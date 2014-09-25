@@ -275,13 +275,6 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 			down_requests = 0;
 		}
 
-
-		if (plug_boost) {
-			freq_table_position = TABLE_SIZE - 1;	//boost for hotplugging
-			plug_boost = false;
-			down_requests = 0;
-		}
-
 	} else {
 		if (freq_table_position > opt_pos)
 				freq_table_position = OPTIMAL_POSITION;  // if early suspended - limit max fq. 
