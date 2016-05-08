@@ -18,7 +18,17 @@ obj-$(CONFIG_IOSCHED_ROW)	+= row-iosched.o
 obj-$(CONFIG_IOSCHED_CFQ)	+= cfq-iosched.o
 obj-$(CONFIG_IOSCHED_TEST)	+= test-iosched.o
 obj-$(CONFIG_IOSCHED_ZEN)       += zen-iosched.o
+<<<<<<< HEAD
 obj-$(CONFIG_IOSCHED_FIFO)	+= fifo-iosched.o
+=======
+obj-$(CONFIG_IOSCHED_SIOPLUS)   += sioplus-iosched.o
+<<<<<<< HEAD
+>>>>>>> 258bfcd51cb... block: scheduler: add SIOPLUS
+=======
+obj-$(CONFIG_IOSCHED_TRIPNDROID)        += tripndroid-iosched.o
+obj-$(CONFIG_IOSCHED_VR)	+= vr-iosched.o 
+>>>>>>> 2296fa50604... block: iosched: add vr and tripndroid
+>>>>>>> c41dad215... block: iosched: add vr and tripndroid
 
 obj-$(CONFIG_BLOCK_COMPAT)	+= compat_ioctl.o
 obj-$(CONFIG_BLK_DEV_INTEGRITY)	+= blk-integrity.o
