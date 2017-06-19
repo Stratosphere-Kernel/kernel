@@ -186,6 +186,7 @@ struct cs_dbs_tuners {
 	unsigned int up_threshold;
 	unsigned int down_threshold;
 	unsigned int freq_step;
+<<<<<<< HEAD
 };
 
 struct ex_dbs_tuners {
@@ -196,6 +197,15 @@ struct ex_dbs_tuners {
 	unsigned int active_floor_freq;
 	unsigned int sampling_down_factor;
 	unsigned int powersave;
+=======
+	unsigned int touch_load_duration;
+	unsigned int input_boost_freq;
+	unsigned int input_boost_duration;
+	unsigned int twostep_threshold;
+	unsigned int min_load;
+	unsigned int twostep_counter;
+	u64 twostep_time;
+>>>>>>> de99d0b2559... cpufreq: add despair governor
 };
 
 /* Common Governor data across policies */
