@@ -380,10 +380,12 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security -Wno-array-bounds -Wno-unused-variable \
 		   -fno-delete-null-pointer-checks \
+		   -std=gnu89
 		   -Wno-unused-const-variable \
 		   -Wno-misleading-indentation \
  		   -Wno-shift-overflow \
  		   -Wno-bool-compare
+		   -std=gnu89
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
