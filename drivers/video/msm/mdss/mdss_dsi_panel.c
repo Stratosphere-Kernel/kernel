@@ -24,17 +24,13 @@
 
 #include "mdss_dsi.h"
 
-#ifdef CONFIG_POWERSUSPEND
-#include <linux/powersuspend.h>
-#endif
-
 #define DT_CMD_HDR 6
 
-#ifndef CONFIG_POWERSUSPEND
-#include <linux/cpufreq_hardlimit.h>
-#endif
-
-DEFINE_LED_TRIGGER(bl_led_trigger);
+/* NT35596 panel specific status variables */
+#define NT35596_BUF_3_STATUS 0x02
+#define NT35596_BUF_4_STATUS 0x40
+#define NT35596_BUF_5_STATUS 0x80
+#define NT35596_MAX_ERR_CNT 2
 
 #define MIN_REFRESH_RATE 48
 #define DEFAULT_MDP_TRANSFER_TIME 14000
@@ -611,10 +607,7 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
-#ifdef CONFIG_POWERSUSPEND
-	set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
-#endif
-
+	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
 
@@ -694,9 +687,35 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 	if (ctrl->off_cmds.cmd_cnt)
 		mdss_dsi_panel_cmds_send(ctrl, &ctrl->off_cmds);
 
-#ifdef CONFIG_POWERSUSPEND
-	set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
-#endif
+end:
+	pinfo->blank_state = MDSS_PANEL_BLANK_BLANK;
+	pr_debug("%s:-\n", __func__);
+	return 0;
+}
+
+static int mdss_dsi_panel_low_power_config(struct mdss_panel_data *pdata,
+	int enable)
+{
+	struct mdss_dsi_ctrl_pdata *ctrl = NULL;
+	struct mdss_panel_info *pinfo;
+
+	if (pdata == NULL) {
+		pr_err("%s: Invalid input data\n", __func__);
+		return -EINVAL;
+	}
+
+	pinfo = &pdata->panel_info;
+	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
+				panel_data);
+
+	pr_debug("%s: ctrl=%pK ndx=%d enable=%d\n", __func__, ctrl, ctrl->ndx,
+		enable);
+
+	/* Any panel specific low power commands/config */
+	if (enable)
+		pinfo->blank_state = MDSS_PANEL_BLANK_LOW_POWER;
+	else
+		pinfo->blank_state = MDSS_PANEL_BLANK_UNBLANK;
 
 	pr_debug("%s:-\n", __func__);
 	return 0;
