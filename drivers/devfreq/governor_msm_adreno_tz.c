@@ -1,3 +1,4 @@
+/* Copyright (c) 2010-2014,2016 The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -19,7 +20,7 @@
 #include <linux/ftrace.h>
 #include <linux/mm.h>
 #include <linux/msm_adreno_devfreq.h>
-#include <linux/powersuspend.h>
+#include <asm/cacheflush.h>
 #include <soc/qcom/scm.h>
 #include "governor.h"
 
@@ -54,8 +55,11 @@ static DEFINE_SPINLOCK(tz_lock);
 
 #define TAG "msm_adreno_tz: "
 
-/* Boolean to detect if panel has gone off */
-static bool power_suspended = false;
+struct msm_adreno_extended_profile *partner_gpu_profile;
+static void do_partner_start_event(struct work_struct *work);
+static void do_partner_stop_event(struct work_struct *work);
+static void do_partner_suspend_event(struct work_struct *work);
+static void do_partner_resume_event(struct work_struct *work);
 
 /* Trap into the TrustZone, and call funcs there. */
 static int __secure_tz_reset_entry2(unsigned int *scm_data, u32 size_scm_data,
@@ -165,10 +169,6 @@ static int tz_init(struct devfreq_msm_adreno_tz_data *priv,
 	return ret;
 }
 
-#ifdef CONFIG_ADRENO_IDLER
-extern int adreno_idler(struct devfreq_dev_status stats, struct devfreq *devfreq,
-		 unsigned long *freq);
-#endif
 static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 				u32 *flag)
 {
@@ -185,32 +185,7 @@ static int tz_get_target_freq(struct devfreq *devfreq, unsigned long *freq,
 		return result;
 	}
 
-	/* Prevent overflow */
-	if (stats.busy_time >= (1 << 24) || stats.total_time >= (1 << 24)) {
-		stats.busy_time >>= 7;
-		stats.total_time >>= 7;
-	}
-
 	*freq = stats.current_frequency;
-	*flag = 0;
-
-	/*
-	 * Force to use & record as min freq when system has
-	 * entered pm-suspend or screen-off state.
-	 */
-	if (power_suspended) {
-		*freq = devfreq->profile->freq_table[devfreq->profile->max_state - 1];
-		return 0;
-	}
-
-
-#ifdef CONFIG_ADRENO_IDLER
-	if (adreno_idler(stats, devfreq, freq)) {
-		/* adreno_idler has asked to bail out now */
-		return 0;
-	}
-#endif
-
 	priv->bin.total_time += stats.total_time;
 	priv->bin.busy_time += stats.busy_time;
 
@@ -474,26 +449,8 @@ static struct devfreq_governor msm_adreno_tz = {
 	.event_handler = tz_handler,
 };
 
-static void tz_early_suspend(struct power_suspend *handler)
-{
-	power_suspended = true;
-	return;
-}
-
-static void tz_late_resume(struct power_suspend *handler)
-{
-	power_suspended = false;
-	return;
-}
-
-static struct power_suspend tz_power_suspend = {
-	.suspend = tz_early_suspend,
-	.resume = tz_late_resume,
-};
-
 static int __init msm_adreno_tz_init(void)
 {
-	register_power_suspend(&tz_power_suspend);
 	return devfreq_add_governor(&msm_adreno_tz);
 }
 subsys_initcall(msm_adreno_tz_init);
@@ -511,3 +468,4 @@ static void __exit msm_adreno_tz_exit(void)
 module_exit(msm_adreno_tz_exit);
 
 MODULE_LICENSE("GPLv2");
+
