@@ -210,7 +210,6 @@ struct ex_dbs_tuners {
 	unsigned int powersave;
 };
 
-};
 
 /* Common Governor data across policies */
 struct dbs_data;
