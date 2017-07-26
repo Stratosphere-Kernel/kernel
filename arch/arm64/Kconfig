@@ -291,8 +291,6 @@ source "drivers/pci/Kconfig"
 source "drivers/pci/pcie/Kconfig"
 endmenu
 
-source arch/arm64/fastcharge/Kconfig
-
 menu "Kernel Features"
 
 config ARM64_DCACHE_DISABLE
