@@ -2,13 +2,11 @@
  * based on work from:
  *	Chad Froebel <chadfroebel@gmail.com> &
  *	Jean-Pierre Rasquin <yank555.lu@gmail.com>
- * for backwards compatibility
+ * 	for backwards compatibility
  *
-<<<<<<< HEAD
  * Port to Osprey : engstk <eng.stk@sapo.pt>
  *
-=======
->>>>>>> ce64b3739... USB Fast Charge
+
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
  * may be copied, distributed, and modified under those terms.
@@ -27,13 +25,10 @@ extern int force_fast_charge;
 extern int fast_charge_level;
 extern int usb_fast_charge_level;
 
-<<<<<<< HEAD
-=======
 #define FAST_CHARGE_DISABLED	0	/* default */
 #define FAST_CHARGE_ENABLED		1
 
 #define FAST_CHARGE_LEVELS	"Anything between range of 500 - 1500 mA (enter value in mA)"
 
->>>>>>> ce64b3739... USB Fast Charge
 #endif
 
