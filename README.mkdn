@@ -1,6 +1,6 @@
 <img src="http://pre06.deviantart.net/ac5b/th/pre/i/2012/218/d/1/evening_victory_by_roen911-d5a019d.jpg">
 
-[ ![Codeship Status for Stratosphere-Kernel/wt88047](https://app.codeship.com/projects/e94e6fe0-540c-0135-7744-266ad56b2dd6/status?branch=3.10.89-ME)](https://app.codeship.com/projects/235160)
+[ ![Codeship Status for Stratosphere-Kernel/wt88047](https://app.codeship.com/projects/e94e6fe0-540c-0135-7744-266ad56b2dd6/status?branch=3.10.89-ME-stable)](https://app.codeship.com/projects/235160)
 
         Linux kernel release 3.x <http://kernel.org/>
 
