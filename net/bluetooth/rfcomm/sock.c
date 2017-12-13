@@ -888,12 +888,8 @@ static int rfcomm_sock_shutdown(struct socket *sock, int how)
 		sk->sk_shutdown = SHUTDOWN_MASK;
 		__rfcomm_sock_close(sk);
 
-<<<<<<< HEAD
 		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime &&
 		    !(current->flags & PF_EXITING))
-=======
-		if (sock_flag(sk, SOCK_LINGER) && sk->sk_lingertime)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			err = bt_sock_wait_state(sk, BT_CLOSED, sk->sk_lingertime);
 	}
 	release_sock(sk);

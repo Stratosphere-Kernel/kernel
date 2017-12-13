@@ -717,27 +717,21 @@ __iscsi_conn_send_pdu(struct iscsi_conn *conn, struct iscsi_hdr *hdr,
 			return NULL;
 		}
 
-<<<<<<< HEAD
 		if (data_size > ISCSI_DEF_MAX_RECV_SEG_LEN) {
 			iscsi_conn_printk(KERN_ERR, conn, "Invalid buffer len of %u for login task. Max len is %u\n", data_size, ISCSI_DEF_MAX_RECV_SEG_LEN);
 			return NULL;
 		}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		task = conn->login_task;
 	} else {
 		if (session->state != ISCSI_STATE_LOGGED_IN)
 			return NULL;
 
-<<<<<<< HEAD
 		if (data_size != 0) {
 			iscsi_conn_printk(KERN_ERR, conn, "Can not send data buffer of len %u for op 0x%x\n", data_size, opcode);
 			return NULL;
 		}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		BUG_ON(conn->c_stage == ISCSI_CONN_INITIAL_STAGE);
 		BUG_ON(conn->c_stage == ISCSI_CONN_STOPPED);
 

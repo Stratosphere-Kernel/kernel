@@ -116,19 +116,13 @@ static void iwl_pcie_set_pwr(struct iwl_trans *trans, bool vaux)
 
 /* PCI registers */
 #define PCI_CFG_RETRY_TIMEOUT	0x041
-<<<<<<< HEAD
 #define PCI_EXP_DEVCTL2_LTR_EN	0x0400
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static void iwl_pcie_apm_config(struct iwl_trans *trans)
 {
 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
 	u16 lctl;
-<<<<<<< HEAD
 	u16 cap;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * HW bug W/A for instability in PCIe bus L0S->L1 transition.
@@ -139,7 +133,6 @@ static void iwl_pcie_apm_config(struct iwl_trans *trans)
 	 *    power savings, even without L1.
 	 */
 	pcie_capability_read_word(trans_pcie->pci_dev, PCI_EXP_LNKCTL, &lctl);
-<<<<<<< HEAD
 	if (lctl & PCI_EXP_LNKCTL_ASPM_L1)
 		iwl_set_bit(trans, CSR_GIO_REG, CSR_GIO_REG_VAL_L0S_ENABLED);
 	else
@@ -151,18 +144,6 @@ static void iwl_pcie_apm_config(struct iwl_trans *trans)
 	dev_info(trans->dev, "L1 %sabled - LTR %sabled\n",
 		 (lctl & PCI_EXP_LNKCTL_ASPM_L1) ? "En" : "Dis",
 		 trans->ltr_enabled ? "En" : "Dis");
-=======
-	if (lctl & PCI_EXP_LNKCTL_ASPM_L1) {
-		/* L1-ASPM enabled; disable(!) L0S */
-		iwl_set_bit(trans, CSR_GIO_REG, CSR_GIO_REG_VAL_L0S_ENABLED);
-		dev_info(trans->dev, "L1 Enabled; Disabling L0S\n");
-	} else {
-		/* L1-ASPM disabled; enable(!) L0S */
-		iwl_clear_bit(trans, CSR_GIO_REG, CSR_GIO_REG_VAL_L0S_ENABLED);
-		dev_info(trans->dev, "L1 Disabled; Enabling L0S\n");
-	}
-	trans->pm_support = !(lctl & PCI_EXP_LNKCTL_ASPM_L0S);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*

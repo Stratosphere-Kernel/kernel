@@ -616,13 +616,6 @@ int ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
 	struct ring_buffer_per_cpu *cpu_buffer;
 	struct rb_irq_work *work;
 
-<<<<<<< HEAD
-=======
-	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
-	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
-		return POLLIN | POLLRDNORM;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (cpu == RING_BUFFER_ALL_CPUS)
 		work = &buffer->irq_work;
 	else {
@@ -633,7 +626,6 @@ int ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
 		work = &cpu_buffer->irq_work;
 	}
 
-<<<<<<< HEAD
 	poll_wait(filp, &work->waiters, poll_table);
 	work->waiters_pending = true;
 	/*
@@ -650,10 +642,6 @@ int ring_buffer_poll_wait(struct ring_buffer *buffer, int cpu,
 	 * will fix it later.
 	 */
 	smp_mb();
-=======
-	work->waiters_pending = true;
-	poll_wait(filp, &work->waiters, poll_table);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if ((cpu == RING_BUFFER_ALL_CPUS && !ring_buffer_empty(buffer)) ||
 	    (cpu != RING_BUFFER_ALL_CPUS && !ring_buffer_empty_cpu(buffer, cpu)))
@@ -2008,11 +1996,7 @@ rb_add_time_stamp(struct ring_buffer_event *event, u64 delta)
 
 /**
  * rb_update_event - update event type and data
-<<<<<<< HEAD
  * @event: the event to update
-=======
- * @event: the even to update
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * @type: the type of event
  * @length: the size of the event field in the ring buffer
  *
@@ -2668,11 +2652,7 @@ static DEFINE_PER_CPU(unsigned int, current_context);
 
 static __always_inline int trace_recursive_lock(void)
 {
-<<<<<<< HEAD
 	unsigned int val = __this_cpu_read(current_context);
-=======
-	unsigned int val = this_cpu_read(current_context);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int bit;
 
 	if (in_interrupt()) {
@@ -2689,29 +2669,17 @@ static __always_inline int trace_recursive_lock(void)
 		return 1;
 
 	val |= (1 << bit);
-<<<<<<< HEAD
 	__this_cpu_write(current_context, val);
-=======
-	this_cpu_write(current_context, val);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }
 
 static __always_inline void trace_recursive_unlock(void)
 {
-<<<<<<< HEAD
 	unsigned int val = __this_cpu_read(current_context);
 
 	val &= val & (val - 1);
 	__this_cpu_write(current_context, val);
-=======
-	unsigned int val = this_cpu_read(current_context);
-
-	val--;
-	val &= this_cpu_read(current_context);
-	this_cpu_write(current_context, val);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 #else
@@ -3400,33 +3368,16 @@ static void rb_iter_reset(struct ring_buffer_iter *iter)
 	struct ring_buffer_per_cpu *cpu_buffer = iter->cpu_buffer;
 
 	/* Iterator usage is expected to have record disabled */
-<<<<<<< HEAD
 	iter->head_page = cpu_buffer->reader_page;
 	iter->head = cpu_buffer->reader_page->read;
 
 	iter->cache_reader_page = iter->head_page;
 	iter->cache_read = cpu_buffer->read;
 
-=======
-	if (list_empty(&cpu_buffer->reader_page->list)) {
-		iter->head_page = rb_set_head_page(cpu_buffer);
-		if (unlikely(!iter->head_page))
-			return;
-		iter->head = iter->head_page->read;
-	} else {
-		iter->head_page = cpu_buffer->reader_page;
-		iter->head = cpu_buffer->reader_page->read;
-	}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (iter->head)
 		iter->read_stamp = cpu_buffer->read_stamp;
 	else
 		iter->read_stamp = iter->head_page->page->time_stamp;
-<<<<<<< HEAD
-=======
-	iter->cache_reader_page = cpu_buffer->reader_page;
-	iter->cache_read = cpu_buffer->read;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /**
@@ -3819,7 +3770,6 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
 		return NULL;
 
 	/*
-<<<<<<< HEAD
 	 * We repeat when a time extend is encountered or we hit
 	 * the end of the page. Since the time extend is always attached
 	 * to a data event, we should never loop more than three times.
@@ -3828,14 +3778,6 @@ rb_iter_peek(struct ring_buffer_iter *iter, u64 *ts)
 	 * (We never hit the following condition more than thrice).
 	 */
 	if (RB_WARN_ON(cpu_buffer, ++nr_loops > 3))
-=======
-	 * We repeat when a time extend is encountered.
-	 * Since the time extend is always attached to a data event,
-	 * we should never loop more than once.
-	 * (We never hit the following condition more than twice).
-	 */
-	if (RB_WARN_ON(cpu_buffer, ++nr_loops > 2))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return NULL;
 
 	if (rb_per_cpu_empty(cpu_buffer))

@@ -247,13 +247,8 @@ struct dme1737_data {
 	u8  pwm_acz[3];
 	u8  pwm_freq[6];
 	u8  pwm_rr[2];
-<<<<<<< HEAD
 	s8  zone_low[3];
 	s8  zone_abs[3];
-=======
-	u8  zone_low[3];
-	u8  zone_abs[3];
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	u8  zone_hyst[2];
 	u32 alarms;
 };
@@ -282,11 +277,7 @@ static inline int IN_FROM_REG(int reg, int nominal, int res)
 	return (reg * nominal + (3 << (res - 3))) / (3 << (res - 2));
 }
 
-<<<<<<< HEAD
 static inline int IN_TO_REG(long val, int nominal)
-=======
-static inline int IN_TO_REG(int val, int nominal)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	return clamp_val((val * 192 + nominal / 2) / nominal, 0, 255);
 }
@@ -302,11 +293,7 @@ static inline int TEMP_FROM_REG(int reg, int res)
 	return (reg * 1000) >> (res - 8);
 }
 
-<<<<<<< HEAD
 static inline int TEMP_TO_REG(long val)
-=======
-static inline int TEMP_TO_REG(int val)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	return clamp_val((val < 0 ? val - 500 : val + 500) / 1000, -128, 127);
 }
@@ -321,11 +308,7 @@ static inline int TEMP_RANGE_FROM_REG(int reg)
 	return TEMP_RANGE[(reg >> 4) & 0x0f];
 }
 
-<<<<<<< HEAD
 static int TEMP_RANGE_TO_REG(long val, int reg)
-=======
-static int TEMP_RANGE_TO_REG(int val, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int i;
 
@@ -348,11 +331,7 @@ static inline int TEMP_HYST_FROM_REG(int reg, int ix)
 	return (((ix == 1) ? reg : reg >> 4) & 0x0f) * 1000;
 }
 
-<<<<<<< HEAD
 static inline int TEMP_HYST_TO_REG(long val, int ix, int reg)
-=======
-static inline int TEMP_HYST_TO_REG(int val, int ix, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int hyst = clamp_val((val + 500) / 1000, 0, 15);
 
@@ -368,11 +347,7 @@ static inline int FAN_FROM_REG(int reg, int tpc)
 		return (reg == 0 || reg == 0xffff) ? 0 : 90000 * 60 / reg;
 }
 
-<<<<<<< HEAD
 static inline int FAN_TO_REG(long val, int tpc)
-=======
-static inline int FAN_TO_REG(int val, int tpc)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	if (tpc) {
 		return clamp_val(val / tpc, 0, 0xffff);
@@ -404,11 +379,7 @@ static inline int FAN_TYPE_FROM_REG(int reg)
 	return (edge > 0) ? 1 << (edge - 1) : 0;
 }
 
-<<<<<<< HEAD
 static inline int FAN_TYPE_TO_REG(long val, int reg)
-=======
-static inline int FAN_TYPE_TO_REG(int val, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int edge = (val == 4) ? 3 : val;
 
@@ -431,11 +402,7 @@ static int FAN_MAX_FROM_REG(int reg)
 	return 1000 + i * 500;
 }
 
-<<<<<<< HEAD
 static int FAN_MAX_TO_REG(long val)
-=======
-static int FAN_MAX_TO_REG(int val)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int i;
 
@@ -493,11 +460,7 @@ static inline int PWM_ACZ_FROM_REG(int reg)
 	return acz[(reg >> 5) & 0x07];
 }
 
-<<<<<<< HEAD
 static inline int PWM_ACZ_TO_REG(long val, int reg)
-=======
-static inline int PWM_ACZ_TO_REG(int val, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int acz = (val == 4) ? 2 : val - 1;
 
@@ -513,11 +476,7 @@ static inline int PWM_FREQ_FROM_REG(int reg)
 	return PWM_FREQ[reg & 0x0f];
 }
 
-<<<<<<< HEAD
 static int PWM_FREQ_TO_REG(long val, int reg)
-=======
-static int PWM_FREQ_TO_REG(int val, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int i;
 
@@ -551,11 +510,7 @@ static inline int PWM_RR_FROM_REG(int reg, int ix)
 	return (rr & 0x08) ? PWM_RR[rr & 0x07] : 0;
 }
 
-<<<<<<< HEAD
 static int PWM_RR_TO_REG(long val, int ix, int reg)
-=======
-static int PWM_RR_TO_REG(int val, int ix, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int i;
 
@@ -573,11 +528,7 @@ static inline int PWM_RR_EN_FROM_REG(int reg, int ix)
 	return PWM_RR_FROM_REG(reg, ix) ? 1 : 0;
 }
 
-<<<<<<< HEAD
 static inline int PWM_RR_EN_TO_REG(long val, int ix, int reg)
-=======
-static inline int PWM_RR_EN_TO_REG(int val, int ix, int reg)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int en = (ix == 1) ? 0x80 : 0x08;
 
@@ -1530,7 +1481,6 @@ static ssize_t set_vrm(struct device *dev, struct device_attribute *attr,
 		       const char *buf, size_t count)
 {
 	struct dme1737_data *data = dev_get_drvdata(dev);
-<<<<<<< HEAD
 	unsigned long val;
 	int err;
 
@@ -1541,15 +1491,6 @@ static ssize_t set_vrm(struct device *dev, struct device_attribute *attr,
 	if (val > 255)
 		return -EINVAL;
 
-=======
-	long val;
-	int err;
-
-	err = kstrtol(buf, 10, &val);
-	if (err)
-		return err;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	data->vrm = val;
 	return count;
 }

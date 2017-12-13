@@ -2026,13 +2026,8 @@ Prior to version 0.9.0rc4 options had a 'snd_' prefix. This was removed.
   -------------------
 
     Module for sound cards based on the Asus AV66/AV100/AV200 chips,
-<<<<<<< HEAD
     i.e., Xonar D1, DX, D2, D2X, DS, DSX, Essence ST (Deluxe),
     Essence STX (II), HDAV1.3 (Deluxe), and HDAV1.3 Slim.
-=======
-    i.e., Xonar D1, DX, D2, D2X, DS, Essence ST (Deluxe), Essence STX,
-    HDAV1.3 (Deluxe), and HDAV1.3 Slim.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
     This module supports autoprobe and multiple cards.
 

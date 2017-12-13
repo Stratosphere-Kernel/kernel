@@ -81,10 +81,7 @@ static int sa11x0_pm_enter(suspend_state_t state)
 	/*
 	 * Ensure not to come back here if it wasn't intended
 	 */
-<<<<<<< HEAD
 	RCSR = RCSR_SMR;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	PSPR = 0;
 
 	/*

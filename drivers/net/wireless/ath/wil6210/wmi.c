@@ -108,22 +108,13 @@ static u32 wmi_addr_remap(u32 x)
 /**
  * Check address validity for WMI buffer; remap if needed
  * @ptr - internal (linker) fw/ucode address
-<<<<<<< HEAD
-=======
- * @size - if non zero, validate the block does not
- *  exceed the device memory (bar)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * Valid buffer should be DWORD aligned
  *
  * return address for accessing buffer from the host;
  * if buffer is not valid, return NULL.
  */
-<<<<<<< HEAD
 void __iomem *wmi_buffer(struct wil6210_priv *wil, __le32 ptr_)
-=======
-void __iomem *wmi_buffer_block(struct wil6210_priv *wil, __le32 ptr_, u32 size)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	u32 off;
 	u32 ptr = le32_to_cpu(ptr_);
@@ -138,23 +129,10 @@ void __iomem *wmi_buffer_block(struct wil6210_priv *wil, __le32 ptr_, u32 size)
 	off = HOSTADDR(ptr);
 	if (off > WIL6210_MEM_SIZE - 4)
 		return NULL;
-<<<<<<< HEAD
-=======
-	if (size && ((off + size > WIL6210_MEM_SIZE) || (off + size < off)))
-		return NULL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return wil->csr + off;
 }
 
-<<<<<<< HEAD
-=======
-void __iomem *wmi_buffer(struct wil6210_priv *wil, __le32 ptr_)
-{
-	return wmi_buffer_block(wil, ptr_, 0);
-}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * Check address validity
  */

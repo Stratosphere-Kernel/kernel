@@ -167,11 +167,7 @@ void setattr_copy(struct inode *inode, const struct iattr *attr)
 }
 EXPORT_SYMBOL(setattr_copy);
 
-<<<<<<< HEAD
 int notify_change(struct dentry * dentry, struct iattr * attr)
-=======
-int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * attr)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct inode *inode = dentry->d_inode;
 	umode_t mode = inode->i_mode;
@@ -243,13 +239,7 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 	if (error)
 		return error;
 
-<<<<<<< HEAD
 	if (inode->i_op->setattr)
-=======
-	if (mnt && inode->i_op->setattr2)
-		error = inode->i_op->setattr2(mnt, dentry, attr);
-	else if (inode->i_op->setattr)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		error = inode->i_op->setattr(dentry, attr);
 	else
 		error = simple_setattr(dentry, attr);
@@ -262,13 +252,4 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 
 	return error;
 }
-<<<<<<< HEAD
-=======
-EXPORT_SYMBOL(notify_change2);
-
-int notify_change(struct dentry * dentry, struct iattr * attr)
-{
-	return notify_change2(NULL, dentry, attr);
-}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 EXPORT_SYMBOL(notify_change);

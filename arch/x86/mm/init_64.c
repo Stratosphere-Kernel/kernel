@@ -1142,11 +1142,7 @@ void mark_rodata_ro(void)
 	unsigned long end = (unsigned long) &__end_rodata_hpage_align;
 	unsigned long text_end = PFN_ALIGN(&__stop___ex_table);
 	unsigned long rodata_end = PFN_ALIGN(&__end_rodata);
-<<<<<<< HEAD
 	unsigned long all_end;
-=======
-	unsigned long all_end = PFN_ALIGN(&_end);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	printk(KERN_INFO "Write protecting the kernel read-only data: %luk\n",
 	       (end - start) >> 10);
@@ -1157,7 +1153,6 @@ void mark_rodata_ro(void)
 	/*
 	 * The rodata/data/bss/brk section (but not the kernel text!)
 	 * should also be not-executable.
-<<<<<<< HEAD
 	 *
 	 * We align all_end to PMD_SIZE because the existing mapping
 	 * is a full PMD. If we would align _brk_end to PAGE_SIZE we
@@ -1168,9 +1163,6 @@ void mark_rodata_ro(void)
 	 * has been zapped already via cleanup_highmem().
 	 */
 	all_end = roundup((unsigned long)_brk_end, PMD_SIZE);
-=======
-	 */
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	set_memory_nx(rodata_start, (all_end - rodata_start) >> PAGE_SHIFT);
 
 	rodata_test();

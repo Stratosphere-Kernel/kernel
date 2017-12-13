@@ -31,11 +31,8 @@
 #include "alloc.h"
 #include "dat.h"
 
-<<<<<<< HEAD
 static void __nilfs_btree_init(struct nilfs_bmap *bmap);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static struct nilfs_btree_path *nilfs_btree_alloc_path(void)
 {
 	struct nilfs_btree_path *path;
@@ -373,7 +370,6 @@ static int nilfs_btree_node_broken(const struct nilfs_btree_node *node,
 	return ret;
 }
 
-<<<<<<< HEAD
 /**
  * nilfs_btree_root_broken - verify consistency of btree root node
  * @node: btree root node to be examined
@@ -402,8 +398,6 @@ static int nilfs_btree_root_broken(const struct nilfs_btree_node *node,
 	return ret;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 int nilfs_btree_broken_node_block(struct buffer_head *bh)
 {
 	int ret;
@@ -1749,11 +1743,7 @@ nilfs_btree_commit_convert_and_insert(struct nilfs_bmap *btree,
 
 	/* convert and insert */
 	dat = NILFS_BMAP_USE_VBN(btree) ? nilfs_bmap_get_dat(btree) : NULL;
-<<<<<<< HEAD
 	__nilfs_btree_init(btree);
-=======
-	nilfs_btree_init(btree);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (nreq != NULL) {
 		nilfs_bmap_commit_alloc_ptr(btree, dreq, dat);
 		nilfs_bmap_commit_alloc_ptr(btree, nreq, dat);
@@ -2334,16 +2324,11 @@ static const struct nilfs_bmap_operations nilfs_btree_ops_gc = {
 	.bop_gather_data	=	NULL,
 };
 
-<<<<<<< HEAD
 static void __nilfs_btree_init(struct nilfs_bmap *bmap)
-=======
-int nilfs_btree_init(struct nilfs_bmap *bmap)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	bmap->b_ops = &nilfs_btree_ops;
 	bmap->b_nchildren_per_block =
 		NILFS_BTREE_NODE_NCHILDREN_MAX(nilfs_btree_node_size(bmap));
-<<<<<<< HEAD
 }
 
 int nilfs_btree_init(struct nilfs_bmap *bmap)
@@ -2356,9 +2341,6 @@ int nilfs_btree_init(struct nilfs_bmap *bmap)
 				    bmap->b_inode->i_ino))
 		ret = -EIO;
 	return ret;
-=======
-	return 0;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 void nilfs_btree_init_gc(struct nilfs_bmap *bmap)

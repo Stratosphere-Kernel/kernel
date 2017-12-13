@@ -71,7 +71,6 @@ int get_compat_msghdr(struct msghdr *kmsg, struct compat_msghdr __user *umsg)
 	    __get_user(kmsg->msg_controllen, &umsg->msg_controllen) ||
 	    __get_user(kmsg->msg_flags, &umsg->msg_flags))
 		return -EFAULT;
-<<<<<<< HEAD
 
 	if (!tmp1)
 		kmsg->msg_namelen = 0;
@@ -79,8 +78,6 @@ int get_compat_msghdr(struct msghdr *kmsg, struct compat_msghdr __user *umsg)
 	if (kmsg->msg_namelen < 0)
 		return -EINVAL;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (kmsg->msg_namelen > sizeof(struct sockaddr_storage))
 		kmsg->msg_namelen = sizeof(struct sockaddr_storage);
 	kmsg->msg_name = compat_ptr(tmp1);
@@ -95,11 +92,7 @@ int verify_compat_iovec(struct msghdr *kern_msg, struct iovec *kern_iov,
 {
 	int tot_len;
 
-<<<<<<< HEAD
 	if (kern_msg->msg_name && kern_msg->msg_namelen) {
-=======
-	if (kern_msg->msg_namelen) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (mode == VERIFY_READ) {
 			int err = move_addr_to_kernel(kern_msg->msg_name,
 						      kern_msg->msg_namelen,
@@ -107,18 +100,11 @@ int verify_compat_iovec(struct msghdr *kern_msg, struct iovec *kern_iov,
 			if (err < 0)
 				return err;
 		}
-<<<<<<< HEAD
 		kern_msg->msg_name = kern_address;
 	} else {
 		kern_msg->msg_name = NULL;
 		kern_msg->msg_namelen = 0;
 	}
-=======
-		if (kern_msg->msg_name)
-			kern_msg->msg_name = kern_address;
-	} else
-		kern_msg->msg_name = NULL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	tot_len = iov_from_user_compat_to_kern(kern_iov,
 					  (struct compat_iovec __user *)kern_msg->msg_iov,
@@ -759,33 +745,18 @@ static unsigned char nas[21] = {
 
 asmlinkage long compat_sys_sendmsg(int fd, struct compat_msghdr __user *msg, unsigned int flags)
 {
-<<<<<<< HEAD
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return __sys_sendmsg(fd, (struct msghdr __user *)msg, flags | MSG_CMSG_COMPAT);
 }
 
 asmlinkage long compat_sys_sendmmsg(int fd, struct compat_mmsghdr __user *mmsg,
 				    unsigned int vlen, unsigned int flags)
 {
-<<<<<<< HEAD
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return __sys_sendmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
 			      flags | MSG_CMSG_COMPAT);
 }
 
 asmlinkage long compat_sys_recvmsg(int fd, struct compat_msghdr __user *msg, unsigned int flags)
 {
-<<<<<<< HEAD
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return __sys_recvmsg(fd, (struct msghdr __user *)msg, flags | MSG_CMSG_COMPAT);
 }
 
@@ -808,12 +779,6 @@ asmlinkage long compat_sys_recvmmsg(int fd, struct compat_mmsghdr __user *mmsg,
 	int datagrams;
 	struct timespec ktspec;
 
-<<<<<<< HEAD
-=======
-	if (flags & MSG_CMSG_COMPAT)
-		return -EINVAL;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (timeout == NULL)
 		return __sys_recvmmsg(fd, (struct mmsghdr __user *)mmsg, vlen,
 				      flags | MSG_CMSG_COMPAT, NULL);

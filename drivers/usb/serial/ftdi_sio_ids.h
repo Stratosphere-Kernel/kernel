@@ -30,7 +30,6 @@
 
 /*** third-party PIDs (using FTDI_VID) ***/
 
-<<<<<<< HEAD
 /*
  * Certain versions of the official Windows FTDI driver reprogrammed
  * counterfeit FTDI devices to PID 0. Support these devices anyway.
@@ -42,10 +41,6 @@
 /* Cyber Cortex AV by Fabulous Silicon (http://fabuloussilicon.com) */
 #define CYBER_CORTEX_AV_PID	0x8698
 
-=======
-#define FTDI_LUMEL_PD12_PID	0x6002
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Marvell OpenRD Base, Client
  * http://www.open-rd.org
@@ -56,11 +51,8 @@
 /* www.candapter.com Ewert Energy Systems CANdapter device */
 #define FTDI_CANDAPTER_PID 0x9F80 /* Product Id */
 
-<<<<<<< HEAD
 #define FTDI_BM_ATOM_NANO_PID	0xa559	/* Basic Micro ATOM Nano USB2Serial */
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Texas Instruments XDS100v2 JTAG / BeagleBone A3
  * http://processors.wiki.ti.com/index.php/XDS100
@@ -159,7 +151,6 @@
 /*
  * Xsens Technologies BV products (http://www.xsens.com).
  */
-<<<<<<< HEAD
 #define XSENS_VID		0x2639
 #define XSENS_AWINDA_STATION_PID 0x0101
 #define XSENS_AWINDA_DONGLE_PID 0x0102
@@ -174,14 +165,6 @@
 #define XSENS_CONVERTER_3_PID	0xD38B	/* Xsens USB-serial converter */
 #define XSENS_CONVERTER_4_PID	0xD38C	/* Xsens Wireless Receiver */
 #define XSENS_CONVERTER_5_PID	0xD38D	/* Xsens Awinda Station */
-=======
-#define XSENS_CONVERTER_0_PID	0xD388
-#define XSENS_CONVERTER_1_PID	0xD389
-#define XSENS_CONVERTER_2_PID	0xD38A
-#define XSENS_CONVERTER_3_PID	0xD38B
-#define XSENS_CONVERTER_4_PID	0xD38C
-#define XSENS_CONVERTER_5_PID	0xD38D
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define XSENS_CONVERTER_6_PID	0xD38E
 #define XSENS_CONVERTER_7_PID	0xD38F
 
@@ -579,7 +562,6 @@
  */
 #define FTDI_NT_ORIONLXM_PID	0x7c90	/* OrionLXm Substation Automation Platform */
 
-<<<<<<< HEAD
 /*
  * Synapse Wireless product ids (FTDI_VID)
  * http://www.synapse-wireless.com
@@ -594,8 +576,6 @@
 #define FTDI_CUSTOMWARE_MINIPLEX2WI_PID	0xfd4a	/* MiniPlex-2Wi */
 #define FTDI_CUSTOMWARE_MINIPLEX3_PID	0xfd4b	/* MiniPlex-3 series */
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /********************************/
 /** third-party VID/PID combos **/
@@ -885,15 +865,12 @@
 #define TELLDUS_TELLSTICK_PID		0x0C30	/* RF control dongle 433 MHz using FT232RL */
 
 /*
-<<<<<<< HEAD
  * NOVITUS printers
  */
 #define NOVITUS_VID			0x1a28
 #define NOVITUS_BONO_E_PID		0x6010
 
 /*
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * RT Systems programming cables for various ham radios
  */
 #define RTSYSTEMS_VID		0x2100	/* Vendor ID */
@@ -967,13 +944,8 @@
 #define BAYER_CONTOUR_CABLE_PID        0x6001
 
 /*
-<<<<<<< HEAD
  * Matrix Orbital Intelligent USB displays.
  * http://www.matrixorbital.com
-=======
- * The following are the values for the Matrix Orbital FTDI Range
- * Anything in this range will use an FT232RL.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  */
 #define MTXORB_VID			0x1B3D
 #define MTXORB_FTDI_RANGE_0100_PID	0x0100
@@ -1232,7 +1204,6 @@
 #define MTXORB_FTDI_RANGE_01FD_PID	0x01FD
 #define MTXORB_FTDI_RANGE_01FE_PID	0x01FE
 #define MTXORB_FTDI_RANGE_01FF_PID	0x01FF
-<<<<<<< HEAD
 #define MTXORB_FTDI_RANGE_4701_PID	0x4701
 #define MTXORB_FTDI_RANGE_9300_PID	0x9300
 #define MTXORB_FTDI_RANGE_9301_PID	0x9301
@@ -1266,10 +1237,6 @@
 #define MTXORB_FTDI_RANGE_931D_PID	0x931D
 #define MTXORB_FTDI_RANGE_931E_PID	0x931E
 #define MTXORB_FTDI_RANGE_931F_PID	0x931F
-=======
-
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * The Mobility Lab (TML)
@@ -1478,11 +1445,8 @@
 #define BRAINBOXES_US_160_6_PID		0x9006 /* US-160 16xRS232 1Mbaud Port 11 and 12 */
 #define BRAINBOXES_US_160_7_PID		0x9007 /* US-160 16xRS232 1Mbaud Port 13 and 14 */
 #define BRAINBOXES_US_160_8_PID		0x9008 /* US-160 16xRS232 1Mbaud Port 15 and 16 */
-<<<<<<< HEAD
 
 /*
  * ekey biometric systems GmbH (http://ekey.net/)
  */
 #define FTDI_EKEY_CONV_USB_PID		0xCB08	/* Converter USB */
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

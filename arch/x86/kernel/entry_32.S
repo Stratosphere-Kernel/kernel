@@ -436,13 +436,8 @@ sysenter_do_call:
 	cmpl $(NR_syscalls), %eax
 	jae sysenter_badsys
 	call *sys_call_table(,%eax,4)
-<<<<<<< HEAD
 sysenter_after_call:
 	movl %eax,PT_EAX(%esp)
-=======
-	movl %eax,PT_EAX(%esp)
-sysenter_after_call:
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	LOCKDEP_SYS_EXIT
 	DISABLE_INTERRUPTS(CLBR_ANY)
 	TRACE_IRQS_OFF
@@ -522,10 +517,7 @@ ENTRY(system_call)
 	jae syscall_badsys
 syscall_call:
 	call *sys_call_table(,%eax,4)
-<<<<<<< HEAD
 syscall_after_call:
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	movl %eax,PT_EAX(%esp)		# store the return value
 syscall_exit:
 	LOCKDEP_SYS_EXIT
@@ -540,10 +532,7 @@ syscall_exit:
 restore_all:
 	TRACE_IRQS_IRET
 restore_all_notrace:
-<<<<<<< HEAD
 #ifdef CONFIG_X86_ESPFIX32
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	movl PT_EFLAGS(%esp), %eax	# mix EFLAGS, SS and CS
 	# Warning: PT_OLDSS(%esp) contains the wrong/random values if we
 	# are returning to the kernel.
@@ -554,10 +543,7 @@ restore_all_notrace:
 	cmpl $((SEGMENT_LDT << 8) | USER_RPL), %eax
 	CFI_REMEMBER_STATE
 	je ldt_ss			# returning to user-space with LDT SS
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 restore_nocheck:
 	RESTORE_REGS 4			# skip orig_eax/error_code
 irq_return:
@@ -570,10 +556,7 @@ ENTRY(iret_exc)
 .previous
 	_ASM_EXTABLE(irq_return,iret_exc)
 
-<<<<<<< HEAD
 #ifdef CONFIG_X86_ESPFIX32
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	CFI_RESTORE_STATE
 ldt_ss:
 #ifdef CONFIG_PARAVIRT
@@ -617,10 +600,7 @@ ldt_ss:
 	lss (%esp), %esp		/* switch to espfix segment */
 	CFI_ADJUST_CFA_OFFSET -8
 	jmp restore_nocheck
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	CFI_ENDPROC
 ENDPROC(system_call)
 
@@ -711,21 +691,12 @@ syscall_fault:
 END(syscall_fault)
 
 syscall_badsys:
-<<<<<<< HEAD
 	movl $-ENOSYS,%eax
 	jmp syscall_after_call
 END(syscall_badsys)
 
 sysenter_badsys:
 	movl $-ENOSYS,%eax
-=======
-	movl $-ENOSYS,PT_EAX(%esp)
-	jmp syscall_exit
-END(syscall_badsys)
-
-sysenter_badsys:
-	movl $-ENOSYS,PT_EAX(%esp)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	jmp sysenter_after_call
 END(syscall_badsys)
 	CFI_ENDPROC
@@ -742,10 +713,7 @@ END(syscall_badsys)
  * the high word of the segment base from the GDT and swiches to the
  * normal stack and adjusts ESP with the matching offset.
  */
-<<<<<<< HEAD
 #ifdef CONFIG_X86_ESPFIX32
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* fixup the stack */
 	mov GDT_ESPFIX_SS + 4, %al /* bits 16..23 */
 	mov GDT_ESPFIX_SS + 7, %ah /* bits 24..31 */
@@ -755,15 +723,10 @@ END(syscall_badsys)
 	pushl_cfi %eax
 	lss (%esp), %esp		/* switch to the normal stack segment */
 	CFI_ADJUST_CFA_OFFSET -8
-<<<<<<< HEAD
 #endif
 .endm
 .macro UNWIND_ESPFIX_STACK
 #ifdef CONFIG_X86_ESPFIX32
-=======
-.endm
-.macro UNWIND_ESPFIX_STACK
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	movl %ss, %eax
 	/* see if on espfix stack */
 	cmpw $__ESPFIX_SS, %ax
@@ -774,10 +737,7 @@ END(syscall_badsys)
 	/* switch to normal stack */
 	FIXUP_ESPFIX_STACK
 27:
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 .endm
 
 /*
@@ -1385,19 +1345,13 @@ END(debug)
 ENTRY(nmi)
 	RING0_INT_FRAME
 	ASM_CLAC
-<<<<<<< HEAD
 #ifdef CONFIG_X86_ESPFIX32
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	pushl_cfi %eax
 	movl %ss, %eax
 	cmpw $__ESPFIX_SS, %ax
 	popl_cfi %eax
 	je nmi_espfix_stack
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	cmpl $ia32_sysenter_target,(%esp)
 	je nmi_stack_fixup
 	pushl_cfi %eax
@@ -1437,10 +1391,7 @@ nmi_debug_stack_check:
 	FIX_STACK 24, nmi_stack_correct, 1
 	jmp nmi_stack_correct
 
-<<<<<<< HEAD
 #ifdef CONFIG_X86_ESPFIX32
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 nmi_espfix_stack:
 	/* We have a RING0_INT_FRAME here.
 	 *
@@ -1462,10 +1413,7 @@ nmi_espfix_stack:
 	lss 12+4(%esp), %esp		# back to espfix stack
 	CFI_ADJUST_CFA_OFFSET -24
 	jmp irq_return
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	CFI_ENDPROC
 END(nmi)
 

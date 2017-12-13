@@ -1077,11 +1077,7 @@ static bool tcp_check_dsack(struct sock *sk, const struct sk_buff *ack_skb,
 	}
 
 	/* D-SACK for already forgotten data... Do dumb counting. */
-<<<<<<< HEAD
 	if (dup_sack && tp->undo_marker && tp->undo_retrans > 0 &&
-=======
-	if (dup_sack && tp->undo_marker && tp->undo_retrans &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	    !after(end_seq_0, prior_snd_una) &&
 	    after(end_seq_0, tp->undo_marker))
 		tp->undo_retrans--;
@@ -1136,11 +1132,7 @@ static int tcp_match_skb_to_sack(struct sock *sk, struct sk_buff *skb,
 			unsigned int new_len = (pkt_len / mss) * mss;
 			if (!in_sack && new_len < pkt_len) {
 				new_len += mss;
-<<<<<<< HEAD
 				if (new_len >= skb->len)
-=======
-				if (new_len > skb->len)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					return 0;
 			}
 			pkt_len = new_len;
@@ -1164,11 +1156,7 @@ static u8 tcp_sacktag_one(struct sock *sk,
 
 	/* Account D-SACK for retransmitted packet. */
 	if (dup_sack && (sacked & TCPCB_RETRANS)) {
-<<<<<<< HEAD
 		if (tp->undo_marker && tp->undo_retrans > 0 &&
-=======
-		if (tp->undo_marker && tp->undo_retrans &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    after(end_seq, tp->undo_marker))
 			tp->undo_retrans--;
 		if (sacked & TCPCB_SACKED_ACKED)
@@ -1864,11 +1852,7 @@ static void tcp_clear_retrans_partial(struct tcp_sock *tp)
 	tp->lost_out = 0;
 
 	tp->undo_marker = 0;
-<<<<<<< HEAD
 	tp->undo_retrans = -1;
-=======
-	tp->undo_retrans = 0;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 void tcp_clear_retrans(struct tcp_sock *tp)
@@ -2718,11 +2702,7 @@ static void tcp_enter_recovery(struct sock *sk, bool ece_ack)
 
 	tp->prior_ssthresh = 0;
 	tp->undo_marker = tp->snd_una;
-<<<<<<< HEAD
 	tp->undo_retrans = tp->retrans_out ? : -1;
-=======
-	tp->undo_retrans = tp->retrans_out;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (inet_csk(sk)->icsk_ca_state < TCP_CA_CWR) {
 		if (!ece_ack)
@@ -3098,18 +3078,11 @@ static int tcp_clean_rtx_queue(struct sock *sk, int prior_fackets,
 			if (seq_rtt < 0) {
 				seq_rtt = ca_seq_rtt;
 			}
-<<<<<<< HEAD
 			if (!(sacked & TCPCB_SACKED_ACKED)) {
 				reord = min(pkts_acked, reord);
 				if (!after(scb->end_seq, tp->high_seq))
 					flag |= FLAG_ORIG_SACK_ACKED;
 			}
-=======
-			if (!(sacked & TCPCB_SACKED_ACKED))
-				reord = min(pkts_acked, reord);
-			if (!after(scb->end_seq, tp->high_seq))
-				flag |= FLAG_ORIG_SACK_ACKED;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 
 		if (sacked & TCPCB_SACKED_ACKED)

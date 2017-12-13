@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2013-2015, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2013-2015, 2017, The Linux Foundation. All rights reserved.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -86,19 +82,12 @@ void mdp3_check_dsi_ctrl_status(struct work_struct *work,
 
 	if (mdp3_session->wait_for_dma_done)
 		ret = mdp3_session->wait_for_dma_done(mdp3_session);
-<<<<<<< HEAD
-=======
-	mutex_unlock(&mdp3_session->lock);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!ret)
 		ret = ctrl_pdata->check_status(ctrl_pdata);
 	else
 		pr_err("%s: wait_for_dma_done error\n", __func__);
-<<<<<<< HEAD
 	mutex_unlock(&mdp3_session->lock);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (mdss_fb_is_power_on_interactive(pdsi_status->mfd)) {
 		if (ret > 0) {

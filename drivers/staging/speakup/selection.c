@@ -5,10 +5,7 @@
 #include <linux/device.h> /* for dev_warn */
 #include <linux/selection.h>
 #include <linux/workqueue.h>
-<<<<<<< HEAD
 #include <linux/tty.h>
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <asm/cmpxchg.h>
 
 #include "speakup.h"
@@ -139,17 +136,12 @@ static void __speakup_paste_selection(struct work_struct *work)
 	struct tty_struct *tty = xchg(&spw->tty, NULL);
 	struct vc_data *vc = (struct vc_data *) tty->driver_data;
 	int pasted = 0, count;
-<<<<<<< HEAD
 	struct tty_ldisc *ld;
 	DECLARE_WAITQUEUE(wait, current);
 
 	ld = tty_ldisc_ref_wait(tty);
 
 	/* FIXME: this is completely unsafe */
-=======
-	DECLARE_WAITQUEUE(wait, current);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	add_wait_queue(&vc->paste_wait, &wait);
 	while (sel_buffer && sel_buffer_lth > pasted) {
 		set_current_state(TASK_INTERRUPTIBLE);
@@ -159,21 +151,13 @@ static void __speakup_paste_selection(struct work_struct *work)
 		}
 		count = sel_buffer_lth - pasted;
 		count = min_t(int, count, tty->receive_room);
-<<<<<<< HEAD
 		ld->ops->receive_buf(tty, sel_buffer + pasted, NULL, count);
-=======
-		tty->ldisc->ops->receive_buf(tty, sel_buffer + pasted,
-			NULL, count);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		pasted += count;
 	}
 	remove_wait_queue(&vc->paste_wait, &wait);
 	current->state = TASK_RUNNING;
-<<<<<<< HEAD
 
 	tty_ldisc_deref(ld);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	tty_kref_put(tty);
 }
 

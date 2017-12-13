@@ -447,14 +447,8 @@ void inode_add_bytes(struct inode *inode, loff_t bytes)
 
 EXPORT_SYMBOL(inode_add_bytes);
 
-<<<<<<< HEAD
 void __inode_sub_bytes(struct inode *inode, loff_t bytes)
 {
-=======
-void inode_sub_bytes(struct inode *inode, loff_t bytes)
-{
-	spin_lock(&inode->i_lock);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	inode->i_blocks -= bytes >> 9;
 	bytes &= 511;
 	if (inode->i_bytes < bytes) {
@@ -462,7 +456,6 @@ void inode_sub_bytes(struct inode *inode, loff_t bytes)
 		inode->i_bytes += 512;
 	}
 	inode->i_bytes -= bytes;
-<<<<<<< HEAD
 }
 
 EXPORT_SYMBOL(__inode_sub_bytes);
@@ -471,8 +464,6 @@ void inode_sub_bytes(struct inode *inode, loff_t bytes)
 {
 	spin_lock(&inode->i_lock);
 	__inode_sub_bytes(inode, bytes);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_unlock(&inode->i_lock);
 }
 

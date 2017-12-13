@@ -80,24 +80,17 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 	struct inode *inode = page->mapping->host;
 	struct buffer_head *bh = NULL;
 	unsigned char *symlink;
-<<<<<<< HEAD
 	int err;
-=======
-	int err = -EIO;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	unsigned char *p = kmap(page);
 	struct udf_inode_info *iinfo;
 	uint32_t pos;
 
-<<<<<<< HEAD
 	/* We don't support symlinks longer than one block */
 	if (inode->i_size > inode->i_sb->s_blocksize) {
 		err = -ENAMETOOLONG;
 		goto out_unmap;
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	iinfo = UDF_I(inode);
 	pos = udf_block_map(inode, 0);
 
@@ -107,15 +100,10 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 	} else {
 		bh = sb_bread(inode->i_sb, pos);
 
-<<<<<<< HEAD
 		if (!bh) {
 			err = -EIO;
 			goto out_unlock_inode;
 		}
-=======
-		if (!bh)
-			goto out;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		symlink = bh->b_data;
 	}
@@ -129,16 +117,10 @@ static int udf_symlink_filler(struct file *file, struct page *page)
 	unlock_page(page);
 	return 0;
 
-<<<<<<< HEAD
 out_unlock_inode:
 	up_read(&iinfo->i_data_sem);
 	SetPageError(page);
 out_unmap:
-=======
-out:
-	up_read(&iinfo->i_data_sem);
-	SetPageError(page);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	kunmap(page);
 	unlock_page(page);
 	return err;

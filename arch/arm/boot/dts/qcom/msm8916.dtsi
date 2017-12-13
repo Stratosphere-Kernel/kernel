@@ -25,11 +25,7 @@
 	interrupt-parent = <&intc>;
 
 	chosen {
-<<<<<<< HEAD
 		bootargs = "boot_cpus=0,1,2,3 sched_enable_hmp=1";
-=======
-		bootargs = "sched_enable_hmp=1";
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	};
 
 	aliases {

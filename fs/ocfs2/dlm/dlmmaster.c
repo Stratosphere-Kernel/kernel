@@ -653,18 +653,9 @@ void dlm_lockres_clear_refmap_bit(struct dlm_ctxt *dlm,
 	clear_bit(bit, res->refmap);
 }
 
-<<<<<<< HEAD
 static void __dlm_lockres_grab_inflight_ref(struct dlm_ctxt *dlm,
 				   struct dlm_lock_resource *res)
 {
-=======
-
-void dlm_lockres_grab_inflight_ref(struct dlm_ctxt *dlm,
-				   struct dlm_lock_resource *res)
-{
-	assert_spin_locked(&res->spinlock);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	res->inflight_locks++;
 
 	mlog(0, "%s: res %.*s, inflight++: now %u, %ps()\n", dlm->name,
@@ -672,7 +663,6 @@ void dlm_lockres_grab_inflight_ref(struct dlm_ctxt *dlm,
 	     __builtin_return_address(0));
 }
 
-<<<<<<< HEAD
 void dlm_lockres_grab_inflight_ref(struct dlm_ctxt *dlm,
 				   struct dlm_lock_resource *res)
 {
@@ -680,8 +670,6 @@ void dlm_lockres_grab_inflight_ref(struct dlm_ctxt *dlm,
 	__dlm_lockres_grab_inflight_ref(dlm, res);
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void dlm_lockres_drop_inflight_ref(struct dlm_ctxt *dlm,
 				   struct dlm_lock_resource *res)
 {
@@ -741,7 +729,6 @@ lookup:
 	if (tmpres) {
 		spin_unlock(&dlm->spinlock);
 		spin_lock(&tmpres->spinlock);
-<<<<<<< HEAD
 
 		/*
 		 * Right after dlm spinlock was released, dlm_thread could have
@@ -755,8 +742,6 @@ lookup:
 			goto lookup;
 		}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* Wait on the thread that is mastering the resource */
 		if (tmpres->owner == DLM_LOCK_RES_OWNER_UNKNOWN) {
 			__dlm_wait_on_lockres(tmpres);
@@ -887,15 +872,8 @@ lookup:
 	/* finally add the lockres to its hash bucket */
 	__dlm_insert_lockres(dlm, res);
 
-<<<<<<< HEAD
 	/* since this lockres is new it doesn't not require the spinlock */
 	__dlm_lockres_grab_inflight_ref(dlm, res);
-=======
-	/* Grab inflight ref to pin the resource */
-	spin_lock(&res->spinlock);
-	dlm_lockres_grab_inflight_ref(dlm, res);
-	spin_unlock(&res->spinlock);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* get an extra ref on the mle in case this is a BLOCK
 	 * if so, the creator of the BLOCK may try to put the last

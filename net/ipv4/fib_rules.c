@@ -62,13 +62,10 @@ int __fib_lookup(struct net *net, struct flowi4 *flp, struct fib_result *res)
 	else
 		res->tclassid = 0;
 #endif
-<<<<<<< HEAD
 
 	if (err == -ESRCH)
 		err = -ENETUNREACH;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return err;
 }
 EXPORT_SYMBOL_GPL(__fib_lookup);

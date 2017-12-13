@@ -326,11 +326,6 @@ static struct task_struct *dup_task_struct(struct task_struct *orig)
 	if (err)
 		goto free_ti;
 
-<<<<<<< HEAD
-=======
-	tsk->flags &= ~PF_SU;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	tsk->stack = ti;
 #ifdef CONFIG_SECCOMP
 	/*
@@ -726,12 +721,8 @@ struct mm_struct *mm_access(struct task_struct *task, unsigned int mode)
 
 	mm = get_task_mm(task);
 	if (mm && mm != current->mm &&
-<<<<<<< HEAD
 			!ptrace_may_access(task, mode) &&
 			!capable(CAP_SYS_RESOURCE)) {
-=======
-			!ptrace_may_access(task, mode)) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mmput(mm);
 		mm = ERR_PTR(-EACCES);
 	}
@@ -1526,17 +1517,6 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 		goto bad_fork_free_pid;
 	}
 
-<<<<<<< HEAD
-=======
-	if (clone_flags & CLONE_THREAD) {
-		current->signal->nr_threads++;
-		atomic_inc(&current->signal->live);
-		atomic_inc(&current->signal->sigcnt);
-		p->group_leader = current->group_leader;
-		list_add_tail_rcu(&p->thread_group, &p->group_leader->thread_group);
-	}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (likely(p->pid)) {
 		ptrace_init_task(p, (clone_flags & CLONE_PTRACE) || trace);
 
@@ -1554,15 +1534,12 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 			list_add_tail_rcu(&p->tasks, &init_task.tasks);
 			__this_cpu_inc(process_counts);
 		} else {
-<<<<<<< HEAD
 			current->signal->nr_threads++;
 			atomic_inc(&current->signal->live);
 			atomic_inc(&current->signal->sigcnt);
 			p->group_leader = current->group_leader;
 			list_add_tail_rcu(&p->thread_group,
 					  &p->group_leader->thread_group);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			list_add_tail_rcu(&p->thread_node,
 					  &p->signal->thread_head);
 		}

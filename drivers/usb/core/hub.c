@@ -888,7 +888,6 @@ static int hub_usb3_port_disable(struct usb_hub *hub, int port1)
 	if (!hub_is_superspeed(hub->hdev))
 		return -EINVAL;
 
-<<<<<<< HEAD
 	ret = hub_port_status(hub, port1, &portstatus, &portchange);
 	if (ret < 0)
 		return ret;
@@ -908,8 +907,6 @@ static int hub_usb3_port_disable(struct usb_hub *hub, int port1)
 		return ret;
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ret = hub_set_port_link_state(hub, port1, USB_SS_PORT_LS_SS_DISABLED);
 	if (ret)
 		return ret;
@@ -1183,12 +1180,8 @@ static void hub_activate(struct usb_hub *hub, enum hub_activation_type type)
 			/* Tell khubd to disconnect the device or
 			 * check for a new connection
 			 */
-<<<<<<< HEAD
 			if (udev || (portstatus & USB_PORT_STAT_CONNECTION) ||
 			    (portstatus & USB_PORT_STAT_OVERCURRENT))
-=======
-			if (udev || (portstatus & USB_PORT_STAT_CONNECTION))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				set_bit(port1, hub->change_bits);
 
 		} else if (portstatus & USB_PORT_STAT_ENABLE) {
@@ -1733,7 +1726,6 @@ static int hub_probe(struct usb_interface *intf, const struct usb_device_id *id)
 	 * - Change autosuspend delay of hub can avoid unnecessary auto
 	 *   suspend timer for hub, also may decrease power consumption
 	 *   of USB bus.
-<<<<<<< HEAD
 	 *
 	 * - If user has indicated to prevent autosuspend by passing
 	 *   usbcore.autosuspend = -1 then keep autosuspend disabled.
@@ -1742,10 +1734,6 @@ static int hub_probe(struct usb_interface *intf, const struct usb_device_id *id)
 	if (hdev->dev.power.autosuspend_delay >= 0)
 		pm_runtime_set_autosuspend_delay(&hdev->dev, 0);
 #endif
-=======
-	 */
-	pm_runtime_set_autosuspend_delay(&hdev->dev, 0);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * Hubs have proper suspend/resume support, except for root hubs
@@ -1999,15 +1987,10 @@ void usb_set_device_state(struct usb_device *udev,
 					|| new_state == USB_STATE_SUSPENDED)
 				;	/* No change to wakeup settings */
 			else if (new_state == USB_STATE_CONFIGURED)
-<<<<<<< HEAD
 				wakeup = (udev->quirks &
 					USB_QUIRK_IGNORE_REMOTE_WAKEUP) ? 0 :
 					udev->actconfig->desc.bmAttributes &
 					USB_CONFIG_ATT_WAKEUP;
-=======
-				wakeup = udev->actconfig->desc.bmAttributes
-					 & USB_CONFIG_ATT_WAKEUP;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			else
 				wakeup = 0;
 		}
@@ -3310,7 +3293,6 @@ static int finish_port_resume(struct usb_device *udev)
 }
 
 /*
-<<<<<<< HEAD
  * There are some SS USB devices which take longer time for link training.
  * XHCI specs 4.19.4 says that when Link training is successful, port
  * sets CSC bit to 1. So if SW reads port status before successful link
@@ -3348,8 +3330,6 @@ static int wait_for_ss_port_enable(struct usb_device *udev,
 }
 
 /*
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * usb_port_resume - re-activate a suspended usb device's upstream port
  * @udev: device to re-activate, not a root hub
  * Context: must be able to sleep; device not locked; pm locks held
@@ -3424,17 +3404,10 @@ int usb_port_resume(struct usb_device *udev, pm_message_t msg)
 		dev_dbg(hub->intfdev, "can't resume port %d, status %d\n",
 				port1, status);
 	} else {
-<<<<<<< HEAD
 		/* drive resume for USB_RESUME_TIMEOUT msec */
 		dev_dbg(&udev->dev, "usb %sresume\n",
 				(PMSG_IS_AUTO(msg) ? "auto-" : ""));
 		msleep(USB_RESUME_TIMEOUT);
-=======
-		/* drive resume for at least 20 msec */
-		dev_dbg(&udev->dev, "usb %sresume\n",
-				(PMSG_IS_AUTO(msg) ? "auto-" : ""));
-		msleep(25);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/* Virtual root hubs can trigger on GET_PORT_STATUS to
 		 * stop resume signaling.  Then finish the resume
@@ -3462,13 +3435,10 @@ int usb_port_resume(struct usb_device *udev, pm_message_t msg)
 
 	clear_bit(port1, hub->busy_bits);
 
-<<<<<<< HEAD
 	if (udev->persist_enabled && hub_is_superspeed(hub->hdev))
 		status = wait_for_ss_port_enable(udev, hub, &port1, &portchange,
 				&portstatus);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	status = check_port_resume_type(udev,
 			hub, port1, status, portchange, portstatus);
 	if (status == 0)

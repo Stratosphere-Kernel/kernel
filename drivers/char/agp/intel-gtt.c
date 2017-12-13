@@ -583,11 +583,7 @@ static inline int needs_ilk_vtd_wa(void)
 	/* Query intel_iommu to see if we need the workaround. Presumably that
 	 * was loaded first.
 	 */
-<<<<<<< HEAD
 	if ((gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_D_IG ||
-=======
-	if ((gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_M_HB ||
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	     gpu_devid == PCI_DEVICE_ID_INTEL_IRONLAKE_M_IG) &&
 	     intel_iommu_gfx_mapped)
 		return 1;

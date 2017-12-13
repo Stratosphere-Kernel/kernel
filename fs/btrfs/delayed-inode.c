@@ -1843,7 +1843,6 @@ int btrfs_delayed_update_inode(struct btrfs_trans_handle *trans,
 	struct btrfs_delayed_node *delayed_node;
 	int ret = 0;
 
-<<<<<<< HEAD
 	/*
 	 * we don't do delayed inode updates during log recovery because it
 	 * leads to enospc problems.  This means we also can't do
@@ -1852,8 +1851,6 @@ int btrfs_delayed_update_inode(struct btrfs_trans_handle *trans,
 	if (BTRFS_I(inode)->root->fs_info->log_root_recovering)
 		return -EAGAIN;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	delayed_node = btrfs_get_or_create_delayed_node(inode);
 	if (IS_ERR(delayed_node))
 		return PTR_ERR(delayed_node);

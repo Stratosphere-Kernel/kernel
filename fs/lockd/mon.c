@@ -159,15 +159,12 @@ static int nsm_mon_unmon(struct nsm_handle *nsm, u32 proc, struct nsm_res *res,
 
 	msg.rpc_proc = &clnt->cl_procinfo[proc];
 	status = rpc_call_sync(clnt, &msg, RPC_TASK_SOFTCONN);
-<<<<<<< HEAD
 	if (status == -ECONNREFUSED) {
 		dprintk("lockd:	NSM upcall RPC failed, status=%d, forcing rebind\n",
 				status);
 		rpc_force_rebind(clnt);
 		status = rpc_call_sync(clnt, &msg, RPC_TASK_SOFTCONN);
 	}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (status < 0)
 		dprintk("lockd: NSM upcall RPC failed, status=%d\n",
 				status);

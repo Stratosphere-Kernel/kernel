@@ -413,20 +413,12 @@ int sctp_packet_transmit(struct sctp_packet *packet)
 	sk = chunk->skb->sk;
 
 	/* Allocate the new skb.  */
-<<<<<<< HEAD
 	nskb = alloc_skb(packet->size + MAX_HEADER, GFP_ATOMIC);
-=======
-	nskb = alloc_skb(packet->size + LL_MAX_HEADER, GFP_ATOMIC);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!nskb)
 		goto nomem;
 
 	/* Make sure the outbound skb has enough header room reserved. */
-<<<<<<< HEAD
 	skb_reserve(nskb, packet->overhead + MAX_HEADER);
-=======
-	skb_reserve(nskb, packet->overhead + LL_MAX_HEADER);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Set the owning socket so that we know where to get the
 	 * destination IP address.
@@ -626,13 +618,9 @@ out:
 	return err;
 no_route:
 	kfree_skb(nskb);
-<<<<<<< HEAD
 
 	if (asoc)
 		IP_INC_STATS(sock_net(asoc->base.sk), IPSTATS_MIB_OUTNOROUTES);
-=======
-	IP_INC_STATS_BH(sock_net(asoc->base.sk), IPSTATS_MIB_OUTNOROUTES);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* FIXME: Returning the 'err' will effect all the associations
 	 * associated with a socket, although only one of the paths of the

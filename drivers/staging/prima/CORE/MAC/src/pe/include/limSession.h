@@ -353,11 +353,6 @@ typedef struct sPESession           // Added to Support BT-AMP
     tANI_BOOLEAN isCiscoVendorAP;
     /* To hold OBSS Scan IE Parameters */
     tSirOBSSHT40Param obssHT40ScanParam;
-<<<<<<< HEAD
-=======
-    /* HS 2.0 Indication */
-    tDot11fIEhs20vendor_ie hs20vendor_ie;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     /* flag to indicate country code in beacon */
     tANI_U8  countryInfoPresent;
     /*  DSCP to UP mapping for HS 2.0 */
@@ -366,13 +361,6 @@ typedef struct sPESession           // Added to Support BT-AMP
     tANI_BOOLEAN is11Gonly;
     tANI_BOOLEAN addBssfailed;
     tDot11fIEExtCap ExtCap;
-<<<<<<< HEAD
-=======
-    tDot11fIEHTCaps ht_caps;
-    tDot11fIEVHTCaps vht_caps;
-    tDot11fIEHTInfo ht_operation;
-    tDot11fIEVHTOperation vht_operation;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }tPESession, *tpPESession;
 
 #define LIM_MAX_ACTIVE_SESSIONS 4

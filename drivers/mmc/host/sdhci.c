@@ -166,11 +166,6 @@ static void sdhci_dumpregs(struct sdhci_host *host)
 		       readl(host->ioaddr + SDHCI_ADMA_ADDRESS_LOW));
 	}
 
-<<<<<<< HEAD
-=======
-	host->mmc->err_occurred = true;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (host->ops->dump_vendor_regs)
 		host->ops->dump_vendor_regs(host);
 	sdhci_dump_state(host);

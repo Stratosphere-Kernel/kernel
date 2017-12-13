@@ -75,11 +75,7 @@
 
 		uart2: serial@12200 {
 			compatible = "ns16550a";
-<<<<<<< HEAD
 			reg = <0x12200 0x100>;
-=======
-			reg = <0x12000 0x100>;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			reg-shift = <2>;
 			interrupts = <9>;
 			clocks = <&core_clk 0>;
@@ -88,11 +84,7 @@
 
 		uart3: serial@12300 {
 			compatible = "ns16550a";
-<<<<<<< HEAD
 			reg = <0x12300 0x100>;
-=======
-			reg = <0x12100 0x100>;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			reg-shift = <2>;
 			interrupts = <10>;
 			clocks = <&core_clk 0>;

@@ -93,11 +93,6 @@ module_exit(aes_fini);
 
 MODULE_DESCRIPTION("Rijndael (AES) Cipher Algorithm (ASM)");
 MODULE_LICENSE("GPL");
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("aes");
 MODULE_ALIAS_CRYPTO("aes-asm");
-=======
-MODULE_ALIAS("aes");
-MODULE_ALIAS("aes-asm");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 MODULE_AUTHOR("David McCullough <ucdevel@gmail.com>");

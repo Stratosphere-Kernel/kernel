@@ -1447,20 +1447,12 @@ extern void ieee80211_sta_ps_send_null_frame(struct ieee80211_device *ieee, shor
 
 extern const long ieee80211_wlan_frequencies[];
 
-<<<<<<< HEAD
 static inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
-=======
-extern inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	ieee->scans++;
 }
 
-<<<<<<< HEAD
 static inline int ieee80211_get_scans(struct ieee80211_device *ieee)
-=======
-extern inline int ieee80211_get_scans(struct ieee80211_device *ieee)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	return ieee->scans;
 }

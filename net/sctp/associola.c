@@ -1213,10 +1213,7 @@ void sctp_assoc_update(struct sctp_association *asoc,
 	asoc->c = new->c;
 	asoc->peer.rwnd = new->peer.rwnd;
 	asoc->peer.sack_needed = new->peer.sack_needed;
-<<<<<<< HEAD
 	asoc->peer.auth_capable = new->peer.auth_capable;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	asoc->peer.i = new->peer.i;
 	sctp_tsnmap_init(&asoc->peer.tsn_map, SCTP_TSN_MAP_INITIAL,
 			 asoc->peer.i.initial_tsn, GFP_ATOMIC);
@@ -1300,10 +1297,6 @@ void sctp_assoc_update(struct sctp_association *asoc,
 	asoc->peer.peer_hmacs = new->peer.peer_hmacs;
 	new->peer.peer_hmacs = NULL;
 
-<<<<<<< HEAD
-=======
-	sctp_auth_key_put(asoc->asoc_shared_key);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	sctp_auth_asoc_init_active_key(asoc, GFP_ATOMIC);
 }
 
@@ -1665,11 +1658,8 @@ struct sctp_chunk *sctp_assoc_lookup_asconf_ack(
 	 * ack chunk whose serial number matches that of the request.
 	 */
 	list_for_each_entry(ack, &asoc->asconf_ack_list, transmitted_list) {
-<<<<<<< HEAD
 		if (sctp_chunk_pending(ack))
 			continue;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (ack->subh.addip_hdr->serial == serial) {
 			sctp_chunk_hold(ack);
 			return ack;

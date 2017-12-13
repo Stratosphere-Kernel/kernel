@@ -97,7 +97,6 @@ config CPU_FREQ_DEFAULT_GOV_ONDEMAND
 	  governor. If unsure have a look at the help section of the
 	  driver. Fallback governor will be the performance governor.
 
-<<<<<<< HEAD
 config CPU_FREQ_DEFAULT_GOV_ELEMENTALX
 	bool "elementalx"
 	select CPU_FREQ_GOV_ELEMENTALX
@@ -105,8 +104,6 @@ config CPU_FREQ_DEFAULT_GOV_ELEMENTALX
 	help
 	  Use the CPUFreq governor 'elementalx' as default.
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
 	bool "conservative"
 	select CPU_FREQ_GOV_CONSERVATIVE
@@ -119,7 +116,6 @@ config CPU_FREQ_DEFAULT_GOV_CONSERVATIVE
 	  governor. If unsure have a look at the help section of the
 	  driver. Fallback governor will be the performance governor.
 
-<<<<<<< HEAD
 config CPU_FREQ_DEFAULT_GOV_PRESERVATIVE
 	bool "preservative"
 	select CPU_FREQ_GOV_PRESERVATIVE
@@ -128,8 +124,6 @@ config CPU_FREQ_DEFAULT_GOV_PRESERVATIVE
 	  Use the CPUFreq governor 'preservative' as default. This allows
 	  you to eat jam.
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	bool "interactive"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -139,15 +133,12 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactive' governor for latency-sensitive workloads.
 
-<<<<<<< HEAD
 config CPU_FREQ_DEFAULT_GOV_DESPAIR
 	bool "despair"
 	select CPU_FREQ_GOV_DESPAIR
 	help
 
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -205,7 +196,6 @@ config CPU_FREQ_GOV_ONDEMAND
 
 	  If in doubt, say N.
 
-<<<<<<< HEAD
 config CPU_FREQ_GOV_ELEMENTALX
 	tristate "'elementalx' cpufreq policy governor"
 	select CPU_FREQ_TABLE
@@ -219,8 +209,6 @@ config CPU_FREQ_GOV_ELEMENTALX
 
 	  If in doubt, say N.
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config CPU_FREQ_GOV_INTERACTIVE
 	tristate "'interactive' cpufreq policy governor"
 	help
@@ -262,13 +250,10 @@ config CPU_FREQ_GOV_CONSERVATIVE
 
 	  If in doubt, say N.
 
-<<<<<<< HEAD
 config CPU_FREQ_GOV_DESPAIR
 	tristate "'despair' cpufreq governor"
 	depends on CPU_FREQ
 	
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config CPU_BOOST
 	tristate "Event base short term CPU freq boost"
 	depends on CPU_FREQ
@@ -290,7 +275,6 @@ config GENERIC_CPUFREQ_CPU0
 
 	  If in doubt, say N.
 
-<<<<<<< HEAD
 config CPU_FREQ_GOV_PRESERVATIVE
 	tristate "'preservative' cpufreq governor"
 	depends on CPU_FREQ
@@ -301,8 +285,6 @@ config CPU_FREQ_GOV_PRESERVATIVE
 
 	  If not in doubt, say N.
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 menu "x86 CPU frequency scaling drivers"
 depends on X86
 source "drivers/cpufreq/Kconfig.x86"

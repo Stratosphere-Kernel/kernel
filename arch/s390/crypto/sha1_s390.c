@@ -103,10 +103,6 @@ static void __exit sha1_s390_fini(void)
 module_init(sha1_s390_init);
 module_exit(sha1_s390_fini);
 
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("sha1");
-=======
-MODULE_ALIAS("sha1");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("SHA1 Secure Hash Algorithm");

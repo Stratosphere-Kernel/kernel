@@ -126,14 +126,9 @@ static void __init of_selftest_parse_phandle_with_args(void)
 	selftest(rc == -EINVAL, "expected:%i got:%i\n", -EINVAL, rc);
 }
 
-<<<<<<< HEAD
 static void __init of_selftest_property_string(void)
 {
 	const char *strings[4];
-=======
-static void __init of_selftest_property_match_string(void)
-{
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct device_node *np;
 	int rc;
 
@@ -151,7 +146,6 @@ static void __init of_selftest_property_match_string(void)
 	rc = of_property_match_string(np, "phandle-list-names", "third");
 	selftest(rc == 2, "third expected:0 got:%i\n", rc);
 	rc = of_property_match_string(np, "phandle-list-names", "fourth");
-<<<<<<< HEAD
 	selftest(rc == -ENODATA, "unmatched string; rc=%i\n", rc);
 	rc = of_property_match_string(np, "missing-property", "blah");
 	selftest(rc == -EINVAL, "missing property; rc=%i\n", rc);
@@ -212,15 +206,6 @@ static void __init of_selftest_property_match_string(void)
 	strings[1] = NULL;
 	rc = of_property_read_string_array(np, "phandle-list-names", strings, 1);
 	selftest(rc == 1 && strings[1] == NULL, "Overwrote end of string array; rc=%i, str='%s'\n", rc, strings[1]);
-=======
-	selftest(rc == -ENODATA, "unmatched string; rc=%i", rc);
-	rc = of_property_match_string(np, "missing-property", "blah");
-	selftest(rc == -EINVAL, "missing property; rc=%i", rc);
-	rc = of_property_match_string(np, "empty-property", "blah");
-	selftest(rc == -ENODATA, "empty property; rc=%i", rc);
-	rc = of_property_match_string(np, "unterminated-string", "blah");
-	selftest(rc == -EILSEQ, "unterminated string; rc=%i", rc);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int __init of_selftest(void)
@@ -236,11 +221,7 @@ static int __init of_selftest(void)
 
 	pr_info("start of selftest - you will see error messages\n");
 	of_selftest_parse_phandle_with_args();
-<<<<<<< HEAD
 	of_selftest_property_string();
-=======
-	of_selftest_property_match_string();
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	pr_info("end of selftest - %s\n", selftest_passed ? "PASS" : "FAIL");
 	return 0;
 }

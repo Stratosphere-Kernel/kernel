@@ -213,11 +213,7 @@ void __init orion5x_init_early(void)
 		mbus_soc_name = NULL;
 	mvebu_mbus_init(mbus_soc_name, ORION5X_BRIDGE_WINS_BASE,
 			ORION5X_BRIDGE_WINS_SZ,
-<<<<<<< HEAD
 			ORION5X_DDR_WINS_BASE, ORION5X_DDR_WINS_SZ, 0);
-=======
-			ORION5X_DDR_WINS_BASE, ORION5X_DDR_WINS_SZ);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 void orion5x_setup_wins(void)

@@ -111,7 +111,6 @@ kvp_work_func(struct work_struct *dummy)
 	kvp_respond_to_host(NULL, HV_E_FAIL);
 }
 
-<<<<<<< HEAD
 static void poll_channel(struct vmbus_channel *channel)
 {
 	unsigned long flags;
@@ -121,8 +120,6 @@ static void poll_channel(struct vmbus_channel *channel)
 	spin_unlock_irqrestore(&channel->inbound_lock, flags);
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int kvp_handle_handshake(struct hv_kvp_msg *msg)
 {
 	int ret = 1;
@@ -151,11 +148,7 @@ static int kvp_handle_handshake(struct hv_kvp_msg *msg)
 		kvp_register(dm_reg_value);
 		kvp_transaction.active = false;
 		if (kvp_transaction.kvp_context)
-<<<<<<< HEAD
 			poll_channel(kvp_transaction.kvp_context);
-=======
-			hv_kvp_onchannelcallback(kvp_transaction.kvp_context);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	return ret;
 }
@@ -568,10 +561,7 @@ response_done:
 
 	vmbus_sendpacket(channel, recv_buffer, buf_len, req_id,
 				VM_PKT_DATA_INBAND, 0);
-<<<<<<< HEAD
 	poll_channel(channel);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 }
 
@@ -605,11 +595,7 @@ void hv_kvp_onchannelcallback(void *context)
 		return;
 	}
 
-<<<<<<< HEAD
 	vmbus_recvpacket(channel, recv_buffer, PAGE_SIZE * 4, &recvlen,
-=======
-	vmbus_recvpacket(channel, recv_buffer, PAGE_SIZE * 2, &recvlen,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			 &requestid);
 
 	if (recvlen > 0) {

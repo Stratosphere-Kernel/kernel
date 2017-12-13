@@ -463,7 +463,6 @@ static void octeon_halt(void)
 	octeon_kill_core(NULL);
 }
 
-<<<<<<< HEAD
 static char __read_mostly octeon_system_type[80];
 
 static int __init init_octeon_system_type(void)
@@ -476,8 +475,6 @@ static int __init init_octeon_system_type(void)
 }
 early_initcall(init_octeon_system_type);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * Handle all the error condition interrupts that might occur.
  *
@@ -497,15 +494,7 @@ static irqreturn_t octeon_rlm_interrupt(int cpl, void *dev_id)
  */
 const char *octeon_board_type_string(void)
 {
-<<<<<<< HEAD
 	return octeon_system_type;
-=======
-	static char name[80];
-	sprintf(name, "%s (%s)",
-		cvmx_board_type_to_string(octeon_bootinfo->board_type),
-		octeon_model_get_string(read_c0_prid()));
-	return name;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 const char *get_system_type(void)

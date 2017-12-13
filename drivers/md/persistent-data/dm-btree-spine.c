@@ -92,11 +92,7 @@ struct dm_block_validator btree_node_validator = {
 
 /*----------------------------------------------------------------*/
 
-<<<<<<< HEAD
 int bn_read_lock(struct dm_btree_info *info, dm_block_t b,
-=======
-static int bn_read_lock(struct dm_btree_info *info, dm_block_t b,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		 struct dm_block **result)
 {
 	return dm_tm_read_lock(info->tm, b, &btree_node_validator, result);

@@ -1661,7 +1661,6 @@ xfs_vm_readpages(
 	return mpage_readpages(mapping, pages, nr_pages, xfs_get_blocks);
 }
 
-<<<<<<< HEAD
 /*
  * This is basically a copy of __set_page_dirty_buffers() with one
  * small tweak: buffers beyond EOF do not get marked dirty. If we mark them
@@ -1722,17 +1721,12 @@ xfs_vm_set_page_dirty(
 	return newly_dirty;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 const struct address_space_operations xfs_address_space_operations = {
 	.readpage		= xfs_vm_readpage,
 	.readpages		= xfs_vm_readpages,
 	.writepage		= xfs_vm_writepage,
 	.writepages		= xfs_vm_writepages,
-<<<<<<< HEAD
 	.set_page_dirty		= xfs_vm_set_page_dirty,
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.releasepage		= xfs_vm_releasepage,
 	.invalidatepage		= xfs_vm_invalidatepage,
 	.write_begin		= xfs_vm_write_begin,

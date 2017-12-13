@@ -424,12 +424,9 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 	struct print_entry *entry;
 	unsigned long irq_flags;
 	int alloc;
-<<<<<<< HEAD
 	int pc;
 
 	pc = preempt_count();
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (unlikely(tracing_selftest_running || tracing_disabled))
 		return 0;
@@ -439,11 +436,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 	local_save_flags(irq_flags);
 	buffer = global_trace.trace_buffer.buffer;
 	event = trace_buffer_lock_reserve(buffer, TRACE_PRINT, alloc, 
-<<<<<<< HEAD
 					  irq_flags, pc);
-=======
-					  irq_flags, preempt_count());
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!event)
 		return 0;
 
@@ -463,10 +456,7 @@ int __trace_puts(unsigned long ip, const char *str, int size)
 	}
 
 	__buffer_unlock_commit(buffer, event);
-<<<<<<< HEAD
 	ftrace_trace_stack(buffer, irq_flags, 4, pc);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return size;
 }
@@ -484,12 +474,9 @@ int __trace_bputs(unsigned long ip, const char *str)
 	struct bputs_entry *entry;
 	unsigned long irq_flags;
 	int size = sizeof(struct bputs_entry);
-<<<<<<< HEAD
 	int pc;
 
 	pc = preempt_count();
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (unlikely(tracing_selftest_running || tracing_disabled))
 		return 0;
@@ -497,11 +484,7 @@ int __trace_bputs(unsigned long ip, const char *str)
 	local_save_flags(irq_flags);
 	buffer = global_trace.trace_buffer.buffer;
 	event = trace_buffer_lock_reserve(buffer, TRACE_BPUTS, size,
-<<<<<<< HEAD
 					  irq_flags, pc);
-=======
-					  irq_flags, preempt_count());
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!event)
 		return 0;
 
@@ -511,10 +494,7 @@ int __trace_bputs(unsigned long ip, const char *str)
 	stm_log(OST_ENTITY_TRACE_PRINTK, entry->str, strlen(entry->str)+1);
 
 	__buffer_unlock_commit(buffer, event);
-<<<<<<< HEAD
 	ftrace_trace_stack(buffer, irq_flags, 4, pc);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 1;
 }
@@ -766,11 +746,7 @@ static struct {
 	{ trace_clock_local,	"local",	1 },
 	{ trace_clock_global,	"global",	1 },
 	{ trace_clock_counter,	"counter",	0 },
-<<<<<<< HEAD
 	{ trace_clock_jiffies,	"uptime",	0 },
-=======
-	{ trace_clock_jiffies,	"uptime",	1 },
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	{ trace_clock,		"perf",		1 },
 	ARCH_TRACE_CLOCKS
 };
@@ -6097,11 +6073,7 @@ static int instance_mkdir (struct inode *inode, struct dentry *dentry, umode_t m
 	int ret;
 
 	/* Paranoid: Make sure the parent is the "instances" directory */
-<<<<<<< HEAD
 	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_u.d_alias);
-=======
-	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (WARN_ON_ONCE(parent != trace_instance_dir))
 		return -ENOENT;
 
@@ -6128,11 +6100,7 @@ static int instance_rmdir(struct inode *inode, struct dentry *dentry)
 	int ret;
 
 	/* Paranoid: Make sure the parent is the "instances" directory */
-<<<<<<< HEAD
 	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_u.d_alias);
-=======
-	parent = hlist_entry(inode->i_dentry.first, struct dentry, d_alias);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (WARN_ON_ONCE(parent != trace_instance_dir))
 		return -ENOENT;
 

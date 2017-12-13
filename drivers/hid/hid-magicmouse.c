@@ -290,14 +290,11 @@ static int magicmouse_raw_event(struct hid_device *hdev,
 		if (size < 4 || ((size - 4) % 9) != 0)
 			return 0;
 		npoints = (size - 4) / 9;
-<<<<<<< HEAD
 		if (npoints > 15) {
 			hid_warn(hdev, "invalid size value (%d) for TRACKPAD_REPORT_ID\n",
 					size);
 			return 0;
 		}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		msc->ntouches = 0;
 		for (ii = 0; ii < npoints; ii++)
 			magicmouse_emit_touch(msc, ii, data + ii * 9 + 4);
@@ -315,14 +312,11 @@ static int magicmouse_raw_event(struct hid_device *hdev,
 		if (size < 6 || ((size - 6) % 8) != 0)
 			return 0;
 		npoints = (size - 6) / 8;
-<<<<<<< HEAD
 		if (npoints > 15) {
 			hid_warn(hdev, "invalid size value (%d) for MOUSE_REPORT_ID\n",
 					size);
 			return 0;
 		}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		msc->ntouches = 0;
 		for (ii = 0; ii < npoints; ii++)
 			magicmouse_emit_touch(msc, ii, data + ii * 8 + 6);

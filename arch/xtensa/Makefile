@@ -55,17 +55,10 @@ ifneq ($(CONFIG_LD_NO_RELAX),)
 LDFLAGS := --no-relax
 endif
 
-<<<<<<< HEAD
 ifeq ($(shell echo __XTENSA_EB__ | $(CC) -E - | grep -v "\#"),1)
 CHECKFLAGS += -D__XTENSA_EB__
 endif
 ifeq ($(shell echo __XTENSA_EL__ | $(CC) -E - | grep -v "\#"),1)
-=======
-ifeq ($(shell echo -e __XTENSA_EB__ | $(CC) -E - | grep -v "\#"),1)
-CHECKFLAGS += -D__XTENSA_EB__
-endif
-ifeq ($(shell echo -e __XTENSA_EL__ | $(CC) -E - | grep -v "\#"),1)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 CHECKFLAGS += -D__XTENSA_EL__
 endif
 

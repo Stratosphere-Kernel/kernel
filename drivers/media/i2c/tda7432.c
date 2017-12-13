@@ -293,11 +293,7 @@ static int tda7432_s_ctrl(struct v4l2_ctrl *ctrl)
 		if (t->mute->val) {
 			lf |= TDA7432_MUTE;
 			lr |= TDA7432_MUTE;
-<<<<<<< HEAD
 			rf |= TDA7432_MUTE;
-=======
-			lf |= TDA7432_MUTE;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			rr |= TDA7432_MUTE;
 		}
 		/* Mute & update balance*/

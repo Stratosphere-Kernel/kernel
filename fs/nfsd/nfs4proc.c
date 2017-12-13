@@ -1191,12 +1191,8 @@ static bool need_wrongsec_check(struct svc_rqst *rqstp)
 	 */
 	if (argp->opcnt == resp->opcnt)
 		return false;
-<<<<<<< HEAD
 	if (next->opnum == OP_ILLEGAL)
 		return false;
-=======
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	nextd = OPDESC(next);
 	/*
 	 * Rest of 2.6.3.1.1: certain operations will return WRONGSEC

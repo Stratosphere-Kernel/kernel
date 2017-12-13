@@ -85,10 +85,6 @@ struct cpuset {
 
 	unsigned long flags;		/* "unsigned long" so bitops work */
 	cpumask_var_t cpus_allowed;	/* CPUs allowed to tasks in cpuset */
-<<<<<<< HEAD
-=======
-	cpumask_var_t cpus_requested;   /* CPUS requested, but not used because of hotplug */
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	nodemask_t mems_allowed;	/* Memory Nodes allowed to tasks */
 
 	struct fmeter fmeter;		/* memory_pressure filter */
@@ -385,11 +381,7 @@ static void cpuset_update_task_spread_flag(struct cpuset *cs,
 
 static int is_cpuset_subset(const struct cpuset *p, const struct cpuset *q)
 {
-<<<<<<< HEAD
 	return	cpumask_subset(p->cpus_allowed, q->cpus_allowed) &&
-=======
-	return	cpumask_subset(p->cpus_requested, q->cpus_requested) &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		nodes_subset(p->mems_allowed, q->mems_allowed) &&
 		is_cpu_exclusive(p) <= is_cpu_exclusive(q) &&
 		is_mem_exclusive(p) <= is_mem_exclusive(q);
@@ -480,11 +472,7 @@ static int validate_change(const struct cpuset *cur, const struct cpuset *trial)
 	cpuset_for_each_child(c, cont, par) {
 		if ((is_cpu_exclusive(trial) || is_cpu_exclusive(c)) &&
 		    c != cur &&
-<<<<<<< HEAD
 		    cpumask_intersects(trial->cpus_allowed, c->cpus_allowed))
-=======
-		    cpumask_intersects(trial->cpus_requested, c->cpus_requested))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			goto out;
 		if ((is_mem_exclusive(trial) || is_mem_exclusive(c)) &&
 		    c != cur &&
@@ -893,34 +881,19 @@ static int update_cpumask(struct cpuset *cs, struct cpuset *trialcs,
 	if (!*buf) {
 		cpumask_clear(trialcs->cpus_allowed);
 	} else {
-<<<<<<< HEAD
 		retval = cpulist_parse(buf, trialcs->cpus_allowed);
 		if (retval < 0)
 			return retval;
 
 		if (!cpumask_subset(trialcs->cpus_allowed, cpu_active_mask))
 			return -EINVAL;
-=======
-		retval = cpulist_parse(buf, trialcs->cpus_requested);
-		if (retval < 0)
-			return retval;
-
-		if (!cpumask_subset(trialcs->cpus_requested, cpu_present_mask))
-			return -EINVAL;
-
-		cpumask_and(trialcs->cpus_allowed, trialcs->cpus_requested, cpu_active_mask);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	retval = validate_change(cs, trialcs);
 	if (retval < 0)
 		return retval;
 
 	/* Nothing to do if the cpus didn't change */
-<<<<<<< HEAD
 	if (cpumask_equal(cs->cpus_allowed, trialcs->cpus_allowed))
-=======
-	if (cpumask_equal(cs->cpus_requested, trialcs->cpus_requested))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return 0;
 
 	retval = heap_init(&heap, PAGE_SIZE, GFP_KERNEL, NULL);
@@ -931,10 +904,6 @@ static int update_cpumask(struct cpuset *cs, struct cpuset *trialcs,
 
 	mutex_lock(&callback_mutex);
 	cpumask_copy(cs->cpus_allowed, trialcs->cpus_allowed);
-<<<<<<< HEAD
-=======
-	cpumask_copy(cs->cpus_requested, trialcs->cpus_requested);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mutex_unlock(&callback_mutex);
 
 	/*
@@ -1446,26 +1415,6 @@ out_unlock:
 	return ret;
 }
 
-<<<<<<< HEAD
-=======
-static int cpuset_allow_attach(struct cgroup *cgrp,
-			       struct cgroup_taskset *tset)
-{
-	const struct cred *cred = current_cred(), *tcred;
-	struct task_struct *task;
-
-	cgroup_taskset_for_each(task, cgrp, tset) {
-		tcred = __task_cred(task);
-
-		if ((current != task) && !capable(CAP_SYS_ADMIN) &&
-		    cred->euid != tcred->uid && cred->euid != tcred->suid)
-			return -EACCES;
-	}
-
-	return 0;
-}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void cpuset_cancel_attach(struct cgroup *cgrp,
 				 struct cgroup_taskset *tset)
 {
@@ -1704,11 +1653,7 @@ static size_t cpuset_sprintf_cpulist(char *page, struct cpuset *cs)
 	size_t count;
 
 	mutex_lock(&callback_mutex);
-<<<<<<< HEAD
 	count = cpulist_scnprintf(page, PAGE_SIZE, cs->cpus_allowed);
-=======
-	count = cpulist_scnprintf(page, PAGE_SIZE, cs->cpus_requested);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mutex_unlock(&callback_mutex);
 
 	return count;
@@ -1919,7 +1864,6 @@ static struct cgroup_subsys_state *cpuset_css_alloc(struct cgroup *cont)
 	cs = kzalloc(sizeof(*cs), GFP_KERNEL);
 	if (!cs)
 		return ERR_PTR(-ENOMEM);
-<<<<<<< HEAD
 	if (!alloc_cpumask_var(&cs->cpus_allowed, GFP_KERNEL)) {
 		kfree(cs);
 		return ERR_PTR(-ENOMEM);
@@ -1927,31 +1871,12 @@ static struct cgroup_subsys_state *cpuset_css_alloc(struct cgroup *cont)
 
 	set_bit(CS_SCHED_LOAD_BALANCE, &cs->flags);
 	cpumask_clear(cs->cpus_allowed);
-=======
-	if (!alloc_cpumask_var(&cs->cpus_allowed, GFP_KERNEL))
-		goto error_allowed;
-	if (!alloc_cpumask_var(&cs->cpus_requested, GFP_KERNEL))
-		goto error_requested;
-
-	set_bit(CS_SCHED_LOAD_BALANCE, &cs->flags);
-	cpumask_clear(cs->cpus_allowed);
-	cpumask_clear(cs->cpus_requested);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	nodes_clear(cs->mems_allowed);
 	fmeter_init(&cs->fmeter);
 	INIT_WORK(&cs->hotplug_work, cpuset_propagate_hotplug_workfn);
 	cs->relax_domain_level = -1;
 
 	return &cs->css;
-<<<<<<< HEAD
-=======
-
-error_requested:
-	free_cpumask_var(cs->cpus_allowed);
-error_allowed:
-	kfree(cs);
-	return ERR_PTR(-ENOMEM);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int cpuset_css_online(struct cgroup *cgrp)
@@ -2002,10 +1927,6 @@ static int cpuset_css_online(struct cgroup *cgrp)
 	mutex_lock(&callback_mutex);
 	cs->mems_allowed = parent->mems_allowed;
 	cpumask_copy(cs->cpus_allowed, parent->cpus_allowed);
-<<<<<<< HEAD
-=======
-	cpumask_copy(cs->cpus_requested, parent->cpus_requested);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mutex_unlock(&callback_mutex);
 out_unlock:
 	mutex_unlock(&cpuset_mutex);
@@ -2038,10 +1959,6 @@ static void cpuset_css_free(struct cgroup *cont)
 	struct cpuset *cs = cgroup_cs(cont);
 
 	free_cpumask_var(cs->cpus_allowed);
-<<<<<<< HEAD
-=======
-	free_cpumask_var(cs->cpus_requested);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	kfree(cs);
 }
 
@@ -2052,10 +1969,6 @@ struct cgroup_subsys cpuset_subsys = {
 	.css_offline = cpuset_css_offline,
 	.css_free = cpuset_css_free,
 	.can_attach = cpuset_can_attach,
-<<<<<<< HEAD
-=======
-	.allow_attach = cpuset_allow_attach,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.cancel_attach = cpuset_cancel_attach,
 	.attach = cpuset_attach,
 	.subsys_id = cpuset_subsys_id,
@@ -2075,16 +1988,8 @@ int __init cpuset_init(void)
 
 	if (!alloc_cpumask_var(&top_cpuset.cpus_allowed, GFP_KERNEL))
 		BUG();
-<<<<<<< HEAD
 
 	cpumask_setall(top_cpuset.cpus_allowed);
-=======
-	if (!alloc_cpumask_var(&top_cpuset.cpus_requested, GFP_KERNEL))
-		BUG();
-
-	cpumask_setall(top_cpuset.cpus_allowed);
-	cpumask_setall(top_cpuset.cpus_requested);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	nodes_setall(top_cpuset.mems_allowed);
 
 	fmeter_init(&top_cpuset.fmeter);
@@ -2140,18 +2045,13 @@ static void remove_tasks_in_empty_cpuset(struct cpuset *cs)
  */
 static void cpuset_propagate_hotplug_workfn(struct work_struct *work)
 {
-<<<<<<< HEAD
 	static cpumask_t off_cpus;
-=======
-	static cpumask_t diff, new_allowed;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	static nodemask_t off_mems, tmp_mems;
 	struct cpuset *cs = container_of(work, struct cpuset, hotplug_work);
 	bool is_empty;
 
 	mutex_lock(&cpuset_mutex);
 
-<<<<<<< HEAD
 	cpumask_andnot(&off_cpus, cs->cpus_allowed, top_cpuset.cpus_allowed);
 	nodes_andnot(off_mems, cs->mems_allowed, top_cpuset.mems_allowed);
 
@@ -2159,17 +2059,6 @@ static void cpuset_propagate_hotplug_workfn(struct work_struct *work)
 	if (!cpumask_empty(&off_cpus)) {
 		mutex_lock(&callback_mutex);
 		cpumask_andnot(cs->cpus_allowed, cs->cpus_allowed, &off_cpus);
-=======
-	cpumask_and(&new_allowed, cs->cpus_requested, top_cpuset.cpus_allowed);
-	cpumask_xor(&diff, &new_allowed, cs->cpus_allowed);
-
-	nodes_andnot(off_mems, cs->mems_allowed, top_cpuset.mems_allowed);
-
-	/* remove offline cpus from @cs */
-	if (!cpumask_empty(&diff)) {
-		mutex_lock(&callback_mutex);
-		cpumask_copy(cs->cpus_allowed, &new_allowed);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mutex_unlock(&callback_mutex);
 		update_tasks_cpumask(cs, NULL);
 	}
@@ -2280,11 +2169,7 @@ static void cpuset_hotplug_workfn(struct work_struct *work)
 	}
 
 	/* if cpus or mems went down, we need to propagate to descendants */
-<<<<<<< HEAD
 	if (cpus_offlined || mems_offlined) {
-=======
-	if (cpus_updated || mems_updated) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		struct cpuset *cs;
 		struct cgroup *pos_cgrp;
 

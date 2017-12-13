@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
-=======
-/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -79,10 +75,6 @@ static struct rtac_apr_data	rtac_voice_apr_data[RTAC_VOICE_MODES];
 struct rtac_popp_data {
 	uint32_t	popp;
 	uint32_t	popp_topology;
-<<<<<<< HEAD
-=======
-	uint32_t	app_type;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 struct rtac_adm_data {
@@ -384,11 +376,7 @@ done:
 
 
 /* ADM Info */
-<<<<<<< HEAD
 void add_popp(u32 dev_idx, u32 port_id, u32 popp_id)
-=======
-void add_popp(u32 dev_idx, u32 port_id, u32 popp_id, u32 app_type)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	u32 i = 0;
 
@@ -404,16 +392,8 @@ void add_popp(u32 dev_idx, u32 port_id, u32 popp_id, u32 app_type)
 	rtac_adm_data.device[dev_idx].popp[
 		rtac_adm_data.device[dev_idx].num_of_popp].popp = popp_id;
 	rtac_adm_data.device[dev_idx].popp[
-<<<<<<< HEAD
 		rtac_adm_data.device[dev_idx].num_of_popp++].popp_topology =
 		q6asm_get_asm_topology();
-=======
-		rtac_adm_data.device[dev_idx].num_of_popp].popp_topology =
-		q6asm_get_asm_topology();
-	rtac_adm_data.device[dev_idx].popp[
-		rtac_adm_data.device[dev_idx].num_of_popp++].app_type =
-		app_type;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 done:
 	return;
 }
@@ -436,11 +416,7 @@ void rtac_add_adm_device(u32 port_id, u32 copp_id, u32 path_id, u32 popp_id,
 		for (; i < rtac_adm_data.num_of_dev; i++) {
 			if (rtac_adm_data.device[i].afe_port == port_id &&
 			    rtac_adm_data.device[i].copp == copp_id) {
-<<<<<<< HEAD
 				add_popp(i, port_id, popp_id);
-=======
-				add_popp(i, port_id, popp_id, app_type);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				goto done;
 			}
 			if (rtac_adm_data.device[i].num_of_popp ==
@@ -463,15 +439,8 @@ void rtac_add_adm_device(u32 port_id, u32 copp_id, u32 path_id, u32 popp_id,
 	rtac_adm_data.device[i].popp[
 		rtac_adm_data.device[i].num_of_popp].popp = popp_id;
 	rtac_adm_data.device[i].popp[
-<<<<<<< HEAD
 		rtac_adm_data.device[i].num_of_popp++].popp_topology =
 		q6asm_get_asm_topology();
-=======
-		rtac_adm_data.device[i].num_of_popp].popp_topology =
-		q6asm_get_asm_topology();
-	rtac_adm_data.device[i].popp[
-		rtac_adm_data.device[i].num_of_popp++].app_type = app_type;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 done:
 	mutex_unlock(&rtac_adm_mutex);
 	return;
@@ -500,21 +469,10 @@ static void shift_popp(u32 copp_idx, u32 popp_idx)
 			&rtac_adm_data.device[copp_idx].popp[popp_idx + 1].
 			popp_topology,
 			sizeof(uint32_t));
-<<<<<<< HEAD
-=======
-		memcpy(&rtac_adm_data.device[copp_idx].popp[popp_idx].app_type,
-			&rtac_adm_data.device[copp_idx].popp[popp_idx + 1].
-			app_type, sizeof(uint32_t));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		memset(&rtac_adm_data.device[copp_idx].popp[popp_idx + 1].
 			popp, 0, sizeof(uint32_t));
 		memset(&rtac_adm_data.device[copp_idx].popp[popp_idx + 1].
 			popp_topology, 0, sizeof(uint32_t));
-<<<<<<< HEAD
-=======
-		memset(&rtac_adm_data.device[copp_idx].popp[popp_idx + 1].
-			app_type, 0, sizeof(uint32_t));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 }
 
@@ -556,12 +514,6 @@ void rtac_remove_popp_from_adm_devices(u32 popp_id)
 				rtac_adm_data.device[i].popp[j].popp = 0;
 				rtac_adm_data.device[i].popp[j].
 					popp_topology = 0;
-<<<<<<< HEAD
-=======
-				rtac_adm_data.device[i].popp[j].
-					app_type = 0;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				rtac_adm_data.device[i].num_of_popp--;
 				shift_popp(i, j);
 			}
@@ -888,17 +840,6 @@ u32 send_adm_apr(void *buf, u32 opcode)
 		bytes_returned = ((u32 *)rtac_cal[ADM_RTAC_CAL].cal_data.
 			kvaddr)[2] + 3 * sizeof(u32);
 
-<<<<<<< HEAD
-=======
-		if (bytes_returned > rtac_cal[ADM_RTAC_CAL].
-			map_data.map_size) {
-			pr_err("%s: Invalid data size = %d\n",
-				__func__, bytes_returned);
-			result = -EINVAL;
-			goto err;
-		}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (bytes_returned > user_buf_size) {
 			pr_err("%s: User buf not big enough, size = 0x%x, returned size = 0x%x\n",
 				__func__, user_buf_size, bytes_returned);
@@ -1107,17 +1048,6 @@ u32 send_rtac_asm_apr(void *buf, u32 opcode)
 		bytes_returned = ((u32 *)rtac_cal[ASM_RTAC_CAL].cal_data.
 			kvaddr)[2] + 3 * sizeof(u32);
 
-<<<<<<< HEAD
-=======
-		if (bytes_returned > rtac_cal[ASM_RTAC_CAL].
-			map_data.map_size) {
-			pr_err("%s: Invalid data size = %d\n",
-				__func__, bytes_returned);
-			result = -EINVAL;
-			goto err;
-		}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (bytes_returned > user_buf_size) {
 			pr_err("%s: User buf not big enough, size = 0x%x, returned size = 0x%x\n",
 				__func__, user_buf_size, bytes_returned);
@@ -1361,17 +1291,6 @@ static u32 send_rtac_afe_apr(void *buf, uint32_t opcode)
 		bytes_returned = get_resp->param_size +
 				sizeof(struct afe_port_param_data_v2);
 
-<<<<<<< HEAD
-=======
-		if (bytes_returned > rtac_cal[AFE_RTAC_CAL].
-			map_data.map_size) {
-			pr_err("%s: Invalid data size = %d\n",
-				__func__, bytes_returned);
-			result = -EINVAL;
-			goto err;
-		}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (bytes_returned > user_afe_buf.buf_size) {
 			pr_err("%s: user size = 0x%x, returned size = 0x%x\n",
 				__func__, user_afe_buf.buf_size,
@@ -1580,17 +1499,6 @@ u32 send_voice_apr(u32 mode, void *buf, u32 opcode)
 		bytes_returned = ((u32 *)rtac_cal[VOICE_RTAC_CAL].cal_data.
 			kvaddr)[2] + 3 * sizeof(u32);
 
-<<<<<<< HEAD
-=======
-		if (bytes_returned > rtac_cal[VOICE_RTAC_CAL].
-			map_data.map_size) {
-			pr_err("%s: Invalid data size = %d\n",
-				__func__, bytes_returned);
-			result = -EINVAL;
-			goto err;
-		}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (bytes_returned > user_buf_size) {
 			pr_err("%s: User buf not big enough, size = 0x%x, returned size = 0x%x\n",
 				__func__, user_buf_size, bytes_returned);

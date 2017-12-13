@@ -1037,17 +1037,10 @@ int se_dev_set_optimal_sectors(struct se_device *dev, u32 optimal_sectors)
 				" changed for TCM/pSCSI\n", dev);
 		return -EINVAL;
 	}
-<<<<<<< HEAD
 	if (optimal_sectors > dev->dev_attrib.hw_max_sectors) {
 		pr_err("dev[%p]: Passed optimal_sectors %u cannot be"
 			" greater than hw_max_sectors: %u\n", dev,
 			optimal_sectors, dev->dev_attrib.hw_max_sectors);
-=======
-	if (optimal_sectors > dev->dev_attrib.fabric_max_sectors) {
-		pr_err("dev[%p]: Passed optimal_sectors %u cannot be"
-			" greater than fabric_max_sectors: %u\n", dev,
-			optimal_sectors, dev->dev_attrib.fabric_max_sectors);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 	}
 
@@ -1300,12 +1293,8 @@ int core_dev_add_initiator_node_lun_acl(
 	 * Check to see if there are any existing persistent reservation APTPL
 	 * pre-registrations that need to be enabled for this LUN ACL..
 	 */
-<<<<<<< HEAD
 	core_scsi3_check_aptpl_registration(lun->lun_se_dev, tpg, lun, nacl,
 					    lacl->mapped_lun);
-=======
-	core_scsi3_check_aptpl_registration(lun->lun_se_dev, tpg, lun, lacl);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
@@ -1453,10 +1442,6 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
 				DA_UNMAP_GRANULARITY_ALIGNMENT_DEFAULT;
 	dev->dev_attrib.max_write_same_len = DA_MAX_WRITE_SAME_LEN;
 	dev->dev_attrib.fabric_max_sectors = DA_FABRIC_MAX_SECTORS;
-<<<<<<< HEAD
-=======
-	dev->dev_attrib.optimal_sectors = DA_FABRIC_MAX_SECTORS;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return dev;
 }
@@ -1489,10 +1474,7 @@ int target_configure_device(struct se_device *dev)
 	dev->dev_attrib.hw_max_sectors =
 		se_dev_align_max_sectors(dev->dev_attrib.hw_max_sectors,
 					 dev->dev_attrib.hw_block_size);
-<<<<<<< HEAD
 	dev->dev_attrib.optimal_sectors = dev->dev_attrib.hw_max_sectors;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	dev->dev_index = scsi_get_new_index(SCSI_DEVICE_INDEX);
 	dev->creation_time = get_jiffies_64();

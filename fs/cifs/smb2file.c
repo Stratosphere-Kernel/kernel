@@ -73,11 +73,7 @@ smb2_open_file(const unsigned int xid, struct cifs_tcon *tcon, const char *path,
 		goto out;
 	}
 
-<<<<<<< HEAD
 	smb2_data = kzalloc(sizeof(struct smb2_file_all_info) + PATH_MAX * 2,
-=======
-	smb2_data = kzalloc(sizeof(struct smb2_file_all_info) + MAX_NAME * 2,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			    GFP_KERNEL);
 	if (smb2_data == NULL) {
 		rc = -ENOMEM;

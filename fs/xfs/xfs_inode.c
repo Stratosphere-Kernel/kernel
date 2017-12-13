@@ -1655,10 +1655,7 @@ xfs_iunlink(
 	agi->agi_unlinked[bucket_index] = cpu_to_be32(agino);
 	offset = offsetof(xfs_agi_t, agi_unlinked) +
 		(sizeof(xfs_agino_t) * bucket_index);
-<<<<<<< HEAD
 	xfs_trans_buf_set_type(tp, agibp, XFS_BLFT_AGI_BUF);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	xfs_trans_log_buf(tp, agibp, offset,
 			  (offset + sizeof(xfs_agino_t) - 1));
 	return 0;
@@ -1750,10 +1747,7 @@ xfs_iunlink_remove(
 		agi->agi_unlinked[bucket_index] = cpu_to_be32(next_agino);
 		offset = offsetof(xfs_agi_t, agi_unlinked) +
 			(sizeof(xfs_agino_t) * bucket_index);
-<<<<<<< HEAD
 		xfs_trans_buf_set_type(tp, agibp, XFS_BLFT_AGI_BUF);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		xfs_trans_log_buf(tp, agibp, offset,
 				  (offset + sizeof(xfs_agino_t) - 1));
 	} else {

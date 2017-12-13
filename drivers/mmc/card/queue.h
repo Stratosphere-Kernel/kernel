@@ -80,10 +80,7 @@ extern void mmc_queue_bounce_post(struct mmc_queue_req *);
 extern int mmc_packed_init(struct mmc_queue *, struct mmc_card *);
 extern void mmc_packed_clean(struct mmc_queue *);
 
-<<<<<<< HEAD
 extern int mmc_access_rpmb(struct mmc_queue *);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 extern void print_mmc_packing_stats(struct mmc_card *card);
 
 #endif

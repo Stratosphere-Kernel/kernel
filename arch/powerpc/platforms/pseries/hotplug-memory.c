@@ -158,11 +158,7 @@ static int pseries_remove_memory(struct device_node *np)
 static inline int pseries_remove_memblock(unsigned long base,
 					  unsigned int memblock_size)
 {
-<<<<<<< HEAD
 	return 0;
-=======
-	return -EOPNOTSUPP;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 static inline int pseries_remove_memory(struct device_node *np)
 {

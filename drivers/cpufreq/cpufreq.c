@@ -28,10 +28,7 @@
 #include <linux/slab.h>
 #include <linux/syscore_ops.h>
 #include <linux/tick.h>
-<<<<<<< HEAD
 #include <linux/pm_opp.h>
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <trace/events/power.h>
 
 /**
@@ -343,20 +340,6 @@ void cpufreq_notify_transition(struct cpufreq_policy *policy,
 }
 EXPORT_SYMBOL_GPL(cpufreq_notify_transition);
 
-<<<<<<< HEAD
-=======
-/**
-cpufreq_notify_utilization - notify CPU userspace about CPU utilization change
-This function is called everytime the CPU load is evaluated by the ondemand governor. 
-It notifies userspace of cpu load changes via sysfs.
-*/
-void cpufreq_notify_utilization(struct cpufreq_policy *policy,
- unsigned int util)
-{
- if (policy)
- policy->util = util;
-}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*********************************************************************
  *                          SYSFS INTERFACE                          *
@@ -653,7 +636,6 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 	return sprintf(buf, "%u\n", policy->cpuinfo.max_freq);
 }
 
-<<<<<<< HEAD
 #ifdef CONFIG_ARCH_MSM8916
 extern ssize_t cpu_clock_get_vdd(char *buf);
 extern ssize_t cpu_clock_set_vdd(const char *buf, size_t count);
@@ -670,8 +652,6 @@ static ssize_t store_UV_mV_table(struct cpufreq_policy *policy,
 }
 #endif
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
 cpufreq_freq_attr_ro(cpuinfo_max_freq);
@@ -686,12 +666,9 @@ cpufreq_freq_attr_rw(scaling_min_freq);
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
-<<<<<<< HEAD
 #ifdef CONFIG_ARCH_MSM8916
 cpufreq_freq_attr_rw(UV_mV_table);
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static struct attribute *default_attrs[] = {
 	&cpuinfo_min_freq.attr,
@@ -705,12 +682,9 @@ static struct attribute *default_attrs[] = {
 	&scaling_driver.attr,
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
-<<<<<<< HEAD
 #ifdef CONFIG_ARCH_MSM8916
 	&UV_mV_table.attr,
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	NULL
 };
 
@@ -1462,23 +1436,6 @@ static void cpufreq_out_of_sync(unsigned int cpu, unsigned int old_freq,
 	cpufreq_notify_transition(policy, &freqs, CPUFREQ_POSTCHANGE);
 }
 
-<<<<<<< HEAD
-=======
-unsigned int cpufreq_quick_get_util(unsigned int cpu)
-{
- struct cpufreq_policy *policy = cpufreq_cpu_get(cpu);
- unsigned int ret_util = 0;
-
- if (policy) {
- ret_util = policy->util;
- cpufreq_cpu_put(policy);
- }
-
- return ret_util;
-}
-EXPORT_SYMBOL(cpufreq_quick_get_util);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * cpufreq_quick_get - get the CPU frequency (in kHz) from policy->cur
  * @cpu: CPU number

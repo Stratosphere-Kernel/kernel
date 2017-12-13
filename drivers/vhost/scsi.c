@@ -820,7 +820,6 @@ static int vhost_scsi_map_iov_to_sgl(struct tcm_vhost_cmd *tv_cmd,
 	return 0;
 }
 
-<<<<<<< HEAD
 static int vhost_scsi_to_tcm_attr(int attr)
 {
 	switch (attr) {
@@ -838,8 +837,6 @@ static int vhost_scsi_to_tcm_attr(int attr)
 	return MSG_SIMPLE_TAG;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void tcm_vhost_submission_work(struct work_struct *work)
 {
 	struct tcm_vhost_cmd *tv_cmd =
@@ -866,15 +863,9 @@ static void tcm_vhost_submission_work(struct work_struct *work)
 	rc = target_submit_cmd_map_sgls(se_cmd, tv_nexus->tvn_se_sess,
 			tv_cmd->tvc_cdb, &tv_cmd->tvc_sense_buf[0],
 			tv_cmd->tvc_lun, tv_cmd->tvc_exp_data_len,
-<<<<<<< HEAD
 			vhost_scsi_to_tcm_attr(tv_cmd->tvc_task_attr),
 			tv_cmd->tvc_data_direction, 0, sg_ptr,
 			tv_cmd->tvc_sgl_count, sg_bidi_ptr, sg_no_bidi);
-=======
-			tv_cmd->tvc_task_attr, tv_cmd->tvc_data_direction,
-			0, sg_ptr, tv_cmd->tvc_sgl_count,
-			sg_bidi_ptr, sg_no_bidi);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (rc < 0) {
 		transport_send_check_condition_and_sense(se_cmd,
 				TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE, 0);
@@ -1176,10 +1167,7 @@ static int vhost_scsi_set_endpoint(
 	struct vhost_scsi *vs,
 	struct vhost_scsi_target *t)
 {
-<<<<<<< HEAD
 	struct se_portal_group *se_tpg;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct tcm_vhost_tport *tv_tport;
 	struct tcm_vhost_tpg *tv_tpg;
 	struct tcm_vhost_tpg **vs_tpg;
@@ -1227,7 +1215,6 @@ static int vhost_scsi_set_endpoint(
 				ret = -EEXIST;
 				goto out;
 			}
-<<<<<<< HEAD
 			/*
 			 * In order to ensure individual vhost-scsi configfs
 			 * groups cannot be removed while in use by vhost ioctl,
@@ -1243,8 +1230,6 @@ static int vhost_scsi_set_endpoint(
 				mutex_unlock(&tv_tpg->tv_tpg_mutex);
 				goto out;
 			}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			tv_tpg->tv_tpg_vhost_count++;
 			tv_tpg->vhost_scsi = vs;
 			vs_tpg[tv_tpg->tport_tpgt] = tv_tpg;
@@ -1288,10 +1273,7 @@ static int vhost_scsi_clear_endpoint(
 	struct vhost_scsi *vs,
 	struct vhost_scsi_target *t)
 {
-<<<<<<< HEAD
 	struct se_portal_group *se_tpg;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct tcm_vhost_tport *tv_tport;
 	struct tcm_vhost_tpg *tv_tpg;
 	struct vhost_virtqueue *vq;
@@ -1340,7 +1322,6 @@ static int vhost_scsi_clear_endpoint(
 		vs->vs_tpg[target] = NULL;
 		match = true;
 		mutex_unlock(&tv_tpg->tv_tpg_mutex);
-<<<<<<< HEAD
 		/*
 		 * Release se_tpg->tpg_group.cg_item configfs dependency now
 		 * to allow vhost-scsi WWPN se_tpg->tpg_group shutdown to occur.
@@ -1348,8 +1329,6 @@ static int vhost_scsi_clear_endpoint(
 		se_tpg = &tv_tpg->se_tpg;
 		configfs_undepend_item(se_tpg->se_tpg_tfo->tf_subsys,
 				       &se_tpg->tpg_group.cg_item);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (match) {
 		for (i = 0; i < VHOST_SCSI_MAX_VQ; i++) {

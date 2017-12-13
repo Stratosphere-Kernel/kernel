@@ -328,10 +328,7 @@ static void handle_stsi_3_2_2(struct kvm_vcpu *vcpu, struct sysinfo_3_2_2 *mem)
 	for (n = mem->count - 1; n > 0 ; n--)
 		memcpy(&mem->vm[n], &mem->vm[n - 1], sizeof(mem->vm[0]));
 
-<<<<<<< HEAD
 	memset(&mem->vm[0], 0, sizeof(mem->vm[0]));
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mem->vm[0].cpus_total = cpus;
 	mem->vm[0].cpus_configured = cpus;
 	mem->vm[0].cpus_standby = 0;

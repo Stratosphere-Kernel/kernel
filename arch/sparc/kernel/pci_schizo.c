@@ -581,11 +581,7 @@ static irqreturn_t schizo_pcierr_intr_other(struct pci_pbm_info *pbm)
 {
 	unsigned long csr_reg, csr, csr_error_bits;
 	irqreturn_t ret = IRQ_NONE;
-<<<<<<< HEAD
 	u32 stat;
-=======
-	u16 stat;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	csr_reg = pbm->pbm_regs + SCHIZO_PCI_CTRL;
 	csr = upa_readq(csr_reg);
@@ -621,11 +617,7 @@ static irqreturn_t schizo_pcierr_intr_other(struct pci_pbm_info *pbm)
 			       pbm->name);
 		ret = IRQ_HANDLED;
 	}
-<<<<<<< HEAD
 	pbm->pci_ops->read(pbm->pci_bus, 0, PCI_STATUS, 2, &stat);
-=======
-	pci_read_config_word(pbm->pci_bus->self, PCI_STATUS, &stat);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (stat & (PCI_STATUS_PARITY |
 		    PCI_STATUS_SIG_TARGET_ABORT |
 		    PCI_STATUS_REC_TARGET_ABORT |
@@ -633,11 +625,7 @@ static irqreturn_t schizo_pcierr_intr_other(struct pci_pbm_info *pbm)
 		    PCI_STATUS_SIG_SYSTEM_ERROR)) {
 		printk("%s: PCI bus error, PCI_STATUS[%04x]\n",
 		       pbm->name, stat);
-<<<<<<< HEAD
 		pbm->pci_ops->write(pbm->pci_bus, 0, PCI_STATUS, 2, 0xffff);
-=======
-		pci_write_config_word(pbm->pci_bus->self, PCI_STATUS, 0xffff);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ret = IRQ_HANDLED;
 	}
 	return ret;

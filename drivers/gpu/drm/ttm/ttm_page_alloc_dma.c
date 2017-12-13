@@ -1006,15 +1006,9 @@ EXPORT_SYMBOL_GPL(ttm_dma_unpopulate);
 static int ttm_dma_pool_mm_shrink(struct shrinker *shrink,
 				  struct shrink_control *sc)
 {
-<<<<<<< HEAD
 	static unsigned start_pool;
 	unsigned idx = 0;
 	unsigned pool_offset;
-=======
-	static atomic_t start_pool = ATOMIC_INIT(0);
-	unsigned idx = 0;
-	unsigned pool_offset = atomic_add_return(1, &start_pool);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	unsigned shrink_pages = sc->nr_to_scan;
 	struct device_pools *p;
 
@@ -1022,13 +1016,9 @@ static int ttm_dma_pool_mm_shrink(struct shrinker *shrink,
 		return 0;
 
 	mutex_lock(&_manager->lock);
-<<<<<<< HEAD
 	if (!_manager->npools)
 		goto out;
 	pool_offset = ++start_pool % _manager->npools;
-=======
-	pool_offset = pool_offset % _manager->npools;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	list_for_each_entry(p, &_manager->pools, pools) {
 		unsigned nr_free;
 
@@ -1045,10 +1035,7 @@ static int ttm_dma_pool_mm_shrink(struct shrinker *shrink,
 			 p->pool->dev_name, p->pool->name, current->pid,
 			 nr_free, shrink_pages);
 	}
-<<<<<<< HEAD
 out:
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mutex_unlock(&_manager->lock);
 	/* return estimated number of unused pages in pool */
 	return ttm_dma_pool_get_num_unused_pages();

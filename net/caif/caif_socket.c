@@ -283,11 +283,7 @@ static int caif_seqpkt_recvmsg(struct kiocb *iocb, struct socket *sock,
 	int copylen;
 
 	ret = -EOPNOTSUPP;
-<<<<<<< HEAD
 	if (flags & MSG_OOB)
-=======
-	if (m->msg_flags&MSG_OOB)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto read_error;
 
 	skb = skb_recv_datagram(sk, flags, 0 , &ret);
@@ -336,13 +332,10 @@ static long caif_stream_data_wait(struct sock *sk, long timeo)
 		release_sock(sk);
 		timeo = schedule_timeout(timeo);
 		lock_sock(sk);
-<<<<<<< HEAD
 
 		if (sock_flag(sk, SOCK_DEAD))
 			break;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		clear_bit(SOCK_ASYNC_WAITDATA, &sk->sk_socket->flags);
 	}
 
@@ -387,13 +380,10 @@ static int caif_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 		struct sk_buff *skb;
 
 		lock_sock(sk);
-<<<<<<< HEAD
 		if (sock_flag(sk, SOCK_DEAD)) {
 			err = -ECONNRESET;
 			goto unlock;
 		}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		skb = skb_dequeue(&sk->sk_receive_queue);
 		caif_check_flow_release(sk);
 

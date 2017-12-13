@@ -180,11 +180,7 @@ static int s5h1420_send_master_cmd (struct dvb_frontend* fe,
 	int result = 0;
 
 	dprintk("enter %s\n", __func__);
-<<<<<<< HEAD
 	if (cmd->msg_len > sizeof(cmd->msg))
-=======
-	if (cmd->msg_len > 8)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 
 	/* setup for DISEQC */

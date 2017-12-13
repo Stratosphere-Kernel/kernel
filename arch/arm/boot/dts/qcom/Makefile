@@ -46,10 +46,6 @@ dtb-$(CONFIG_ARCH_MSM8909) += msm8909-sim.dtb \
 	msm8909-1gb-rcm.dtb \
 	msm8909-pm8916-1gb-rcm.dtb \
 	msm8909-pm8916-mtp.dtb \
-<<<<<<< HEAD
-=======
-	msm8909-pm8916-wear-mtp.dtb \
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	msm8909-pm8916-cdp.dtb \
 	msm8909-qhd-cdp.dtb \
 	msm8909-qhd-rcm.dtb \

@@ -287,15 +287,12 @@ struct tsi721_tx_desc *tsi721_desc_get(struct tsi721_bdma_chan *bdma_chan)
 			"desc %p not ACKed\n", tx_desc);
 	}
 
-<<<<<<< HEAD
 	if (ret == NULL) {
 		dev_dbg(bdma_chan->dchan.device->dev,
 			"%s: unable to obtain tx descriptor\n", __func__);
 		goto err_out;
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	i = bdma_chan->wr_count_next % bdma_chan->bd_num;
 	if (i == bdma_chan->bd_num - 1) {
 		i = 0;
@@ -306,11 +303,7 @@ struct tsi721_tx_desc *tsi721_desc_get(struct tsi721_bdma_chan *bdma_chan)
 	tx_desc->txd.phys = bdma_chan->bd_phys +
 				i * sizeof(struct tsi721_dma_desc);
 	tx_desc->hw_desc = &((struct tsi721_dma_desc *)bdma_chan->bd_base)[i];
-<<<<<<< HEAD
 err_out:
-=======
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_unlock_bh(&bdma_chan->lock);
 
 	return ret;

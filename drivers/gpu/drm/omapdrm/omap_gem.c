@@ -806,11 +806,7 @@ int omap_gem_get_paddr(struct drm_gem_object *obj,
 			omap_obj->paddr = tiler_ssptr(block);
 			omap_obj->block = block;
 
-<<<<<<< HEAD
 			DBG("got paddr: %pad", &omap_obj->paddr);
-=======
-			DBG("got paddr: %08x", omap_obj->paddr);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 
 		omap_obj->paddr_cnt++;
@@ -1008,15 +1004,9 @@ void omap_gem_describe(struct drm_gem_object *obj, struct seq_file *m)
 	if (obj->map_list.map)
 		off = (uint64_t)obj->map_list.hash.key;
 
-<<<<<<< HEAD
 	seq_printf(m, "%08x: %2d (%2d) %08llx %pad (%2d) %p %4d",
 			omap_obj->flags, obj->name, obj->refcount.refcount.counter,
 			off, &omap_obj->paddr, omap_obj->paddr_cnt,
-=======
-	seq_printf(m, "%08x: %2d (%2d) %08llx %08Zx (%2d) %p %4d",
-			omap_obj->flags, obj->name, obj->refcount.refcount.counter,
-			off, omap_obj->paddr, omap_obj->paddr_cnt,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			omap_obj->vaddr, omap_obj->roll);
 
 	if (omap_obj->flags & OMAP_BO_TILED) {
@@ -1499,13 +1489,8 @@ void omap_gem_init(struct drm_device *dev)
 			entry->paddr = tiler_ssptr(block);
 			entry->block = block;
 
-<<<<<<< HEAD
 			DBG("%d:%d: %dx%d: paddr=%pad stride=%d", i, j, w, h,
 					&entry->paddr,
-=======
-			DBG("%d:%d: %dx%d: paddr=%08x stride=%d", i, j, w, h,
-					entry->paddr,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					usergart[i].stride_pfn << PAGE_SHIFT);
 		}
 	}

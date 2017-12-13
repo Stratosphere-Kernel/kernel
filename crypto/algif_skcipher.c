@@ -49,11 +49,7 @@ struct skcipher_ctx {
 	struct ablkcipher_request req;
 };
 
-<<<<<<< HEAD
 #define MAX_SGL_ENTS ((4096 - sizeof(struct skcipher_sg_list)) / \
-=======
-#define MAX_SGL_ENTS ((PAGE_SIZE - sizeof(struct skcipher_sg_list)) / \
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		      sizeof(struct scatterlist) - 1)
 
 static inline int skcipher_sndbuf(struct sock *sk)

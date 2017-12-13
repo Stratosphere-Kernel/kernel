@@ -136,13 +136,10 @@ long arch_ptrace(struct task_struct *child, long request,
 	pr_debug("REQ=%ld: ADDR =0x%lx, DATA=0x%lx)\n", request, addr, data);
 
 	switch (request) {
-<<<<<<< HEAD
 	case PTRACE_GET_THREAD_AREA:
 		ret = put_user(task_thread_info(child)->thr_ptr,
 			       (unsigned long __user *)data);
 		break;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	default:
 		ret = ptrace_request(child, request, addr, data);
 		break;

@@ -1270,7 +1270,6 @@ update_time:
 	return 0;
 }
 
-<<<<<<< HEAD
 /*
  * Maximum length of linked list formed by ICB hierarchy. The chosen number is
  * arbitrary - just that we hopefully don't limit any real use of rewritten
@@ -1278,21 +1277,15 @@ update_time:
  */
 #define UDF_MAX_ICB_NESTING 1024
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void __udf_read_inode(struct inode *inode)
 {
 	struct buffer_head *bh = NULL;
 	struct fileEntry *fe;
 	uint16_t ident;
 	struct udf_inode_info *iinfo = UDF_I(inode);
-<<<<<<< HEAD
 	unsigned int indirections = 0;
 
 reread:
-=======
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Set defaults, but the inode is still incomplete!
 	 * Note: get_new_inode() sets the following on a new inode:
@@ -1329,17 +1322,12 @@ reread:
 		ibh = udf_read_ptagged(inode->i_sb, &iinfo->i_location, 1,
 					&ident);
 		if (ident == TAG_IDENT_IE && ibh) {
-<<<<<<< HEAD
-=======
-			struct buffer_head *nbh = NULL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			struct kernel_lb_addr loc;
 			struct indirectEntry *ie;
 
 			ie = (struct indirectEntry *)ibh->b_data;
 			loc = lelb_to_cpu(ie->indirectICB.extLocation);
 
-<<<<<<< HEAD
 			if (ie->indirectICB.extLength) {
 				brelse(bh);
 				brelse(ibh);
@@ -1354,23 +1342,6 @@ reread:
 					return;
 				}
 				goto reread;
-=======
-			if (ie->indirectICB.extLength &&
-				(nbh = udf_read_ptagged(inode->i_sb, &loc, 0,
-							&ident))) {
-				if (ident == TAG_IDENT_FE ||
-					ident == TAG_IDENT_EFE) {
-					memcpy(&iinfo->i_location,
-						&loc,
-						sizeof(struct kernel_lb_addr));
-					brelse(bh);
-					brelse(ibh);
-					brelse(nbh);
-					__udf_read_inode(inode);
-					return;
-				}
-				brelse(nbh);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			}
 		}
 		brelse(ibh);

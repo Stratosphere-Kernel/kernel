@@ -155,11 +155,7 @@ axon_ram_direct_access(struct block_device *device, sector_t sector,
 	}
 
 	*kaddr = (void *)(bank->ph_addr + offset);
-<<<<<<< HEAD
 	*pfn = virt_to_phys(*kaddr) >> PAGE_SHIFT;
-=======
-	*pfn = virt_to_phys(kaddr) >> PAGE_SHIFT;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }

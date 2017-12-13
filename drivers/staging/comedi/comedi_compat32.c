@@ -270,11 +270,7 @@ static int compat_cmd(struct file *file, unsigned long arg)
 {
 	struct comedi_cmd __user *cmd;
 	struct comedi32_cmd_struct __user *cmd32;
-<<<<<<< HEAD
 	int rc, err;
-=======
-	int rc;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	cmd32 = compat_ptr(arg);
 	cmd = compat_alloc_user_space(sizeof(*cmd));
@@ -283,7 +279,6 @@ static int compat_cmd(struct file *file, unsigned long arg)
 	if (rc)
 		return rc;
 
-<<<<<<< HEAD
 	rc = translated_ioctl(file, COMEDI_CMD, (unsigned long)cmd);
 	if (rc == -EAGAIN) {
 		/* Special case: copy cmd back to user. */
@@ -293,9 +288,6 @@ static int compat_cmd(struct file *file, unsigned long arg)
 	}
 
 	return rc;
-=======
-	return translated_ioctl(file, COMEDI_CMD, (unsigned long)cmd);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /* Handle 32-bit COMEDI_CMDTEST ioctl. */

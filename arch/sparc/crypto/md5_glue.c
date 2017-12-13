@@ -185,10 +185,6 @@ module_exit(md5_sparc64_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("MD5 Secure Hash Algorithm, sparc64 md5 opcode accelerated");
 
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("md5");
-=======
-MODULE_ALIAS("md5");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #include "crop_devid.c"

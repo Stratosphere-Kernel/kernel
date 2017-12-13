@@ -866,14 +866,10 @@ void iscsit_connection_reinstatement_rcfr(struct iscsi_conn *conn)
 	}
 	spin_unlock_bh(&conn->state_lock);
 
-<<<<<<< HEAD
 	if (conn->tx_thread && conn->tx_thread_active)
 		send_sig(SIGINT, conn->tx_thread, 1);
 	if (conn->rx_thread && conn->rx_thread_active)
 		send_sig(SIGINT, conn->rx_thread, 1);
-=======
-	iscsi_thread_set_force_reinstatement(conn);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 sleep:
 	wait_for_completion(&conn->conn_wait_rcfr_comp);
@@ -898,17 +894,10 @@ void iscsit_cause_connection_reinstatement(struct iscsi_conn *conn, int sleep)
 		return;
 	}
 
-<<<<<<< HEAD
 	if (conn->tx_thread && conn->tx_thread_active)
 		send_sig(SIGINT, conn->tx_thread, 1);
 	if (conn->rx_thread && conn->rx_thread_active)
 		send_sig(SIGINT, conn->rx_thread, 1);
-=======
-	if (iscsi_thread_set_force_reinstatement(conn) < 0) {
-		spin_unlock_bh(&conn->state_lock);
-		return;
-	}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	atomic_set(&conn->connection_reinstatement, 1);
 	if (!sleep) {

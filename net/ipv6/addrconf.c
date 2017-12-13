@@ -2772,7 +2772,6 @@ static void init_loopback(struct net_device *dev)
 			if (sp_ifa->flags & (IFA_F_DADFAILED | IFA_F_TENTATIVE))
 				continue;
 
-<<<<<<< HEAD
 			if (sp_ifa->rt) {
 				/* This dst has been added to garbage list when
 				 * lo device down, release this obsolete dst and
@@ -2785,10 +2784,6 @@ static void init_loopback(struct net_device *dev)
 					continue;
 				}
 			}
-=======
-			if (sp_ifa->rt)
-				continue;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 			sp_rt = addrconf_dst_alloc(idev, &sp_ifa->addr, 0);
 

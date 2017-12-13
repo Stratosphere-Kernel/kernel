@@ -178,7 +178,6 @@ acpi_ex_read_data_from_field(struct acpi_walk_state *walk_state,
 		buffer = &buffer_desc->integer.value;
 	}
 
-<<<<<<< HEAD
 	if ((obj_desc->common.type == ACPI_TYPE_LOCAL_REGION_FIELD) &&
 	    (obj_desc->field.region_obj->region.space_id ==
 	     ACPI_ADR_SPACE_GPIO)) {
@@ -210,8 +209,6 @@ acpi_ex_read_data_from_field(struct acpi_walk_state *walk_state,
 		return_ACPI_STATUS(status);
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ACPI_DEBUG_PRINT((ACPI_DB_BFIELD,
 			  "FieldRead [TO]:   Obj %p, Type %X, Buf %p, ByteLen %X\n",
 			  obj_desc, obj_desc->common.type, buffer,
@@ -359,7 +356,6 @@ acpi_ex_write_data_to_field(union acpi_operand_object *source_desc,
 
 		*result_desc = buffer_desc;
 		return_ACPI_STATUS(status);
-<<<<<<< HEAD
 	} else if ((obj_desc->common.type == ACPI_TYPE_LOCAL_REGION_FIELD) &&
 		   (obj_desc->field.region_obj->region.space_id ==
 		    ACPI_ADR_SPACE_GPIO)) {
@@ -396,8 +392,6 @@ acpi_ex_write_data_to_field(union acpi_operand_object *source_desc,
 					       (u64 *)buffer, ACPI_WRITE);
 		acpi_ex_release_global_lock(obj_desc->common_field.field_flags);
 		return_ACPI_STATUS(status);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	/* Get a pointer to the data to be written */

@@ -150,7 +150,6 @@ static inline void set_pte(pte_t *ptep, pte_t pteval)
 		 * Make sure the buddy is global too (if it's !none,
 		 * it better already be global)
 		 */
-<<<<<<< HEAD
 #ifdef CONFIG_SMP
 		/*
 		 * For SMP, multiple CPUs can race, so we need to do
@@ -184,10 +183,6 @@ static inline void set_pte(pte_t *ptep, pte_t pteval)
 		if (pte_none(*buddy))
 			pte_val(*buddy) = pte_val(*buddy) | _PAGE_GLOBAL;
 #endif /* CONFIG_SMP */
-=======
-		if (pte_none(*buddy))
-			pte_val(*buddy) = pte_val(*buddy) | _PAGE_GLOBAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 #endif
 }

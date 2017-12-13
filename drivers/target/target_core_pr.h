@@ -55,11 +55,7 @@ extern int core_scsi3_alloc_aptpl_registration(
 			unsigned char *, u16, u32, int, int, u8);
 extern int core_scsi3_check_aptpl_registration(struct se_device *,
 			struct se_portal_group *, struct se_lun *,
-<<<<<<< HEAD
 			struct se_node_acl *, u32);
-=======
-			struct se_lun_acl *);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 extern void core_scsi3_free_pr_reg_from_nacl(struct se_device *,
 					     struct se_node_acl *);
 extern void core_scsi3_free_all_registrations(struct se_device *);

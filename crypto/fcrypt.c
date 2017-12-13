@@ -420,7 +420,4 @@ module_exit(fcrypt_mod_fini);
 MODULE_LICENSE("Dual BSD/GPL");
 MODULE_DESCRIPTION("FCrypt Cipher Algorithm");
 MODULE_AUTHOR("David Howells <dhowells@redhat.com>");
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("fcrypt");
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

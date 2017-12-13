@@ -1,15 +1,8 @@
 /*
-<<<<<<< HEAD
  * drivers/gpu/ion/ion_priv.h
  *
  * Copyright (C) 2011 Google, Inc.
  * Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
-=======
- * drivers/staging/android/ion/ion_priv.h
- *
- * Copyright (C) 2011 Google, Inc.
- * Copyright (c) 2011-2014,2017, The Linux Foundation. All rights reserved.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -436,12 +429,7 @@ int ion_page_pool_shrink(struct ion_page_pool *pool, gfp_t gfp_mask,
 void ion_pages_sync_for_device(struct device *dev, struct page *page,
 		size_t size, enum dma_data_direction dir);
 
-<<<<<<< HEAD
 int ion_walk_heaps(struct ion_client *client, int heap_id, void *data,
-=======
-int ion_walk_heaps(struct ion_client *client, int heap_id,
-			enum ion_heap_type type, void *data,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			int (*f)(struct ion_heap *heap, void *data));
 
 struct ion_handle *ion_handle_get_by_id(struct ion_client *client,

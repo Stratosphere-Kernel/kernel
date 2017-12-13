@@ -655,7 +655,6 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
 
 	BUG_ON(end < lblk);
 
-<<<<<<< HEAD
 	if ((status & EXTENT_STATUS_DELAYED) &&
 	    (status & EXTENT_STATUS_WRITTEN)) {
 		ext4_warning(inode->i_sb, "Inserting extent [%u/%u] as "
@@ -664,8 +663,6 @@ int ext4_es_insert_extent(struct inode *inode, ext4_lblk_t lblk,
 		WARN_ON(1);
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	newes.es_lblk = lblk;
 	newes.es_len = len;
 	ext4_es_store_pblock(&newes, pblk);

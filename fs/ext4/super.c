@@ -805,10 +805,7 @@ static void ext4_put_super(struct super_block *sb)
 		dump_orphan_list(sb, sbi);
 	J_ASSERT(list_empty(&sbi->s_orphan));
 
-<<<<<<< HEAD
 	sync_blockdev(sb->s_bdev);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	invalidate_bdev(sb->s_bdev);
 	if (sbi->journal_bdev && sbi->journal_bdev != sb->s_bdev) {
 		/*
@@ -970,11 +967,7 @@ static struct inode *ext4_nfs_get_inode(struct super_block *sb,
 	 * Currently we don't know the generation for parent directory, so
 	 * a generation of 0 means "accept any"
 	 */
-<<<<<<< HEAD
 	inode = ext4_iget_normal(sb, ino);
-=======
-	inode = ext4_iget(sb, ino);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (IS_ERR(inode))
 		return ERR_CAST(inode);
 	if (generation && inode->i_generation != generation) {
@@ -1642,16 +1635,6 @@ static int parse_options(char *options, struct super_block *sb,
 					"not specified");
 			return 0;
 		}
-<<<<<<< HEAD
-=======
-	} else {
-		if (sbi->s_jquota_fmt) {
-			ext4_msg(sb, KERN_ERR, "journaled quota format "
-					"specified with no journaling "
-					"enabled");
-			return 0;
-		}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 #endif
 	if (test_opt(sb, DIOREAD_NOLOCK)) {
@@ -1970,13 +1953,10 @@ static __le16 ext4_group_desc_csum(struct ext4_sb_info *sbi, __u32 block_group,
 	}
 
 	/* old crc16 code */
-<<<<<<< HEAD
 	if (!(sbi->s_es->s_feature_ro_compat &
 	      cpu_to_le32(EXT4_FEATURE_RO_COMPAT_GDT_CSUM)))
 		return 0;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	offset = offsetof(struct ext4_group_desc, bg_checksum);
 
 	crc = crc16(~0, sbi->s_es->s_uuid, sizeof(sbi->s_es->s_uuid));

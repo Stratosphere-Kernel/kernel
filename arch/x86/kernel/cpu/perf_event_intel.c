@@ -1199,7 +1199,6 @@ again:
 	intel_pmu_lbr_read();
 
 	/*
-<<<<<<< HEAD
 	 * CondChgd bit 63 doesn't mean any overflow status. Ignore
 	 * and clear the bit.
 	 */
@@ -1209,8 +1208,6 @@ again:
 	}
 
 	/*
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	 * PEBS overflow sets bit 62 in the global status register
 	 */
 	if (__test_and_clear_bit(62, (unsigned long *)&status)) {
@@ -2175,12 +2172,9 @@ __init int intel_pmu_init(void)
 	case 62: /* IvyBridge EP */
 		memcpy(hw_cache_event_ids, snb_hw_cache_event_ids,
 		       sizeof(hw_cache_event_ids));
-<<<<<<< HEAD
 		/* dTLB-load-misses on IVB is different than SNB */
 		hw_cache_event_ids[C(DTLB)][C(OP_READ)][C(RESULT_MISS)] = 0x8108; /* DTLB_LOAD_MISSES.DEMAND_LD_MISS_CAUSES_A_WALK */
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		memcpy(hw_cache_extra_regs, snb_hw_cache_extra_regs,
 		       sizeof(hw_cache_extra_regs));
 

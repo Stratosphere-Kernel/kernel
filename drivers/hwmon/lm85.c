@@ -158,11 +158,7 @@ static inline u16 FAN_TO_REG(unsigned long val)
 
 /* Temperature is reported in .001 degC increments */
 #define TEMP_TO_REG(val)	\
-<<<<<<< HEAD
 		DIV_ROUND_CLOSEST(clamp_val((val), -127000, 127000), 1000)
-=======
-		clamp_val(SCALE(val, 1000, 1), -127, 127)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define TEMPEXT_FROM_REG(val, ext)	\
 		SCALE(((val) << 4) + (ext), 16, 1000)
 #define TEMP_FROM_REG(val)	((val) * 1000)
@@ -196,11 +192,7 @@ static const int lm85_range_map[] = {
 	13300, 16000, 20000, 26600, 32000, 40000, 53300, 80000
 };
 
-<<<<<<< HEAD
 static int RANGE_TO_REG(long range)
-=======
-static int RANGE_TO_REG(int range)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int i;
 
@@ -222,11 +214,7 @@ static const int adm1027_freq_map[8] = { /* 1 Hz */
 	11, 15, 22, 29, 35, 44, 59, 88
 };
 
-<<<<<<< HEAD
 static int FREQ_TO_REG(const int *map, unsigned long freq)
-=======
-static int FREQ_TO_REG(const int *map, int freq)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int i;
 
@@ -475,12 +463,9 @@ static ssize_t store_vrm_reg(struct device *dev, struct device_attribute *attr,
 	if (err)
 		return err;
 
-<<<<<<< HEAD
 	if (val > 255)
 		return -EINVAL;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	data->vrm = val;
 	return count;
 }

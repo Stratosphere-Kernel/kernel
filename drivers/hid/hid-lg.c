@@ -345,22 +345,14 @@ static __u8 *lg_report_fixup(struct hid_device *hdev, __u8 *rdesc,
 	struct usb_device_descriptor *udesc;
 	__u16 bcdDevice, rev_maj, rev_min;
 
-<<<<<<< HEAD
 	if ((drv_data->quirks & LG_RDESC) && *rsize >= 91 && rdesc[83] == 0x26 &&
-=======
-	if ((drv_data->quirks & LG_RDESC) && *rsize >= 90 && rdesc[83] == 0x26 &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			rdesc[84] == 0x8c && rdesc[85] == 0x02) {
 		hid_info(hdev,
 			 "fixing up Logitech keyboard report descriptor\n");
 		rdesc[84] = rdesc[89] = 0x4d;
 		rdesc[85] = rdesc[90] = 0x10;
 	}
-<<<<<<< HEAD
 	if ((drv_data->quirks & LG_RDESC_REL_ABS) && *rsize >= 51 &&
-=======
-	if ((drv_data->quirks & LG_RDESC_REL_ABS) && *rsize >= 50 &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			rdesc[32] == 0x81 && rdesc[33] == 0x06 &&
 			rdesc[49] == 0x81 && rdesc[50] == 0x06) {
 		hid_info(hdev,

@@ -574,13 +574,10 @@ int radeon_dp_mode_valid_helper(struct drm_connector *connector,
 	struct radeon_connector_atom_dig *dig_connector;
 	int dp_clock;
 
-<<<<<<< HEAD
 	if ((mode->clock > 340000) &&
 	    (!radeon_connector_is_dp12_capable(connector)))
 		return MODE_CLOCK_HIGH;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!radeon_connector->con_priv)
 		return MODE_CLOCK_HIGH;
 	dig_connector = radeon_connector->con_priv;

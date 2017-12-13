@@ -94,7 +94,6 @@ struct ib_umem *ib_umem_get(struct ib_ucontext *context, unsigned long addr,
 	if (dmasync)
 		dma_set_attr(DMA_ATTR_WRITE_BARRIER, &attrs);
 
-<<<<<<< HEAD
 	if (!size)
 		return ERR_PTR(-EINVAL);
 
@@ -106,8 +105,6 @@ struct ib_umem *ib_umem_get(struct ib_ucontext *context, unsigned long addr,
 	    PAGE_ALIGN(addr + size) < (addr + size))
 		return ERR_PTR(-EINVAL);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!can_do_mlock())
 		return ERR_PTR(-EPERM);
 

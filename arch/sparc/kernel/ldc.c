@@ -1336,11 +1336,7 @@ int ldc_connect(struct ldc_channel *lp)
 	if (!(lp->flags & LDC_FLAG_ALLOCED_QUEUES) ||
 	    !(lp->flags & LDC_FLAG_REGISTERED_QUEUES) ||
 	    lp->hs_state != LDC_HS_OPEN)
-<<<<<<< HEAD
 		err = ((lp->hs_state > LDC_HS_OPEN) ? 0 : -EINVAL);
-=======
-		err = -EINVAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	else
 		err = start_handshake(lp);
 
@@ -2310,11 +2306,7 @@ void *ldc_alloc_exp_dring(struct ldc_channel *lp, unsigned int len,
 	if (len & (8UL - 1))
 		return ERR_PTR(-EINVAL);
 
-<<<<<<< HEAD
 	buf = kzalloc(len, GFP_ATOMIC);
-=======
-	buf = kzalloc(len, GFP_KERNEL);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!buf)
 		return ERR_PTR(-ENOMEM);
 

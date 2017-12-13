@@ -340,11 +340,7 @@ bool cfg80211_chandef_usable(struct wiphy *wiphy,
 {
 	struct ieee80211_sta_ht_cap *ht_cap;
 	struct ieee80211_sta_vht_cap *vht_cap;
-<<<<<<< HEAD
 	u32 width, control_freq, cap;
-=======
-	u32 width, control_freq;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (WARN_ON(!cfg80211_chandef_valid(chandef)))
 		return false;
@@ -376,12 +372,8 @@ bool cfg80211_chandef_usable(struct wiphy *wiphy,
 			return false;
 		break;
 	case NL80211_CHAN_WIDTH_80P80:
-<<<<<<< HEAD
 		cap = vht_cap->cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_MASK;
 		if (cap != IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160_80PLUS80MHZ)
-=======
-		if (!(vht_cap->cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160_80PLUS80MHZ))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return false;
 	case NL80211_CHAN_WIDTH_80:
 		if (!vht_cap->vht_supported)
@@ -392,13 +384,9 @@ bool cfg80211_chandef_usable(struct wiphy *wiphy,
 	case NL80211_CHAN_WIDTH_160:
 		if (!vht_cap->vht_supported)
 			return false;
-<<<<<<< HEAD
 		cap = vht_cap->cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_MASK;
 		if (cap != IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ &&
 		    cap != IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160_80PLUS80MHZ)
-=======
-		if (!(vht_cap->cap & IEEE80211_VHT_CAP_SUPP_CHAN_WIDTH_160MHZ))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return false;
 		prohibited_flags |= IEEE80211_CHAN_NO_160MHZ;
 		width = 160;

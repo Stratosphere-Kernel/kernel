@@ -4150,16 +4150,10 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 	{ "ST3320[68]13AS",	"SD1[5-9]",	ATA_HORKAGE_NONCQ |
 						ATA_HORKAGE_FIRMWARE_WARN },
 
-<<<<<<< HEAD
 	/* drives which fail FPDMA_AA activation (some may freeze afterwards) */
 	{ "ST1000LM024 HN-M101MBB", "2AR10001",	ATA_HORKAGE_BROKEN_FPDMA_AA },
 	{ "ST1000LM024 HN-M101MBB", "2BA30001",	ATA_HORKAGE_BROKEN_FPDMA_AA },
 	{ "VB0250EAVER",	"HPG7",		ATA_HORKAGE_BROKEN_FPDMA_AA },
-=======
-	/* Seagate Momentus SpinPoint M8 seem to have FPMDA_AA issues */
-	{ "ST1000LM024 HN-M101MBB", "2AR10001",	ATA_HORKAGE_BROKEN_FPDMA_AA },
-	{ "ST1000LM024 HN-M101MBB", "2BA30001",	ATA_HORKAGE_BROKEN_FPDMA_AA },
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Blacklist entries taken from Silicon Image 3124/3132
 	   Windows driver .inf file - also several Linux problem reports */
@@ -4207,12 +4201,9 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
 	{ "PIONEER DVD-RW  DVR-212D",	NULL,	ATA_HORKAGE_NOSETXFER },
 	{ "PIONEER DVD-RW  DVR-216D",	NULL,	ATA_HORKAGE_NOSETXFER },
 
-<<<<<<< HEAD
 	/* devices that don't properly handle TRIM commands */
 	{ "SuperSSpeed S238*",		NULL,	ATA_HORKAGE_NOTRIM, },
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Some WD SATA-I drives spin up and down erratically when the link
 	 * is put into the slumber mode.  We don't have full list of the
@@ -4517,12 +4508,8 @@ static unsigned int ata_dev_set_xfermode(struct ata_device *dev)
 	else /* In the ancient relic department - skip all of this */
 		return 0;
 
-<<<<<<< HEAD
 	/* On some disks, this command causes spin-up, so we need longer timeout */
 	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 15000);
-=======
-	err_mask = ata_exec_internal(dev, &tf, NULL, DMA_NONE, NULL, 0, 0);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	DPRINTK("EXIT, err_mask=%x\n", err_mask);
 	return err_mask;
@@ -4776,13 +4763,10 @@ void swap_buf_le16(u16 *buf, unsigned int buf_words)
  *	ata_qc_new - Request an available ATA command, for queueing
  *	@ap: target port
  *
-<<<<<<< HEAD
  *	Some ATA host controllers may implement a queue depth which is less
  *	than ATA_MAX_QUEUE. So we shouldn't allocate a tag which is beyond
  *	the hardware limitation.
  *
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *	LOCKING:
  *	None.
  */
@@ -4790,23 +4774,15 @@ void swap_buf_le16(u16 *buf, unsigned int buf_words)
 static struct ata_queued_cmd *ata_qc_new(struct ata_port *ap)
 {
 	struct ata_queued_cmd *qc = NULL;
-<<<<<<< HEAD
 	unsigned int max_queue = ap->host->n_tags;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	unsigned int i, tag;
 
 	/* no command while frozen */
 	if (unlikely(ap->pflags & ATA_PFLAG_FROZEN))
 		return NULL;
 
-<<<<<<< HEAD
 	for (i = 0, tag = ap->last_tag + 1; i < max_queue; i++, tag++) {
 		tag = tag < max_queue ? tag : 0;
-=======
-	for (i = 0; i < ATA_MAX_QUEUE; i++) {
-		tag = (i + ap->last_tag + 1) % ATA_MAX_QUEUE;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/* the last tag is reserved for internal command. */
 		if (tag == ATA_TAG_INTERNAL)
@@ -6107,10 +6083,7 @@ void ata_host_init(struct ata_host *host, struct device *dev,
 {
 	spin_lock_init(&host->lock);
 	mutex_init(&host->eh_mutex);
-<<<<<<< HEAD
 	host->n_tags = ATA_MAX_QUEUE - 1;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	host->dev = dev;
 	host->ops = ops;
 }
@@ -6192,11 +6165,8 @@ int ata_host_register(struct ata_host *host, struct scsi_host_template *sht)
 {
 	int i, rc;
 
-<<<<<<< HEAD
 	host->n_tags = clamp(sht->can_queue, 1, ATA_MAX_QUEUE - 1);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* host must have been started */
 	if (!(host->flags & ATA_HOST_STARTED)) {
 		dev_err(host->dev, "BUG: trying to register unstarted host\n");
@@ -6835,7 +6805,6 @@ u32 ata_wait_register(struct ata_port *ap, void __iomem *reg, u32 mask, u32 val,
 	return tmp;
 }
 
-<<<<<<< HEAD
 /**
  *	sata_lpm_ignore_phy_events - test if PHY event should be ignored
  *	@link: Link receiving the event
@@ -6868,8 +6837,6 @@ bool sata_lpm_ignore_phy_events(struct ata_link *link)
 }
 EXPORT_SYMBOL_GPL(sata_lpm_ignore_phy_events);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Dummy port_ops
  */

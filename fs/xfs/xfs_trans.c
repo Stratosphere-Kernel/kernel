@@ -1100,10 +1100,7 @@ xfs_trans_apply_sb_deltas(
 		whole = 1;
 	}
 
-<<<<<<< HEAD
 	xfs_trans_buf_set_type(tp, bp, XFS_BLFT_SB_BUF);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (whole)
 		/*
 		 * Log the whole thing, the fields are noncontiguous.

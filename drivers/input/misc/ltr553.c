@@ -2114,11 +2114,7 @@ static int ltr553_suspend(struct device *dev)
 			if (res) {
 				dev_err(&ltr->i2c->dev, "read %d failed.(%d)\n",
 						LTR553_REG_ALS_CTL, res);
-<<<<<<< HEAD
 				return res;
-=======
-				goto exit;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			}
 
 			res = regmap_write(ltr->regmap, LTR553_REG_ALS_CTL,

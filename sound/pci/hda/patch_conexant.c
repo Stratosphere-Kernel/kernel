@@ -3223,10 +3223,7 @@ enum {
 	CXT_PINCFG_LENOVO_TP410,
 	CXT_PINCFG_LEMOTE_A1004,
 	CXT_PINCFG_LEMOTE_A1205,
-<<<<<<< HEAD
 	CXT_PINCFG_COMPAQ_CQ60,
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	CXT_FIXUP_STEREO_DMIC,
 	CXT_FIXUP_INC_MIC_BOOST,
 	CXT_FIXUP_GPIO1,
@@ -3300,7 +3297,6 @@ static const struct hda_fixup cxt_fixups[] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = cxt_pincfg_lemote,
 	},
-<<<<<<< HEAD
 	[CXT_PINCFG_COMPAQ_CQ60] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = (const struct hda_pintbl[]) {
@@ -3310,8 +3306,6 @@ static const struct hda_fixup cxt_fixups[] = {
 			{ }
 		}
 	},
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	[CXT_FIXUP_STEREO_DMIC] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = cxt_fixup_stereo_dmic,
@@ -3332,10 +3326,7 @@ static const struct hda_fixup cxt_fixups[] = {
 };
 
 static const struct snd_pci_quirk cxt5051_fixups[] = {
-<<<<<<< HEAD
 	SND_PCI_QUIRK(0x103c, 0x360b, "Compaq CQ60", CXT_PINCFG_COMPAQ_CQ60),
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo X200", CXT_PINCFG_LENOVO_X200),
 	{}
 };
@@ -3499,7 +3490,6 @@ static const struct hda_codec_preset snd_hda_preset_conexant[] = {
 	  .patch = patch_conexant_auto },
 	{ .id = 0x14f150b9, .name = "CX20665",
 	  .patch = patch_conexant_auto },
-<<<<<<< HEAD
 	{ .id = 0x14f150f1, .name = "CX20721",
 	  .patch = patch_conexant_auto },
 	{ .id = 0x14f150f2, .name = "CX20722",
@@ -3508,8 +3498,6 @@ static const struct hda_codec_preset snd_hda_preset_conexant[] = {
 	  .patch = patch_conexant_auto },
 	{ .id = 0x14f150f4, .name = "CX20724",
 	  .patch = patch_conexant_auto },
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	{ .id = 0x14f1510f, .name = "CX20751/2",
 	  .patch = patch_conexant_auto },
 	{ .id = 0x14f15110, .name = "CX20751/2",
@@ -3544,13 +3532,10 @@ MODULE_ALIAS("snd-hda-codec-id:14f150ab");
 MODULE_ALIAS("snd-hda-codec-id:14f150ac");
 MODULE_ALIAS("snd-hda-codec-id:14f150b8");
 MODULE_ALIAS("snd-hda-codec-id:14f150b9");
-<<<<<<< HEAD
 MODULE_ALIAS("snd-hda-codec-id:14f150f1");
 MODULE_ALIAS("snd-hda-codec-id:14f150f2");
 MODULE_ALIAS("snd-hda-codec-id:14f150f3");
 MODULE_ALIAS("snd-hda-codec-id:14f150f4");
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 MODULE_ALIAS("snd-hda-codec-id:14f1510f");
 MODULE_ALIAS("snd-hda-codec-id:14f15110");
 MODULE_ALIAS("snd-hda-codec-id:14f15111");

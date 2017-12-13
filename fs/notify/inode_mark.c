@@ -288,7 +288,6 @@ void fsnotify_unmount_inodes(struct list_head *list)
 		spin_unlock(&inode->i_lock);
 
 		/* In case the dropping of a reference would nuke next_i. */
-<<<<<<< HEAD
 		while (&next_i->i_sb_list != list) {
 			spin_lock(&next_i->i_lock);
 			if (!(next_i->i_state & (I_FREEING | I_WILL_FREE)) &&
@@ -308,22 +307,6 @@ void fsnotify_unmount_inodes(struct list_head *list)
 		 * we actually hold references on both inode and next_i or
 		 * end of list.  Also no new inodes will be added since the
 		 * umount has begun.
-=======
-		if ((&next_i->i_sb_list != list) &&
-		    atomic_read(&next_i->i_count)) {
-			spin_lock(&next_i->i_lock);
-			if (!(next_i->i_state & (I_FREEING | I_WILL_FREE))) {
-				__iget(next_i);
-				need_iput = next_i;
-			}
-			spin_unlock(&next_i->i_lock);
-		}
-
-		/*
-		 * We can safely drop inode_sb_list_lock here because we hold
-		 * references on both inode and next_i.  Also no new inodes
-		 * will be added since the umount has begun.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		 */
 		spin_unlock(&inode_sb_list_lock);
 

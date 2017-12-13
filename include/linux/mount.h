@@ -42,7 +42,6 @@ struct mnt_namespace;
  * flag, consider how it interacts with shared mounts.
  */
 #define MNT_SHARED_MASK	(MNT_UNBINDABLE)
-<<<<<<< HEAD
 #define MNT_USER_SETTABLE_MASK  (MNT_NOSUID | MNT_NODEV | MNT_NOEXEC \
 				 | MNT_NOATIME | MNT_NODIRATIME | MNT_RELATIME \
 				 | MNT_READONLY)
@@ -55,23 +54,12 @@ struct mnt_namespace;
 #define MNT_LOCK_NOEXEC		0x080000
 #define MNT_LOCK_NOSUID		0x100000
 #define MNT_LOCK_NODEV		0x200000
-=======
-#define MNT_PROPAGATION_MASK	(MNT_SHARED | MNT_UNBINDABLE)
-
-
-#define MNT_INTERNAL	0x4000
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define MNT_LOCK_READONLY	0x400000
 
 struct vfsmount {
 	struct dentry *mnt_root;	/* root of the mounted tree */
 	struct super_block *mnt_sb;	/* pointer to superblock */
 	int mnt_flags;
-<<<<<<< HEAD
-=======
-	void *data;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 struct file; /* forward dec */

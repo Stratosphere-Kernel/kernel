@@ -32,13 +32,9 @@ ret_fast_syscall:
  UNWIND(.fnstart	)
  UNWIND(.cantunwind	)
 	disable_irq				@ disable interrupts
-<<<<<<< HEAD
 	ldr	r1, [tsk, #TI_FLAGS]		@ re-check for syscall tracing
 	tst	r1, #_TIF_SYSCALL_WORK
 	bne	__sys_trace_return
-=======
-	ldr	r1, [tsk, #TI_FLAGS]
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	tst	r1, #_TIF_WORK_MASK
 	bne	fast_work_pending
 	asm_trace_hardirqs_on
@@ -368,7 +364,6 @@ ENTRY(vector_swi)
 	str	r0, [sp, #S_OLD_R0]		@ Save OLD_R0
 	zero_fp
 
-<<<<<<< HEAD
 #ifdef CONFIG_ALIGNMENT_TRAP
 	ldr	ip, __cr_alignment
 	ldr	ip, [ip]
@@ -379,8 +374,6 @@ ENTRY(vector_swi)
 	ct_user_exit
 	get_thread_info tsk
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Get the system call number.
 	 */
@@ -394,15 +387,9 @@ ENTRY(vector_swi)
 #ifdef CONFIG_ARM_THUMB
 	tst	r8, #PSR_T_BIT
 	movne	r10, #0				@ no thumb OABI emulation
-<<<<<<< HEAD
  USER(	ldreq	r10, [lr, #-4]		)	@ get SWI instruction
 #else
  USER(	ldr	r10, [lr, #-4]		)	@ get SWI instruction
-=======
-	ldreq	r10, [lr, #-4]			@ get SWI instruction
-#else
-	ldr	r10, [lr, #-4]			@ get SWI instruction
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 #ifdef CONFIG_CPU_ENDIAN_BE8
 	rev	r10, r10			@ little endian instruction
@@ -417,7 +404,6 @@ ENTRY(vector_swi)
 	/* Legacy ABI only, possibly thumb mode. */
 	tst	r8, #PSR_T_BIT			@ this is SPSR from save_user_regs
 	addne	scno, r7, #__NR_SYSCALL_BASE	@ put OS number in
-<<<<<<< HEAD
  USER(	ldreq	scno, [lr, #-4]		)
 
 #else
@@ -425,24 +411,6 @@ ENTRY(vector_swi)
  USER(	ldr	scno, [lr, #-4]		)	@ get SWI instruction
 #endif
 
-=======
-	ldreq	scno, [lr, #-4]
-
-#else
-	/* Legacy ABI only. */
-	ldr	scno, [lr, #-4]			@ get SWI instruction
-#endif
-
-#ifdef CONFIG_ALIGNMENT_TRAP
-	ldr	ip, __cr_alignment
-	ldr	ip, [ip]
-	mcr	p15, 0, ip, c1, c0		@ update control register
-#endif
-	enable_irq
-	ct_user_exit
-
-	get_thread_info tsk
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	adr	tbl, sys_call_table		@ load syscall table pointer
 
 #if defined(CONFIG_OABI_COMPAT)
@@ -477,7 +445,6 @@ local_restart:
 	eor	r0, scno, #__NR_SYSCALL_BASE	@ put OS number back
 	bcs	arm_syscall	
 	b	sys_ni_syscall			@ not private func
-<<<<<<< HEAD
 
 #if defined(CONFIG_OABI_COMPAT) || !defined(CONFIG_AEABI)
 	/*
@@ -493,8 +460,6 @@ local_restart:
 	str	lr, [sp, #S_PC]
 	b	ret_fast_syscall
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 ENDPROC(vector_swi)
 
 	/*

@@ -312,15 +312,10 @@ atombios_set_crtc_dtd_timing(struct drm_crtc *crtc,
 		misc |= ATOM_COMPOSITESYNC;
 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
 		misc |= ATOM_INTERLACE;
-<<<<<<< HEAD
 	if (mode->flags & DRM_MODE_FLAG_DBLCLK)
 		misc |= ATOM_DOUBLE_CLOCK_MODE;
 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
 		misc |= ATOM_H_REPLICATIONBY2 | ATOM_V_REPLICATIONBY2;
-=======
-	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
-		misc |= ATOM_DOUBLE_CLOCK_MODE;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	args.susModeMiscInfo.usAccess = cpu_to_le16(misc);
 	args.ucCRTC = radeon_crtc->crtc_id;
@@ -363,15 +358,10 @@ static void atombios_crtc_set_timing(struct drm_crtc *crtc,
 		misc |= ATOM_COMPOSITESYNC;
 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
 		misc |= ATOM_INTERLACE;
-<<<<<<< HEAD
 	if (mode->flags & DRM_MODE_FLAG_DBLCLK)
 		misc |= ATOM_DOUBLE_CLOCK_MODE;
 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
 		misc |= ATOM_H_REPLICATIONBY2 | ATOM_V_REPLICATIONBY2;
-=======
-	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
-		misc |= ATOM_DOUBLE_CLOCK_MODE;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	args.susModeMiscInfo.usAccess = cpu_to_le16(misc);
 	args.ucCRTC = radeon_crtc->crtc_id;

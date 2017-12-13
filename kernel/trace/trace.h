@@ -428,10 +428,7 @@ enum {
 
 	TRACE_CONTROL_BIT,
 
-<<<<<<< HEAD
 	TRACE_BRANCH_BIT,
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Abuse of the trace_recursion.
  * As we need a way to maintain state if we are tracing the function

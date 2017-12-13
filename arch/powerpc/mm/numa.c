@@ -586,13 +586,8 @@ static int __cpuinit cpu_numa_callback(struct notifier_block *nfb,
 	case CPU_UP_CANCELED:
 	case CPU_UP_CANCELED_FROZEN:
 		unmap_cpu_from_node(lcpu);
-<<<<<<< HEAD
 		ret = NOTIFY_OK;
 		break;
-=======
-		break;
-		ret = NOTIFY_OK;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 	}
 	return ret;

@@ -1065,10 +1065,7 @@ bytes respectively. Such letter suffixes can also be entirely omitted.
 	i8042.notimeout	[HW] Ignore timeout condition signalled by controller
 	i8042.reset	[HW] Reset the controller during init and cleanup
 	i8042.unlock	[HW] Unlock (ignore) the keylock
-<<<<<<< HEAD
 	i8042.kbdreset  [HW] Reset device connected to KBD port
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	i810=		[HW,DRM]
 

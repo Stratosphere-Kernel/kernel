@@ -594,13 +594,6 @@ static long msm_ois_subdev_do_ioctl(
 			parg = &ois_data;
 			break;
 		}
-<<<<<<< HEAD
-=======
-		break;
-	case VIDIOC_MSM_OIS_CFG:
-		pr_err("%s: invalid cmd 0x%x received\n", __func__, cmd);
-		return -EINVAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	rc = msm_ois_subdev_ioctl(sd, cmd, parg);
 

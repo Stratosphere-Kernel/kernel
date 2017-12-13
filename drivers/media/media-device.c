@@ -106,11 +106,6 @@ static long media_device_enum_entities(struct media_device *mdev,
 	if (ent->name) {
 		strncpy(u_ent.name, ent->name, sizeof(u_ent.name));
 		u_ent.name[sizeof(u_ent.name) - 1] = '\0';
-<<<<<<< HEAD
-=======
-	} else {
-		memset(u_ent.name, 0, sizeof(u_ent.name));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	u_ent.type = ent->type;
 	u_ent.revision = ent->revision;

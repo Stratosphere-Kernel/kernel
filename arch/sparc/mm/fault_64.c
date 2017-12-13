@@ -95,7 +95,6 @@ static unsigned int get_user_insn(unsigned long tpc)
 	pte_t *ptep, pte;
 	unsigned long pa;
 	u32 insn = 0;
-<<<<<<< HEAD
 
 	if (pgd_none(*pgdp) || unlikely(pgd_bad(*pgdp)))
 		goto out;
@@ -141,40 +140,6 @@ static unsigned int get_user_insn(unsigned long tpc)
 out_irq_enable:
 	local_irq_enable();
 out:
-=======
-	unsigned long pstate;
-
-	if (pgd_none(*pgdp))
-		goto outret;
-	pudp = pud_offset(pgdp, tpc);
-	if (pud_none(*pudp))
-		goto outret;
-	pmdp = pmd_offset(pudp, tpc);
-	if (pmd_none(*pmdp))
-		goto outret;
-
-	/* This disables preemption for us as well. */
-	__asm__ __volatile__("rdpr %%pstate, %0" : "=r" (pstate));
-	__asm__ __volatile__("wrpr %0, %1, %%pstate"
-				: : "r" (pstate), "i" (PSTATE_IE));
-	ptep = pte_offset_map(pmdp, tpc);
-	pte = *ptep;
-	if (!pte_present(pte))
-		goto out;
-
-	pa  = (pte_pfn(pte) << PAGE_SHIFT);
-	pa += (tpc & ~PAGE_MASK);
-
-	/* Use phys bypass so we don't pollute dtlb/dcache. */
-	__asm__ __volatile__("lduwa [%1] %2, %0"
-			     : "=r" (insn)
-			     : "r" (pa), "i" (ASI_PHYS_USE_EC));
-
-out:
-	pte_unmap(ptep);
-	__asm__ __volatile__("wrpr %0, 0x0, %%pstate" : : "r" (pstate));
-outret:
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return insn;
 }
 
@@ -200,12 +165,8 @@ show_signal_msg(struct pt_regs *regs, int sig, int code,
 }
 
 static void do_fault_siginfo(int code, int sig, struct pt_regs *regs,
-<<<<<<< HEAD
 			     unsigned long fault_addr, unsigned int insn,
 			     int fault_code)
-=======
-			     unsigned int insn, int fault_code)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	unsigned long addr;
 	siginfo_t info;
@@ -213,7 +174,6 @@ static void do_fault_siginfo(int code, int sig, struct pt_regs *regs,
 	info.si_code = code;
 	info.si_signo = sig;
 	info.si_errno = 0;
-<<<<<<< HEAD
 	if (fault_code & FAULT_CODE_ITLB) {
 		addr = regs->tpc;
 	} else {
@@ -226,12 +186,6 @@ static void do_fault_siginfo(int code, int sig, struct pt_regs *regs,
 		else
 			addr = fault_addr;
 	}
-=======
-	if (fault_code & FAULT_CODE_ITLB)
-		addr = regs->tpc;
-	else
-		addr = compute_effective_address(regs, insn, 0);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	info.si_addr = (void __user *) addr;
 	info.si_trapno = 0;
 
@@ -306,11 +260,7 @@ static void __kprobes do_kernel_fault(struct pt_regs *regs, int si_code,
 		/* The si_code was set to make clear whether
 		 * this was a SEGV_MAPERR or SEGV_ACCERR fault.
 		 */
-<<<<<<< HEAD
 		do_fault_siginfo(si_code, SIGSEGV, regs, address, insn, fault_code);
-=======
-		do_fault_siginfo(si_code, SIGSEGV, regs, insn, fault_code);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 	}
 
@@ -330,21 +280,6 @@ static void noinline __kprobes bogus_32bit_fault_tpc(struct pt_regs *regs)
 	show_regs(regs);
 }
 
-<<<<<<< HEAD
-=======
-static void noinline __kprobes bogus_32bit_fault_address(struct pt_regs *regs,
-							 unsigned long addr)
-{
-	static int times;
-
-	if (times++ < 10)
-		printk(KERN_ERR "FAULT[%s:%d]: 32-bit process "
-		       "reports 64-bit fault address [%lx]\n",
-		       current->comm, current->pid, addr);
-	show_regs(regs);
-}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 asmlinkage void __kprobes do_sparc64_fault(struct pt_regs *regs)
 {
 	struct mm_struct *mm = current->mm;
@@ -373,15 +308,8 @@ asmlinkage void __kprobes do_sparc64_fault(struct pt_regs *regs)
 				goto intr_or_no_mm;
 			}
 		}
-<<<<<<< HEAD
 		if (unlikely((address >> 32) != 0))
 			goto intr_or_no_mm;
-=======
-		if (unlikely((address >> 32) != 0)) {
-			bogus_32bit_fault_address(regs, address);
-			goto intr_or_no_mm;
-		}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (regs->tstate & TSTATE_PRIV) {
@@ -515,11 +443,8 @@ good_area:
 	if (unlikely(fault & VM_FAULT_ERROR)) {
 		if (fault & VM_FAULT_OOM)
 			goto out_of_memory;
-<<<<<<< HEAD
 		else if (fault & VM_FAULT_SIGSEGV)
 			goto bad_area;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		else if (fault & VM_FAULT_SIGBUS)
 			goto do_sigbus;
 		BUG();
@@ -606,11 +531,7 @@ do_sigbus:
 	 * Send a sigbus, regardless of whether we were in kernel
 	 * or user mode.
 	 */
-<<<<<<< HEAD
 	do_fault_siginfo(BUS_ADRERR, SIGBUS, regs, address, insn, fault_code);
-=======
-	do_fault_siginfo(BUS_ADRERR, SIGBUS, regs, insn, fault_code);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Kernel mode? Handle exceptions or die */
 	if (regs->tstate & TSTATE_PRIV)

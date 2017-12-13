@@ -1117,17 +1117,10 @@ int memory_failure(unsigned long pfn, int trapno, int flags)
 	 * The check (unnecessarily) ignores LRU pages being isolated and
 	 * walked by the page reclaim code, however that's not a big loss.
 	 */
-<<<<<<< HEAD
 	if (!PageHuge(p)) {
 		if (!PageLRU(hpage))
 			shake_page(hpage, 0);
 		if (!PageLRU(hpage)) {
-=======
-	if (!PageHuge(p) && !PageTransTail(p)) {
-		if (!PageLRU(p))
-			shake_page(p, 0);
-		if (!PageLRU(p)) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			/*
 			 * shake_page could have turned it free.
 			 */
@@ -1480,11 +1473,8 @@ static int get_any_page(struct page *page, unsigned long pfn, int flags)
 		 */
 		ret = __get_any_page(page, pfn, 0);
 		if (!PageLRU(page)) {
-<<<<<<< HEAD
 			/* Drop page reference which is from __get_any_page() */
 			put_page(page);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			pr_info("soft_offline: %#lx: unknown non LRU page type %lx\n",
 				pfn, page->flags);
 			return -EIO;

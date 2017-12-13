@@ -341,11 +341,7 @@ inline void softmac_ps_mgmt_xmit(struct sk_buff *skb,
 	}
 }
 
-<<<<<<< HEAD
 static inline struct sk_buff *rtllib_probe_req(struct rtllib_device *ieee)
-=======
-inline struct sk_buff *rtllib_probe_req(struct rtllib_device *ieee)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	unsigned int len, rate_len;
 	u8 *tag;

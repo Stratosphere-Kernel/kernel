@@ -28,17 +28,11 @@
 int hwreg_present( volatile void *regp )
 {
     int	ret = 0;
-<<<<<<< HEAD
     unsigned long flags;
     long	save_sp, save_vbr;
     long	tmp_vectors[3];
 
     local_irq_save(flags);
-=======
-    long	save_sp, save_vbr;
-    long	tmp_vectors[3];
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     __asm__ __volatile__
 	(	"movec	%/vbr,%2\n\t"
 		"movel	#Lberr1,%4@(8)\n\t"
@@ -54,10 +48,7 @@ int hwreg_present( volatile void *regp )
 		: "=&d" (ret), "=&r" (save_sp), "=&r" (save_vbr)
 		: "a" (regp), "a" (tmp_vectors)
                 );
-<<<<<<< HEAD
     local_irq_restore(flags);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
     return( ret );
 }
@@ -70,17 +61,11 @@ EXPORT_SYMBOL(hwreg_present);
 int hwreg_write( volatile void *regp, unsigned short val )
 {
 	int		ret;
-<<<<<<< HEAD
 	unsigned long flags;
 	long	save_sp, save_vbr;
 	long	tmp_vectors[3];
 
 	local_irq_save(flags);
-=======
-	long	save_sp, save_vbr;
-	long	tmp_vectors[3];
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	__asm__ __volatile__
 	(	"movec	%/vbr,%2\n\t"
 		"movel	#Lberr2,%4@(8)\n\t"
@@ -98,10 +83,7 @@ int hwreg_write( volatile void *regp, unsigned short val )
 		: "=&d" (ret), "=&r" (save_sp), "=&r" (save_vbr)
 		: "a" (regp), "a" (tmp_vectors), "g" (val)
 	);
-<<<<<<< HEAD
 	local_irq_restore(flags);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return( ret );
 }

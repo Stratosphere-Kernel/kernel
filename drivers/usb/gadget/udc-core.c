@@ -488,14 +488,11 @@ static ssize_t usb_udc_softconn_store(struct device *dev,
 {
 	struct usb_udc		*udc = container_of(dev, struct usb_udc, dev);
 
-<<<<<<< HEAD
 	if (!udc->driver) {
 		dev_err(dev, "soft-connect without a gadget driver\n");
 		return -EOPNOTSUPP;
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (sysfs_streq(buf, "connect")) {
 		usb_gadget_udc_start(udc->gadget, udc->driver);
 		usb_gadget_connect(udc->gadget);

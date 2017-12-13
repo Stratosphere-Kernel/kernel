@@ -391,11 +391,7 @@ ncp_dget_fpos(struct dentry *dentry, struct dentry *parent, unsigned long fpos)
 	spin_lock(&parent->d_lock);
 	next = parent->d_subdirs.next;
 	while (next != &parent->d_subdirs) {
-<<<<<<< HEAD
 		dent = list_entry(next, struct dentry, d_child);
-=======
-		dent = list_entry(next, struct dentry, d_u.d_child);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if ((unsigned long)dent->d_fsdata == fpos) {
 			if (dent->d_inode)
 				dget(dent);

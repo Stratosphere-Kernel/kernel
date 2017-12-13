@@ -68,10 +68,7 @@ extern void groups_free(struct group_info *);
 extern int set_current_groups(struct group_info *);
 extern int set_groups(struct cred *, struct group_info *);
 extern int groups_search(const struct group_info *, kgid_t);
-<<<<<<< HEAD
 extern bool may_setgroups(void);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /* access the groups "array" with this macro */
 #define GROUP_AT(gi, i) \

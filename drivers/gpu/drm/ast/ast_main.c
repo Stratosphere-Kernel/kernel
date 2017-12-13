@@ -100,11 +100,7 @@ static int ast_detect_chip(struct drm_device *dev)
 			}
 			ast->vga2_clone = false;
 		} else {
-<<<<<<< HEAD
 			ast->chip = AST2000;
-=======
-			ast->chip = 2000;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			DRM_INFO("AST 2000 detected\n");
 		}
 	}

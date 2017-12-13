@@ -124,10 +124,7 @@ dcb_outp_parse(struct nouveau_bios *bios, u8 idx, u8 *ver, u8 *len,
 	       struct dcb_output *outp)
 {
 	u16 dcb = dcb_outp(bios, idx, ver, len);
-<<<<<<< HEAD
 	memset(outp, 0x00, sizeof(*outp));
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (dcb) {
 		if (*ver >= 0x20) {
 			u32 conn = nv_ro32(bios, dcb + 0x00);

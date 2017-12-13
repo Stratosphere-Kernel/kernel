@@ -44,15 +44,12 @@
 #ifndef _ANIGLOBAL_H
 #define _ANIGLOBAL_H
 
-<<<<<<< HEAD
 // Take care to avoid redefinition of this type, if it is
 // already defined in "halWmmApi.h"
 #if !defined(_HALMAC_WMM_API_H)
 typedef struct sAniSirGlobal *tpAniSirGlobal;
 #endif
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include "halTypes.h"
 #include "sirCommon.h"
 #include "aniSystemDefs.h"

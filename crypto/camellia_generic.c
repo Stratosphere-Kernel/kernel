@@ -1098,9 +1098,5 @@ module_exit(camellia_fini);
 
 MODULE_DESCRIPTION("Camellia Cipher Algorithm");
 MODULE_LICENSE("GPL");
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("camellia");
 MODULE_ALIAS_CRYPTO("camellia-generic");
-=======
-MODULE_ALIAS("camellia");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

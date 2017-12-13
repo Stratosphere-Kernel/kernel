@@ -110,11 +110,7 @@ void __init init_IRQ(void)
 #endif
 }
 
-<<<<<<< HEAD
 #ifdef CONFIG_DEBUG_STACKOVERFLOW
-=======
-#ifdef DEBUG_STACKOVERFLOW
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static inline void check_stack_overflow(void)
 {
 	unsigned long sp;

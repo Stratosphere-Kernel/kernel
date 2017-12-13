@@ -362,7 +362,6 @@ static inline int apic_find_highest_irr(struct kvm_lapic *apic)
 
 static inline void apic_clear_irr(int vec, struct kvm_lapic *apic)
 {
-<<<<<<< HEAD
 	struct kvm_vcpu *vcpu;
 
 	vcpu = apic->vcpu;
@@ -375,17 +374,10 @@ static inline void apic_clear_irr(int vec, struct kvm_lapic *apic)
 		vec = apic_search_irr(apic);
 		apic->irr_pending = (vec != -1);
 	}
-=======
-	apic->irr_pending = false;
-	apic_clear_vector(vec, apic->regs + APIC_IRR);
-	if (apic_search_irr(apic) != -1)
-		apic->irr_pending = true;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static inline void apic_set_isr(int vec, struct kvm_lapic *apic)
 {
-<<<<<<< HEAD
 	struct kvm_vcpu *vcpu;
 
 	if (__apic_test_and_set_vector(vec, apic->regs + APIC_ISR))
@@ -410,19 +402,6 @@ static inline void apic_set_isr(int vec, struct kvm_lapic *apic)
 		 */
 		apic->highest_isr_cache = vec;
 	}
-=======
-	/* Note that we never get here with APIC virtualization enabled.  */
-
-	if (!__apic_test_and_set_vector(vec, apic->regs + APIC_ISR))
-		++apic->isr_count;
-	BUG_ON(apic->isr_count > MAX_APIC_VECTOR);
-	/*
-	 * ISR (in service register) bit is set when injecting an interrupt.
-	 * The highest vector is injected. Thus the latest bit set matches
-	 * the highest bit in ISR.
-	 */
-	apic->highest_isr_cache = vec;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static inline int apic_find_highest_isr(struct kvm_lapic *apic)
@@ -1144,17 +1123,10 @@ static void apic_manage_nmi_watchdog(struct kvm_lapic *apic, u32 lvt0_val)
 		if (!nmi_wd_enabled) {
 			apic_debug("Receive NMI setting on APIC_LVT0 "
 				   "for cpu %d\n", apic->vcpu->vcpu_id);
-<<<<<<< HEAD
 			atomic_inc(&apic->vcpu->kvm->arch.vapics_in_nmi_mode);
 		}
 	} else if (nmi_wd_enabled)
 		atomic_dec(&apic->vcpu->kvm->arch.vapics_in_nmi_mode);
-=======
-			apic->vcpu->kvm->arch.vapics_in_nmi_mode++;
-		}
-	} else if (nmi_wd_enabled)
-		apic->vcpu->kvm->arch.vapics_in_nmi_mode--;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int apic_reg_write(struct kvm_lapic *apic, u32 reg, u32 val)
@@ -1690,7 +1662,6 @@ int kvm_get_apic_interrupt(struct kvm_vcpu *vcpu)
 	int vector = kvm_apic_has_interrupt(vcpu);
 	struct kvm_lapic *apic = vcpu->arch.apic;
 
-<<<<<<< HEAD
 	if (vector == -1)
 		return -1;
 
@@ -1701,13 +1672,6 @@ int kvm_get_apic_interrupt(struct kvm_vcpu *vcpu)
 	 * because the process would deliver it through the IDT.
 	 */
 
-=======
-	/* Note that we never get here with APIC virtualization enabled.  */
-
-	if (vector == -1)
-		return -1;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	apic_set_isr(vector, apic);
 	apic_update_ppr(apic);
 	apic_clear_irr(vector, apic);

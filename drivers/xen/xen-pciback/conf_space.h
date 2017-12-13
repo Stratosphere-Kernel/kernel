@@ -64,11 +64,8 @@ struct config_field_entry {
 	void *data;
 };
 
-<<<<<<< HEAD
 extern bool permissive;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define OFFSET(cfg_entry) ((cfg_entry)->base_offset+(cfg_entry)->field->offset)
 
 /* Add fields to a device - the add_fields macro expects to get a pointer to

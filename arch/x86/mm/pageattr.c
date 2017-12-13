@@ -389,11 +389,7 @@ phys_addr_t slow_virt_to_phys(void *__virt_addr)
 	psize = page_level_size(level);
 	pmask = page_level_mask(level);
 	offset = virt_addr & ~pmask;
-<<<<<<< HEAD
 	phys_addr = (phys_addr_t)pte_pfn(*pte) << PAGE_SHIFT;
-=======
-	phys_addr = pte_pfn(*pte) << PAGE_SHIFT;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return (phys_addr | offset);
 }
 EXPORT_SYMBOL_GPL(slow_virt_to_phys);

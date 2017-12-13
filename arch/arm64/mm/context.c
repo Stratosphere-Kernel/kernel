@@ -92,7 +92,6 @@ static void reset_context(void *info)
 	unsigned int cpu = smp_processor_id();
 	struct mm_struct *mm = current->active_mm;
 
-<<<<<<< HEAD
 	/*
 	 * current->active_mm could be init_mm for the idle thread immediately
 	 * after secondary CPU boot or hotplug. TTBR0_EL1 is already set to
@@ -101,8 +100,6 @@ static void reset_context(void *info)
 	if (mm == &init_mm)
 		return;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	smp_rmb();
 	asid = cpu_last_asid + cpu;
 

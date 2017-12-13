@@ -444,10 +444,6 @@ static sense_reason_t
 spc_emulate_evpd_b0(struct se_cmd *cmd, unsigned char *buf)
 {
 	struct se_device *dev = cmd->se_dev;
-<<<<<<< HEAD
-=======
-	u32 max_sectors;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int have_tp = 0;
 
 	/*
@@ -472,13 +468,7 @@ spc_emulate_evpd_b0(struct se_cmd *cmd, unsigned char *buf)
 	/*
 	 * Set MAXIMUM TRANSFER LENGTH
 	 */
-<<<<<<< HEAD
 	put_unaligned_be32(dev->dev_attrib.hw_max_sectors, &buf[8]);
-=======
-	max_sectors = min(dev->dev_attrib.fabric_max_sectors,
-			  dev->dev_attrib.hw_max_sectors);
-	put_unaligned_be32(max_sectors, &buf[8]);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * Set OPTIMAL TRANSFER LENGTH

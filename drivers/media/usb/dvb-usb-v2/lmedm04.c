@@ -350,10 +350,7 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
 {
 	struct dvb_usb_device *d = adap_to_d(adap);
 	struct lme2510_state *lme_int = adap_to_priv(adap);
-<<<<<<< HEAD
 	struct usb_host_endpoint *ep;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	lme_int->lme_urb = usb_alloc_urb(0, GFP_ATOMIC);
 
@@ -375,15 +372,12 @@ static int lme2510_int_read(struct dvb_usb_adapter *adap)
 				adap,
 				8);
 
-<<<<<<< HEAD
 	/* Quirk of pipe reporting PIPE_BULK but behaves as interrupt */
 	ep = usb_pipe_endpoint(d->udev, lme_int->lme_urb->pipe);
 
 	if (usb_endpoint_type(&ep->desc) == USB_ENDPOINT_XFER_BULK)
 		lme_int->lme_urb->pipe = usb_rcvbulkpipe(d->udev, 0xa),
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	lme_int->lme_urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
 
 	usb_submit_urb(lme_int->lme_urb, GFP_ATOMIC);

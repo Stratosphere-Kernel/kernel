@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
  * Copyright (c) 2012-2016 The Linux Foundation. All rights reserved.
-=======
- * Copyright (c) 2012-2017 The Linux Foundation. All rights reserved.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -207,13 +203,6 @@ limExtractApCapability(tpAniSirGlobal pMac, tANI_U8 *pIE, tANI_U16 ieLen,
         }
 
     }
-<<<<<<< HEAD
-=======
-
-    /* Update HS 2.0 Information Element */
-    sir_copy_hs20_ie(&psessionEntry->hs20vendor_ie,
-                     &pBeaconStruct->hs20vendor_ie);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     vos_mem_free(pBeaconStruct);
     return;
 } /****** end limExtractApCapability() ******/

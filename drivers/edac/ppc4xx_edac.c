@@ -921,11 +921,7 @@ static int ppc4xx_edac_init_csrows(struct mem_ctl_info *mci, u32 mcopt1)
 	 */
 
 	for (row = 0; row < mci->nr_csrows; row++) {
-<<<<<<< HEAD
 		struct csrow_info *csi = mci->csrows[row];
-=======
-		struct csrow_info *csi = &mci->csrows[row];
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/*
 		 * Get the configuration settings for this

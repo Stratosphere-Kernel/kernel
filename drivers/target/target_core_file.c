@@ -554,7 +554,6 @@ fd_execute_rw(struct se_cmd *cmd)
 	enum dma_data_direction data_direction = cmd->data_direction;
 	struct se_device *dev = cmd->se_dev;
 	int ret = 0;
-<<<<<<< HEAD
 	/*
 	 * We are currently limited by the number of iovecs (2048) per
 	 * single vfs_[writev,readv] call.
@@ -565,9 +564,6 @@ fd_execute_rw(struct se_cmd *cmd)
 			cmd->data_length, FD_MAX_BYTES);
 		return TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
 	}
-=======
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Call vectorized fileio functions to map struct scatterlist
 	 * physical memory addresses to struct iovec virtual memory.

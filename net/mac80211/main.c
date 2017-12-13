@@ -257,10 +257,7 @@ static void ieee80211_restart_work(struct work_struct *work)
 {
 	struct ieee80211_local *local =
 		container_of(work, struct ieee80211_local, restart_work);
-<<<<<<< HEAD
 	struct ieee80211_sub_if_data *sdata;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* wait for scan work complete */
 	flush_workqueue(local->workqueue);
@@ -273,11 +270,8 @@ static void ieee80211_restart_work(struct work_struct *work)
 	mutex_unlock(&local->mtx);
 
 	rtnl_lock();
-<<<<<<< HEAD
 	list_for_each_entry(sdata, &local->interfaces, list)
 		flush_delayed_work(&sdata->dec_tailroom_needed_wk);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ieee80211_scan_cancel(local);
 	ieee80211_reconfig(local);
 	rtnl_unlock();

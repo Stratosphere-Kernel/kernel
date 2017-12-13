@@ -9,18 +9,9 @@
 #include <linux/pfn.h>
 #include <linux/suspend.h>
 #include <linux/mm.h>
-<<<<<<< HEAD
 #include <asm/sections.h>
 #include <asm/ctl_reg.h>
 #include <asm/ipl.h>
-=======
-#include <asm/ctl_reg.h>
-
-/*
- * References to section boundaries
- */
-extern const void __nosave_begin, __nosave_end;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * The restore of the saved pages in an hibernation image will set
@@ -144,11 +135,8 @@ int pfn_is_nosave(unsigned long pfn)
 {
 	unsigned long nosave_begin_pfn = PFN_DOWN(__pa(&__nosave_begin));
 	unsigned long nosave_end_pfn = PFN_DOWN(__pa(&__nosave_end));
-<<<<<<< HEAD
 	unsigned long eshared_pfn = PFN_DOWN(__pa(&_eshared)) - 1;
 	unsigned long stext_pfn = PFN_DOWN(__pa(&_stext));
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Always save lowcore pages (LC protection might be enabled). */
 	if (pfn <= LC_PAGES)
@@ -156,11 +144,8 @@ int pfn_is_nosave(unsigned long pfn)
 	if (pfn >= nosave_begin_pfn && pfn < nosave_end_pfn)
 		return 1;
 	/* Skip memory holes and read-only pages (NSS, DCSS, ...). */
-<<<<<<< HEAD
 	if (pfn >= stext_pfn && pfn <= eshared_pfn)
 		return ipl_info.type == IPL_TYPE_NSS ? 1 : 0;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (tprot(PFN_PHYS(pfn)))
 		return 1;
 	return 0;

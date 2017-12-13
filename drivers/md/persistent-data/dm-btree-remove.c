@@ -309,13 +309,8 @@ static void redistribute3(struct dm_btree_info *info, struct btree_node *parent,
 
 		if (s < 0 && nr_center < -s) {
 			/* not enough in central node */
-<<<<<<< HEAD
 			shift(left, center, -nr_center);
 			s += nr_center;
-=======
-			shift(left, center, nr_center);
-			s = nr_center - target;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			shift(left, right, s);
 			nr_right += s;
 		} else
@@ -328,11 +323,7 @@ static void redistribute3(struct dm_btree_info *info, struct btree_node *parent,
 		if (s > 0 && nr_center < s) {
 			/* not enough in central node */
 			shift(center, right, nr_center);
-<<<<<<< HEAD
 			s -= nr_center;
-=======
-			s = target - nr_center;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			shift(left, right, s);
 			nr_left -= s;
 		} else

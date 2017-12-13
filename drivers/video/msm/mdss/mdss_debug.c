@@ -416,12 +416,6 @@ static ssize_t mdss_debug_base_offset_write(struct file *file,
 
 	buf[count] = 0;	/* end of string */
 
-<<<<<<< HEAD
-=======
-	if (off % sizeof(u32))
-		return -EINVAL;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	sscanf(buf, "%5x %x", &off, &cnt);
 
 	if (off > dbg->max_offset)
@@ -496,12 +490,6 @@ static ssize_t mdss_debug_base_reg_write(struct file *file,
 	if (cnt < 2)
 		return -EFAULT;
 
-<<<<<<< HEAD
-=======
-	if (off % sizeof(u32))
-		return -EFAULT;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (off >= dbg->max_offset)
 		return -EFAULT;
 
@@ -547,12 +535,6 @@ static ssize_t mdss_debug_base_reg_read(struct file *file,
 			return -ENOMEM;
 		}
 
-<<<<<<< HEAD
-=======
-		if (dbg->off % sizeof(u32))
-			return -EFAULT;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ptr = dbg->base + dbg->off;
 		tot = 0;
 

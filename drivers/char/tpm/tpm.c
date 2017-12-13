@@ -533,18 +533,10 @@ static int tpm_startup(struct tpm_chip *chip, __be16 startup_type)
 int tpm_get_timeouts(struct tpm_chip *chip)
 {
 	struct tpm_cmd_t tpm_cmd;
-<<<<<<< HEAD
 	unsigned long new_timeout[4];
 	unsigned long old_timeout[4];
 	struct duration_t *duration_cap;
 	ssize_t rc;
-=======
-	struct timeout_t *timeout_cap;
-	struct duration_t *duration_cap;
-	ssize_t rc;
-	u32 timeout;
-	unsigned int scale = 1;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	tpm_cmd.header.in = tpm_getcap_header;
 	tpm_cmd.params.getcap_in.cap = TPM_CAP_PROP;
@@ -578,7 +570,6 @@ int tpm_get_timeouts(struct tpm_chip *chip)
 	    != sizeof(tpm_cmd.header.out) + sizeof(u32) + 4 * sizeof(u32))
 		return -EINVAL;
 
-<<<<<<< HEAD
 	old_timeout[0] = be32_to_cpu(tpm_cmd.params.getcap_out.cap.timeout.a);
 	old_timeout[1] = be32_to_cpu(tpm_cmd.params.getcap_out.cap.timeout.b);
 	old_timeout[2] = be32_to_cpu(tpm_cmd.params.getcap_out.cap.timeout.c);
@@ -619,27 +610,6 @@ int tpm_get_timeouts(struct tpm_chip *chip)
 	chip->vendor.timeout_b = usecs_to_jiffies(new_timeout[1]);
 	chip->vendor.timeout_c = usecs_to_jiffies(new_timeout[2]);
 	chip->vendor.timeout_d = usecs_to_jiffies(new_timeout[3]);
-=======
-	timeout_cap = &tpm_cmd.params.getcap_out.cap.timeout;
-	/* Don't overwrite default if value is 0 */
-	timeout = be32_to_cpu(timeout_cap->a);
-	if (timeout && timeout < 1000) {
-		/* timeouts in msec rather usec */
-		scale = 1000;
-		chip->vendor.timeout_adjusted = true;
-	}
-	if (timeout)
-		chip->vendor.timeout_a = usecs_to_jiffies(timeout * scale);
-	timeout = be32_to_cpu(timeout_cap->b);
-	if (timeout)
-		chip->vendor.timeout_b = usecs_to_jiffies(timeout * scale);
-	timeout = be32_to_cpu(timeout_cap->c);
-	if (timeout)
-		chip->vendor.timeout_c = usecs_to_jiffies(timeout * scale);
-	timeout = be32_to_cpu(timeout_cap->d);
-	if (timeout)
-		chip->vendor.timeout_d = usecs_to_jiffies(timeout * scale);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 duration:
 	tpm_cmd.header.in = tpm_getcap_header;
@@ -1473,22 +1443,13 @@ int tpm_get_random(u32 chip_num, u8 *out, size_t max)
 	int err, total = 0, retries = 5;
 	u8 *dest = out;
 
-<<<<<<< HEAD
 	if (!out || !num_bytes || max > TPM_MAX_RNG_DATA)
 		return -EINVAL;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	chip = tpm_chip_find_get(chip_num);
 	if (chip == NULL)
 		return -ENODEV;
 
-<<<<<<< HEAD
-=======
-	if (!out || !num_bytes || max > TPM_MAX_RNG_DATA)
-		return -EINVAL;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	do {
 		tpm_cmd.header.in = tpm_getrandom_header;
 		tpm_cmd.params.getrandom_in.num_bytes = cpu_to_be32(num_bytes);
@@ -1507,10 +1468,7 @@ int tpm_get_random(u32 chip_num, u8 *out, size_t max)
 		num_bytes -= recd;
 	} while (retries-- && total < max);
 
-<<<<<<< HEAD
 	tpm_chip_put(chip);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return total ? total : -EIO;
 }
 EXPORT_SYMBOL_GPL(tpm_get_random);

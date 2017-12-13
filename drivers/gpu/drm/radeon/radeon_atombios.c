@@ -463,7 +463,6 @@ static bool radeon_atom_apply_quirks(struct drm_device *dev,
 		}
 	}
 
-<<<<<<< HEAD
 	/* Fujitsu D3003-S2 board lists DVI-I as DVI-I and VGA */
 	if ((dev->pdev->device == 0x9805) &&
 	    (dev->pdev->subsystem_vendor == 0x1734) &&
@@ -471,8 +470,6 @@ static bool radeon_atom_apply_quirks(struct drm_device *dev,
 		if (*connector_type == DRM_MODE_CONNECTOR_VGA)
 			return false;
 	}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return true;
 }
@@ -1918,11 +1915,7 @@ static const char *thermal_controller_names[] = {
 	"adm1032",
 	"adm1030",
 	"max6649",
-<<<<<<< HEAD
 	"lm63", /* lm64 */
-=======
-	"lm64",
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	"f75375",
 	"asc7xxx",
 };
@@ -1933,11 +1926,7 @@ static const char *pp_lib_thermal_controller_names[] = {
 	"adm1032",
 	"adm1030",
 	"max6649",
-<<<<<<< HEAD
 	"lm63", /* lm64 */
-=======
-	"lm64",
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	"f75375",
 	"RV6xx",
 	"RV770",

@@ -176,11 +176,7 @@ int copy_thread(unsigned long clone_flags, unsigned long sp,
 		childregs->bp = arg;
 		childregs->orig_ax = -1;
 		childregs->cs = __KERNEL_CS | get_kernel_rpl();
-<<<<<<< HEAD
 		childregs->flags = X86_EFLAGS_IF | X86_EFLAGS_FIXED;
-=======
-		childregs->flags = X86_EFLAGS_IF | X86_EFLAGS_BIT1;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return 0;
 	}
 	*childregs = *current_pt_regs();
@@ -283,30 +279,9 @@ __switch_to(struct task_struct *prev_p, struct task_struct *next_p)
 
 	fpu = switch_fpu_prepare(prev_p, next_p, cpu);
 
-<<<<<<< HEAD
 	/* Reload esp0 and ss1. */
 	load_sp0(tss, next);
 
-=======
-	/*
-	 * Reload esp0, LDT and the page table pointer:
-	 */
-	load_sp0(tss, next);
-
-	/*
-	 * Switch DS and ES.
-	 * This won't pick up thread selector changes, but I guess that is ok.
-	 */
-	savesegment(es, prev->es);
-	if (unlikely(next->es | prev->es))
-		loadsegment(es, next->es);
-
-	savesegment(ds, prev->ds);
-	if (unlikely(next->ds | prev->ds))
-		loadsegment(ds, next->ds);
-
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* We must save %fs and %gs before load_TLS() because
 	 * %fs and %gs may be cleared by load_TLS().
 	 *
@@ -315,7 +290,6 @@ __switch_to(struct task_struct *prev_p, struct task_struct *next_p)
 	savesegment(fs, fsindex);
 	savesegment(gs, gsindex);
 
-<<<<<<< HEAD
 	/*
 	 * Load TLS before restoring any segments so that segment loads
 	 * reference the correct GDT entries.
@@ -399,51 +373,18 @@ __switch_to(struct task_struct *prev_p, struct task_struct *next_p)
 		 * address itself, we won't notice and we'll incorrectly
 		 * restore the prior base address next time we reschdule
 		 * the process.
-=======
-	load_TLS(next, cpu);
-
-	/*
-	 * Leave lazy mode, flushing any hypercalls made here.
-	 * This must be done before restoring TLS segments so
-	 * the GDT and LDT are properly updated, and must be
-	 * done before math_state_restore, so the TS bit is up
-	 * to date.
-	 */
-	arch_end_context_switch(next_p);
-
-	/*
-	 * Switch FS and GS.
-	 *
-	 * Segment register != 0 always requires a reload.  Also
-	 * reload when it has changed.  When prev process used 64bit
-	 * base always reload to avoid an information leak.
-	 */
-	if (unlikely(fsindex | next->fsindex | prev->fs)) {
-		loadsegment(fs, next->fsindex);
-		/*
-		 * Check if the user used a selector != 0; if yes
-		 *  clear 64bit base, since overloaded base is always
-		 *  mapped to the Null selector
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		 */
 		if (fsindex)
 			prev->fs = 0;
 	}
-<<<<<<< HEAD
-=======
-	/* when next process has a 64bit base use it */
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (next->fs)
 		wrmsrl(MSR_FS_BASE, next->fs);
 	prev->fsindex = fsindex;
 
 	if (unlikely(gsindex | next->gsindex | prev->gs)) {
 		load_gs_index(next->gsindex);
-<<<<<<< HEAD
 
 		/* This works (and fails) the same way as fsindex above. */
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (gsindex)
 			prev->gs = 0;
 	}

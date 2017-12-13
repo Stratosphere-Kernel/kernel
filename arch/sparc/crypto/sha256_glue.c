@@ -237,12 +237,7 @@ module_exit(sha256_sparc64_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("SHA-224 and SHA-256 Secure Hash Algorithm, sparc64 sha256 opcode accelerated");
 
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("sha224");
 MODULE_ALIAS_CRYPTO("sha256");
-=======
-MODULE_ALIAS("sha224");
-MODULE_ALIAS("sha256");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #include "crop_devid.c"

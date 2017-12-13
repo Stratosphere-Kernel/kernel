@@ -510,13 +510,10 @@ static int jffs2_scan_eraseblock (struct jffs2_sb_info *c, struct jffs2_eraseblo
 				sumlen = c->sector_size - je32_to_cpu(sm->offset);
 				sumptr = buf + buf_size - sumlen;
 
-<<<<<<< HEAD
 				/* sm->offset maybe wrong but MAGIC maybe right */
 				if (sumlen > c->sector_size)
 					goto full_scan;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				/* Now, make sure the summary itself is available */
 				if (sumlen > buf_size) {
 					/* Need to kmalloc for this. */
@@ -551,10 +548,7 @@ static int jffs2_scan_eraseblock (struct jffs2_sb_info *c, struct jffs2_eraseblo
 		}
 	}
 
-<<<<<<< HEAD
 full_scan:
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	buf_ofs = jeb->offset;
 
 	if (!buf_size) {

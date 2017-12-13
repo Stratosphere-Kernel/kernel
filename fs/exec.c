@@ -1101,11 +1101,7 @@ EXPORT_SYMBOL(flush_old_exec);
 
 void would_dump(struct linux_binprm *bprm, struct file *file)
 {
-<<<<<<< HEAD
 	if (inode_permission(file_inode(file), MAY_READ) < 0)
-=======
-	if (inode_permission2(file->f_path.mnt, file_inode(file), MAY_READ) < 0)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		bprm->interp_flags |= BINPRM_FLAGS_ENFORCE_NONDUMP;
 }
 EXPORT_SYMBOL(would_dump);
@@ -1549,14 +1545,6 @@ static int do_execve_common(const char *filename,
 	if (retval < 0)
 		goto out;
 
-<<<<<<< HEAD
-=======
-	if (d_is_su(file->f_dentry) && capable(CAP_SYS_ADMIN)) {
-		current->flags |= PF_SU;
-		su_exec();
-	}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* execve succeeded */
 	current->fs->in_exec = 0;
 	current->in_execve = 0;

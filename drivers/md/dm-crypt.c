@@ -1535,10 +1535,7 @@ static int crypt_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 	unsigned int key_size, opt_params;
 	unsigned long long tmpll;
 	int ret;
-<<<<<<< HEAD
 	size_t iv_size_padding;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct dm_arg_set as;
 	const char *opt_string;
 	char dummy;
@@ -1568,7 +1565,6 @@ static int crypt_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 
 	cc->dmreq_start = sizeof(struct ablkcipher_request);
 	cc->dmreq_start += crypto_ablkcipher_reqsize(any_tfm(cc));
-<<<<<<< HEAD
 	cc->dmreq_start = ALIGN(cc->dmreq_start, __alignof__(struct dm_crypt_request));
 
 	if (crypto_ablkcipher_alignmask(any_tfm(cc)) < CRYPTO_MINALIGN) {
@@ -1587,15 +1583,6 @@ static int crypt_ctr(struct dm_target *ti, unsigned int argc, char **argv)
 	ret = -ENOMEM;
 	cc->req_pool = mempool_create_kmalloc_pool(MIN_IOS, cc->dmreq_start +
 			sizeof(struct dm_crypt_request) + iv_size_padding + cc->iv_size);
-=======
-	cc->dmreq_start = ALIGN(cc->dmreq_start, crypto_tfm_ctx_alignment());
-	cc->dmreq_start += crypto_ablkcipher_alignmask(any_tfm(cc)) &
-			   ~(crypto_tfm_ctx_alignment() - 1);
-
-	ret = -ENOMEM;
-	cc->req_pool = mempool_create_kmalloc_pool(MIN_IOS, cc->dmreq_start +
-			sizeof(struct dm_crypt_request) + cc->iv_size);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!cc->req_pool) {
 		ti->error = "Cannot allocate crypt request mempool";
 		goto bad;

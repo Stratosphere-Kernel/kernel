@@ -2810,10 +2810,6 @@ struct sk_buff *skb_segment(struct sk_buff *skb, netdev_features_t features)
 		tail = nskb;
 
 		__copy_skb_header(nskb, skb);
-<<<<<<< HEAD
-=======
-		nskb->mac_len = skb->mac_len;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/* nskb and skb might have different headroom */
 		if (nskb->ip_summed == CHECKSUM_PARTIAL)
@@ -2823,10 +2819,7 @@ struct sk_buff *skb_segment(struct sk_buff *skb, netdev_features_t features)
 		skb_set_network_header(nskb, skb->mac_len);
 		nskb->transport_header = (nskb->network_header +
 					  skb_network_header_len(skb));
-<<<<<<< HEAD
 		skb_reset_mac_len(nskb);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		skb_copy_from_linear_data_offset(skb, -tnl_hlen,
 						 nskb->data - tnl_hlen,

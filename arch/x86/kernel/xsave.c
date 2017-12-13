@@ -268,11 +268,6 @@ int save_xstate_sig(void __user *buf, void __user *buf_fx, int size)
 	if (use_fxsr() && save_xstate_epilog(buf_fx, ia32_fxstate))
 		return -1;
 
-<<<<<<< HEAD
-=======
-	drop_init_fpu(tsk);	/* trigger finit */
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
@@ -381,11 +376,7 @@ int __restore_xstate_sig(void __user *buf, void __user *buf_fx, int size)
 		 * thread's fpu state, reconstruct fxstate from the fsave
 		 * header. Sanitize the copied state etc.
 		 */
-<<<<<<< HEAD
 		struct fpu *fpu = &tsk->thread.fpu;
-=======
-		struct xsave_struct *xsave = &tsk->thread.fpu.state->xsave;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		struct user_i387_ia32_struct env;
 		int err = 0;
 
@@ -399,7 +390,6 @@ int __restore_xstate_sig(void __user *buf, void __user *buf_fx, int size)
 		 */
 		drop_fpu(tsk);
 
-<<<<<<< HEAD
 		if (__copy_from_user(&fpu->state->xsave, buf_fx, state_size) ||
 		    __copy_from_user(&env, buf, sizeof(env))) {
 			fpu_finit(fpu);
@@ -414,18 +404,6 @@ int __restore_xstate_sig(void __user *buf, void __user *buf_fx, int size)
 			math_state_restore();
 			preempt_enable();
 		}
-=======
-		if (__copy_from_user(xsave, buf_fx, state_size) ||
-		    __copy_from_user(&env, buf, sizeof(env))) {
-			err = -1;
-		} else {
-			sanitize_restored_xstate(tsk, &env, xstate_bv, fx_only);
-			set_used_math();
-		}
-
-		if (use_eager_fpu())
-			math_state_restore();
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		return err;
 	} else {

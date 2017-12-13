@@ -46,11 +46,7 @@ USER(9f, strh	wzr, [x0], #2	)
 	sub	x1, x1, #2
 4:	adds	x1, x1, #1
 	b.mi	5f
-<<<<<<< HEAD
 USER(9f, strb	wzr, [x0]	)
-=======
-	strb	wzr, [x0]
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 5:	mov	x0, #0
 	ret
 ENDPROC(__clear_user)

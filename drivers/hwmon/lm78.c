@@ -108,11 +108,7 @@ static inline int FAN_FROM_REG(u8 val, int div)
  * TEMP: mC (-128C to +127C)
  * REG: 1C/bit, two's complement
  */
-<<<<<<< HEAD
 static inline s8 TEMP_TO_REG(long val)
-=======
-static inline s8 TEMP_TO_REG(int val)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int nval = clamp_val(val, -128000, 127000) ;
 	return nval < 0 ? (nval - 500) / 1000 : (nval + 500) / 1000;

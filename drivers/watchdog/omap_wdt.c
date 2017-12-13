@@ -134,7 +134,6 @@ static int omap_wdt_start(struct watchdog_device *wdog)
 
 	pm_runtime_get_sync(wdev->dev);
 
-<<<<<<< HEAD
 	/*
 	 * Make sure the watchdog is disabled. This is unfortunately required
 	 * because writing to various registers with the watchdog running has no
@@ -142,8 +141,6 @@ static int omap_wdt_start(struct watchdog_device *wdog)
 	 */
 	omap_wdt_disable(wdev);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* initialize prescaler */
 	while (__raw_readl(base + OMAP_WATCHDOG_WPS) & 0x01)
 		cpu_relax();

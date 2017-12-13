@@ -40,10 +40,7 @@
 #include <target/target_core_fabric.h>
 
 #include "target_core_internal.h"
-<<<<<<< HEAD
 #include "target_core_pr.h"
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 extern struct se_device *g_lun0_dev;
 
@@ -169,7 +166,6 @@ void core_tpg_add_node_to_devs(
 
 		core_enable_device_list_for_node(lun, NULL, lun->unpacked_lun,
 				lun_access, acl, tpg);
-<<<<<<< HEAD
 		/*
 		 * Check to see if there are any existing persistent reservation
 		 * APTPL pre-registrations that need to be enabled for this dynamic
@@ -177,8 +173,6 @@ void core_tpg_add_node_to_devs(
 		 */
 		core_scsi3_check_aptpl_registration(dev, tpg, lun, acl,
 						    lun->unpacked_lun);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		spin_lock(&tpg->tpg_lun_lock);
 	}
 	spin_unlock(&tpg->tpg_lun_lock);

@@ -688,13 +688,10 @@ int radeon_ddc_get_modes(struct radeon_connector *radeon_connector)
 	struct radeon_device *rdev = dev->dev_private;
 	int ret = 0;
 
-<<<<<<< HEAD
 	/* don't leak the edid if we already fetched it in detect() */
 	if (radeon_connector->edid)
 		goto got_edid;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* on hw with routers, select right port */
 	if (radeon_connector->router.ddc_valid)
 		radeon_router_select_ddc_port(radeon_connector);
@@ -734,10 +731,7 @@ int radeon_ddc_get_modes(struct radeon_connector *radeon_connector)
 			radeon_connector->edid = radeon_bios_get_hardcoded_edid(rdev);
 	}
 	if (radeon_connector->edid) {
-<<<<<<< HEAD
 got_edid:
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		drm_mode_connector_update_edid_property(&radeon_connector->base, radeon_connector->edid);
 		ret = drm_add_edid_modes(&radeon_connector->base, radeon_connector->edid);
 		drm_edid_to_eld(&radeon_connector->base, radeon_connector->edid);

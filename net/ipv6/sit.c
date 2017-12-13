@@ -101,31 +101,19 @@ static struct ip_tunnel *ipip6_tunnel_lookup(struct net *net,
 	for_each_ip_tunnel_rcu(t, sitn->tunnels_r_l[h0 ^ h1]) {
 		if (local == t->parms.iph.saddr &&
 		    remote == t->parms.iph.daddr &&
-<<<<<<< HEAD
 		    (!dev || !t->parms.link || dev->ifindex == t->parms.link) &&
-=======
-		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    (t->dev->flags & IFF_UP))
 			return t;
 	}
 	for_each_ip_tunnel_rcu(t, sitn->tunnels_r[h0]) {
 		if (remote == t->parms.iph.daddr &&
-<<<<<<< HEAD
 		    (!dev || !t->parms.link || dev->ifindex == t->parms.link) &&
-=======
-		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    (t->dev->flags & IFF_UP))
 			return t;
 	}
 	for_each_ip_tunnel_rcu(t, sitn->tunnels_l[h1]) {
 		if (local == t->parms.iph.saddr &&
-<<<<<<< HEAD
 		    (!dev || !t->parms.link || dev->ifindex == t->parms.link) &&
-=======
-		    (!dev || !t->parms.link || dev->iflink == t->parms.link) &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    (t->dev->flags & IFF_UP))
 			return t;
 	}
@@ -931,11 +919,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
 		iph->ttl	=	iph6->hop_limit;
 
 	skb->ip_summed = CHECKSUM_NONE;
-<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
-=======
-	ip_select_ident(skb, skb_dst(skb), NULL);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	iptunnel_xmit(skb, dev);
 	return NETDEV_TX_OK;
 

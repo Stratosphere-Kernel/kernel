@@ -495,13 +495,8 @@ static struct crypto_template *__crypto_lookup_template(const char *name)
 
 struct crypto_template *crypto_lookup_template(const char *name)
 {
-<<<<<<< HEAD
 	return try_then_request_module(__crypto_lookup_template(name),
 				       "crypto-%s", name);
-=======
-	return try_then_request_module(__crypto_lookup_template(name), "%s",
-				       name);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 EXPORT_SYMBOL_GPL(crypto_lookup_template);
 

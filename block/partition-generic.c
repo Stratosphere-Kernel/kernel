@@ -211,10 +211,7 @@ static const struct attribute_group *part_attr_groups[] = {
 static void part_release(struct device *dev)
 {
 	struct hd_struct *p = dev_to_part(dev);
-<<<<<<< HEAD
 	blk_free_devt(dev->devt);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	free_part_stats(p);
 	free_part_info(p);
 	kfree(p);
@@ -268,10 +265,6 @@ void delete_partition(struct gendisk *disk, int partno)
 	rcu_assign_pointer(ptbl->last_lookup, NULL);
 	kobject_put(part->holder_dir);
 	device_del(part_to_dev(part));
-<<<<<<< HEAD
-=======
-	blk_free_devt(part_devt(part));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	hd_struct_put(part);
 }

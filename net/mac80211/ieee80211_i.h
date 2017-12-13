@@ -60,7 +60,6 @@ struct ieee80211_local;
 #define IEEE80211_UNSET_POWER_LEVEL	INT_MIN
 
 /*
-<<<<<<< HEAD
  * Some APs experience problems when working with U-APSD. Decreasing the
  * probability of that happening by using legacy mode for all ACs but VO isn't
  * enough.
@@ -79,15 +78,6 @@ struct ieee80211_local;
  * frame support doesn't make much sense.
  */
 #define IEEE80211_DEFAULT_UAPSD_QUEUES 0
-=======
- * Some APs experience problems when working with U-APSD. Decrease the
- * probability of that happening by using legacy mode for all ACs but VO.
- * The AP that caused us trouble was a Cisco 4410N. It ignores our
- * setting, and always treats non-VO ACs as legacy.
- */
-#define IEEE80211_DEFAULT_UAPSD_QUEUES \
-	IEEE80211_WMM_IE_STA_QOSINFO_AC_VO
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #define IEEE80211_DEFAULT_MAX_SP_LEN		\
 	IEEE80211_WMM_IE_STA_QOSINFO_SP_ALL

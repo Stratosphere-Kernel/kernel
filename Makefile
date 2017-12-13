@@ -1,10 +1,6 @@
 VERSION = 3
 PATCHLEVEL = 10
-<<<<<<< HEAD
 SUBLEVEL = 89
-=======
-SUBLEVEL = 49
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 EXTRAVERSION =
 NAME = TOSSUG Baby Fish
 
@@ -162,10 +158,7 @@ VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
 
-<<<<<<< HEAD
 CCACHE := $(shell which ccache)
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
@@ -247,13 +240,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-<<<<<<< HEAD
 HOSTCC       = $(CCACHE) gcc
 HOSTCXX      = $(CCACHE) g++
-=======
-HOSTCC       = gcc
-HOSTCXX      = g++
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer
 HOSTCXXFLAGS = -O2
 
@@ -339,11 +327,7 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-<<<<<<< HEAD
 CC		= $(CCACHE) $(CROSS_COMPILE)gcc
-=======
-REAL_CC		= $(CROSS_COMPILE)gcc
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -359,11 +343,7 @@ CHECK		= sparse
 
 # Use the wrapper for the compiler.  This wrapper scans for new
 # warnings and causes the build to stop upon encountering them.
-<<<<<<< HEAD
 #CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
-=======
-CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
@@ -398,7 +378,6 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
-<<<<<<< HEAD
 		   -Wno-format-security -Wno-array-bounds -Wno-unused-variable \
 		   -fno-delete-null-pointer-checks \
 		   -std=gnu89 \
@@ -407,10 +386,6 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
  		   -Wno-shift-overflow \
  		   -Wno-bool-compare
 
-=======
-		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -607,16 +582,11 @@ endif # $(dot-config)
 # Defaults to vmlinux, but the arch makefile usually adds further targets
 all: vmlinux
 
-<<<<<<< HEAD
 KBUILD_CFLAGS	+= $(call cc-disable-warning,switch,)
 KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os
-=======
-ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 else
 KBUILD_CFLAGS	+= -O2
 endif
@@ -675,11 +645,8 @@ KBUILD_CFLAGS	+= -fomit-frame-pointer
 endif
 endif
 
-<<<<<<< HEAD
 KBUILD_CFLAGS   += $(call cc-option, -fno-var-tracking-assignments)
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 ifdef CONFIG_DEBUG_INFO
 KBUILD_CFLAGS	+= -g
 KBUILD_AFLAGS	+= -gdwarf-2
@@ -1500,7 +1467,4 @@ FORCE:
 # Declare the contents of the .PHONY variable as phony.  We keep that
 # information in a variable so we can use it in if_changed and friends.
 .PHONY: $(PHONY)
-<<<<<<< HEAD
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

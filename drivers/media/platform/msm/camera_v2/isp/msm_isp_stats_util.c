@@ -656,11 +656,7 @@ int msm_isp_update_stats_stream(struct vfe_device *vfe_dev, void *arg)
 		update_info = &update_cmd->update_info[i];
 		/*check array reference bounds*/
 		if (STATS_IDX(update_info->stream_handle)
-<<<<<<< HEAD
 			> vfe_dev->hw_info->stats_hw_info->num_stats_type) {
-=======
-			>= vfe_dev->hw_info->stats_hw_info->num_stats_type) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			pr_err("%s: stats idx %d out of bound!", __func__,
 				STATS_IDX(update_info->stream_handle));
 			return -EINVAL;

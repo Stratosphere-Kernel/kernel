@@ -564,10 +564,6 @@ static struct beiscsi_hba *beiscsi_hba_alloc(struct pci_dev *pcidev)
 			"beiscsi_hba_alloc - iscsi_host_alloc failed\n");
 		return NULL;
 	}
-<<<<<<< HEAD
-=======
-	shost->dma_boundary = pcidev->dma_mask;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	shost->max_id = BE2_MAX_SESSIONS;
 	shost->max_channel = 0;
 	shost->max_cmd_len = BEISCSI_MAX_CMD_LEN;
@@ -5084,15 +5080,9 @@ free_port:
 hba_free:
 	if (phba->msix_enabled)
 		pci_disable_msix(phba->pcidev);
-<<<<<<< HEAD
 	pci_dev_put(phba->pcidev);
 	iscsi_host_free(phba->shost);
 	pci_set_drvdata(pcidev, NULL);
-=======
-	iscsi_host_remove(phba->shost);
-	pci_dev_put(phba->pcidev);
-	iscsi_host_free(phba->shost);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 disable_pci:
 	pci_disable_device(pcidev);
 	return ret;

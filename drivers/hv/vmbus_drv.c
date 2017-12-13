@@ -686,11 +686,7 @@ int vmbus_device_register(struct hv_device *child_device_obj)
 	if (ret)
 		pr_err("Unable to register child device\n");
 	else
-<<<<<<< HEAD
 		pr_debug("child device %s registered\n",
-=======
-		pr_info("child device %s registered\n",
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			dev_name(&child_device_obj->device));
 
 	return ret;
@@ -702,23 +698,14 @@ int vmbus_device_register(struct hv_device *child_device_obj)
  */
 void vmbus_device_unregister(struct hv_device *device_obj)
 {
-<<<<<<< HEAD
 	pr_debug("child device %s unregistered\n",
 		dev_name(&device_obj->device));
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Kick off the process of unregistering the device.
 	 * This will call vmbus_remove() and eventually vmbus_device_release()
 	 */
 	device_unregister(&device_obj->device);
-<<<<<<< HEAD
-=======
-
-	pr_info("child device %s unregistered\n",
-		dev_name(&device_obj->device));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 

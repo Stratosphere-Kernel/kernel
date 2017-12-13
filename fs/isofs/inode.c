@@ -69,11 +69,7 @@ static void isofs_put_super(struct super_block *sb)
 	return;
 }
 
-<<<<<<< HEAD
 static int isofs_read_inode(struct inode *, int relocated);
-=======
-static int isofs_read_inode(struct inode *);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int isofs_statfs (struct dentry *, struct kstatfs *);
 
 static struct kmem_cache *isofs_inode_cachep;
@@ -1278,11 +1274,7 @@ out_toomany:
 	goto out;
 }
 
-<<<<<<< HEAD
 static int isofs_read_inode(struct inode *inode, int relocated)
-=======
-static int isofs_read_inode(struct inode *inode)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct super_block *sb = inode->i_sb;
 	struct isofs_sb_info *sbi = ISOFS_SB(sb);
@@ -1427,11 +1419,7 @@ static int isofs_read_inode(struct inode *inode)
 	 */
 
 	if (!high_sierra) {
-<<<<<<< HEAD
 		parse_rock_ridge_inode(de, inode, relocated);
-=======
-		parse_rock_ridge_inode(de, inode);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* if we want uid/gid set, override the rock ridge setting */
 		if (sbi->s_uid_set)
 			inode->i_uid = sbi->s_uid;
@@ -1510,16 +1498,10 @@ static int isofs_iget5_set(struct inode *ino, void *data)
  * offset that point to the underlying meta-data for the inode.  The
  * code below is otherwise similar to the iget() code in
  * include/linux/fs.h */
-<<<<<<< HEAD
 struct inode *__isofs_iget(struct super_block *sb,
 			   unsigned long block,
 			   unsigned long offset,
 			   int relocated)
-=======
-struct inode *isofs_iget(struct super_block *sb,
-			 unsigned long block,
-			 unsigned long offset)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	unsigned long hashval;
 	struct inode *inode;
@@ -1541,11 +1523,7 @@ struct inode *isofs_iget(struct super_block *sb,
 		return ERR_PTR(-ENOMEM);
 
 	if (inode->i_state & I_NEW) {
-<<<<<<< HEAD
 		ret = isofs_read_inode(inode, relocated);
-=======
-		ret = isofs_read_inode(inode);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (ret < 0) {
 			iget_failed(inode);
 			inode = ERR_PTR(ret);

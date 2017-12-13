@@ -1953,7 +1953,6 @@ EXPORT_SYMBOL(acpi_video_unregister);
 
 static int __init acpi_video_init(void)
 {
-<<<<<<< HEAD
 	/*
 	 * Let the module load even if ACPI is disabled (e.g. due to
 	 * a broken BIOS) so that i915.ko can still be loaded on such
@@ -1965,8 +1964,6 @@ static int __init acpi_video_init(void)
 	if (acpi_disabled)
 		return 0;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dmi_check_system(video_dmi_table);
 
 	if (intel_opregion_present())

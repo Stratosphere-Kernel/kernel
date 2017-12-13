@@ -9,13 +9,10 @@
 #include "pciback.h"
 #include "conf_space.h"
 
-<<<<<<< HEAD
 struct pci_cmd_info {
 	u16 val;
 };
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 struct pci_bar_info {
 	u32 val;
 	u32 len_val;
@@ -25,7 +22,6 @@ struct pci_bar_info {
 #define is_enable_cmd(value) ((value)&(PCI_COMMAND_MEMORY|PCI_COMMAND_IO))
 #define is_master_cmd(value) ((value)&PCI_COMMAND_MASTER)
 
-<<<<<<< HEAD
 /* Bits guests are allowed to control in permissive mode. */
 #define PCI_COMMAND_GUEST (PCI_COMMAND_MASTER|PCI_COMMAND_SPECIAL| \
 			   PCI_COMMAND_INVALIDATE|PCI_COMMAND_VGA_PALETTE| \
@@ -55,23 +51,6 @@ static int command_read(struct pci_dev *dev, int offset, u16 *value, void *data)
 
 	*value &= PCI_COMMAND_GUEST;
 	*value |= cmd->val & ~PCI_COMMAND_GUEST;
-=======
-static int command_read(struct pci_dev *dev, int offset, u16 *value, void *data)
-{
-	int i;
-	int ret;
-
-	ret = xen_pcibk_read_config_word(dev, offset, value, data);
-	if (!pci_is_enabled(dev))
-		return ret;
-
-	for (i = 0; i < PCI_ROM_RESOURCE; i++) {
-		if (dev->resource[i].flags & IORESOURCE_IO)
-			*value |= PCI_COMMAND_IO;
-		if (dev->resource[i].flags & IORESOURCE_MEM)
-			*value |= PCI_COMMAND_MEMORY;
-	}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return ret;
 }
@@ -80,11 +59,8 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
 {
 	struct xen_pcibk_dev_data *dev_data;
 	int err;
-<<<<<<< HEAD
 	u16 val;
 	struct pci_cmd_info *cmd = data;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	dev_data = pci_get_drvdata(dev);
 	if (!pci_is_enabled(dev) && is_enable_cmd(value)) {
@@ -127,7 +103,6 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
 		}
 	}
 
-<<<<<<< HEAD
 	cmd->val = value;
 
 	if (!permissive && (!dev_data || !dev_data->permissive))
@@ -141,8 +116,6 @@ static int command_write(struct pci_dev *dev, int offset, u16 value, void *data)
 	value &= PCI_COMMAND_GUEST;
 	value |= val & ~PCI_COMMAND_GUEST;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return pci_write_config_word(dev, offset, value);
 }
 
@@ -342,11 +315,8 @@ static const struct config_field header_common[] = {
 	{
 	 .offset    = PCI_COMMAND,
 	 .size      = 2,
-<<<<<<< HEAD
 	 .init      = command_init,
 	 .release   = bar_release,
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	 .u.w.read  = command_read,
 	 .u.w.write = command_write,
 	},

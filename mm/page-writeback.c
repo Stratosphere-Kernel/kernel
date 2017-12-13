@@ -796,16 +796,11 @@ static void bdi_update_write_bandwidth(struct backing_dev_info *bdi,
 	 *                   bw * elapsed + write_bandwidth * (period - elapsed)
 	 * write_bandwidth = ---------------------------------------------------
 	 *                                          period
-<<<<<<< HEAD
 	 *
 	 * @written may have decreased due to account_page_redirty().
 	 * Avoid underflowing @bw calculation.
 	 */
 	bw = written - min(written, bdi->written_stamp);
-=======
-	 */
-	bw = written - bdi->written_stamp;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	bw *= HZ;
 	if (unlikely(elapsed > period)) {
 		do_div(bw, elapsed);
@@ -869,11 +864,7 @@ static void global_update_bandwidth(unsigned long thresh,
 				    unsigned long now)
 {
 	static DEFINE_SPINLOCK(dirty_lock);
-<<<<<<< HEAD
 	static unsigned long update_time = INITIAL_JIFFIES;
-=======
-	static unsigned long update_time;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * check locklessly first to optimize away locking for the most time

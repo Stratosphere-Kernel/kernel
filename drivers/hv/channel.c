@@ -169,11 +169,7 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 			   GFP_KERNEL);
 	if (!open_info) {
 		err = -ENOMEM;
-<<<<<<< HEAD
 		goto error_gpadl;
-=======
-		goto error0;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	init_completion(&open_info->waitevent);
@@ -189,11 +185,7 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 
 	if (userdatalen > MAX_USER_DEFINED_BYTES) {
 		err = -EINVAL;
-<<<<<<< HEAD
 		goto error_gpadl;
-=======
-		goto error0;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (userdatalen)
@@ -207,15 +199,10 @@ int vmbus_open(struct vmbus_channel *newchannel, u32 send_ringbuffer_size,
 	ret = vmbus_post_msg(open_msg,
 			       sizeof(struct vmbus_channel_open_channel));
 
-<<<<<<< HEAD
 	if (ret != 0) {
 		err = ret;
 		goto error1;
 	}
-=======
-	if (ret != 0)
-		goto error1;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	t = wait_for_completion_timeout(&open_info->waitevent, 5*HZ);
 	if (t == 0) {
@@ -239,12 +226,9 @@ error1:
 	list_del(&open_info->msglistentry);
 	spin_unlock_irqrestore(&vmbus_connection.channelmsg_lock, flags);
 
-<<<<<<< HEAD
 error_gpadl:
 	vmbus_teardown_gpadl(newchannel, newchannel->ringbuffer_gpadlhandle);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 error0:
 	free_pages((unsigned long)out,
 		get_order(send_ringbuffer_size + recv_ringbuffer_size));
@@ -413,10 +397,6 @@ int vmbus_establish_gpadl(struct vmbus_channel *channel, void *kbuffer,
 	u32 next_gpadl_handle;
 	unsigned long flags;
 	int ret = 0;
-<<<<<<< HEAD
-=======
-	int t;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	next_gpadl_handle = atomic_read(&vmbus_connection.next_gpadl_handle);
 	atomic_inc(&vmbus_connection.next_gpadl_handle);
@@ -463,13 +443,7 @@ int vmbus_establish_gpadl(struct vmbus_channel *channel, void *kbuffer,
 
 		}
 	}
-<<<<<<< HEAD
 	wait_for_completion(&msginfo->waitevent);
-=======
-	t = wait_for_completion_timeout(&msginfo->waitevent, 5*HZ);
-	BUG_ON(t == 0);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* At this point, we received the gpadl created msg */
 	*gpadl_handle = gpadlmsg->gpadl;
@@ -492,11 +466,7 @@ int vmbus_teardown_gpadl(struct vmbus_channel *channel, u32 gpadl_handle)
 	struct vmbus_channel_gpadl_teardown *msg;
 	struct vmbus_channel_msginfo *info;
 	unsigned long flags;
-<<<<<<< HEAD
 	int ret;
-=======
-	int ret, t;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	info = kmalloc(sizeof(*info) +
 		       sizeof(struct vmbus_channel_gpadl_teardown), GFP_KERNEL);
@@ -518,20 +488,12 @@ int vmbus_teardown_gpadl(struct vmbus_channel *channel, u32 gpadl_handle)
 	ret = vmbus_post_msg(msg,
 			       sizeof(struct vmbus_channel_gpadl_teardown));
 
-<<<<<<< HEAD
 	if (ret)
 		goto post_msg_err;
 
 	wait_for_completion(&info->waitevent);
 
 post_msg_err:
-=======
-	BUG_ON(ret != 0);
-	t = wait_for_completion_timeout(&info->waitevent, 5*HZ);
-	BUG_ON(t == 0);
-
-	/* Received a torndown response */
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock_irqsave(&vmbus_connection.channelmsg_lock, flags);
 	list_del(&info->msglistentry);
 	spin_unlock_irqrestore(&vmbus_connection.channelmsg_lock, flags);

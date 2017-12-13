@@ -389,11 +389,7 @@ struct mdss_pp_res_type {
 	struct mdp_hist_lut_data enhist_disp_cfg[MDSS_BLOCK_DISP_NUM];
 	struct mdp_dither_cfg_data dither_disp_cfg[MDSS_BLOCK_DISP_NUM];
 	struct mdp_gamut_cfg_data gamut_disp_cfg[MDSS_BLOCK_DISP_NUM];
-<<<<<<< HEAD
 	uint16_t gamut_tbl[MDSS_BLOCK_DISP_NUM][GAMUT_TOTAL_TABLE_SIZE];
-=======
-	uint16_t gamut_tbl[MDSS_BLOCK_DISP_NUM][3 * GAMUT_TOTAL_TABLE_SIZE];
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	u32 hist_data[MDSS_BLOCK_DISP_NUM][HIST_V_SIZE];
 	struct pp_sts_type pp_disp_sts[MDSS_MAX_MIXER_DISP_NUM];
 	/* physical info */
@@ -491,10 +487,7 @@ static int pp_ad_linearize_bl(struct mdss_ad_info *ad, u32 bl, u32 *bl_out,
 static int pp_ad_calc_bl(struct msm_fb_data_type *mfd, int bl_in, int *bl_out,
 		bool *bl_out_notify);
 static int pp_ad_shutdown_cleanup(struct msm_fb_data_type *mfd);
-<<<<<<< HEAD
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int pp_num_to_side(struct mdss_mdp_ctl *ctl, u32 num);
 static inline bool pp_sts_is_enabled(u32 sts, int side);
 static inline void pp_sts_set_split_bits(u32 *sts, u32 bits);

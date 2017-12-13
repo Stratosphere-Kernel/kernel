@@ -650,7 +650,6 @@ static inline int ip_vs_gather_frags(struct sk_buff *skb, u_int32_t user)
 	return err;
 }
 
-<<<<<<< HEAD
 static int ip_vs_route_me_harder(int af, struct sk_buff *skb,
 				 unsigned int hooknum)
 {
@@ -669,18 +668,6 @@ static int ip_vs_route_me_harder(int af, struct sk_buff *skb,
 	} else
 #endif
 		if (!(skb_rtable(skb)->rt_flags & RTCF_LOCAL) &&
-=======
-static int ip_vs_route_me_harder(int af, struct sk_buff *skb)
-{
-#ifdef CONFIG_IP_VS_IPV6
-	if (af == AF_INET6) {
-		if (sysctl_snat_reroute(skb) && ip6_route_me_harder(skb) != 0)
-			return 1;
-	} else
-#endif
-		if ((sysctl_snat_reroute(skb) ||
-		     skb_rtable(skb)->rt_flags & RTCF_LOCAL) &&
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    ip_route_me_harder(skb, RTN_LOCAL) != 0)
 			return 1;
 
@@ -803,12 +790,8 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
 				union nf_inet_addr *snet,
 				__u8 protocol, struct ip_vs_conn *cp,
 				struct ip_vs_protocol *pp,
-<<<<<<< HEAD
 				unsigned int offset, unsigned int ihl,
 				unsigned int hooknum)
-=======
-				unsigned int offset, unsigned int ihl)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	unsigned int verdict = NF_DROP;
 
@@ -838,11 +821,7 @@ static int handle_response_icmp(int af, struct sk_buff *skb,
 #endif
 		ip_vs_nat_icmp(skb, pp, cp, 1);
 
-<<<<<<< HEAD
 	if (ip_vs_route_me_harder(af, skb, hooknum))
-=======
-	if (ip_vs_route_me_harder(af, skb))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto out;
 
 	/* do the statistics and put it back */
@@ -937,11 +916,7 @@ static int ip_vs_out_icmp(struct sk_buff *skb, int *related,
 
 	snet.ip = iph->saddr;
 	return handle_response_icmp(AF_INET, skb, &snet, cih->protocol, cp,
-<<<<<<< HEAD
 				    pp, ciph.len, ihl, hooknum);
-=======
-				    pp, ciph.len, ihl);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 #ifdef CONFIG_IP_VS_IPV6
@@ -1006,12 +981,8 @@ static int ip_vs_out_icmp_v6(struct sk_buff *skb, int *related,
 	snet.in6 = ciph.saddr.in6;
 	writable = ciph.len;
 	return handle_response_icmp(AF_INET6, skb, &snet, ciph.protocol, cp,
-<<<<<<< HEAD
 				    pp, writable, sizeof(struct ipv6hdr),
 				    hooknum);
-=======
-				    pp, writable, sizeof(struct ipv6hdr));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 #endif
 
@@ -1070,12 +1041,8 @@ static inline bool is_new_conn(const struct sk_buff *skb,
  */
 static unsigned int
 handle_response(int af, struct sk_buff *skb, struct ip_vs_proto_data *pd,
-<<<<<<< HEAD
 		struct ip_vs_conn *cp, struct ip_vs_iphdr *iph,
 		unsigned int hooknum)
-=======
-		struct ip_vs_conn *cp, struct ip_vs_iphdr *iph)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct ip_vs_protocol *pp = pd->pp;
 
@@ -1113,11 +1080,7 @@ handle_response(int af, struct sk_buff *skb, struct ip_vs_proto_data *pd,
 	 * if it came from this machine itself.  So re-compute
 	 * the routing information.
 	 */
-<<<<<<< HEAD
 	if (ip_vs_route_me_harder(af, skb, hooknum))
-=======
-	if (ip_vs_route_me_harder(af, skb))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto drop;
 
 	IP_VS_DBG_PKT(10, af, pp, skb, 0, "After SNAT");
@@ -1220,11 +1183,7 @@ ip_vs_out(unsigned int hooknum, struct sk_buff *skb, int af)
 	cp = pp->conn_out_get(af, skb, &iph, 0);
 
 	if (likely(cp))
-<<<<<<< HEAD
 		return handle_response(af, skb, pd, cp, &iph, hooknum);
-=======
-		return handle_response(af, skb, pd, cp, &iph);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (sysctl_nat_icmp_send(net) &&
 	    (pp->protocol == IPPROTO_TCP ||
 	     pp->protocol == IPPROTO_UDP ||
@@ -1950,11 +1909,7 @@ static struct nf_hook_ops ip_vs_ops[] __read_mostly = {
 	{
 		.hook		= ip_vs_local_reply6,
 		.owner		= THIS_MODULE,
-<<<<<<< HEAD
 		.pf		= NFPROTO_IPV6,
-=======
-		.pf		= NFPROTO_IPV4,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		.hooknum	= NF_INET_LOCAL_OUT,
 		.priority	= NF_IP6_PRI_NAT_DST + 1,
 	},

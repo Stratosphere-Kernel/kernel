@@ -2047,13 +2047,10 @@ static long unix_stream_data_wait(struct sock *sk, long timeo,
 		unix_state_unlock(sk);
 		timeo = freezable_schedule_timeout(timeo);
 		unix_state_lock(sk);
-<<<<<<< HEAD
 
 		if (sock_flag(sk, SOCK_DEAD))
 			break;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		clear_bit(SOCK_ASYNC_WAITDATA, &sk->sk_socket->flags);
 	}
 
@@ -2113,13 +2110,10 @@ static int unix_stream_recvmsg(struct kiocb *iocb, struct socket *sock,
 		struct sk_buff *skb, *last;
 
 		unix_state_lock(sk);
-<<<<<<< HEAD
 		if (sock_flag(sk, SOCK_DEAD)) {
 			err = -ECONNRESET;
 			goto unlock;
 		}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		last = skb = skb_peek(&sk->sk_receive_queue);
 again:
 		if (skb == NULL) {

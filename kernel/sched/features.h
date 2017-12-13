@@ -3,11 +3,7 @@
  * them to run sooner, but does not allow tons of sleepers to
  * rip the spread apart.
  */
-<<<<<<< HEAD
 SCHED_FEAT(GENTLE_FAIR_SLEEPERS, true)
-=======
-SCHED_FEAT(GENTLE_FAIR_SLEEPERS, false)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * Place new tasks ahead so that they do not starve already running

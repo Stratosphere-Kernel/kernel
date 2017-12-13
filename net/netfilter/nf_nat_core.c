@@ -487,7 +487,6 @@ static int nf_nat_proto_remove(struct nf_conn *i, void *data)
 	return i->status & IPS_NAT_MASK ? 1 : 0;
 }
 
-<<<<<<< HEAD
 static int nf_nat_proto_clean(struct nf_conn *ct, void *data)
 {
 	struct nf_conn_nat *nat = nfct_nat(ct);
@@ -521,8 +520,6 @@ static int nf_nat_proto_clean(struct nf_conn *ct, void *data)
 	return 0;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void nf_nat_l4proto_clean(u8 l3proto, u8 l4proto)
 {
 	struct nf_nat_proto_clean clean = {
@@ -785,11 +782,7 @@ static void __net_exit nf_nat_net_exit(struct net *net)
 {
 	struct nf_nat_proto_clean clean = {};
 
-<<<<<<< HEAD
 	nf_ct_iterate_cleanup(net, nf_nat_proto_clean, &clean);
-=======
-	nf_ct_iterate_cleanup(net, &nf_nat_proto_remove, &clean);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	synchronize_rcu();
 	nf_ct_free_hashtable(net->ct.nat_bysource, net->ct.nat_htable_size);
 }

@@ -42,15 +42,12 @@ struct btree_node {
 } __packed;
 
 
-<<<<<<< HEAD
 /*
  * Locks a block using the btree node validator.
  */
 int bn_read_lock(struct dm_btree_info *info, dm_block_t b,
 		 struct dm_block **result);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void inc_children(struct dm_transaction_manager *tm, struct btree_node *n,
 		  struct dm_btree_value_type *vt);
 

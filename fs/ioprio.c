@@ -159,7 +159,6 @@ out:
 
 int ioprio_best(unsigned short aprio, unsigned short bprio)
 {
-<<<<<<< HEAD
 	unsigned short aclass;
 	unsigned short bclass;
 
@@ -170,16 +169,6 @@ int ioprio_best(unsigned short aprio, unsigned short bprio)
 
 	aclass = IOPRIO_PRIO_CLASS(aprio);
 	bclass = IOPRIO_PRIO_CLASS(bprio);
-=======
-	unsigned short aclass = IOPRIO_PRIO_CLASS(aprio);
-	unsigned short bclass = IOPRIO_PRIO_CLASS(bprio);
-
-	if (aclass == IOPRIO_CLASS_NONE)
-		aclass = IOPRIO_CLASS_BE;
-	if (bclass == IOPRIO_CLASS_NONE)
-		bclass = IOPRIO_CLASS_BE;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (aclass == bclass)
 		return min(aprio, bprio);
 	if (aclass > bclass)

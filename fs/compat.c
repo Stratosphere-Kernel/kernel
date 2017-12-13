@@ -832,10 +832,6 @@ struct compat_old_linux_dirent {
 };
 
 struct compat_readdir_callback {
-<<<<<<< HEAD
-=======
-	struct dir_context ctx;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct compat_old_linux_dirent __user *dirent;
 	int result;
 };
@@ -877,26 +873,15 @@ asmlinkage long compat_sys_old_readdir(unsigned int fd,
 {
 	int error;
 	struct fd f = fdget(fd);
-<<<<<<< HEAD
 	struct compat_readdir_callback buf;
-=======
-	struct compat_readdir_callback buf = {
-		.ctx.actor = compat_fillonedir,
-		.dirent = dirent
-	};
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!f.file)
 		return -EBADF;
 
-<<<<<<< HEAD
 	buf.result = 0;
 	buf.dirent = dirent;
 
 	error = vfs_readdir(f.file, compat_fillonedir, &buf);
-=======
-	error = iterate_dir(f.file, &buf.ctx);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (buf.result)
 		error = buf.result;
 
@@ -912,10 +897,6 @@ struct compat_linux_dirent {
 };
 
 struct compat_getdents_callback {
-<<<<<<< HEAD
-=======
-	struct dir_context ctx;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct compat_linux_dirent __user *current_dir;
 	struct compat_linux_dirent __user *previous;
 	int count;
@@ -970,15 +951,7 @@ asmlinkage long compat_sys_getdents(unsigned int fd,
 {
 	struct fd f;
 	struct compat_linux_dirent __user * lastdirent;
-<<<<<<< HEAD
 	struct compat_getdents_callback buf;
-=======
-	struct compat_getdents_callback buf = {
-		.ctx.actor = compat_filldir,
-		.current_dir = dirent,
-		.count = count
-	};
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int error;
 
 	if (!access_ok(VERIFY_WRITE, dirent, count))
@@ -988,25 +961,17 @@ asmlinkage long compat_sys_getdents(unsigned int fd,
 	if (!f.file)
 		return -EBADF;
 
-<<<<<<< HEAD
 	buf.current_dir = dirent;
 	buf.previous = NULL;
 	buf.count = count;
 	buf.error = 0;
 
 	error = vfs_readdir(f.file, compat_filldir, &buf);
-=======
-	error = iterate_dir(f.file, &buf.ctx);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (error >= 0)
 		error = buf.error;
 	lastdirent = buf.previous;
 	if (lastdirent) {
-<<<<<<< HEAD
 		if (put_user(f.file->f_pos, &lastdirent->d_off))
-=======
-		if (put_user(buf.ctx.pos, &lastdirent->d_off))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			error = -EFAULT;
 		else
 			error = count - buf.count;
@@ -1018,10 +983,6 @@ asmlinkage long compat_sys_getdents(unsigned int fd,
 #ifdef __ARCH_WANT_COMPAT_SYS_GETDENTS64
 
 struct compat_getdents_callback64 {
-<<<<<<< HEAD
-=======
-	struct dir_context ctx;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct linux_dirent64 __user *current_dir;
 	struct linux_dirent64 __user *previous;
 	int count;
@@ -1075,15 +1036,7 @@ asmlinkage long compat_sys_getdents64(unsigned int fd,
 {
 	struct fd f;
 	struct linux_dirent64 __user * lastdirent;
-<<<<<<< HEAD
 	struct compat_getdents_callback64 buf;
-=======
-	struct compat_getdents_callback64 buf = {
-		.ctx.actor = compat_filldir64,
-		.current_dir = dirent,
-		.count = count
-	};
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int error;
 
 	if (!access_ok(VERIFY_WRITE, dirent, count))
@@ -1093,25 +1046,17 @@ asmlinkage long compat_sys_getdents64(unsigned int fd,
 	if (!f.file)
 		return -EBADF;
 
-<<<<<<< HEAD
 	buf.current_dir = dirent;
 	buf.previous = NULL;
 	buf.count = count;
 	buf.error = 0;
 
 	error = vfs_readdir(f.file, compat_filldir64, &buf);
-=======
-	error = iterate_dir(f.file, &buf.ctx);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (error >= 0)
 		error = buf.error;
 	lastdirent = buf.previous;
 	if (lastdirent) {
-<<<<<<< HEAD
 		typeof(lastdirent->d_off) d_off = f.file->f_pos;
-=======
-		typeof(lastdirent->d_off) d_off = buf.ctx.pos;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (__put_user_unaligned(d_off, &lastdirent->d_off))
 			error = -EFAULT;
 		else

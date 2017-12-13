@@ -12,7 +12,6 @@
 #ifndef __ASM_MIPS_REG_H
 #define __ASM_MIPS_REG_H
 
-<<<<<<< HEAD
 #define MIPS32_EF_R0		6
 #define MIPS32_EF_R1		7
 #define MIPS32_EF_R2		8
@@ -39,42 +38,10 @@
 #define MIPS32_EF_R23		29
 #define MIPS32_EF_R24		30
 #define MIPS32_EF_R25		31
-=======
-
-#if defined(CONFIG_32BIT) || defined(WANT_COMPAT_REG_H)
-
-#define EF_R0			6
-#define EF_R1			7
-#define EF_R2			8
-#define EF_R3			9
-#define EF_R4			10
-#define EF_R5			11
-#define EF_R6			12
-#define EF_R7			13
-#define EF_R8			14
-#define EF_R9			15
-#define EF_R10			16
-#define EF_R11			17
-#define EF_R12			18
-#define EF_R13			19
-#define EF_R14			20
-#define EF_R15			21
-#define EF_R16			22
-#define EF_R17			23
-#define EF_R18			24
-#define EF_R19			25
-#define EF_R20			26
-#define EF_R21			27
-#define EF_R22			28
-#define EF_R23			29
-#define EF_R24			30
-#define EF_R25			31
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * k0/k1 unsaved
  */
-<<<<<<< HEAD
 #define MIPS32_EF_R26		32
 #define MIPS32_EF_R27		33
 
@@ -82,20 +49,10 @@
 #define MIPS32_EF_R29		35
 #define MIPS32_EF_R30		36
 #define MIPS32_EF_R31		37
-=======
-#define EF_R26			32
-#define EF_R27			33
-
-#define EF_R28			34
-#define EF_R29			35
-#define EF_R30			36
-#define EF_R31			37
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * Saved special registers
  */
-<<<<<<< HEAD
 #define MIPS32_EF_LO		38
 #define MIPS32_EF_HI		39
 
@@ -133,54 +90,10 @@
 #define MIPS64_EF_R23		23
 #define MIPS64_EF_R24		24
 #define MIPS64_EF_R25		25
-=======
-#define EF_LO			38
-#define EF_HI			39
-
-#define EF_CP0_EPC		40
-#define EF_CP0_BADVADDR		41
-#define EF_CP0_STATUS		42
-#define EF_CP0_CAUSE		43
-#define EF_UNUSED0		44
-
-#define EF_SIZE			180
-
-#endif
-
-#if defined(CONFIG_64BIT) && !defined(WANT_COMPAT_REG_H)
-
-#define EF_R0			 0
-#define EF_R1			 1
-#define EF_R2			 2
-#define EF_R3			 3
-#define EF_R4			 4
-#define EF_R5			 5
-#define EF_R6			 6
-#define EF_R7			 7
-#define EF_R8			 8
-#define EF_R9			 9
-#define EF_R10			10
-#define EF_R11			11
-#define EF_R12			12
-#define EF_R13			13
-#define EF_R14			14
-#define EF_R15			15
-#define EF_R16			16
-#define EF_R17			17
-#define EF_R18			18
-#define EF_R19			19
-#define EF_R20			20
-#define EF_R21			21
-#define EF_R22			22
-#define EF_R23			23
-#define EF_R24			24
-#define EF_R25			25
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * k0/k1 unsaved
  */
-<<<<<<< HEAD
 #define MIPS64_EF_R26		26
 #define MIPS64_EF_R27		27
 
@@ -189,21 +102,10 @@
 #define MIPS64_EF_R29		29
 #define MIPS64_EF_R30		30
 #define MIPS64_EF_R31		31
-=======
-#define EF_R26			26
-#define EF_R27			27
-
-
-#define EF_R28			28
-#define EF_R29			29
-#define EF_R30			30
-#define EF_R31			31
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * Saved special registers
  */
-<<<<<<< HEAD
 #define MIPS64_EF_LO		32
 #define MIPS64_EF_HI		33
 
@@ -298,17 +200,6 @@
 #define EF_CP0_STATUS		MIPS64_EF_CP0_STATUS
 #define EF_CP0_CAUSE		MIPS64_EF_CP0_CAUSE
 #define EF_SIZE			MIPS64_EF_SIZE
-=======
-#define EF_LO			32
-#define EF_HI			33
-
-#define EF_CP0_EPC		34
-#define EF_CP0_BADVADDR		35
-#define EF_CP0_STATUS		36
-#define EF_CP0_CAUSE		37
-
-#define EF_SIZE			304	/* size in bytes */
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #endif /* CONFIG_64BIT */
 

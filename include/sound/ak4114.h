@@ -168,11 +168,7 @@ struct ak4114 {
 	ak4114_write_t * write;
 	ak4114_read_t * read;
 	void * private_data;
-<<<<<<< HEAD
 	atomic_t wq_processing;
-=======
-	unsigned int init: 1;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spinlock_t lock;
 	unsigned char regmap[7];
 	unsigned char txcsb[5];

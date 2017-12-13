@@ -476,9 +476,5 @@ module_param(dbg, int, 0);
 MODULE_PARM_DESC(dbg, "Boolean to enable debugging (0/1 == off/on)");
 module_init(prng_mod_init);
 module_exit(prng_mod_fini);
-<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("stdrng");
 MODULE_ALIAS_CRYPTO("ansi_cprng");
-=======
-MODULE_ALIAS("stdrng");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

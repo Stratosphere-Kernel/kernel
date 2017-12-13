@@ -120,7 +120,6 @@ struct dentry {
 	void *d_fsdata;			/* fs-specific data */
 
 	struct list_head d_lru;		/* LRU list */
-<<<<<<< HEAD
 	struct list_head d_child;	/* child of parent list */
 	struct list_head d_subdirs;	/* our children */
 	/*
@@ -130,17 +129,6 @@ struct dentry {
 		struct hlist_node d_alias;	/* inode alias list */
 	 	struct rcu_head d_rcu;
 	} d_u;
-=======
-	/*
-	 * d_child and d_rcu can share memory
-	 */
-	union {
-		struct list_head d_child;	/* child of parent list */
-	 	struct rcu_head d_rcu;
-	} d_u;
-	struct list_head d_subdirs;	/* our children */
-	struct hlist_node d_alias;	/* inode alias list */
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 /*
@@ -424,16 +412,6 @@ static inline bool d_mountpoint(struct dentry *dentry)
 	return dentry->d_flags & DCACHE_MOUNTED;
 }
 
-<<<<<<< HEAD
-=======
-static inline bool d_is_su(const struct dentry *dentry)
-{
-	return dentry &&
-	       dentry->d_name.len == 2 &&
-	       !memcmp(dentry->d_name.name, "su", 2);
-}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 extern int sysctl_vfs_cache_pressure;
 
 #endif	/* __LINUX_DCACHE_H */

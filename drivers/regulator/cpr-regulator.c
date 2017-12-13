@@ -1067,7 +1067,6 @@ static struct regulator_ops cpr_corner_ops = {
 	.get_voltage		= cpr_regulator_get_voltage,
 };
 
-<<<<<<< HEAD
 #ifdef CONFIG_ARCH_MSM8916
 int cpr_regulator_get_corner_voltage(struct regulator *regulator,
 		int corner)
@@ -1098,8 +1097,6 @@ int cpr_regulator_set_corner_voltage(struct regulator *regulator,
 }
 #endif
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifdef CONFIG_PM
 static int cpr_suspend(struct cpr_regulator *cpr_vreg)
 {

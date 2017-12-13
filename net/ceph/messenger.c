@@ -290,12 +290,8 @@ int ceph_msgr_init(void)
 	if (ceph_msgr_slab_init())
 		return -ENOMEM;
 
-<<<<<<< HEAD
 	ceph_msgr_wq = alloc_workqueue("ceph-msgr",
 				       WQ_NON_REENTRANT | WQ_MEM_RECLAIM, 0);
-=======
-	ceph_msgr_wq = alloc_workqueue("ceph-msgr", WQ_NON_REENTRANT, 0);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (ceph_msgr_wq)
 		return 0;
 
@@ -909,11 +905,7 @@ static void ceph_msg_data_pages_cursor_init(struct ceph_msg_data_cursor *cursor,
 	BUG_ON(page_count > (int)USHRT_MAX);
 	cursor->page_count = (unsigned short)page_count;
 	BUG_ON(length > SIZE_MAX - cursor->page_offset);
-<<<<<<< HEAD
 	cursor->last_piece = cursor->page_offset + cursor->resid <= PAGE_SIZE;
-=======
-	cursor->last_piece = (size_t)cursor->page_offset + length <= PAGE_SIZE;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static struct page *
@@ -3153,11 +3145,7 @@ struct ceph_msg *ceph_msg_new(int type, int front_len, gfp_t flags,
 	INIT_LIST_HEAD(&m->data);
 
 	/* front */
-<<<<<<< HEAD
 	m->front_alloc_len = front_len;
-=======
-	m->front_max = front_len;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (front_len) {
 		if (front_len > PAGE_CACHE_SIZE) {
 			m->front.iov_base = __vmalloc(front_len, flags,
@@ -3332,13 +3320,8 @@ EXPORT_SYMBOL(ceph_msg_last_put);
 
 void ceph_msg_dump(struct ceph_msg *msg)
 {
-<<<<<<< HEAD
 	pr_debug("msg_dump %p (front_alloc_len %d length %zd)\n", msg,
 		 msg->front_alloc_len, msg->data_length);
-=======
-	pr_debug("msg_dump %p (front_max %d length %zd)\n", msg,
-		 msg->front_max, msg->data_length);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	print_hex_dump(KERN_DEBUG, "header: ",
 		       DUMP_PREFIX_OFFSET, 16, 1,
 		       &msg->hdr, sizeof(msg->hdr), true);

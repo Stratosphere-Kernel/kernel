@@ -1430,11 +1430,7 @@ static struct dentry *ext4_lookup(struct inode *dir, struct dentry *dentry, unsi
 					 dentry->d_name.name);
 			return ERR_PTR(-EIO);
 		}
-<<<<<<< HEAD
 		inode = ext4_iget_normal(dir->i_sb, ino);
-=======
-		inode = ext4_iget(dir->i_sb, ino);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (inode == ERR_PTR(-ESTALE)) {
 			EXT4_ERROR_INODE(dir,
 					 "deleted inode referenced: %u",
@@ -1465,11 +1461,7 @@ struct dentry *ext4_get_parent(struct dentry *child)
 		return ERR_PTR(-EIO);
 	}
 
-<<<<<<< HEAD
 	return d_obtain_alias(ext4_iget_normal(child->d_inode->i_sb, ino));
-=======
-	return d_obtain_alias(ext4_iget(child->d_inode->i_sb, ino));
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*
@@ -1888,11 +1880,7 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 			  struct inode *inode)
 {
 	struct inode *dir = dentry->d_parent->d_inode;
-<<<<<<< HEAD
 	struct buffer_head *bh = NULL;
-=======
-	struct buffer_head *bh;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct ext4_dir_entry_2 *de;
 	struct ext4_dir_entry_tail *t;
 	struct super_block *sb;
@@ -1917,22 +1905,14 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 			return retval;
 		if (retval == 1) {
 			retval = 0;
-<<<<<<< HEAD
 			goto out;
-=======
-			return retval;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 	}
 
 	if (is_dx(dir)) {
 		retval = ext4_dx_add_entry(handle, dentry, inode);
 		if (!retval || (retval != ERR_BAD_DX_DIR))
-<<<<<<< HEAD
 			goto out;
-=======
-			return retval;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ext4_clear_inode_flag(dir, EXT4_INODE_INDEX);
 		dx_fallback++;
 		ext4_mark_inode_dirty(handle, dir);
@@ -1944,7 +1924,6 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 			return PTR_ERR(bh);
 
 		retval = add_dirent_to_buf(handle, dentry, inode, NULL, bh);
-<<<<<<< HEAD
 		if (retval != -ENOSPC)
 			goto out;
 
@@ -1954,16 +1933,6 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 			bh = NULL; /* make_indexed_dir releases bh */
 			goto out;
 		}
-=======
-		if (retval != -ENOSPC) {
-			brelse(bh);
-			return retval;
-		}
-
-		if (blocks == 1 && !dx_fallback &&
-		    EXT4_HAS_COMPAT_FEATURE(sb, EXT4_FEATURE_COMPAT_DIR_INDEX))
-			return make_indexed_dir(handle, dentry, inode, bh);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		brelse(bh);
 	}
 	bh = ext4_append(handle, dir, &block);
@@ -1979,10 +1948,7 @@ static int ext4_add_entry(handle_t *handle, struct dentry *dentry,
 	}
 
 	retval = add_dirent_to_buf(handle, dentry, inode, de, bh);
-<<<<<<< HEAD
 out:
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	brelse(bh);
 	if (retval == 0)
 		ext4_set_inode_state(inode, EXT4_STATE_NEWENTRY);

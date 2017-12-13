@@ -349,11 +349,7 @@ static int inotify_find_inode(const char __user *dirname, struct path *path, uns
 	if (error)
 		return error;
 	/* you can only watch an inode if you have read permissions on it */
-<<<<<<< HEAD
 	error = inode_permission(path->dentry->d_inode, MAY_READ);
-=======
-	error = inode_permission2(path->mnt, path->dentry->d_inode, MAY_READ);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (error)
 		path_put(path);
 	return error;

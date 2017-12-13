@@ -215,12 +215,9 @@ static int pty_signal(struct tty_struct *tty, int sig)
 	unsigned long flags;
 	struct pid *pgrp;
 
-<<<<<<< HEAD
 	if (sig != SIGINT && sig != SIGQUIT && sig != SIGTSTP)
 		return -EINVAL;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (tty->link) {
 		spin_lock_irqsave(&tty->link->ctrl_lock, flags);
 		pgrp = get_pid(tty->link->pgrp);

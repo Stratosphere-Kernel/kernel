@@ -793,13 +793,10 @@ got:
 		struct buffer_head *block_bitmap_bh;
 
 		block_bitmap_bh = ext4_read_block_bitmap(sb, group);
-<<<<<<< HEAD
 		if (!block_bitmap_bh) {
 			err = -EIO;
 			goto out;
 		}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		BUFFER_TRACE(block_bitmap_bh, "get block bitmap access");
 		err = ext4_journal_get_write_access(handle, block_bitmap_bh);
 		if (err) {

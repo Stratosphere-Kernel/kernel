@@ -524,10 +524,6 @@ int btrfs_wait_for_commit(struct btrfs_root *root, u64 transid)
 		if (transid <= root->fs_info->last_trans_committed)
 			goto out;
 
-<<<<<<< HEAD
-=======
-		ret = -EINVAL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* find specified transaction */
 		spin_lock(&root->fs_info->trans_lock);
 		list_for_each_entry(t, &root->fs_info->trans_list, list) {
@@ -543,7 +539,6 @@ int btrfs_wait_for_commit(struct btrfs_root *root, u64 transid)
 			}
 		}
 		spin_unlock(&root->fs_info->trans_lock);
-<<<<<<< HEAD
 
 		/*
 		 * The specified transaction doesn't exist, or we
@@ -554,11 +549,6 @@ int btrfs_wait_for_commit(struct btrfs_root *root, u64 transid)
 				ret = -EINVAL;
 			goto out;
 		}
-=======
-		/* The specified transaction doesn't exist */
-		if (!cur_trans)
-			goto out;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	} else {
 		/* find newest transaction that is committing | committed */
 		spin_lock(&root->fs_info->trans_lock);

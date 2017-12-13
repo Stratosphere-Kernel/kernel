@@ -426,11 +426,7 @@ static int rtas_setup_msi_irqs(struct pci_dev *pdev, int nvec_in, int type)
 	 */
 again:
 	if (type == PCI_CAP_ID_MSI) {
-<<<<<<< HEAD
 		if (pdev->no_64bit_msi) {
-=======
-		if (pdn->force_32bit_msi) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			rc = rtas_change_msi(pdn, RTAS_CHANGE_32MSI_FN, nvec);
 			if (rc < 0) {
 				/*

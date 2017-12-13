@@ -274,13 +274,10 @@ endif # NETWORK_FILESYSTEMS
 source "fs/nls/Kconfig"
 source "fs/dlm/Kconfig"
 
-<<<<<<< HEAD
 config DYNAMIC_FSYNC
 	bool "dynamic file sync control"
 	default n
 	help
 	An experimental file sync control using Android's power suspend / late resume drivers
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 endmenu

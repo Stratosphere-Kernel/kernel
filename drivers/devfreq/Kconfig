@@ -100,7 +100,6 @@ config ARMBW_HWMON
 config DEVFREQ_GOV_MSM_GPUBW_MON
 	tristate "GPU BW voting governor"
 	depends on DEVFREQ_GOV_MSM_ADRENO_TZ
-<<<<<<< HEAD
 
 config ADRENO_IDLER
 	tristate "MSM Adreno idler"
@@ -114,8 +113,6 @@ config ADRENO_IDLER
 config DEVFREQ_GOV_MSM_CPUFREQ
 	bool "MSM CPUfreq"
 	depends on CPU_FREQ_MSM
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	help
 	  MSM GPU governor for GPU bus bandwidth voting.
 	  This governor works together with MSM Adreno Trustzone governor,

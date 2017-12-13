@@ -299,11 +299,7 @@ static int zap_threads(struct task_struct *tsk, struct mm_struct *mm,
 	if (unlikely(nr < 0))
 		return nr;
 
-<<<<<<< HEAD
 	tsk->flags |= PF_DUMPCORE;
-=======
-	tsk->flags = PF_DUMPCORE;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (atomic_read(&mm->mm_users) == nr + 1)
 		goto done;
 	/*
@@ -648,11 +644,7 @@ void do_coredump(siginfo_t *siginfo)
 			goto close_fail;
 		if (!cprm.file->f_op || !cprm.file->f_op->write)
 			goto close_fail;
-<<<<<<< HEAD
 		if (do_truncate(cprm.file->f_path.dentry, 0, 0, cprm.file))
-=======
-		if (do_truncate2(cprm.file->f_path.mnt, cprm.file->f_path.dentry, 0, 0, cprm.file))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			goto close_fail;
 	}
 

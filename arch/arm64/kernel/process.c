@@ -303,7 +303,6 @@ void exit_thread(void)
 {
 }
 
-<<<<<<< HEAD
 static void tls_thread_flush(void)
 {
 	asm ("msr tpidr_el0, xzr");
@@ -325,11 +324,6 @@ void flush_thread(void)
 {
 	fpsimd_flush_thread();
 	tls_thread_flush();
-=======
-void flush_thread(void)
-{
-	fpsimd_flush_thread();
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	flush_ptrace_hw_breakpoint(current);
 }
 

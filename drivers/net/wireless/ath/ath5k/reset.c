@@ -478,11 +478,7 @@ ath5k_hw_wisoc_reset(struct ath5k_hw *ah, u32 flags)
 	regval = ioread32(reg);
 	iowrite32(regval | val, reg);
 	regval = ioread32(reg);
-<<<<<<< HEAD
 	udelay(100);	/* NB: should be atomic */
-=======
-	usleep_range(100, 150);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Bring BB/MAC out of reset */
 	iowrite32(regval & ~val, reg);

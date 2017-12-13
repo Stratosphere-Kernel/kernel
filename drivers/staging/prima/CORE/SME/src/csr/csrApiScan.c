@@ -88,12 +88,6 @@ RSSI *cannot* be more than 0xFF or less than 0 for meaningful WLAN operation
 #define CSR_SCAN_MAX_SCORE_VAL 0xFF
 #define CSR_SCAN_MIN_SCORE_VAL 0x0
 #define CSR_SCAN_HANDOFF_DELTA 10
-<<<<<<< HEAD
-=======
-
-#define CSR_PURGE_RSSI_THRESHOLD -70
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define MAX_ACTIVE_SCAN_FOR_ONE_CHANNEL 140
 #define MIN_ACTIVE_SCAN_FOR_ONE_CHANNEL 120
 
@@ -155,11 +149,7 @@ eHalStatus csrSetBGScanChannelList( tpAniSirGlobal pMac, tANI_U8 *pAdjustChannel
 void csrReleaseCmdSingle(tpAniSirGlobal pMac, tSmeCmd *pCommand);
 tANI_BOOLEAN csrRoamIsValidChannel( tpAniSirGlobal pMac, tANI_U8 channel );
 void csrPruneChannelListForMode( tpAniSirGlobal pMac, tCsrChannel *pChannelList );
-<<<<<<< HEAD
 void csrPurgeOldScanResults(tpAniSirGlobal pMac);
-=======
-void csrPurgeScanResults(tpAniSirGlobal pMac);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 
 
@@ -3694,11 +3684,7 @@ static void csrMoveTempScanResultsToMainList( tpAniSirGlobal pMac, tANI_U8 reaso
           )
         {
             smsLog(pMac, LOG1, FL("########## BSS Limit reached ###########"));
-<<<<<<< HEAD
             csrPurgeOldScanResults(pMac);
-=======
-            csrPurgeScanResults(pMac);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         }
         // check for duplicate scan results
         if ( !fDupBss )
@@ -3817,7 +3803,6 @@ end:
     return;
 }
 
-<<<<<<< HEAD
 void csrPurgeOldScanResults(tpAniSirGlobal pMac)
 {
     tListElem *pEntry, *tmpEntry;
@@ -3828,30 +3813,6 @@ void csrPurgeOldScanResults(tpAniSirGlobal pMac)
     csrLLLock(&pMac->scan.scanResultList);
     pEntry = csrLLPeekHead( &pMac->scan.scanResultList, LL_ACCESS_NOLOCK );
     while( pEntry )
-=======
-/**
- * csrPurgeScanResults() - This function removes scan entry based
- * on RSSI or AGE
- * @pMac: pointer to Global MAC structure
- *
- * This function removes scan entry based on RSSI or AGE.
- * If an scan entry with RSSI less than CSR_PURGE_RSSI_THRESHOLD,
- * the scan entry is removed else oldest entry is removed.
- *
- * Return: None
- */
-void csrPurgeScanResults(tpAniSirGlobal pMac)
-{
-    tListElem *pEntry, *tmpEntry;
-    tCsrScanResult *pResult, *oldest_bss = NULL, *weakest_bss = NULL;
-    v_TIME_t oldest_entry = 0;
-    v_TIME_t curTime = vos_timer_get_system_time();
-    tANI_S8 weakest_rssi = 0;
-
-    csrLLLock(&pMac->scan.scanResultList);
-    pEntry = csrLLPeekHead( &pMac->scan.scanResultList, LL_ACCESS_NOLOCK );
-    while(pEntry)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     {
         tmpEntry = csrLLNext(&pMac->scan.scanResultList, pEntry,
                 LL_ACCESS_NOLOCK);
@@ -3863,19 +3824,10 @@ void csrPurgeScanResults(tpAniSirGlobal pMac)
                                 pResult->Result.BssDescriptor.nReceivedTime;
             oldest_bss = pResult;
         }
-<<<<<<< HEAD
-=======
-        if (pResult->Result.BssDescriptor.rssi < weakest_rssi)
-        {
-            weakest_rssi = pResult->Result.BssDescriptor.rssi;
-            weakest_bss = pResult;
-        }
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         pEntry = tmpEntry;
     }
     if (oldest_bss)
     {
-<<<<<<< HEAD
         //Free the old BSS Entries
         if( csrLLRemoveEntry(&pMac->scan.scanResultList,
                                &oldest_bss->Link, LL_ACCESS_NOLOCK) )
@@ -3884,27 +3836,6 @@ void csrPurgeScanResults(tpAniSirGlobal pMac)
                     (curTime - oldest_bss->Result.BssDescriptor.nReceivedTime),
                     MAC_ADDR_ARRAY(oldest_bss->Result.BssDescriptor.bssId));
             csrFreeScanResultEntry(pMac, oldest_bss);
-=======
-        tCsrScanResult *bss_to_remove;
-
-        if (weakest_rssi < CSR_PURGE_RSSI_THRESHOLD)
-            bss_to_remove = weakest_bss;
-        else
-            bss_to_remove = oldest_bss;
-
-        //Free the old BSS Entries
-        if(csrLLRemoveEntry(&pMac->scan.scanResultList,
-                       &bss_to_remove->Link, LL_ACCESS_NOLOCK))
-        {
-            smsLog(pMac, LOG1,
-               FL("BSSID: "MAC_ADDRESS_STR" Removed, time delta (%lu) RSSI %d"),
-               MAC_ADDR_ARRAY(
-               bss_to_remove->Result.BssDescriptor.bssId),
-               (curTime -
-               bss_to_remove->Result.BssDescriptor.nReceivedTime),
-               bss_to_remove->Result.BssDescriptor.rssi);
-            csrFreeScanResultEntry(pMac, bss_to_remove);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         }
     }
     csrLLUnlock(&pMac->scan.scanResultList);
@@ -5778,11 +5709,7 @@ static tANI_BOOLEAN csrScanProcessScanResults( tpAniSirGlobal pMac, tSmeCmd *pCo
         if (eHAL_STATUS_SUCCESS != status)
             smsLog(pMac, LOGE,
                    FL( "failed to update the supported channel list"));
-<<<<<<< HEAD
         pMac->scan.defer_update_channel_list = false;
-=======
-            pMac->scan.defer_update_channel_list = false;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     }
 
 #ifdef WLAN_AP_STA_CONCURRENCY

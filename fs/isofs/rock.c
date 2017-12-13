@@ -295,7 +295,6 @@ eio:
 	goto out;
 }
 
-<<<<<<< HEAD
 #define RR_REGARD_XA 1
 #define RR_RELOC_DE 2
 
@@ -306,14 +305,6 @@ parse_rock_ridge_inode_internal(struct iso_directory_record *de,
 	int symlink_len = 0;
 	int cnt, sig;
 	unsigned int reloc_block;
-=======
-static int
-parse_rock_ridge_inode_internal(struct iso_directory_record *de,
-				struct inode *inode, int regard_xa)
-{
-	int symlink_len = 0;
-	int cnt, sig;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct inode *reloc;
 	struct rock_ridge *rr;
 	int rootflag;
@@ -325,11 +316,7 @@ parse_rock_ridge_inode_internal(struct iso_directory_record *de,
 
 	init_rock_state(&rs, inode);
 	setup_rock_ridge(de, inode, &rs);
-<<<<<<< HEAD
 	if (flags & RR_REGARD_XA) {
-=======
-	if (regard_xa) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		rs.chr += 14;
 		rs.len -= 14;
 		if (rs.len < 0)
@@ -376,12 +363,9 @@ repeat:
 			rs.cont_size = isonum_733(rr->u.CE.size);
 			break;
 		case SIG('E', 'R'):
-<<<<<<< HEAD
 			/* Invalid length of ER tag id? */
 			if (rr->u.ER.len_id + offsetof(struct rock_ridge, u.ER.data) > rr->len)
 				goto out;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			ISOFS_SB(inode->i_sb)->s_rock = 1;
 			printk(KERN_DEBUG "ISO 9660 Extensions: ");
 			{
@@ -515,7 +499,6 @@ repeat:
 					"relocated directory\n");
 			goto out;
 		case SIG('C', 'L'):
-<<<<<<< HEAD
 			if (flags & RR_RELOC_DE) {
 				printk(KERN_ERR
 				       "ISOFS: Recursive directory relocation "
@@ -532,14 +515,6 @@ repeat:
 			}
 			ISOFS_I(inode)->i_first_extent = reloc_block;
 			reloc = isofs_iget_reloc(inode->i_sb, reloc_block, 0);
-=======
-			ISOFS_I(inode)->i_first_extent =
-			    isonum_733(rr->u.CL.location);
-			reloc =
-			    isofs_iget(inode->i_sb,
-				       ISOFS_I(inode)->i_first_extent,
-				       0);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			if (IS_ERR(reloc)) {
 				ret = PTR_ERR(reloc);
 				goto out;
@@ -686,17 +661,11 @@ static char *get_symlink_chunk(char *rpnt, struct rock_ridge *rr, char *plimit)
 	return rpnt;
 }
 
-<<<<<<< HEAD
 int parse_rock_ridge_inode(struct iso_directory_record *de, struct inode *inode,
 			   int relocated)
 {
 	int flags = relocated ? RR_RELOC_DE : 0;
 	int result = parse_rock_ridge_inode_internal(de, inode, flags);
-=======
-int parse_rock_ridge_inode(struct iso_directory_record *de, struct inode *inode)
-{
-	int result = parse_rock_ridge_inode_internal(de, inode, 0);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * if rockridge flag was reset and we didn't look for attributes
@@ -704,12 +673,8 @@ int parse_rock_ridge_inode(struct iso_directory_record *de, struct inode *inode)
 	 */
 	if ((ISOFS_SB(inode->i_sb)->s_rock_offset == -1)
 	    && (ISOFS_SB(inode->i_sb)->s_rock == 2)) {
-<<<<<<< HEAD
 		result = parse_rock_ridge_inode_internal(de, inode,
 							 flags | RR_REGARD_XA);
-=======
-		result = parse_rock_ridge_inode_internal(de, inode, 14);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	return result;
 }

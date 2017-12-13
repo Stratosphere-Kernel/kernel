@@ -21,10 +21,7 @@
 #include <linux/init.h>
 #include <linux/serio.h>
 #include <linux/tty.h>
-<<<<<<< HEAD
 #include <linux/compat.h>
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 MODULE_AUTHOR("Vojtech Pavlik <vojtech@ucw.cz>");
 MODULE_DESCRIPTION("Input device TTY line discipline");
@@ -200,7 +197,6 @@ static ssize_t serport_ldisc_read(struct tty_struct * tty, struct file * file, u
 	return 0;
 }
 
-<<<<<<< HEAD
 static void serport_set_type(struct tty_struct *tty, unsigned long type)
 {
 	struct serport *serport = tty->disc_data;
@@ -210,13 +206,10 @@ static void serport_set_type(struct tty_struct *tty, unsigned long type)
 	serport->id.extra = (type & 0x00ff0000) >> 16;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * serport_ldisc_ioctl() allows to set the port protocol, and device ID
  */
 
-<<<<<<< HEAD
 static int serport_ldisc_ioctl(struct tty_struct *tty, struct file *file,
 			       unsigned int cmd, unsigned long arg)
 {
@@ -247,30 +240,12 @@ static long serport_ldisc_compat_ioctl(struct tty_struct *tty,
 			return -EFAULT;
 
 		serport_set_type(tty, compat_type);
-=======
-static int serport_ldisc_ioctl(struct tty_struct * tty, struct file * file, unsigned int cmd, unsigned long arg)
-{
-	struct serport *serport = (struct serport*) tty->disc_data;
-	unsigned long type;
-
-	if (cmd == SPIOCSTYPE) {
-		if (get_user(type, (unsigned long __user *) arg))
-			return -EFAULT;
-
-		serport->id.proto = type & 0x000000ff;
-		serport->id.id	  = (type & 0x0000ff00) >> 8;
-		serport->id.extra = (type & 0x00ff0000) >> 16;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return 0;
 	}
 
 	return -EINVAL;
 }
-<<<<<<< HEAD
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static void serport_ldisc_write_wakeup(struct tty_struct * tty)
 {
@@ -294,12 +269,9 @@ static struct tty_ldisc_ops serport_ldisc = {
 	.close =	serport_ldisc_close,
 	.read =		serport_ldisc_read,
 	.ioctl =	serport_ldisc_ioctl,
-<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 	.compat_ioctl =	serport_ldisc_compat_ioctl,
 #endif
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.receive_buf =	serport_ldisc_receive,
 	.write_wakeup =	serport_ldisc_write_wakeup
 };

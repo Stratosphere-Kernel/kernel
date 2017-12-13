@@ -788,7 +788,6 @@ static int au0828_i2s_init(struct au0828_dev *dev)
 
 /*
  * Auvitek au0828 analog stream enable
-<<<<<<< HEAD
  */
 static int au0828_analog_stream_enable(struct au0828_dev *d)
 {
@@ -810,13 +809,6 @@ static int au0828_analog_stream_enable(struct au0828_dev *d)
 
 	/* FIXME: size should be calculated using d->width, d->height */
 
-=======
- * Please set interface0 to AS5 before enable the stream
- */
-static int au0828_analog_stream_enable(struct au0828_dev *d)
-{
-	dprintk(1, "au0828_analog_stream_enable called\n");
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	au0828_writereg(d, AU0828_SENSORCTRL_VBI_103, 0x00);
 	au0828_writereg(d, 0x106, 0x00);
 	/* set x position */
@@ -1027,18 +1019,6 @@ static int au0828_v4l2_open(struct file *filp)
 		return -ERESTARTSYS;
 	}
 	if (dev->users == 0) {
-<<<<<<< HEAD
-=======
-		/* set au0828 interface0 to AS5 here again */
-		ret = usb_set_interface(dev->usbdev, 0, 5);
-		if (ret < 0) {
-			mutex_unlock(&dev->lock);
-			printk(KERN_INFO "Au0828 can't set alternate to 5!\n");
-			kfree(fh);
-			return -EBUSY;
-		}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		au0828_analog_stream_enable(dev);
 		au0828_analog_stream_reset(dev);
 
@@ -1280,16 +1260,6 @@ static int au0828_set_format(struct au0828_dev *dev, unsigned int cmd,
 		}
 	}
 
-<<<<<<< HEAD
-=======
-	/* set au0828 interface0 to AS5 here again */
-	ret = usb_set_interface(dev->usbdev, 0, 5);
-	if (ret < 0) {
-		printk(KERN_INFO "Au0828 can't set alt setting to 5!\n");
-		return -EBUSY;
-	}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	au0828_analog_stream_enable(dev);
 
 	return 0;

@@ -933,10 +933,6 @@ struct proto {
 						struct sk_buff *skb);
 
 	void		(*release_cb)(struct sock *sk);
-<<<<<<< HEAD
-=======
-	void		(*mtu_reduced)(struct sock *sk);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Keeping track of sk's, looking them up, and port selection methods. */
 	void			(*hash)(struct sock *sk);
@@ -1732,13 +1728,8 @@ sk_dst_get(struct sock *sk)
 
 	rcu_read_lock();
 	dst = rcu_dereference(sk->sk_dst_cache);
-<<<<<<< HEAD
 	if (dst && !atomic_inc_not_zero(&dst->__refcnt))
 		dst = NULL;
-=======
-	if (dst)
-		dst_hold(dst);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rcu_read_unlock();
 	return dst;
 }
@@ -1777,17 +1768,11 @@ __sk_dst_set(struct sock *sk, struct dst_entry *dst)
 static inline void
 sk_dst_set(struct sock *sk, struct dst_entry *dst)
 {
-<<<<<<< HEAD
 	struct dst_entry *old_dst;
 
 	sk_tx_queue_clear(sk);
 	old_dst = xchg((__force struct dst_entry **)&sk->sk_dst_cache, dst);
 	dst_release(old_dst);
-=======
-	spin_lock(&sk->sk_dst_lock);
-	__sk_dst_set(sk, dst);
-	spin_unlock(&sk->sk_dst_lock);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static inline void
@@ -1799,13 +1784,7 @@ __sk_dst_reset(struct sock *sk)
 static inline void
 sk_dst_reset(struct sock *sk)
 {
-<<<<<<< HEAD
 	sk_dst_set(sk, NULL);
-=======
-	spin_lock(&sk->sk_dst_lock);
-	__sk_dst_reset(sk);
-	spin_unlock(&sk->sk_dst_lock);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 extern struct dst_entry *__sk_dst_check(struct sock *sk, u32 cookie);

@@ -160,32 +160,6 @@ limSendSmeRsp(tpAniSirGlobal pMac, tANI_U16 msgType,
     limSysProcessMmhMsgApi(pMac, &mmhMsg,  ePROT);
 } /*** end limSendSmeRsp() ***/
 
-<<<<<<< HEAD
-=======
-/**
- * lim_add_bss_info() - copy data from session entry to join rsp
- * @session_entry: PE Session Info
- * @sme_join_rsp: Join response buffer to be filled up
- *
- * Return: None
- */
-void lim_add_bss_info(tpDphHashNode sta_ds,
-                      tpSirSmeJoinRsp sme_join_rsp)
-{
-    struct parsed_ies *parsed_ies = &sta_ds->parsed_ies;
-
-    if (parsed_ies->hs20vendor_ie.present)
-        sme_join_rsp->hs20vendor_ie = parsed_ies->hs20vendor_ie;
-    if (parsed_ies->vht_caps.present)
-        sme_join_rsp->vht_caps = parsed_ies->vht_caps;
-    if (parsed_ies->ht_caps.present)
-        sme_join_rsp->ht_caps = parsed_ies->ht_caps;
-    if (parsed_ies->ht_operation.present)
-        sme_join_rsp->ht_operation = parsed_ies->ht_operation;
-    if (parsed_ies->vht_operation.present)
-        sme_join_rsp->vht_operation = parsed_ies->vht_operation;
-}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /**
  * limSendSmeJoinReassocRspAfterResume()
@@ -408,10 +382,6 @@ limSendSmeJoinReassocRsp(tpAniSirGlobal pMac, tANI_U16 msgType,
                 pSirSmeJoinRsp->bcastSig   = pStaDs->ucBcastSig;
                 pSirSmeJoinRsp->maxRateFlags =
                                 limGetMaxRateFlags(pStaDs, psessionEntry);
-<<<<<<< HEAD
-=======
-                lim_add_bss_info(pStaDs, pSirSmeJoinRsp);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
                 PELOGE(limLog(pMac, LOG1, FL("maxRateFlags: %x"),
                                               pSirSmeJoinRsp->maxRateFlags);)
             }

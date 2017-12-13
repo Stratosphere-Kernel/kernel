@@ -502,22 +502,6 @@ static int device_resume_noirq(struct device *dev, pm_message_t state)
 	return error;
 }
 
-<<<<<<< HEAD
-=======
-static bool is_async(struct device *dev);
-
-static void async_resume_noirq(void *data, async_cookie_t cookie)
-{
-	struct device *dev = (struct device *)data;
-	int error;
-
-	error = device_resume_noirq(dev, pm_transition);
-	if (error)
-		pm_dev_err(dev, pm_transition, " noirq", error);
-	put_device(dev);
-}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * dpm_resume_noirq - Execute "noirq resume" callbacks for all devices.
  * @state: PM transition of the system being carried out.
@@ -527,35 +511,17 @@ static void async_resume_noirq(void *data, async_cookie_t cookie)
  */
 static void dpm_resume_noirq(pm_message_t state)
 {
-<<<<<<< HEAD
 	ktime_t starttime = ktime_get();
 
 	mutex_lock(&dpm_list_mtx);
 	while (!list_empty(&dpm_noirq_list)) {
 		struct device *dev = to_device(dpm_noirq_list.next);
 		int error;
-=======
-	struct device *dev;
-	ktime_t starttime = ktime_get();
-	pm_transition = state;
-
-	list_for_each_entry(dev, &dpm_noirq_list, power.entry) {
-		if (is_async(dev)) {
-			get_device(dev);
-			async_schedule(async_resume_noirq, dev);
-		}
-	}
-
-	mutex_lock(&dpm_list_mtx);
-	while (!list_empty(&dpm_noirq_list)) {
-		dev = to_device(dpm_noirq_list.next);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		get_device(dev);
 		list_move_tail(&dev->power.entry, &dpm_late_early_list);
 		mutex_unlock(&dpm_list_mtx);
 
-<<<<<<< HEAD
 		error = device_resume_noirq(dev, state);
 		if (error) {
 			suspend_stats.failed_resume_noirq++;
@@ -564,26 +530,10 @@ static void dpm_resume_noirq(pm_message_t state)
 			pm_dev_err(dev, state, " noirq", error);
 		}
 
-=======
-		if (!is_async(dev)) {
-			int error;
-			error = device_resume_noirq(dev, state);
-			if (error) {
-				suspend_stats.failed_resume_noirq++;
-				dpm_save_failed_step(SUSPEND_RESUME_NOIRQ);
-				dpm_save_failed_dev(dev_name(dev));
-				pm_dev_err(dev, state, " noirq", error);
-			}
-		}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mutex_lock(&dpm_list_mtx);
 		put_device(dev);
 	}
 	mutex_unlock(&dpm_list_mtx);
-<<<<<<< HEAD
-=======
-	async_synchronize_full();
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dpm_show_time(starttime, state, "noirq");
 	resume_device_irqs();
 	cpuidle_resume();
@@ -1050,10 +1000,6 @@ static int device_suspend_late(struct device *dev, pm_message_t state)
 {
 	pm_callback_t callback = NULL;
 	char *info = NULL;
-<<<<<<< HEAD
-=======
-	int error = 0;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	__pm_runtime_disable(dev, false);
 
@@ -1079,19 +1025,7 @@ static int device_suspend_late(struct device *dev, pm_message_t state)
 		callback = pm_late_early_op(dev->driver->pm, state);
 	}
 
-<<<<<<< HEAD
 	return dpm_run_callback(callback, dev, state, info);
-=======
-	error = dpm_run_callback(callback, dev, state, info);
-	if (error)
-		/*
-		 * dpm_resume_early wouldn't be run for this failed device,
-		 * hence enable runtime_pm now
-		 */
-		pm_runtime_enable(dev);
-
-	return error;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /**
@@ -1113,12 +1047,6 @@ static int dpm_suspend_late(pm_message_t state)
 		error = device_suspend_late(dev, state);
 
 		mutex_lock(&dpm_list_mtx);
-<<<<<<< HEAD
-=======
-		if (!list_empty(&dev->power.entry))
-			list_move(&dev->power.entry, &dpm_late_early_list);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (error) {
 			pm_dev_err(dev, state, " late", error);
 			suspend_stats.failed_suspend_late++;
@@ -1127,11 +1055,8 @@ static int dpm_suspend_late(pm_message_t state)
 			put_device(dev);
 			break;
 		}
-<<<<<<< HEAD
 		if (!list_empty(&dev->power.entry))
 			list_move(&dev->power.entry, &dpm_late_early_list);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		put_device(dev);
 
 		if (pm_wakeup_pending()) {

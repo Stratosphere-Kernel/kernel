@@ -182,11 +182,8 @@ static int pstore_unlink(struct inode *dir, struct dentry *dentry)
 	if (p->psi->erase)
 		p->psi->erase(p->type, p->id, p->count,
 			      dentry->d_inode->i_ctime, p->psi);
-<<<<<<< HEAD
 	else
 		return -EPERM;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return simple_unlink(dir, dentry);
 }
@@ -367,14 +364,8 @@ int pstore_mkfile(enum pstore_type_id type, char *psname, u64 id, int count,
 
 	mutex_lock(&root->d_inode->i_mutex);
 
-<<<<<<< HEAD
 	dentry = d_alloc_name(root, name);
 	if (!dentry)
-=======
-	rc = -ENOSPC;
-	dentry = d_alloc_name(root, name);
-	if (IS_ERR(dentry))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto fail_lockedalloc;
 
 	memcpy(private->data, data, size);

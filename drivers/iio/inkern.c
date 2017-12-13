@@ -178,11 +178,7 @@ static struct iio_channel *of_iio_channel_get_by_name(struct device_node *np,
 			index = of_property_match_string(np, "io-channel-names",
 							 name);
 		chan = of_iio_channel_get(np, index);
-<<<<<<< HEAD
 		if (!IS_ERR(chan) || PTR_ERR(chan) == -EPROBE_DEFER)
-=======
-		if (!IS_ERR(chan))
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			break;
 		else if (name && index >= 0) {
 			pr_err("ERROR: could not get IIO channel %s:%s(%i)\n",

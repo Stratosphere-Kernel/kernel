@@ -147,24 +147,9 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
 		} else {
 			/* Nothing to do. Next chunk in the packet, please. */
 			ch = (sctp_chunkhdr_t *) chunk->chunk_end;
-<<<<<<< HEAD
 			/* Force chunk->skb->data to chunk->chunk_end.  */
 			skb_pull(chunk->skb, chunk->chunk_end - chunk->skb->data);
 			/* We are guaranteed to pull a SCTP header. */
-=======
-
-			/* Force chunk->skb->data to chunk->chunk_end.  */
-			skb_pull(chunk->skb,
-				 chunk->chunk_end - chunk->skb->data);
-
-			/* Verify that we have at least chunk headers
-			 * worth of buffer left.
-			 */
-			if (skb_headlen(chunk->skb) < sizeof(sctp_chunkhdr_t)) {
-				sctp_chunk_free(chunk);
-				chunk = queue->in_progress = NULL;
-			}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 	}
 
@@ -200,7 +185,6 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
 	skb_pull(chunk->skb, sizeof(sctp_chunkhdr_t));
 	chunk->subh.v = NULL; /* Subheader is no longer valid.  */
 
-<<<<<<< HEAD
 	if (chunk->chunk_end + sizeof(sctp_chunkhdr_t) <
 	    skb_tail_pointer(chunk->skb)) {
 		/* This is not a singleton */
@@ -209,26 +193,6 @@ struct sctp_chunk *sctp_inq_pop(struct sctp_inq *queue)
 		/* Discard inside state machine. */
 		chunk->pdiscard = 1;
 		chunk->chunk_end = skb_tail_pointer(chunk->skb);
-=======
-	if (chunk->chunk_end < skb_tail_pointer(chunk->skb)) {
-		/* This is not a singleton */
-		chunk->singleton = 0;
-	} else if (chunk->chunk_end > skb_tail_pointer(chunk->skb)) {
-		/* RFC 2960, Section 6.10  Bundling
-		 *
-		 * Partial chunks MUST NOT be placed in an SCTP packet.
-		 * If the receiver detects a partial chunk, it MUST drop
-		 * the chunk.
-		 *
-		 * Since the end of the chunk is past the end of our buffer
-		 * (which contains the whole packet, we can freely discard
-		 * the whole packet.
-		 */
-		sctp_chunk_free(chunk);
-		chunk = queue->in_progress = NULL;
-
-		return NULL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	} else {
 		/* We are at the end of the packet, so mark the chunk
 		 * in case we need to send a SACK.

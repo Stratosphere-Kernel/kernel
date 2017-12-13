@@ -814,17 +814,8 @@ static long read_events(struct kioctx *ctx, long min_nr, long nr,
 	 * the ringbuffer empty. So in practice we should be ok, but it's
 	 * something to be aware of when touching this code.
 	 */
-<<<<<<< HEAD
 	wait_event_interruptible_hrtimeout(ctx->wait,
 			aio_read_events(ctx, min_nr, nr, event, &ret), until);
-=======
-	if (until.tv64 == 0)
-		aio_read_events(ctx, min_nr, nr, event, &ret);
-	else
-		wait_event_interruptible_hrtimeout(ctx->wait,
-				aio_read_events(ctx, min_nr, nr, event, &ret),
-				until);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!ret && signal_pending(current))
 		ret = -EINTR;

@@ -705,11 +705,7 @@ halRoundS32(tANI_S32 p)
     else
         k = p;
 
-<<<<<<< HEAD
     return(k);
-=======
-        return(k);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 // New functions for endianess conversion
@@ -741,7 +737,4 @@ void CreateFinishScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, t
 #endif /* __UTILSAPI_H */
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

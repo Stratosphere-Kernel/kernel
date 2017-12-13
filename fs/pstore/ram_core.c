@@ -381,12 +381,8 @@ void persistent_ram_zap(struct persistent_ram_zone *prz)
 	persistent_ram_update_header_ecc(prz);
 }
 
-<<<<<<< HEAD
 static void *persistent_ram_vmap(phys_addr_t start, size_t size,
 		unsigned int memtype)
-=======
-static void *persistent_ram_vmap(phys_addr_t start, size_t size)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct page **pages;
 	phys_addr_t page_start;
@@ -398,14 +394,10 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size)
 	page_start = start - offset_in_page(start);
 	page_count = DIV_ROUND_UP(size + offset_in_page(start), PAGE_SIZE);
 
-<<<<<<< HEAD
 	if (memtype)
 		prot = pgprot_noncached(PAGE_KERNEL);
 	else
 		prot = pgprot_writecombine(PAGE_KERNEL);
-=======
-	prot = pgprot_writecombine(PAGE_KERNEL);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	pages = kmalloc(sizeof(struct page *) * page_count, GFP_KERNEL);
 	if (!pages) {
@@ -424,16 +416,11 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size)
 	return vaddr;
 }
 
-<<<<<<< HEAD
 static void *persistent_ram_iomap(phys_addr_t start, size_t size,
 		unsigned int memtype)
 {
 	void *va;
 
-=======
-static void *persistent_ram_iomap(phys_addr_t start, size_t size)
-{
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!request_mem_region(start, size, "persistent_ram")) {
 		pr_err("request mem region (0x%llx@0x%llx) failed\n",
 			(unsigned long long)size, (unsigned long long)start);
@@ -443,7 +430,6 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size)
 	buffer_start_add = buffer_start_add_locked;
 	buffer_size_add = buffer_size_add_locked;
 
-<<<<<<< HEAD
 	if (memtype)
 		va = ioremap(start, size);
 	else
@@ -454,27 +440,14 @@ static void *persistent_ram_iomap(phys_addr_t start, size_t size)
 
 static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
 		struct persistent_ram_zone *prz, int memtype)
-=======
-	return ioremap_wc(start, size);
-}
-
-static int persistent_ram_buffer_map(phys_addr_t start, phys_addr_t size,
-		struct persistent_ram_zone *prz)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	prz->paddr = start;
 	prz->size = size;
 
 	if (pfn_valid(start >> PAGE_SHIFT))
-<<<<<<< HEAD
 		prz->vaddr = persistent_ram_vmap(start, size, memtype);
 	else
 		prz->vaddr = persistent_ram_iomap(start, size, memtype);
-=======
-		prz->vaddr = persistent_ram_vmap(start, size);
-	else
-		prz->vaddr = persistent_ram_iomap(start, size);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!prz->vaddr) {
 		pr_err("%s: Failed to map 0x%llx pages at 0x%llx\n", __func__,
@@ -548,12 +521,8 @@ void persistent_ram_free(struct persistent_ram_zone *prz)
 }
 
 struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
-<<<<<<< HEAD
 			u32 sig, struct persistent_ram_ecc_info *ecc_info,
 			unsigned int memtype)
-=======
-			u32 sig, struct persistent_ram_ecc_info *ecc_info)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct persistent_ram_zone *prz;
 	int ret = -ENOMEM;
@@ -564,11 +533,7 @@ struct persistent_ram_zone *persistent_ram_new(phys_addr_t start, size_t size,
 		goto err;
 	}
 
-<<<<<<< HEAD
 	ret = persistent_ram_buffer_map(start, size, prz, memtype);
-=======
-	ret = persistent_ram_buffer_map(start, size, prz);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (ret)
 		goto err;
 

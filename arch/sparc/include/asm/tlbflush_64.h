@@ -35,11 +35,8 @@ static inline void flush_tlb_range(struct vm_area_struct *vma,
 {
 }
 
-<<<<<<< HEAD
 void flush_tlb_kernel_range(unsigned long start, unsigned long end);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define __HAVE_ARCH_ENTER_LAZY_MMU_MODE
 
 extern void flush_tlb_pending(void);
@@ -54,14 +51,6 @@ extern void __flush_tlb_kernel_range(unsigned long start, unsigned long end);
 
 #ifndef CONFIG_SMP
 
-<<<<<<< HEAD
-=======
-#define flush_tlb_kernel_range(start,end) \
-do {	flush_tsb_kernel_range(start,end); \
-	__flush_tlb_kernel_range(start,end); \
-} while (0)
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static inline void global_flush_tlb_page(struct mm_struct *mm, unsigned long vaddr)
 {
 	__flush_tlb_page(CTX_HWBITS(mm->context), vaddr);
@@ -72,14 +61,6 @@ static inline void global_flush_tlb_page(struct mm_struct *mm, unsigned long vad
 extern void smp_flush_tlb_kernel_range(unsigned long start, unsigned long end);
 extern void smp_flush_tlb_page(struct mm_struct *mm, unsigned long vaddr);
 
-<<<<<<< HEAD
-=======
-#define flush_tlb_kernel_range(start, end) \
-do {	flush_tsb_kernel_range(start,end); \
-	smp_flush_tlb_kernel_range(start, end); \
-} while (0)
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define global_flush_tlb_page(mm, vaddr) \
 	smp_flush_tlb_page(mm, vaddr)
 

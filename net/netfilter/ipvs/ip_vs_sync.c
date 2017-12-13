@@ -878,11 +878,8 @@ static void ip_vs_proc_conn(struct net *net, struct ip_vs_conn_param *param,
 			IP_VS_DBG(2, "BACKUP, add new conn. failed\n");
 			return;
 		}
-<<<<<<< HEAD
 		if (!(flags & IP_VS_CONN_F_TEMPLATE))
 			kfree(param->pe_data);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (opt)
@@ -1156,10 +1153,7 @@ static inline int ip_vs_proc_sync_conn(struct net *net, __u8 *p, __u8 *msg_end)
 				(opt_flags & IPVS_OPT_F_SEQ_DATA ? &opt : NULL)
 				);
 #endif
-<<<<<<< HEAD
 	ip_vs_pe_put(param.pe);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 	/* Error exit */
 out:

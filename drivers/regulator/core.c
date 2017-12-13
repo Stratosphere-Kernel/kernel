@@ -799,11 +799,7 @@ static int suspend_prepare(struct regulator_dev *rdev, suspend_state_t state)
 static void print_constraints(struct regulator_dev *rdev)
 {
 	struct regulation_constraints *constraints = rdev->constraints;
-<<<<<<< HEAD
 	char buf[160] = "";
-=======
-	char buf[80] = "";
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int count = 0;
 	int ret;
 
@@ -1634,19 +1630,12 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
 	trace_regulator_enable(rdev_get_name(rdev));
 
 	if (rdev->ena_pin) {
-<<<<<<< HEAD
 		if (!rdev->ena_gpio_state) {
 			ret = regulator_ena_gpio_ctrl(rdev, true);
 			if (ret < 0)
 				return ret;
 			rdev->ena_gpio_state = 1;
 		}
-=======
-		ret = regulator_ena_gpio_ctrl(rdev, true);
-		if (ret < 0)
-			return ret;
-		rdev->ena_gpio_state = 1;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	} else if (rdev->desc->ops->enable) {
 		ret = rdev->desc->ops->enable(rdev);
 		if (ret < 0)
@@ -1754,19 +1743,12 @@ static int _regulator_do_disable(struct regulator_dev *rdev)
 	trace_regulator_disable(rdev_get_name(rdev));
 
 	if (rdev->ena_pin) {
-<<<<<<< HEAD
 		if (rdev->ena_gpio_state) {
 			ret = regulator_ena_gpio_ctrl(rdev, false);
 			if (ret < 0)
 				return ret;
 			rdev->ena_gpio_state = 0;
 		}
-=======
-		ret = regulator_ena_gpio_ctrl(rdev, false);
-		if (ret < 0)
-			return ret;
-		rdev->ena_gpio_state = 0;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	} else if (rdev->desc->ops->disable) {
 		ret = rdev->desc->ops->disable(rdev);
@@ -4051,15 +4033,6 @@ regulator_register(const struct regulator_desc *regulator_desc,
 				 config->ena_gpio, ret);
 			goto wash;
 		}
-<<<<<<< HEAD
-=======
-
-		if (config->ena_gpio_flags & GPIOF_OUT_INIT_HIGH)
-			rdev->ena_gpio_state = 1;
-
-		if (config->ena_gpio_invert)
-			rdev->ena_gpio_state = !rdev->ena_gpio_state;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	/* set regulator constraints */
@@ -4227,17 +4200,11 @@ int regulator_suspend_finish(void)
 	list_for_each_entry(rdev, &regulator_list, list) {
 		mutex_lock(&rdev->mutex);
 		if (rdev->use_count > 0  || rdev->constraints->always_on) {
-<<<<<<< HEAD
 			if (!_regulator_is_enabled(rdev)) {
 				error = _regulator_do_enable(rdev);
 				if (error)
 					ret = error;
 			}
-=======
-			error = _regulator_do_enable(rdev);
-			if (error)
-				ret = error;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		} else {
 			if (!has_full_constraints)
 				goto unlock;

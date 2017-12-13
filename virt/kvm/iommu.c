@@ -43,21 +43,13 @@ static void kvm_iommu_put_pages(struct kvm *kvm,
 				gfn_t base_gfn, unsigned long npages);
 
 static pfn_t kvm_pin_pages(struct kvm_memory_slot *slot, gfn_t gfn,
-<<<<<<< HEAD
 			   unsigned long npages)
-=======
-			   unsigned long size)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	gfn_t end_gfn;
 	pfn_t pfn;
 
 	pfn     = gfn_to_pfn_memslot(slot, gfn);
-<<<<<<< HEAD
 	end_gfn = gfn + npages;
-=======
-	end_gfn = gfn + (size >> PAGE_SHIFT);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	gfn    += 1;
 
 	if (is_error_noslot_pfn(pfn))
@@ -69,7 +61,6 @@ static pfn_t kvm_pin_pages(struct kvm_memory_slot *slot, gfn_t gfn,
 	return pfn;
 }
 
-<<<<<<< HEAD
 static void kvm_unpin_pages(struct kvm *kvm, pfn_t pfn, unsigned long npages)
 {
 	unsigned long i;
@@ -78,8 +69,6 @@ static void kvm_unpin_pages(struct kvm *kvm, pfn_t pfn, unsigned long npages)
 		kvm_release_pfn_clean(pfn + i);
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 int kvm_iommu_map_pages(struct kvm *kvm, struct kvm_memory_slot *slot)
 {
 	gfn_t gfn, end_gfn;
@@ -130,11 +119,7 @@ int kvm_iommu_map_pages(struct kvm *kvm, struct kvm_memory_slot *slot)
 		 * Pin all pages we are about to map in memory. This is
 		 * important because we unmap and unpin in 4kb steps later.
 		 */
-<<<<<<< HEAD
 		pfn = kvm_pin_pages(slot, gfn, page_size >> PAGE_SHIFT);
-=======
-		pfn = kvm_pin_pages(slot, gfn, page_size);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (is_error_noslot_pfn(pfn)) {
 			gfn += 1;
 			continue;
@@ -146,10 +131,7 @@ int kvm_iommu_map_pages(struct kvm *kvm, struct kvm_memory_slot *slot)
 		if (r) {
 			printk(KERN_ERR "kvm_iommu_map_address:"
 			       "iommu failed to map pfn=%llx\n", pfn);
-<<<<<<< HEAD
 			kvm_unpin_pages(kvm, pfn, page_size >> PAGE_SHIFT);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			goto unmap_pages;
 		}
 
@@ -161,11 +143,7 @@ int kvm_iommu_map_pages(struct kvm *kvm, struct kvm_memory_slot *slot)
 	return 0;
 
 unmap_pages:
-<<<<<<< HEAD
 	kvm_iommu_put_pages(kvm, slot->base_gfn, gfn - slot->base_gfn);
-=======
-	kvm_iommu_put_pages(kvm, slot->base_gfn, gfn);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return r;
 }
 
@@ -303,17 +281,6 @@ out_unlock:
 	return r;
 }
 
-<<<<<<< HEAD
-=======
-static void kvm_unpin_pages(struct kvm *kvm, pfn_t pfn, unsigned long npages)
-{
-	unsigned long i;
-
-	for (i = 0; i < npages; ++i)
-		kvm_release_pfn_clean(pfn + i);
-}
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void kvm_iommu_put_pages(struct kvm *kvm,
 				gfn_t base_gfn, unsigned long npages)
 {

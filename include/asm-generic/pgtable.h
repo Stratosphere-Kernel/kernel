@@ -563,18 +563,10 @@ static inline int pmd_none_or_trans_huge_or_clear_bad(pmd_t *pmd)
 #ifdef CONFIG_TRANSPARENT_HUGEPAGE
 	barrier();
 #endif
-<<<<<<< HEAD
 	if (pmd_none(pmdval) || pmd_trans_huge(pmdval))
 		return 1;
 	if (unlikely(pmd_bad(pmdval))) {
 		pmd_clear_bad(pmd);
-=======
-	if (pmd_none(pmdval))
-		return 1;
-	if (unlikely(pmd_bad(pmdval))) {
-		if (!pmd_trans_huge(pmdval))
-			pmd_clear_bad(pmd);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return 1;
 	}
 	return 0;

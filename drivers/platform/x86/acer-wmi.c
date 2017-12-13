@@ -572,7 +572,6 @@ static const struct dmi_system_id video_vendor_dmi_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "Aspire 5750"),
 		},
 	},
-<<<<<<< HEAD
 	{
 		/*
 		 * Note no video_set_backlight_video_vendor, we must use the
@@ -584,8 +583,6 @@ static const struct dmi_system_id video_vendor_dmi_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "KAV80"),
 		},
 	},
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	{}
 };
 

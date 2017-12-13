@@ -95,12 +95,9 @@ struct tpm_vendor_specific {
 	int (*send) (struct tpm_chip *, u8 *, size_t);
 	void (*cancel) (struct tpm_chip *);
 	u8 (*status) (struct tpm_chip *);
-<<<<<<< HEAD
 	bool (*update_timeouts)(struct tpm_chip *chip,
 				unsigned long *timeout_cap);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	void (*release) (struct device *);
 	struct miscdevice miscdev;
 	struct attribute_group *attr_group;

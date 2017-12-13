@@ -73,12 +73,8 @@ config IIO_ST_GYRO_SPI_3AXIS
 config ITG3200
 	tristate "InvenSense ITG3200 Digital 3-Axis Gyroscope I2C driver"
 	depends on I2C
-<<<<<<< HEAD
 	select IIO_BUFFER
 	select IIO_TRIGGERED_BUFFER
-=======
-	select IIO_TRIGGERED_BUFFER if IIO_BUFFER
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	help
 	  Say yes here to add support for the InvenSense ITG3200 digital
 	  3-axis gyroscope sensor.

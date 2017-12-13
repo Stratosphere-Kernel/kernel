@@ -184,11 +184,7 @@ static int INIT get_next_block(struct bunzip_data *bd)
 	if (get_bits(bd, 1))
 		return RETVAL_OBSOLETE_INPUT;
 	origPtr = get_bits(bd, 24);
-<<<<<<< HEAD
 	if (origPtr >= dbufSize)
-=======
-	if (origPtr > dbufSize)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return RETVAL_DATA_ERROR;
 	/* mapping table: if some byte values are never used (encoding things
 	   like ascii text), the compression code removes the gaps to have fewer

@@ -460,10 +460,7 @@ static void ib_uverbs_async_handler(struct ib_uverbs_file *file,
 
 	entry->desc.async.element    = element;
 	entry->desc.async.event_type = event;
-<<<<<<< HEAD
 	entry->desc.async.reserved   = 0;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	entry->counter               = counter;
 
 	list_add_tail(&entry->list, &file->async_file->event_list);

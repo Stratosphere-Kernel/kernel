@@ -333,11 +333,7 @@ EXPORT_SYMBOL_GPL(ktime_sub_ns);
 /*
  * Divide a ktime value by a nanosecond value
  */
-<<<<<<< HEAD
 u64 ktime_divns(const ktime_t kt, s64 div)
-=======
-u64 __ktime_divns(const ktime_t kt, s64 div)
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	u64 dclc;
 	int sft = 0;
@@ -353,10 +349,6 @@ u64 __ktime_divns(const ktime_t kt, s64 div)
 
 	return dclc;
 }
-<<<<<<< HEAD
-=======
-EXPORT_SYMBOL_GPL(__ktime_divns);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif /* BITS_PER_LONG >= 64 */
 
 /*

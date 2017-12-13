@@ -367,10 +367,6 @@ static struct nfs4_delegation *
 alloc_init_deleg(struct nfs4_client *clp, struct nfs4_ol_stateid *stp, struct svc_fh *current_fh, u32 type)
 {
 	struct nfs4_delegation *dp;
-<<<<<<< HEAD
-=======
-	struct nfs4_file *fp = stp->st_file;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	dprintk("NFSD alloc_init_deleg\n");
 	/*
@@ -380,11 +376,6 @@ alloc_init_deleg(struct nfs4_client *clp, struct nfs4_ol_stateid *stp, struct sv
 	 */
 	if (type != NFS4_OPEN_DELEGATE_READ)
 		return NULL;
-<<<<<<< HEAD
-=======
-	if (fp->fi_had_conflict)
-		return NULL;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (num_delegations > max_delegations)
 		return NULL;
 	dp = delegstateid(nfs4_alloc_stid(clp, deleg_slab));
@@ -401,12 +392,7 @@ alloc_init_deleg(struct nfs4_client *clp, struct nfs4_ol_stateid *stp, struct sv
 	INIT_LIST_HEAD(&dp->dl_perfile);
 	INIT_LIST_HEAD(&dp->dl_perclnt);
 	INIT_LIST_HEAD(&dp->dl_recall_lru);
-<<<<<<< HEAD
 	dp->dl_file = NULL;
-=======
-	get_nfs4_file(fp);
-	dp->dl_file = fp;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dp->dl_type = type;
 	fh_copy_shallow(&dp->dl_fh, &current_fh->fh_handle);
 	dp->dl_time = 0;
@@ -1214,7 +1200,6 @@ static int copy_cred(struct svc_cred *target, struct svc_cred *source)
 	return 0;
 }
 
-<<<<<<< HEAD
 static int
 compare_blob(const struct xdr_netobj *o1, const struct xdr_netobj *o2)
 {
@@ -1223,17 +1208,6 @@ compare_blob(const struct xdr_netobj *o1, const struct xdr_netobj *o2)
 	if (o1->len > o2->len)
 		return 1;
 	return memcmp(o1->data, o2->data, o1->len);
-=======
-static long long
-compare_blob(const struct xdr_netobj *o1, const struct xdr_netobj *o2)
-{
-	long long res;
-
-	res = o1->len - o2->len;
-	if (res)
-		return res;
-	return (long long)memcmp(o1->data, o2->data, o1->len);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int same_name(const char *n1, const char *n2)
@@ -1390,11 +1364,7 @@ add_clp_to_name_tree(struct nfs4_client *new_clp, struct rb_root *root)
 static struct nfs4_client *
 find_clp_in_name_tree(struct xdr_netobj *name, struct rb_root *root)
 {
-<<<<<<< HEAD
 	int cmp;
-=======
-	long long cmp;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct rb_node *node = root->rb_node;
 	struct nfs4_client *clp;
 
@@ -2990,7 +2960,6 @@ static int nfs4_setlease(struct nfs4_delegation *dp, int flag)
 	return 0;
 }
 
-<<<<<<< HEAD
 static int nfs4_set_delegation(struct nfs4_delegation *dp, int flag, struct nfs4_file *fp)
 {
 	int status;
@@ -3010,31 +2979,16 @@ static int nfs4_set_delegation(struct nfs4_delegation *dp, int flag, struct nfs4
 		spin_unlock(&recall_lock);
 		status = -EAGAIN;
 		goto out_free;
-=======
-static int nfs4_set_delegation(struct nfs4_delegation *dp, int flag)
-{
-	struct nfs4_file *fp = dp->dl_file;
-
-	if (!fp->fi_lease)
-		return nfs4_setlease(dp, flag);
-	spin_lock(&recall_lock);
-	if (fp->fi_had_conflict) {
-		spin_unlock(&recall_lock);
-		return -EAGAIN;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	atomic_inc(&fp->fi_delegees);
 	list_add(&dp->dl_perfile, &fp->fi_delegations);
 	spin_unlock(&recall_lock);
 	list_add(&dp->dl_perclnt, &dp->dl_stid.sc_client->cl_delegations);
 	return 0;
-<<<<<<< HEAD
 out_free:
 	put_nfs4_file(fp);
 	dp->dl_file = fp;
 	return status;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void nfsd4_open_deleg_none_ext(struct nfsd4_open *open, int status)
@@ -3100,11 +3054,7 @@ nfs4_open_delegation(struct net *net, struct svc_fh *fh,
 	dp = alloc_init_deleg(oo->oo_owner.so_client, stp, fh, flag);
 	if (dp == NULL)
 		goto out_no_deleg;
-<<<<<<< HEAD
 	status = nfs4_set_delegation(dp, flag, stp->st_file);
-=======
-	status = nfs4_set_delegation(dp, flag);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (status)
 		goto out_free;
 

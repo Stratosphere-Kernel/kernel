@@ -55,15 +55,6 @@ struct sched_param {
 
 #include <asm/processor.h>
 
-<<<<<<< HEAD
-=======
-int  su_instances(void);
-bool su_running(void);
-bool su_visible(void);
-void su_exec(void);
-void su_exit(void);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define SCHED_ATTR_SIZE_VER0	48	/* sizeof first published struct */
 
 /*
@@ -172,13 +163,8 @@ extern unsigned long nr_iowait(void);
 extern unsigned long nr_iowait_cpu(int cpu);
 extern unsigned long this_cpu_load(void);
 
-<<<<<<< HEAD
 extern void sched_update_nr_prod(int cpu, unsigned long nr, bool inc);
 extern void sched_get_nr_running_avg(int *avg, int *iowait_avg);
-=======
-extern void sched_update_nr_prod(int cpu, long delta, bool inc);
-extern void sched_get_nr_running_avg(int *avg, int *iowait_avg, int *big_avg);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 extern void calc_global_load(unsigned long ticks);
 extern void update_cpu_load_nohz(void);
@@ -853,53 +839,6 @@ enum cpu_idle_type {
 #define SCHED_POWER_SCALE	(1L << SCHED_POWER_SHIFT)
 
 /*
-<<<<<<< HEAD
-=======
- * Wake-queues are lists of tasks with a pending wakeup, whose
- * callers have already marked the task as woken internally,
- * and can thus carry on. A common use case is being able to
- * do the wakeups once the corresponding user lock as been
- * released.
- *
- * We hold reference to each task in the list across the wakeup,
- * thus guaranteeing that the memory is still valid by the time
- * the actual wakeups are performed in wake_up_q().
- *
- * One per task suffices, because there's never a need for a task to be
- * in two wake queues simultaneously; it is forbidden to abandon a task
- * in a wake queue (a call to wake_up_q() _must_ follow), so if a task is
- * already in a wake queue, the wakeup will happen soon and the second
- * waker can just skip it.
- *
- * The WAKE_Q macro declares and initializes the list head.
- * wake_up_q() does NOT reinitialize the list; it's expected to be
- * called near the end of a function, where the fact that the queue is
- * not used again will be easy to see by inspection.
- *
- * Note that this can cause spurious wakeups. schedule() callers
- * must ensure the call is done inside a loop, confirming that the
- * wakeup condition has in fact occurred.
- */
-struct wake_q_node {
-	struct wake_q_node *next;
-};
-
-struct wake_q_head {
-	struct wake_q_node *first;
-	struct wake_q_node **lastp;
-};
-
-#define WAKE_Q_TAIL ((struct wake_q_node *) 0x01)
-
-#define WAKE_Q(name)					\
-	struct wake_q_head name = { WAKE_Q_TAIL, &name.first }
-
-extern void wake_q_add(struct wake_q_head *head,
-		       struct task_struct *task);
-extern void wake_up_q(struct wake_q_head *head);
-
-/*
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * sched-domains (multiprocessor balancing) declarations:
  */
 #ifdef CONFIG_SMP
@@ -1421,11 +1360,6 @@ struct task_struct {
 	/* Protection of the PI data structures: */
 	raw_spinlock_t pi_lock;
 
-<<<<<<< HEAD
-=======
-	struct wake_q_node wake_q;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifdef CONFIG_RT_MUTEXES
 	/* PI waiters blocked on a rt_mutex held by this task */
 	struct plist_head pi_waiters;
@@ -1588,15 +1522,12 @@ struct task_struct {
 		unsigned long memsw_nr_pages; /* uncharged mem+swap usage */
 	} memcg_batch;
 	unsigned int memcg_kmem_skip_account;
-<<<<<<< HEAD
 	struct memcg_oom_info {
 		struct mem_cgroup *memcg;
 		gfp_t gfp_mask;
 		int order;
 		unsigned int may_oom:1;
 	} memcg_oom;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 #ifdef CONFIG_HAVE_HW_BREAKPOINT
 	atomic_t ptrace_bp_refcnt;
@@ -1850,11 +1781,6 @@ static inline void sched_set_io_is_busy(int val) {};
 #define PF_FREEZER_SKIP	0x40000000	/* Freezer should not count it as freezable */
 #define PF_WAKE_UP_IDLE 0x80000000	/* try to wake up on an idle CPU */
 
-<<<<<<< HEAD
-=======
-#define PF_SU		0x00000002      /* task is su */
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Only the _current_ task can read/write to tsk->flags, but other
  * tasks can access tsk->flags in readonly mode for example
@@ -1880,7 +1806,6 @@ static inline void sched_set_io_is_busy(int val) {};
 #define tsk_used_math(p) ((p)->flags & PF_USED_MATH)
 #define used_math() tsk_used_math(current)
 
-<<<<<<< HEAD
 /* __GFP_IO isn't allowed if PF_MEMALLOC_NOIO is set in current->flags
  * __GFP_FS is also cleared as it implies __GFP_IO.
  */
@@ -1888,13 +1813,6 @@ static inline gfp_t memalloc_noio_flags(gfp_t flags)
 {
 	if (unlikely(current->flags & PF_MEMALLOC_NOIO))
 		flags &= ~(__GFP_IO | __GFP_FS);
-=======
-/* __GFP_IO isn't allowed if PF_MEMALLOC_NOIO is set in current->flags */
-static inline gfp_t memalloc_noio_flags(gfp_t flags)
-{
-	if (unlikely(current->flags & PF_MEMALLOC_NOIO))
-		flags &= ~__GFP_IO;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return flags;
 }
 
@@ -2062,10 +1980,6 @@ extern u64 sched_clock_cpu(int cpu);
 
 
 extern void sched_clock_init(void);
-<<<<<<< HEAD
-=======
-extern int sched_clock_initialized(void);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #ifndef CONFIG_HAVE_UNSTABLE_SCHED_CLOCK
 static inline void sched_clock_tick(void)
@@ -2240,10 +2154,6 @@ extern void xtime_update(unsigned long ticks);
 
 extern int wake_up_state(struct task_struct *tsk, unsigned int state);
 extern int wake_up_process(struct task_struct *tsk);
-<<<<<<< HEAD
-=======
-extern int wake_up_process_no_notif(struct task_struct *tsk);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 extern void wake_up_new_task(struct task_struct *tsk);
 #ifdef CONFIG_SMP
  extern void kick_process(struct task_struct *tsk);
@@ -2466,7 +2376,6 @@ static inline bool thread_group_leader(struct task_struct *p)
  * all we care about is that we have a task with the appropriate
  * pid, we don't actually care if we have the right task.
  */
-<<<<<<< HEAD
 static inline bool has_group_leader_pid(struct task_struct *p)
 {
 	return task_pid(p) == p->signal->leader_pid;
@@ -2476,17 +2385,6 @@ static inline
 bool same_thread_group(struct task_struct *p1, struct task_struct *p2)
 {
 	return p1->signal == p2->signal;
-=======
-static inline int has_group_leader_pid(struct task_struct *p)
-{
-	return p->pid == p->tgid;
-}
-
-static inline
-int same_thread_group(struct task_struct *p1, struct task_struct *p2)
-{
-	return p1->tgid == p2->tgid;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static inline struct task_struct *next_thread(const struct task_struct *p)

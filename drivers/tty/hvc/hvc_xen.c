@@ -299,7 +299,6 @@ static int xen_initial_domain_console_init(void)
 	return 0;
 }
 
-<<<<<<< HEAD
 static void xen_console_update_evtchn(struct xencons_info *info)
 {
 	if (xen_hvm_domain()) {
@@ -321,13 +320,6 @@ void xen_console_resume(void)
 			xen_console_update_evtchn(info);
 		rebind_evtchn_irq(info->evtchn, info->irq);
 	}
-=======
-void xen_console_resume(void)
-{
-	struct xencons_info *info = vtermno_to_xencons(HVC_COOKIE);
-	if (info != NULL && info->irq)
-		rebind_evtchn_irq(info->evtchn, info->irq);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void xencons_disconnect_backend(struct xencons_info *info)

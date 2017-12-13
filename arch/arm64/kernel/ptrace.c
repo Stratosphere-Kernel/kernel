@@ -86,12 +86,8 @@ static void ptrace_hbptriggered(struct perf_event *bp,
 			break;
 		}
 	}
-<<<<<<< HEAD
 
 	for (i = 0; i < ARM_MAX_WRP; ++i) {
-=======
-	for (i = ARM_MAX_BRP; i < ARM_MAX_HBP_SLOTS && !bp; ++i) {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (current->thread.debug.hbp_watch[i] == bp) {
 			info.si_errno = -((i << 1) + 1);
 			break;

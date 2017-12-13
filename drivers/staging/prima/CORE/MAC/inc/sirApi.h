@@ -41,24 +41,10 @@
 #ifndef __SIR_API_H
 #define __SIR_API_H
 
-<<<<<<< HEAD
-=======
-/* Take care to avoid redefinition of this type, if it is */
-/* already defined in "halWmmApi.h" */
-#if !defined(_HALMAC_WMM_API_H)
-typedef struct sAniSirGlobal *tpAniSirGlobal;
-#endif
-
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include "sirTypes.h"
 #include "sirMacProtDef.h"
 #include "aniSystemDefs.h"
 #include "sirParams.h"
-<<<<<<< HEAD
-=======
-#include <dot11f.h>
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #if defined(FEATURE_WLAN_ESE) && !defined(FEATURE_WLAN_ESE_UPLOAD)
 #include "eseGlobal.h"
@@ -1163,15 +1149,6 @@ typedef struct sSirSmeJoinRsp
     /*to report MAX link-speed populate rate-flags from ASSOC RSP frame*/
     tANI_U32           maxRateFlags;
 
-<<<<<<< HEAD
-=======
-    tDot11fIEHTCaps ht_caps;
-    tDot11fIEVHTCaps vht_caps;
-    tDot11fIEHTInfo ht_operation;
-    tDot11fIEVHTOperation vht_operation;
-    tDot11fIEhs20vendor_ie hs20vendor_ie;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     tANI_U8         frames[ 1 ];
 } tSirSmeJoinRsp, *tpSirSmeJoinRsp;
 

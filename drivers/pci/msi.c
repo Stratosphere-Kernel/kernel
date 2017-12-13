@@ -524,7 +524,6 @@ out_unroll:
 	return ret;
 }
 
-<<<<<<< HEAD
 static int msi_verify_entries(struct pci_dev *dev)
 {
 	struct msi_desc *entry;
@@ -539,8 +538,6 @@ static int msi_verify_entries(struct pci_dev *dev)
 	return 0;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * msi_capability_init - configure device's MSI capability structure
  * @dev: pointer to the pci_dev data structure of MSI device function
@@ -594,7 +591,6 @@ static int msi_capability_init(struct pci_dev *dev, int nvec)
 		return ret;
 	}
 
-<<<<<<< HEAD
 	ret = msi_verify_entries(dev);
 	if (ret) {
 		msi_mask_irq(entry, mask, ~mask);
@@ -602,8 +598,6 @@ static int msi_capability_init(struct pci_dev *dev, int nvec)
 		return ret;
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ret = populate_msi_sysfs(dev);
 	if (ret) {
 		msi_mask_irq(entry, mask, ~mask);
@@ -719,14 +713,11 @@ static int msix_capability_init(struct pci_dev *dev,
 	if (ret)
 		goto error;
 
-<<<<<<< HEAD
 	/* Check if all MSI entries honor device restrictions */
 	ret = msi_verify_entries(dev);
 	if (ret)
 		goto error;
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Some devices require MSI-X to be enabled before we can touch the
 	 * MSI-X registers.  We need to mask all the vectors to prevent

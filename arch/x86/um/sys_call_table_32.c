@@ -34,11 +34,7 @@ typedef asmlinkage void (*sys_call_ptr_t)(void);
 
 extern asmlinkage void sys_ni_syscall(void);
 
-<<<<<<< HEAD
 const sys_call_ptr_t sys_call_table[] ____cacheline_aligned = {
-=======
-const sys_call_ptr_t sys_call_table[] __cacheline_aligned = {
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Smells like a compiler bug -- it doesn't work
 	 * when the & below is removed.

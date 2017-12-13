@@ -253,7 +253,6 @@ static void sem_rcu_free(struct rcu_head *head)
 }
 
 /*
-<<<<<<< HEAD
  * spin_unlock_wait() and !spin_is_locked() are not memory barriers, they
  * are only control barriers.
  * The code must pair with spin_unlock(&sem->lock) or
@@ -264,8 +263,6 @@ static void sem_rcu_free(struct rcu_head *head)
 #define ipc_smp_acquire__after_spin_is_unlocked()	smp_rmb()
 
 /*
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * Wait until all currently ongoing simple ops have completed.
  * Caller must own sem_perm.lock.
  * New simple ops cannot start, because simple ops first check
@@ -288,10 +285,7 @@ static void sem_wait_array(struct sem_array *sma)
 		sem = sma->sem_base + i;
 		spin_unlock_wait(&sem->lock);
 	}
-<<<<<<< HEAD
 	ipc_smp_acquire__after_spin_is_unlocked();
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*
@@ -343,7 +337,6 @@ static inline int sem_lock(struct sem_array *sma, struct sembuf *sops,
 
 		/* Then check that the global lock is free */
 		if (!spin_is_locked(&sma->sem_perm.lock)) {
-<<<<<<< HEAD
 			/*
 			 * We need a memory barrier with acquire semantics,
 			 * otherwise we can race with another thread that does:
@@ -351,10 +344,6 @@ static inline int sem_lock(struct sem_array *sma, struct sembuf *sops,
 			 *	spin_unlock(sem_perm.lock);
 			 */
 			ipc_smp_acquire__after_spin_is_unlocked();
-=======
-			/* spin_is_locked() is not a memory barrier */
-			smp_mb();
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 			/* Now repeat the test of complex_count:
 			 * It can't change anymore until we drop sem->lock.
@@ -2076,7 +2065,6 @@ void exit_sem(struct task_struct *tsk)
 		rcu_read_lock();
 		un = list_entry_rcu(ulp->list_proc.next,
 				    struct sem_undo, list_proc);
-<<<<<<< HEAD
 		if (&un->list_proc == &ulp->list_proc) {
 			/*
 			 * We must wait for freeary() before freeing this ulp,
@@ -2099,19 +2087,6 @@ void exit_sem(struct task_struct *tsk)
 		}
 
 		sma = sem_obtain_object_check(tsk->nsproxy->ipc_ns, semid);
-=======
-		if (&un->list_proc == &ulp->list_proc)
-			semid = -1;
-		 else
-			semid = un->semid;
-
-		if (semid == -1) {
-			rcu_read_unlock();
-			break;
-		}
-
-		sma = sem_obtain_object_check(tsk->nsproxy->ipc_ns, un->semid);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* exit_sem raced with IPC_RMID, nothing to do */
 		if (IS_ERR(sma)) {
 			rcu_read_unlock();

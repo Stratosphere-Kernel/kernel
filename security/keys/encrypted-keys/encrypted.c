@@ -1018,7 +1018,6 @@ static int __init init_encrypted(void)
 	ret = encrypted_shash_alloc();
 	if (ret < 0)
 		return ret;
-<<<<<<< HEAD
 	ret = aes_get_sizes();
 	if (ret < 0)
 		goto out;
@@ -1026,12 +1025,6 @@ static int __init init_encrypted(void)
 	if (ret < 0)
 		goto out;
 	return 0;
-=======
-	ret = register_key_type(&key_type_encrypted);
-	if (ret < 0)
-		goto out;
-	return aes_get_sizes();
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 out:
 	encrypted_shash_release();
 	return ret;

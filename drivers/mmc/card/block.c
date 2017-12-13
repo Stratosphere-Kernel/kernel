@@ -228,11 +228,8 @@ static ssize_t power_ro_lock_show(struct device *dev,
 
 	ret = snprintf(buf, PAGE_SIZE, "%d\n", locked);
 
-<<<<<<< HEAD
 	mmc_blk_put(md);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return ret;
 }
 
@@ -295,11 +292,7 @@ static ssize_t force_ro_show(struct device *dev, struct device_attribute *attr,
 	if (!md)
 		return -EINVAL;
 
-<<<<<<< HEAD
 	ret = snprintf(buf, PAGE_SIZE, "%d\n",
-=======
-	ret = snprintf(buf, PAGE_SIZE, "%d",
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		       get_disk_ro(dev_to_disk(dev)) ^
 		       md->read_only);
 	mmc_blk_put(md);
@@ -1371,7 +1364,6 @@ static inline void mmc_blk_reset_success(struct mmc_blk_data *md, int type)
 	md->reset_done &= ~type;
 }
 
-<<<<<<< HEAD
 int mmc_access_rpmb(struct mmc_queue *mq)
 {
 	struct mmc_blk_data *md = mq->data;
@@ -1384,8 +1376,6 @@ int mmc_access_rpmb(struct mmc_queue *mq)
 	return false;
 }
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int mmc_blk_issue_discard_rq(struct mmc_queue *mq, struct request *req)
 {
 	struct mmc_blk_data *md = mq->data;

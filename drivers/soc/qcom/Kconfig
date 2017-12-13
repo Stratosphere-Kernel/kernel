@@ -571,7 +571,6 @@ config MSM_PERFORMANCE_HOTPLUG_ON
           compile out the nodes needed for core-control functionality through
           msm_performance.
 
-<<<<<<< HEAD
 config STATE_NOTIFIER
         bool "State Notifier"
 
@@ -581,15 +580,6 @@ config AUTOSMP
 	help
 	  Automatically hotplugs the multiple cpu cores on and off
 	  based on cpu load and suspend state
-=======
-config MSM_HOTPLUG
-	bool "MSM hotplug driver"
-	depends on HOTPLUG_CPU
-	default y
-	help
-	  The MSM hotplug driver controls on-/offlining of additional cores based
-	  on current cpu load.
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 source "drivers/soc/qcom/memshare/Kconfig"
 

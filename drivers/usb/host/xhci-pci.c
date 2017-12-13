@@ -87,7 +87,6 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 	/* AMD PLL quirk */
 	if (pdev->vendor == PCI_VENDOR_ID_AMD && usb_amd_find_chipset_info())
 		xhci->quirks |= XHCI_AMD_PLL_FIX;
-<<<<<<< HEAD
 
 	if (pdev->vendor == PCI_VENDOR_ID_AMD)
 		xhci->quirks |= XHCI_TRUST_TX_LENGTH;
@@ -96,11 +95,6 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 		xhci->quirks |= XHCI_LPM_SUPPORT;
 		xhci->quirks |= XHCI_INTEL_HOST;
 		xhci->quirks |= XHCI_AVOID_BEI;
-=======
-	if (pdev->vendor == PCI_VENDOR_ID_INTEL) {
-		xhci->quirks |= XHCI_LPM_SUPPORT;
-		xhci->quirks |= XHCI_INTEL_HOST;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
 			pdev->device == PCI_DEVICE_ID_INTEL_PANTHERPOINT_XHCI) {
@@ -116,10 +110,6 @@ static void xhci_pci_quirks(struct device *dev, struct xhci_hcd *xhci)
 		 * PPT chipsets.
 		 */
 		xhci->quirks |= XHCI_SPURIOUS_REBOOT;
-<<<<<<< HEAD
-=======
-		xhci->quirks |= XHCI_AVOID_BEI;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pdev->vendor == PCI_VENDOR_ID_ETRON &&
 			pdev->device == PCI_DEVICE_ID_ASROCK_P67) {

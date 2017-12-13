@@ -508,7 +508,6 @@ void __init dma_contiguous_remap(void)
 		map.type = MT_MEMORY_DMA_READY;
 
 		/*
-<<<<<<< HEAD
 		 * Clear previous low-memory mapping to ensure that the
 		 * TLB does not see any conflicting entries, then flush
 		 * the TLB of the old entries before creating new mappings.
@@ -516,20 +515,14 @@ void __init dma_contiguous_remap(void)
 		 * This ensures that any speculatively loaded TLB entries
 		 * (even though they may be rare) can not cause any problems,
 		 * and ensures that this code is architecturally compliant.
-=======
-		 * Clear previous low-memory mapping
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		 */
 		for (addr = __phys_to_virt(start); addr < __phys_to_virt(end);
 		     addr += PMD_SIZE)
 			pmd_clear(pmd_off_k(addr));
 
-<<<<<<< HEAD
 		flush_tlb_kernel_range(__phys_to_virt(start),
 				       __phys_to_virt(end));
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		iotable_init(&map, 1);
 	}
 }

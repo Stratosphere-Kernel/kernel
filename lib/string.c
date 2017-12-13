@@ -586,7 +586,6 @@ void *memset(void *s, int c, size_t count)
 EXPORT_SYMBOL(memset);
 #endif
 
-<<<<<<< HEAD
 /**
  * memzero_explicit - Fill a region of memory (e.g. sensitive
  *		      keying data) with 0s.
@@ -603,8 +602,6 @@ void memzero_explicit(void *s, size_t count)
 }
 EXPORT_SYMBOL(memzero_explicit);
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifndef __HAVE_ARCH_MEMCPY
 /**
  * memcpy - Copy one area of memory to another

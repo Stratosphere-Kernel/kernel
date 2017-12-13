@@ -262,11 +262,8 @@ good_area:
 	if (unlikely(fault & VM_FAULT_ERROR)) {
 		if (fault & VM_FAULT_OOM)
 			goto out_of_memory;
-<<<<<<< HEAD
 		else if (fault & VM_FAULT_SIGSEGV)
 			goto bad_area;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		else if (fault & VM_FAULT_SIGBUS)
 			goto do_sigbus;
 		BUG();
@@ -352,16 +349,10 @@ no_context:
  */
 out_of_memory:
 	up_read(&mm->mmap_sem);
-<<<<<<< HEAD
 	if ((fault_code & MMUFCR_xFC_ACCESS) == MMUFCR_xFC_ACCESS_USR) {
 		pagefault_out_of_memory();
 		return;
 	}
-=======
-	printk(KERN_ALERT "VM: killing process %s\n", tsk->comm);
-	if ((fault_code & MMUFCR_xFC_ACCESS) == MMUFCR_xFC_ACCESS_USR)
-		do_exit(SIGKILL);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	goto no_context;
 
 do_sigbus:

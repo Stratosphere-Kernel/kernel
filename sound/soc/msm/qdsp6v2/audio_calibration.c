@@ -457,15 +457,6 @@ static long audio_cal_shared_ioctl(struct file *file, unsigned int cmd,
 			data->cal_type.cal_hdr.buffer_number);
 		ret = -EINVAL;
 		goto done;
-<<<<<<< HEAD
-=======
-	} else if ((data->hdr.cal_type_size + sizeof(data->hdr)) > size) {
-		pr_err("%s: cal type hdr size %zd + cal type size %d is greater than user buffer size %d\n",
-			__func__, sizeof(data->hdr), data->hdr.cal_type_size,
-			size);
-		ret = -EFAULT;
-		goto done;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 
@@ -503,7 +494,6 @@ static long audio_cal_shared_ioctl(struct file *file, unsigned int cmd,
 			goto unlock;
 		if (data == NULL)
 			goto unlock;
-<<<<<<< HEAD
 		if ((sizeof(data->hdr) + data->hdr.cal_type_size) > size) {
 			pr_err("%s: header size %zd plus cal type size %d are greater than data buffer size %d\n",
 				__func__, sizeof(data->hdr),
@@ -511,9 +501,6 @@ static long audio_cal_shared_ioctl(struct file *file, unsigned int cmd,
 			ret = -EFAULT;
 			goto unlock;
 		} else if (copy_to_user((void *)arg, data,
-=======
-		if (copy_to_user(arg, data,
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			sizeof(data->hdr) + data->hdr.cal_type_size)) {
 			pr_err("%s: Could not copy cal type to user\n",
 				__func__);

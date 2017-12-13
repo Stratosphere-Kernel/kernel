@@ -1778,10 +1778,7 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 	struct ipxhdr *ipx = NULL;
 	struct sk_buff *skb;
 	int copied, rc;
-<<<<<<< HEAD
 	bool locked = true;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	lock_sock(sk);
 	/* put the autobinding in */
@@ -1808,11 +1805,8 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 	if (sock_flag(sk, SOCK_ZAPPED))
 		goto out;
 
-<<<<<<< HEAD
 	release_sock(sk);
 	locked = false;
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	skb = skb_recv_datagram(sk, flags & ~MSG_DONTWAIT,
 				flags & MSG_DONTWAIT, &rc);
 	if (!skb)
@@ -1846,12 +1840,8 @@ static int ipx_recvmsg(struct kiocb *iocb, struct socket *sock,
 out_free:
 	skb_free_datagram(sk, skb);
 out:
-<<<<<<< HEAD
 	if (locked)
 		release_sock(sk);
-=======
-	release_sock(sk);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return rc;
 }
 

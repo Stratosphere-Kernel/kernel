@@ -512,10 +512,6 @@ int __wil_down(struct wil6210_priv *wil);
 void wil_mbox_ring_le2cpus(struct wil6210_mbox_ring *r);
 int wil_find_cid(struct wil6210_priv *wil, const u8 *mac);
 
-<<<<<<< HEAD
-=======
-void __iomem *wmi_buffer_block(struct wil6210_priv *wil, __le32 ptr, u32 size);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void __iomem *wmi_buffer(struct wil6210_priv *wil, __le32 ptr);
 void __iomem *wmi_addr(struct wil6210_priv *wil, u32 ptr);
 int wmi_read_hdr(struct wil6210_priv *wil, __le32 ptr,

@@ -408,14 +408,6 @@ static int hdd_hostapd_driver_command(hdd_adapter_t *pAdapter,
        hdd_context_t *pHddCtx = WLAN_HDD_GET_CTX(pAdapter);
        tANI_U8 filterType = 0;
        tANI_U8 *value;
-<<<<<<< HEAD
-=======
-
-       ret = hdd_drv_cmd_validate(command, 8);
-       if (ret)
-           goto exit;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
        value = command + 9;
 
        /* Convert the value from ascii to integer */
@@ -456,13 +448,6 @@ static int hdd_hostapd_driver_command(hdd_adapter_t *pAdapter,
    }
    else if (strncasecmp(command, "DISABLE_CA_EVENT", 16) == 0)
    {
-<<<<<<< HEAD
-=======
-       ret = hdd_drv_cmd_validate(command, 16);
-       if (ret)
-           goto exit;
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
        ret = hdd_enable_disable_ca_event(pHddCtx, command, 16);
    }
 

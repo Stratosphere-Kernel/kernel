@@ -1275,24 +1275,16 @@ __cfq_group_service_tree_add(struct cfq_rb_root *st, struct cfq_group *cfqg)
 static void
 cfq_update_group_weight(struct cfq_group *cfqg)
 {
-<<<<<<< HEAD
-=======
-	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (cfqg->new_weight) {
 		cfqg->weight = cfqg->new_weight;
 		cfqg->new_weight = 0;
 	}
-<<<<<<< HEAD
 }
 
 static void
 cfq_update_group_leaf_weight(struct cfq_group *cfqg)
 {
 	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (cfqg->new_leaf_weight) {
 		cfqg->leaf_weight = cfqg->new_leaf_weight;
@@ -1311,11 +1303,7 @@ cfq_group_service_tree_add(struct cfq_rb_root *st, struct cfq_group *cfqg)
 	/* add to the service tree */
 	BUG_ON(!RB_EMPTY_NODE(&cfqg->rb_node));
 
-<<<<<<< HEAD
 	cfq_update_group_leaf_weight(cfqg);
-=======
-	cfq_update_group_weight(cfqg);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	__cfq_group_service_tree_add(st, cfqg);
 
 	/*
@@ -1339,10 +1327,7 @@ cfq_group_service_tree_add(struct cfq_rb_root *st, struct cfq_group *cfqg)
 	 */
 	while ((parent = cfqg_parent(pos))) {
 		if (propagate) {
-<<<<<<< HEAD
 			cfq_update_group_weight(pos);
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			propagate = !parent->nr_active++;
 			parent->children_weight += pos->weight;
 		}
@@ -3593,14 +3578,11 @@ retry:
 
 	blkcg = bio_blkcg(bio);
 	cfqg = cfq_lookup_create_cfqg(cfqd, blkcg);
-<<<<<<< HEAD
 	if (!cfqg) {
 		cfqq = &cfqd->oom_cfqq;
 		goto out;
 	}
 
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	cfqq = cic_to_cfqq(cic, is_sync);
 
 	/*
@@ -3637,11 +3619,7 @@ retry:
 		} else
 			cfqq = &cfqd->oom_cfqq;
 	}
-<<<<<<< HEAD
 out:
-=======
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (new_cfqq)
 		kmem_cache_free(cfq_pool, new_cfqq);
 
@@ -3671,25 +3649,17 @@ static struct cfq_queue *
 cfq_get_queue(struct cfq_data *cfqd, bool is_sync, struct cfq_io_cq *cic,
 	      struct bio *bio, gfp_t gfp_mask)
 {
-<<<<<<< HEAD
 	int ioprio_class = IOPRIO_PRIO_CLASS(cic->ioprio);
 	int ioprio = IOPRIO_PRIO_DATA(cic->ioprio);
-=======
-	const int ioprio_class = IOPRIO_PRIO_CLASS(cic->ioprio);
-	const int ioprio = IOPRIO_PRIO_DATA(cic->ioprio);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct cfq_queue **async_cfqq = NULL;
 	struct cfq_queue *cfqq = NULL;
 
 	if (!is_sync) {
-<<<<<<< HEAD
 		if (!ioprio_valid(cic->ioprio)) {
 			struct task_struct *tsk = current;
 			ioprio = task_nice_ioprio(tsk);
 			ioprio_class = task_nice_ioclass(tsk);
 		}
-=======
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		async_cfqq = cfq_async_queue_prio(cfqd, ioprio_class, ioprio);
 		cfqq = *async_cfqq;
 	}

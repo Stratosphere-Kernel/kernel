@@ -189,7 +189,6 @@ ext4_listxattr(struct dentry *dentry, char *buffer, size_t size)
 }
 
 static int
-<<<<<<< HEAD
 ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end,
 		       void *value_start)
 {
@@ -212,16 +211,6 @@ ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end,
 		entry = EXT4_XATTR_NEXT(entry);
 	}
 
-=======
-ext4_xattr_check_names(struct ext4_xattr_entry *entry, void *end)
-{
-	while (!IS_LAST_ENTRY(entry)) {
-		struct ext4_xattr_entry *next = EXT4_XATTR_NEXT(entry);
-		if ((void *)next >= end)
-			return -EIO;
-		entry = next;
-	}
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
@@ -238,12 +227,8 @@ ext4_xattr_check_block(struct inode *inode, struct buffer_head *bh)
 		return -EIO;
 	if (!ext4_xattr_block_csum_verify(inode, bh->b_blocknr, BHDR(bh)))
 		return -EIO;
-<<<<<<< HEAD
 	error = ext4_xattr_check_names(BFIRST(bh), bh->b_data + bh->b_size,
 				       bh->b_data);
-=======
-	error = ext4_xattr_check_names(BFIRST(bh), bh->b_data + bh->b_size);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!error)
 		set_buffer_verified(bh);
 	return error;
@@ -359,11 +344,7 @@ ext4_xattr_ibody_get(struct inode *inode, int name_index, const char *name,
 	header = IHDR(inode, raw_inode);
 	entry = IFIRST(header);
 	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-<<<<<<< HEAD
 	error = ext4_xattr_check_names(entry, end, entry);
-=======
-	error = ext4_xattr_check_names(entry, end);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (error)
 		goto cleanup;
 	error = ext4_xattr_find_entry(&entry, name_index, name,
@@ -491,11 +472,7 @@ ext4_xattr_ibody_list(struct dentry *dentry, char *buffer, size_t buffer_size)
 	raw_inode = ext4_raw_inode(&iloc);
 	header = IHDR(inode, raw_inode);
 	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-<<<<<<< HEAD
 	error = ext4_xattr_check_names(IFIRST(header), end, IFIRST(header));
-=======
-	error = ext4_xattr_check_names(IFIRST(header), end);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (error)
 		goto cleanup;
 	error = ext4_xattr_list_entries(dentry, IFIRST(header),
@@ -1010,12 +987,8 @@ int ext4_xattr_ibody_find(struct inode *inode, struct ext4_xattr_info *i,
 	is->s.here = is->s.first;
 	is->s.end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
 	if (ext4_test_inode_state(inode, EXT4_STATE_XATTR)) {
-<<<<<<< HEAD
 		error = ext4_xattr_check_names(IFIRST(header), is->s.end,
 					       IFIRST(header));
-=======
-		error = ext4_xattr_check_names(IFIRST(header), is->s.end);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (error)
 			return error;
 		/* Find the named attribute. */

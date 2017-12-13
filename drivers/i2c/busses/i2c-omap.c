@@ -928,20 +928,12 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 		if (stat & OMAP_I2C_STAT_NACK) {
 			err |= OMAP_I2C_STAT_NACK;
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_NACK);
-<<<<<<< HEAD
-=======
-			break;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 
 		if (stat & OMAP_I2C_STAT_AL) {
 			dev_err(dev->dev, "Arbitration lost\n");
 			err |= OMAP_I2C_STAT_AL;
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_AL);
-<<<<<<< HEAD
-=======
-			break;
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 
 		/*
@@ -966,7 +958,6 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 			if (dev->fifo_size)
 				num_bytes = dev->buf_len;
 
-<<<<<<< HEAD
 			if (dev->errata & I2C_OMAP_ERRATA_I207) {
 				i2c_omap_errata_i207(dev, stat);
 				num_bytes = (omap_i2c_read_reg(dev,
@@ -974,13 +965,6 @@ omap_i2c_isr_thread(int this_irq, void *dev_id)
 			}
 
 			omap_i2c_receive_data(dev, num_bytes, true);
-=======
-			omap_i2c_receive_data(dev, num_bytes, true);
-
-			if (dev->errata & I2C_OMAP_ERRATA_I207)
-				i2c_omap_errata_i207(dev, stat);
-
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			omap_i2c_ack_stat(dev, OMAP_I2C_STAT_RDR);
 			continue;
 		}

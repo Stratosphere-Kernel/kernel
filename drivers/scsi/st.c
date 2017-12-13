@@ -1262,15 +1262,9 @@ static int st_open(struct inode *inode, struct file *filp)
 	spin_lock(&st_use_lock);
 	STp->in_use = 0;
 	spin_unlock(&st_use_lock);
-<<<<<<< HEAD
 	if (resumed)
 		scsi_autopm_put_device(STp->device);
 	scsi_tape_put(STp);
-=======
-	scsi_tape_put(STp);
-	if (resumed)
-		scsi_autopm_put_device(STp->device);
->>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return retval;
 
 }
