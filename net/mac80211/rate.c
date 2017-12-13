@@ -448,7 +448,11 @@ static void rate_fixup_ratelist(struct ieee80211_vif *vif,
 	 */
 	if (!(rates[0].flags & IEEE80211_TX_RC_MCS)) {
 		u32 basic_rates = vif->bss_conf.basic_rates;
+<<<<<<< HEAD
 		s8 baserate = basic_rates ? ffs(basic_rates) - 1 : 0;
+=======
+		s8 baserate = basic_rates ? ffs(basic_rates - 1) : 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		rate = &sband->bitrates[rates[0].idx];
 

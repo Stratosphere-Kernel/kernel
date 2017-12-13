@@ -112,7 +112,13 @@ static int show_vfsmnt(struct seq_file *m, struct vfsmount *mnt)
 	if (err)
 		goto out;
 	show_mnt_opts(m, mnt);
+<<<<<<< HEAD
 	if (sb->s_op->show_options)
+=======
+	if (sb->s_op->show_options2)
+			err = sb->s_op->show_options2(mnt, m, mnt_path.dentry);
+	else if (sb->s_op->show_options)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		err = sb->s_op->show_options(m, mnt_path.dentry);
 	seq_puts(m, " 0 0\n");
 out:
@@ -173,7 +179,13 @@ static int show_mountinfo(struct seq_file *m, struct vfsmount *mnt)
 	err = show_sb_opts(m, sb);
 	if (err)
 		goto out;
+<<<<<<< HEAD
 	if (sb->s_op->show_options)
+=======
+	if (sb->s_op->show_options2) {
+		err = sb->s_op->show_options2(mnt, m, mnt->mnt_root);
+	} else if (sb->s_op->show_options)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		err = sb->s_op->show_options(m, mnt->mnt_root);
 	seq_putc(m, '\n');
 out:

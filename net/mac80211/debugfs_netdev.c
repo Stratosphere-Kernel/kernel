@@ -697,7 +697,10 @@ void ieee80211_debugfs_remove_netdev(struct ieee80211_sub_if_data *sdata)
 
 	debugfs_remove_recursive(sdata->vif.debugfs_dir);
 	sdata->vif.debugfs_dir = NULL;
+<<<<<<< HEAD
 	sdata->debugfs.subdir_stations = NULL;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 void ieee80211_debugfs_rename_netdev(struct ieee80211_sub_if_data *sdata)

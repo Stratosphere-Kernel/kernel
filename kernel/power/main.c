@@ -293,12 +293,21 @@ static ssize_t state_show(struct kobject *kobj, struct kobj_attribute *attr,
 {
 	char *s = buf;
 #ifdef CONFIG_SUSPEND
+<<<<<<< HEAD
 	suspend_state_t i;
 
 	for (i = PM_SUSPEND_MIN; i < PM_SUSPEND_MAX; i++)
 		if (pm_states[i].state)
 			s += sprintf(s,"%s ", pm_states[i].label);
 
+=======
+	int i;
+
+	for (i = 0; i < PM_SUSPEND_MAX; i++) {
+		if (pm_states[i] && valid_state(i))
+			s += sprintf(s,"%s ", pm_states[i]);
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 #ifdef CONFIG_HIBERNATION
 	s += sprintf(s, "%s\n", "disk");
@@ -314,7 +323,11 @@ static suspend_state_t decode_state(const char *buf, size_t n)
 {
 #ifdef CONFIG_SUSPEND
 	suspend_state_t state = PM_SUSPEND_MIN;
+<<<<<<< HEAD
 	struct pm_sleep_state *s;
+=======
+	const char * const *s;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 	char *p;
 	int len;
@@ -328,9 +341,14 @@ static suspend_state_t decode_state(const char *buf, size_t n)
 
 #ifdef CONFIG_SUSPEND
 	for (s = &pm_states[state]; state < PM_SUSPEND_MAX; s++, state++)
+<<<<<<< HEAD
 		if (s->state && len == strlen(s->label)
 		    && !strncmp(buf, s->label, len))
 			return s->state;
+=======
+		if (*s && len == strlen(*s) && !strncmp(buf, *s, len))
+			return state;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 
 	return PM_SUSPEND_ON;
@@ -425,6 +443,11 @@ static ssize_t wakeup_count_store(struct kobject *kobj,
 	if (sscanf(buf, "%u", &val) == 1) {
 		if (pm_save_wakeup_count(val))
 			error = n;
+<<<<<<< HEAD
+=======
+		else
+			pm_print_active_wakeup_sources();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
  out:
@@ -446,8 +469,13 @@ static ssize_t autosleep_show(struct kobject *kobj,
 
 #ifdef CONFIG_SUSPEND
 	if (state < PM_SUSPEND_MAX)
+<<<<<<< HEAD
 		return sprintf(buf, "%s\n", pm_states[state].state ?
 					pm_states[state].label : "error");
+=======
+		return sprintf(buf, "%s\n", valid_state(state) ?
+						pm_states[state] : "error");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 #ifdef CONFIG_HIBERNATION
 	return sprintf(buf, "disk\n");

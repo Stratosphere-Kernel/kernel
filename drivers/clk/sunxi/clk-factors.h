@@ -15,7 +15,10 @@ struct clk_factors_config {
 	u8 mwidth;
 	u8 pshift;
 	u8 pwidth;
+<<<<<<< HEAD
 	u8 n_start;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 struct clk *clk_register_factors(struct device *dev, const char *name,

@@ -12,7 +12,11 @@
 KBUILD_CFLAGS	+= -fno-builtin -Iarch/$(ARCH)/boot/include
 HOSTFLAGS	+= -Iarch/$(ARCH)/boot/include
 
+<<<<<<< HEAD
 BIG_ENDIAN	:= $(shell echo __XTENSA_EB__ | $(CC) -E - | grep -v "\#")
+=======
+BIG_ENDIAN	:= $(shell echo -e __XTENSA_EB__ | $(CC) -E - | grep -v "\#")
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 export ccflags-y
 export BIG_ENDIAN

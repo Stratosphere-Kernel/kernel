@@ -719,6 +719,29 @@ err_out:
 }
 EXPORT_SYMBOL(devfreq_remove_governor);
 
+<<<<<<< HEAD
+=======
+int devfreq_policy_add_files(struct devfreq *devfreq,
+			     struct attribute_group attr_group)
+{
+	int ret;
+
+	ret = sysfs_create_group(&devfreq->dev.kobj, &attr_group);
+	if (ret)
+		kobject_put(&devfreq->dev.kobj);
+
+	return ret;
+}
+EXPORT_SYMBOL(devfreq_policy_add_files);
+
+void devfreq_policy_remove_files(struct devfreq *devfreq,
+				 struct attribute_group attr_group)
+{
+	sysfs_remove_group(&devfreq->dev.kobj, &attr_group);
+}
+EXPORT_SYMBOL(devfreq_policy_remove_files);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static ssize_t show_governor(struct device *dev,
 			     struct device_attribute *attr, char *buf)
 {

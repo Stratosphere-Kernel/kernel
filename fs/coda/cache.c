@@ -92,7 +92,11 @@ static void coda_flag_children(struct dentry *parent, int flag)
 	struct dentry *de;
 
 	spin_lock(&parent->d_lock);
+<<<<<<< HEAD
 	list_for_each_entry(de, &parent->d_subdirs, d_child) {
+=======
+	list_for_each_entry(de, &parent->d_subdirs, d_u.d_child) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* don't know what to do with negative dentries */
 		if (de->d_inode ) 
 			coda_flag_inode(de->d_inode, flag);

@@ -1593,10 +1593,28 @@ static ssize_t btrfs_file_aio_write(struct kiocb *iocb,
 	mutex_unlock(&inode->i_mutex);
 
 	/*
+<<<<<<< HEAD
+=======
+	 * we want to make sure fsync finds this change
+	 * but we haven't joined a transaction running right now.
+	 *
+	 * Later on, someone is sure to update the inode and get the
+	 * real transid recorded.
+	 *
+	 * We set last_trans now to the fs_info generation + 1,
+	 * this will either be one more than the running transaction
+	 * or the generation used for the next transaction if there isn't
+	 * one running right now.
+	 *
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	 * We also have to set last_sub_trans to the current log transid,
 	 * otherwise subsequent syncs to a file that's been synced in this
 	 * transaction will appear to have already occured.
 	 */
+<<<<<<< HEAD
+=======
+	BTRFS_I(inode)->last_trans = root->fs_info->generation + 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	BTRFS_I(inode)->last_sub_trans = root->log_transid;
 	if (num_written > 0 || num_written == -EIOCBQUEUED) {
 		err = generic_write_sync(file, pos, num_written);
@@ -1694,6 +1712,7 @@ int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
 	atomic_inc(&root->log_batch);
 
 	/*
+<<<<<<< HEAD
 	 * If the last transaction that changed this file was before the current
 	 * transaction and we have the full sync flag set in our inode, we can
 	 * bail out now without any syncing.
@@ -1725,6 +1744,27 @@ int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
 	if (btrfs_inode_in_log(inode, root->fs_info->generation) ||
 	    (full_sync && BTRFS_I(inode)->last_trans <=
 	     root->fs_info->last_trans_committed)) {
+=======
+	 * check the transaction that last modified this inode
+	 * and see if its already been committed
+	 */
+	if (!BTRFS_I(inode)->last_trans) {
+		mutex_unlock(&inode->i_mutex);
+		goto out;
+	}
+
+	/*
+	 * if the last transaction that changed this file was before
+	 * the current transaction, we can bail out now without any
+	 * syncing
+	 */
+	smp_mb();
+	if (btrfs_inode_in_log(inode, root->fs_info->generation) ||
+	    BTRFS_I(inode)->last_trans <=
+	    root->fs_info->last_trans_committed) {
+		BTRFS_I(inode)->last_trans = 0;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/*
 		 * We'v had everything committed since the last time we were
 		 * modified so clear this flag in case it was set for whatever

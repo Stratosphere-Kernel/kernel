@@ -185,4 +185,7 @@ module_exit(crypto_ecb_module_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("ECB block cipher algorithm");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("ecb");
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

@@ -52,7 +52,10 @@
 
 #include <asm/processor.h>
 #include <asm/io.h>
+<<<<<<< HEAD
 #include <asm/ioctl.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <asm/uaccess.h>
 #include <asm/pgtable.h>
 
@@ -1549,8 +1552,13 @@ int kvm_gfn_to_hva_cache_init(struct kvm *kvm, struct gfn_to_hva_cache *ghc,
 	ghc->generation = slots->generation;
 	ghc->len = len;
 	ghc->memslot = gfn_to_memslot(kvm, start_gfn);
+<<<<<<< HEAD
 	ghc->hva = gfn_to_hva_many(ghc->memslot, start_gfn, NULL);
 	if (!kvm_is_error_hva(ghc->hva) && nr_pages_needed <= 1) {
+=======
+	ghc->hva = gfn_to_hva_many(ghc->memslot, start_gfn, &nr_pages_avail);
+	if (!kvm_is_error_hva(ghc->hva) && nr_pages_avail >= nr_pages_needed) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ghc->hva += offset;
 	} else {
 		/*
@@ -1982,9 +1990,12 @@ static long kvm_vcpu_ioctl(struct file *filp,
 	if (vcpu->kvm->mm != current->mm)
 		return -EIO;
 
+<<<<<<< HEAD
 	if (unlikely(_IOC_TYPE(ioctl) != KVMIO))
 		return -EINVAL;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #if defined(CONFIG_S390) || defined(CONFIG_PPC) || defined(CONFIG_MIPS)
 	/*
 	 * Special cases: vcpu ioctls that are asynchronous to vcpu execution,

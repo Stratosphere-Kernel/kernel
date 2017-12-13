@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright (c) 2011-2015 The Linux Foundation. All rights reserved.
+=======
+ * Copyright (c) 2011-2015, 2017 The Linux Foundation. All rights reserved.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -691,6 +695,11 @@ void ConvertQosMapsetFrame(tpAniSirGlobal pMac, tSirQosMapSet* Qos, tDot11fIEQos
     tANI_U8 i,j=0;
     if (dot11fIE->num_dscp_exceptions > 58)
         dot11fIE->num_dscp_exceptions = 58;
+<<<<<<< HEAD
+=======
+    if (dot11fIE->num_dscp_exceptions < 16)
+        return;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     Qos->num_dscp_exceptions = (dot11fIE->num_dscp_exceptions - 16)/2;
     for (i=0;i<Qos->num_dscp_exceptions;i++)
     {

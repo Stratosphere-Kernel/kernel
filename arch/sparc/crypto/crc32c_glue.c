@@ -176,6 +176,10 @@ module_exit(crc32c_sparc64_mod_fini);
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("CRC32c (Castagnoli), sparc64 crc32c opcode accelerated");
 
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("crc32c");
+=======
+MODULE_ALIAS("crc32c");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #include "crop_devid.c"

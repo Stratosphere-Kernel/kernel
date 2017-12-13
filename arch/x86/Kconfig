@@ -171,7 +171,11 @@ config SBUS
 
 config NEED_DMA_MAP_STATE
 	def_bool y
+<<<<<<< HEAD
 	depends on X86_64 || INTEL_IOMMU || DMA_API_DEBUG || SWIOTLB
+=======
+	depends on X86_64 || INTEL_IOMMU || DMA_API_DEBUG
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 config NEED_SG_DMA_LENGTH
 	def_bool y
@@ -969,6 +973,7 @@ config VM86
 	default y
 	depends on X86_32
 	---help---
+<<<<<<< HEAD
 	  This option is required by programs like DOSEMU to run
 	  16-bit real mode legacy code on x86 processors. It also may
 	  be needed by software like XFree86 to initialize some video
@@ -990,6 +995,12 @@ config X86_ESPFIX32
 config X86_ESPFIX64
 	def_bool y
 	depends on X86_16BIT && X86_64
+=======
+	  This option is required by programs like DOSEMU to run 16-bit legacy
+	  code on X86 processors. It also may be needed by software like
+	  XFree86 to initialize some video cards via BIOS. Disabling this
+	  option saves about 6k.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 config TOSHIBA
 	tristate "Toshiba Laptop support"
@@ -1595,7 +1606,10 @@ config EFI
 config EFI_STUB
        bool "EFI stub support"
        depends on EFI
+<<<<<<< HEAD
        select RELOCATABLE
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
        ---help---
           This kernel feature allows a bzImage to be loaded directly
 	  by EFI firmware without the use of a bootloader.

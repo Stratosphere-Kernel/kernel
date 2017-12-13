@@ -87,7 +87,11 @@ int rxrpc_recvmsg(struct kiocb *iocb, struct socket *sock,
 		if (!skb) {
 			/* nothing remains on the queue */
 			if (copied &&
+<<<<<<< HEAD
 			    (flags & MSG_PEEK || timeo == 0))
+=======
+			    (msg->msg_flags & MSG_PEEK || timeo == 0))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				goto out;
 
 			/* wait for a message to turn up */

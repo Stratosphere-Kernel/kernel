@@ -54,7 +54,11 @@ ENTRY(efi_pe_entry)
 	call	reloc
 reloc:
 	popl	%ecx
+<<<<<<< HEAD
 	subl	$reloc, %ecx
+=======
+	subl	reloc, %ecx
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	movl	%ecx, BP_code32_start(%eax)
 
 	sub	$0x4, %esp

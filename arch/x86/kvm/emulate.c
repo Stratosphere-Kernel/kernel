@@ -663,6 +663,14 @@ static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
 	masked_increment(reg_rmw(ctxt, VCPU_REGS_RSP), stack_mask(ctxt), inc);
 }
 
+<<<<<<< HEAD
+=======
+static inline void jmp_rel(struct x86_emulate_ctxt *ctxt, int rel)
+{
+	register_address_increment(ctxt, &ctxt->_eip, rel);
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static u32 desc_limit_scaled(struct desc_struct *desc)
 {
 	u32 limit = get_desc_limit(desc);
@@ -736,6 +744,7 @@ static int emulate_nm(struct x86_emulate_ctxt *ctxt)
 	return emulate_exception(ctxt, NM_VECTOR, 0, false);
 }
 
+<<<<<<< HEAD
 static inline int assign_eip_far(struct x86_emulate_ctxt *ctxt, ulong dst,
 			       int cs_l)
 {
@@ -768,6 +777,8 @@ static inline int jmp_rel(struct x86_emulate_ctxt *ctxt, int rel)
 	return assign_eip_near(ctxt, ctxt->_eip + rel);
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static u16 get_segment_selector(struct x86_emulate_ctxt *ctxt, unsigned seg)
 {
 	u16 selector;
@@ -2188,15 +2199,23 @@ static int em_grp45(struct x86_emulate_ctxt *ctxt)
 	case 2: /* call near abs */ {
 		long int old_eip;
 		old_eip = ctxt->_eip;
+<<<<<<< HEAD
 		rc = assign_eip_near(ctxt, ctxt->src.val);
 		if (rc != X86EMUL_CONTINUE)
 			break;
+=======
+		ctxt->_eip = ctxt->src.val;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ctxt->src.val = old_eip;
 		rc = em_push(ctxt);
 		break;
 	}
 	case 4: /* jmp abs */
+<<<<<<< HEAD
 		rc = assign_eip_near(ctxt, ctxt->src.val);
+=======
+		ctxt->_eip = ctxt->src.val;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	case 5: /* jmp far */
 		rc = em_jmp_far(ctxt);
@@ -2228,6 +2247,7 @@ static int em_cmpxchg8b(struct x86_emulate_ctxt *ctxt)
 
 static int em_ret(struct x86_emulate_ctxt *ctxt)
 {
+<<<<<<< HEAD
 	int rc;
 	unsigned long eip;
 
@@ -2236,13 +2256,22 @@ static int em_ret(struct x86_emulate_ctxt *ctxt)
 		return rc;
 
 	return assign_eip_near(ctxt, eip);
+=======
+	ctxt->dst.type = OP_REG;
+	ctxt->dst.addr.reg = &ctxt->_eip;
+	ctxt->dst.bytes = ctxt->op_bytes;
+	return em_pop(ctxt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int em_ret_far(struct x86_emulate_ctxt *ctxt)
 {
 	int rc;
 	unsigned long cs;
+<<<<<<< HEAD
 	int cpl = ctxt->ops->cpl(ctxt);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	rc = emulate_pop(ctxt, &ctxt->_eip, ctxt->op_bytes);
 	if (rc != X86EMUL_CONTINUE)
@@ -2252,9 +2281,12 @@ static int em_ret_far(struct x86_emulate_ctxt *ctxt)
 	rc = emulate_pop(ctxt, &cs, ctxt->op_bytes);
 	if (rc != X86EMUL_CONTINUE)
 		return rc;
+<<<<<<< HEAD
 	/* Outer-privilege level return is not implemented */
 	if (ctxt->mode >= X86EMUL_MODE_PROT16 && (cs & 3) > cpl)
 		return X86EMUL_UNHANDLEABLE;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rc = load_segment_descriptor(ctxt, (u16)cs, VCPU_SREG_CS);
 	return rc;
 }
@@ -2450,7 +2482,11 @@ static int em_sysenter(struct x86_emulate_ctxt *ctxt)
 	 * Not recognized on AMD in compat mode (but is recognized in legacy
 	 * mode).
 	 */
+<<<<<<< HEAD
 	if ((ctxt->mode != X86EMUL_MODE_PROT64) && (efer & EFER_LMA)
+=======
+	if ((ctxt->mode == X86EMUL_MODE_PROT32) && (efer & EFER_LMA)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	    && !vendor_intel(ctxt))
 		return emulate_ud(ctxt);
 
@@ -2463,6 +2499,7 @@ static int em_sysenter(struct x86_emulate_ctxt *ctxt)
 	setup_syscalls_segments(ctxt, &cs, &ss);
 
 	ops->get_msr(ctxt, MSR_IA32_SYSENTER_CS, &msr_data);
+<<<<<<< HEAD
 	if ((msr_data & 0xfffc) == 0x0)
 		return emulate_gp(ctxt, 0);
 
@@ -2470,6 +2507,27 @@ static int em_sysenter(struct x86_emulate_ctxt *ctxt)
 	cs_sel = (u16)msr_data & ~SELECTOR_RPL_MASK;
 	ss_sel = cs_sel + 8;
 	if (efer & EFER_LMA) {
+=======
+	switch (ctxt->mode) {
+	case X86EMUL_MODE_PROT32:
+		if ((msr_data & 0xfffc) == 0x0)
+			return emulate_gp(ctxt, 0);
+		break;
+	case X86EMUL_MODE_PROT64:
+		if (msr_data == 0x0)
+			return emulate_gp(ctxt, 0);
+		break;
+	default:
+		break;
+	}
+
+	ctxt->eflags &= ~(EFLG_VM | EFLG_IF | EFLG_RF);
+	cs_sel = (u16)msr_data;
+	cs_sel &= ~SELECTOR_RPL_MASK;
+	ss_sel = cs_sel + 8;
+	ss_sel &= ~SELECTOR_RPL_MASK;
+	if (ctxt->mode == X86EMUL_MODE_PROT64 || (efer & EFER_LMA)) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		cs.d = 0;
 		cs.l = 1;
 	}
@@ -2478,11 +2536,18 @@ static int em_sysenter(struct x86_emulate_ctxt *ctxt)
 	ops->set_segment(ctxt, ss_sel, &ss, 0, VCPU_SREG_SS);
 
 	ops->get_msr(ctxt, MSR_IA32_SYSENTER_EIP, &msr_data);
+<<<<<<< HEAD
 	ctxt->_eip = (efer & EFER_LMA) ? msr_data : (u32)msr_data;
 
 	ops->get_msr(ctxt, MSR_IA32_SYSENTER_ESP, &msr_data);
 	*reg_write(ctxt, VCPU_REGS_RSP) = (efer & EFER_LMA) ? msr_data :
 							      (u32)msr_data;
+=======
+	ctxt->_eip = msr_data;
+
+	ops->get_msr(ctxt, MSR_IA32_SYSENTER_ESP, &msr_data);
+	*reg_write(ctxt, VCPU_REGS_RSP) = msr_data;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return X86EMUL_CONTINUE;
 }
@@ -2491,7 +2556,11 @@ static int em_sysexit(struct x86_emulate_ctxt *ctxt)
 {
 	const struct x86_emulate_ops *ops = ctxt->ops;
 	struct desc_struct cs, ss;
+<<<<<<< HEAD
 	u64 msr_data, rcx, rdx;
+=======
+	u64 msr_data;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int usermode;
 	u16 cs_sel = 0, ss_sel = 0;
 
@@ -2507,9 +2576,12 @@ static int em_sysexit(struct x86_emulate_ctxt *ctxt)
 	else
 		usermode = X86EMUL_MODE_PROT32;
 
+<<<<<<< HEAD
 	rcx = reg_read(ctxt, VCPU_REGS_RCX);
 	rdx = reg_read(ctxt, VCPU_REGS_RDX);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	cs.dpl = 3;
 	ss.dpl = 3;
 	ops->get_msr(ctxt, MSR_IA32_SYSENTER_CS, &msr_data);
@@ -2527,9 +2599,12 @@ static int em_sysexit(struct x86_emulate_ctxt *ctxt)
 		ss_sel = cs_sel + 8;
 		cs.d = 0;
 		cs.l = 1;
+<<<<<<< HEAD
 		if (is_noncanonical_address(rcx) ||
 		    is_noncanonical_address(rdx))
 			return emulate_gp(ctxt, 0);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	}
 	cs_sel |= SELECTOR_RPL_MASK;
@@ -2538,8 +2613,13 @@ static int em_sysexit(struct x86_emulate_ctxt *ctxt)
 	ops->set_segment(ctxt, cs_sel, &cs, 0, VCPU_SREG_CS);
 	ops->set_segment(ctxt, ss_sel, &ss, 0, VCPU_SREG_SS);
 
+<<<<<<< HEAD
 	ctxt->_eip = rdx;
 	*reg_write(ctxt, VCPU_REGS_RSP) = rcx;
+=======
+	ctxt->_eip = reg_read(ctxt, VCPU_REGS_RDX);
+	*reg_write(ctxt, VCPU_REGS_RSP) = reg_read(ctxt, VCPU_REGS_RCX);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return X86EMUL_CONTINUE;
 }
@@ -3078,6 +3158,7 @@ static int em_aad(struct x86_emulate_ctxt *ctxt)
 
 static int em_call(struct x86_emulate_ctxt *ctxt)
 {
+<<<<<<< HEAD
 	int rc;
 	long rel = ctxt->src.val;
 
@@ -3085,6 +3166,12 @@ static int em_call(struct x86_emulate_ctxt *ctxt)
 	rc = jmp_rel(ctxt, rel);
 	if (rc != X86EMUL_CONTINUE)
 		return rc;
+=======
+	long rel = ctxt->src.val;
+
+	ctxt->src.val = (unsigned long)ctxt->_eip;
+	jmp_rel(ctxt, rel);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return em_push(ctxt);
 }
 
@@ -3116,12 +3203,20 @@ static int em_call_far(struct x86_emulate_ctxt *ctxt)
 static int em_ret_near_imm(struct x86_emulate_ctxt *ctxt)
 {
 	int rc;
+<<<<<<< HEAD
 	unsigned long eip;
 
 	rc = emulate_pop(ctxt, &eip, ctxt->op_bytes);
 	if (rc != X86EMUL_CONTINUE)
 		return rc;
 	rc = assign_eip_near(ctxt, eip);
+=======
+
+	ctxt->dst.type = OP_REG;
+	ctxt->dst.addr.reg = &ctxt->_eip;
+	ctxt->dst.bytes = ctxt->op_bytes;
+	rc = emulate_pop(ctxt, &ctxt->dst.val, ctxt->op_bytes);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (rc != X86EMUL_CONTINUE)
 		return rc;
 	rsp_increment(ctxt, ctxt->src.val);
@@ -3411,6 +3506,7 @@ static int em_lmsw(struct x86_emulate_ctxt *ctxt)
 
 static int em_loop(struct x86_emulate_ctxt *ctxt)
 {
+<<<<<<< HEAD
 	int rc = X86EMUL_CONTINUE;
 
 	register_address_increment(ctxt, reg_rmw(ctxt, VCPU_REGS_RCX), -1);
@@ -3419,16 +3515,31 @@ static int em_loop(struct x86_emulate_ctxt *ctxt)
 		rc = jmp_rel(ctxt, ctxt->src.val);
 
 	return rc;
+=======
+	register_address_increment(ctxt, reg_rmw(ctxt, VCPU_REGS_RCX), -1);
+	if ((address_mask(ctxt, reg_read(ctxt, VCPU_REGS_RCX)) != 0) &&
+	    (ctxt->b == 0xe2 || test_cc(ctxt->b ^ 0x5, ctxt->eflags)))
+		jmp_rel(ctxt, ctxt->src.val);
+
+	return X86EMUL_CONTINUE;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int em_jcxz(struct x86_emulate_ctxt *ctxt)
 {
+<<<<<<< HEAD
 	int rc = X86EMUL_CONTINUE;
 
 	if (address_mask(ctxt, reg_read(ctxt, VCPU_REGS_RCX)) == 0)
 		rc = jmp_rel(ctxt, ctxt->src.val);
 
 	return rc;
+=======
+	if (address_mask(ctxt, reg_read(ctxt, VCPU_REGS_RCX)) == 0)
+		jmp_rel(ctxt, ctxt->src.val);
+
+	return X86EMUL_CONTINUE;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int em_in(struct x86_emulate_ctxt *ctxt)
@@ -4721,8 +4832,12 @@ int x86_emulate_insn(struct x86_emulate_ctxt *ctxt)
 		if (rc != X86EMUL_CONTINUE)
 			goto done;
 	}
+<<<<<<< HEAD
 	/* Copy full 64-bit value for CMPXCHG8B.  */
 	ctxt->dst.orig_val64 = ctxt->dst.val64;
+=======
+	ctxt->dst.orig_val = ctxt->dst.val;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 special_insn:
 
@@ -4758,7 +4873,11 @@ special_insn:
 		break;
 	case 0x70 ... 0x7f: /* jcc (short) */
 		if (test_cc(ctxt->b, ctxt->eflags))
+<<<<<<< HEAD
 			rc = jmp_rel(ctxt, ctxt->src.val);
+=======
+			jmp_rel(ctxt, ctxt->src.val);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	case 0x8d: /* lea r16/r32, m */
 		ctxt->dst.val = ctxt->src.addr.mem.ea;
@@ -4787,7 +4906,11 @@ special_insn:
 		break;
 	case 0xe9: /* jmp rel */
 	case 0xeb: /* jmp rel short */
+<<<<<<< HEAD
 		rc = jmp_rel(ctxt, ctxt->src.val);
+=======
+		jmp_rel(ctxt, ctxt->src.val);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ctxt->dst.type = OP_NONE; /* Disable writeback. */
 		break;
 	case 0xf4:              /* hlt */
@@ -4899,7 +5022,11 @@ twobyte_insn:
 		break;
 	case 0x80 ... 0x8f: /* jnz rel, etc*/
 		if (test_cc(ctxt->b, ctxt->eflags))
+<<<<<<< HEAD
 			rc = jmp_rel(ctxt, ctxt->src.val);
+=======
+			jmp_rel(ctxt, ctxt->src.val);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	case 0x90 ... 0x9f:     /* setcc r/m8 */
 		ctxt->dst.val = test_cc(ctxt->b, ctxt->eflags);

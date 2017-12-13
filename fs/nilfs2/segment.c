@@ -305,6 +305,10 @@ static void nilfs_transaction_lock(struct super_block *sb,
 	ti->ti_count = 0;
 	ti->ti_save = cur_ti;
 	ti->ti_magic = NILFS_TI_MAGIC;
+<<<<<<< HEAD
+=======
+	INIT_LIST_HEAD(&ti->ti_garbage);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	current->journal_info = ti;
 
 	for (;;) {
@@ -331,6 +335,11 @@ static void nilfs_transaction_unlock(struct super_block *sb)
 
 	up_write(&nilfs->ns_segctor_sem);
 	current->journal_info = ti->ti_save;
+<<<<<<< HEAD
+=======
+	if (!list_empty(&ti->ti_garbage))
+		nilfs_dispose_list(nilfs, &ti->ti_garbage, 0);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void *nilfs_segctor_map_segsum_entry(struct nilfs_sc_info *sci,
@@ -743,6 +752,7 @@ static void nilfs_dispose_list(struct the_nilfs *nilfs,
 	}
 }
 
+<<<<<<< HEAD
 static void nilfs_iput_work_func(struct work_struct *work)
 {
 	struct nilfs_sc_info *sci = container_of(work, struct nilfs_sc_info,
@@ -752,6 +762,8 @@ static void nilfs_iput_work_func(struct work_struct *work)
 	nilfs_dispose_list(nilfs, &sci->sc_iput_queue, 0);
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int nilfs_test_metadata_dirty(struct the_nilfs *nilfs,
 				     struct nilfs_root *root)
 {
@@ -1905,9 +1917,14 @@ static int nilfs_segctor_collect_dirty_files(struct nilfs_sc_info *sci,
 static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 					     struct the_nilfs *nilfs)
 {
+<<<<<<< HEAD
 	struct nilfs_inode_info *ii, *n;
 	int during_mount = !(sci->sc_super->s_flags & MS_ACTIVE);
 	int defer_iput = false;
+=======
+	struct nilfs_transaction_info *ti = current->journal_info;
+	struct nilfs_inode_info *ii, *n;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	spin_lock(&nilfs->ns_inode_lock);
 	list_for_each_entry_safe(ii, n, &sci->sc_dirty_files, i_dirty) {
@@ -1918,6 +1935,7 @@ static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 		clear_bit(NILFS_I_BUSY, &ii->i_state);
 		brelse(ii->i_bh);
 		ii->i_bh = NULL;
+<<<<<<< HEAD
 		list_del_init(&ii->i_dirty);
 		if (!ii->vfs_inode.i_nlink || during_mount) {
 			/*
@@ -1936,6 +1954,11 @@ static void nilfs_segctor_drop_written_files(struct nilfs_sc_info *sci,
 
 	if (defer_iput)
 		schedule_work(&sci->sc_iput_work);
+=======
+		list_move_tail(&ii->i_dirty, &ti->ti_garbage);
+	}
+	spin_unlock(&nilfs->ns_inode_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*
@@ -2602,8 +2625,11 @@ static struct nilfs_sc_info *nilfs_segctor_new(struct super_block *sb,
 	INIT_LIST_HEAD(&sci->sc_segbufs);
 	INIT_LIST_HEAD(&sci->sc_write_logs);
 	INIT_LIST_HEAD(&sci->sc_gc_inodes);
+<<<<<<< HEAD
 	INIT_LIST_HEAD(&sci->sc_iput_queue);
 	INIT_WORK(&sci->sc_iput_work, nilfs_iput_work_func);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	init_timer(&sci->sc_timer);
 
 	sci->sc_interval = HZ * NILFS_SC_DEFAULT_TIMEOUT;
@@ -2630,8 +2656,11 @@ static void nilfs_segctor_write_out(struct nilfs_sc_info *sci)
 		ret = nilfs_segctor_construct(sci, SC_LSEG_SR);
 		nilfs_transaction_unlock(sci->sc_super);
 
+<<<<<<< HEAD
 		flush_work(&sci->sc_iput_work);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	} while (ret && retrycount-- > 0);
 }
 
@@ -2656,9 +2685,12 @@ static void nilfs_segctor_destroy(struct nilfs_sc_info *sci)
 		|| sci->sc_seq_request != sci->sc_seq_done);
 	spin_unlock(&sci->sc_state_lock);
 
+<<<<<<< HEAD
 	if (flush_work(&sci->sc_iput_work))
 		flag = true;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (flag || !nilfs_segctor_confirm(sci))
 		nilfs_segctor_write_out(sci);
 
@@ -2668,12 +2700,15 @@ static void nilfs_segctor_destroy(struct nilfs_sc_info *sci)
 		nilfs_dispose_list(nilfs, &sci->sc_dirty_files, 1);
 	}
 
+<<<<<<< HEAD
 	if (!list_empty(&sci->sc_iput_queue)) {
 		nilfs_warning(sci->sc_super, __func__,
 			      "iput queue is not empty\n");
 		nilfs_dispose_list(nilfs, &sci->sc_iput_queue, 1);
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	WARN_ON(!list_empty(&sci->sc_segbufs));
 	WARN_ON(!list_empty(&sci->sc_write_logs));
 

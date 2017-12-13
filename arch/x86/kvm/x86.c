@@ -225,6 +225,7 @@ static void kvm_shared_msr_cpu_online(void)
 		shared_msr_update(i, shared_msrs_global.msrs[i]);
 }
 
+<<<<<<< HEAD
 int kvm_set_shared_msr(unsigned slot, u64 value, u64 mask)
 {
 	unsigned int cpu = smp_processor_id();
@@ -238,12 +239,26 @@ int kvm_set_shared_msr(unsigned slot, u64 value, u64 mask)
 	if (err)
 		return 1;
 
+=======
+void kvm_set_shared_msr(unsigned slot, u64 value, u64 mask)
+{
+	unsigned int cpu = smp_processor_id();
+	struct kvm_shared_msrs *smsr = per_cpu_ptr(shared_msrs, cpu);
+
+	if (((value ^ smsr->values[slot].curr) & mask) == 0)
+		return;
+	smsr->values[slot].curr = value;
+	wrmsrl(shared_msrs_global.msrs[slot], value);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!smsr->registered) {
 		smsr->urn.on_user_return = kvm_on_user_return;
 		user_return_notifier_register(&smsr->urn);
 		smsr->registered = true;
 	}
+<<<<<<< HEAD
 	return 0;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 EXPORT_SYMBOL_GPL(kvm_set_shared_msr);
 
@@ -925,6 +940,10 @@ void kvm_enable_efer_bits(u64 mask)
 }
 EXPORT_SYMBOL_GPL(kvm_enable_efer_bits);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Writes msr value into into the appropriate "register".
  * Returns 0 on success, non-0 otherwise.
@@ -932,6 +951,7 @@ EXPORT_SYMBOL_GPL(kvm_enable_efer_bits);
  */
 int kvm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
 {
+<<<<<<< HEAD
 	switch (msr->index) {
 	case MSR_FS_BASE:
 	case MSR_GS_BASE:
@@ -960,6 +980,10 @@ int kvm_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr)
 	return kvm_x86_ops->set_msr(vcpu, msr);
 }
 EXPORT_SYMBOL_GPL(kvm_set_msr);
+=======
+	return kvm_x86_ops->set_msr(vcpu, msr);
+}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * Adapt set_msr() to msr_io()'s calling convention
@@ -1182,12 +1206,17 @@ void kvm_track_tsc_matching(struct kvm_vcpu *vcpu)
 {
 #ifdef CONFIG_X86_64
 	bool vcpus_matched;
+<<<<<<< HEAD
+=======
+	bool do_request = false;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct kvm_arch *ka = &vcpu->kvm->arch;
 	struct pvclock_gtod_data *gtod = &pvclock_gtod_data;
 
 	vcpus_matched = (ka->nr_vcpus_matched_tsc + 1 ==
 			 atomic_read(&vcpu->kvm->online_vcpus));
 
+<<<<<<< HEAD
 	/*
 	 * Once the masterclock is enabled, always perform request in
 	 * order to update it.
@@ -1198,6 +1227,16 @@ void kvm_track_tsc_matching(struct kvm_vcpu *vcpu)
 	 */
 	if (ka->use_master_clock ||
 	    (gtod->clock.vclock_mode == VCLOCK_TSC && vcpus_matched))
+=======
+	if (vcpus_matched && gtod->clock.vclock_mode == VCLOCK_TSC)
+		if (!ka->use_master_clock)
+			do_request = 1;
+
+	if (!vcpus_matched && ka->use_master_clock)
+			do_request = 1;
+
+	if (do_request)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		kvm_make_request(KVM_REQ_MASTERCLOCK_UPDATE, vcpu);
 
 	trace_kvm_track_tsc(vcpu->vcpu_id, ka->nr_vcpus_matched_tsc,
@@ -1227,14 +1266,18 @@ void kvm_write_tsc(struct kvm_vcpu *vcpu, struct msr_data *msr)
 	elapsed = ns - kvm->arch.last_tsc_nsec;
 
 	if (vcpu->arch.virtual_tsc_khz) {
+<<<<<<< HEAD
 		int faulted = 0;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* n.b - signed multiplication and division required */
 		usdiff = data - kvm->arch.last_tsc_write;
 #ifdef CONFIG_X86_64
 		usdiff = (usdiff * 1000) / vcpu->arch.virtual_tsc_khz;
 #else
 		/* do_div() only does unsigned */
+<<<<<<< HEAD
 		asm("1: idivl %[divisor]\n"
 		    "2: xor %%edx, %%edx\n"
 		    "   movl $0, %[faulted]\n"
@@ -1249,15 +1292,23 @@ void kvm_write_tsc(struct kvm_vcpu *vcpu, struct msr_data *msr)
 		: "=A"(usdiff), [faulted] "=r" (faulted)
 		: "A"(usdiff * 1000), [divisor] "rm"(vcpu->arch.virtual_tsc_khz));
 
+=======
+		asm("idivl %2; xor %%edx, %%edx"
+		: "=A"(usdiff)
+		: "A"(usdiff * 1000), "rm"(vcpu->arch.virtual_tsc_khz));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 		do_div(elapsed, 1000);
 		usdiff -= elapsed;
 		if (usdiff < 0)
 			usdiff = -usdiff;
+<<<<<<< HEAD
 
 		/* idivl overflow => difference is larger than USEC_PER_SEC */
 		if (faulted)
 			usdiff = USEC_PER_SEC;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	} else
 		usdiff = USEC_PER_SEC; /* disable TSC match window below */
 
@@ -4835,7 +4886,11 @@ static int handle_emulation_failure(struct kvm_vcpu *vcpu)
 
 	++vcpu->stat.insn_emulation_fail;
 	trace_kvm_emulate_insn_failed(vcpu);
+<<<<<<< HEAD
 	if (!is_guest_mode(vcpu) && kvm_x86_ops->get_cpl(vcpu) == 0) {
+=======
+	if (!is_guest_mode(vcpu)) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		vcpu->run->exit_reason = KVM_EXIT_INTERNAL_ERROR;
 		vcpu->run->internal.suberror = KVM_INTERNAL_ERROR_EMULATION;
 		vcpu->run->internal.ndata = 0;

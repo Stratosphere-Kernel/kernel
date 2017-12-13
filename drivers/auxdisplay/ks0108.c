@@ -139,7 +139,10 @@ static int __init ks0108_init(void)
 
 	ks0108_pardevice = parport_register_device(ks0108_parport, KS0108_NAME,
 		NULL, NULL, NULL, PARPORT_DEV_EXCL, NULL);
+<<<<<<< HEAD
 	parport_put_port(ks0108_parport);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (ks0108_pardevice == NULL) {
 		printk(KERN_ERR KS0108_NAME ": ERROR: "
 			"parport didn't register new device\n");

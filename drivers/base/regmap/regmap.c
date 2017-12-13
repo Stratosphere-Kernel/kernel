@@ -1839,7 +1839,11 @@ int regmap_bulk_read(struct regmap *map, unsigned int reg, void *val,
 					  &ival);
 			if (ret != 0)
 				return ret;
+<<<<<<< HEAD
 			map->format.format_val(val + (i * val_bytes), ival, 0);
+=======
+			memcpy(val + (i * val_bytes), &ival, val_bytes);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 	}
 

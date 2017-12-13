@@ -554,10 +554,16 @@ static void ipr_trc_hook(struct ipr_cmnd *ipr_cmd,
 {
 	struct ipr_trace_entry *trace_entry;
 	struct ipr_ioa_cfg *ioa_cfg = ipr_cmd->ioa_cfg;
+<<<<<<< HEAD
 	unsigned int trace_index;
 
 	trace_index = atomic_add_return(1, &ioa_cfg->trace_index) & IPR_TRACE_INDEX_MASK;
 	trace_entry = &ioa_cfg->trace[trace_index];
+=======
+
+	trace_entry = &ioa_cfg->trace[atomic_add_return
+			(1, &ioa_cfg->trace_index)%IPR_NUM_TRACE_ENTRIES];
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	trace_entry->time = jiffies;
 	trace_entry->op_code = ipr_cmd->ioarcb.cmd_pkt.cdb[0];
 	trace_entry->type = type;
@@ -646,7 +652,10 @@ static void ipr_init_ipr_cmnd(struct ipr_cmnd *ipr_cmd,
 	ipr_reinit_ipr_cmnd(ipr_cmd);
 	ipr_cmd->u.scratch = 0;
 	ipr_cmd->sibling = NULL;
+<<<<<<< HEAD
 	ipr_cmd->eh_comp = NULL;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ipr_cmd->fast_done = fast_done;
 	init_timer(&ipr_cmd->timer);
 }
@@ -812,8 +821,11 @@ static void ipr_scsi_eh_done(struct ipr_cmnd *ipr_cmd)
 
 	scsi_dma_unmap(ipr_cmd->scsi_cmd);
 	scsi_cmd->scsi_done(scsi_cmd);
+<<<<<<< HEAD
 	if (ipr_cmd->eh_comp)
 		complete(ipr_cmd->eh_comp);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	list_add_tail(&ipr_cmd->queue, &ipr_cmd->hrrq->hrrq_free_q);
 }
 
@@ -1007,6 +1019,7 @@ static void ipr_send_blocking_cmd(struct ipr_cmnd *ipr_cmd,
 
 static int ipr_get_hrrq_index(struct ipr_ioa_cfg *ioa_cfg)
 {
+<<<<<<< HEAD
 	unsigned int hrrq;
 
 	if (ioa_cfg->hrrq_num == 1)
@@ -1016,6 +1029,12 @@ static int ipr_get_hrrq_index(struct ipr_ioa_cfg *ioa_cfg)
 		hrrq = (hrrq % (ioa_cfg->hrrq_num - 1)) + 1;
 	}
 	return hrrq;
+=======
+	if (ioa_cfg->hrrq_num == 1)
+		return 0;
+	else
+		return (atomic_add_return(1, &ioa_cfg->hrrq_index) % (ioa_cfg->hrrq_num - 1)) + 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /**
@@ -4776,6 +4795,7 @@ static int ipr_slave_alloc(struct scsi_device *sdev)
 	return rc;
 }
 
+<<<<<<< HEAD
 /**
  * ipr_match_lun - Match function for specified LUN
  * @ipr_cmd:	ipr command struct
@@ -4854,6 +4874,8 @@ static int ipr_wait_for_ops(struct ipr_ioa_cfg *ioa_cfg, void *device,
 	return SUCCESS;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int ipr_eh_host_reset(struct scsi_cmnd *cmd)
 {
 	struct ipr_ioa_cfg *ioa_cfg;
@@ -5072,17 +5094,23 @@ static int __ipr_eh_dev_reset(struct scsi_cmnd *scsi_cmd)
 static int ipr_eh_dev_reset(struct scsi_cmnd *cmd)
 {
 	int rc;
+<<<<<<< HEAD
 	struct ipr_ioa_cfg *ioa_cfg;
 
 	ioa_cfg = (struct ipr_ioa_cfg *) cmd->device->host->hostdata;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	spin_lock_irq(cmd->device->host->host_lock);
 	rc = __ipr_eh_dev_reset(cmd);
 	spin_unlock_irq(cmd->device->host->host_lock);
 
+<<<<<<< HEAD
 	if (rc == SUCCESS)
 		rc = ipr_wait_for_ops(ioa_cfg, cmd->device, ipr_match_lun);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return rc;
 }
 
@@ -5260,18 +5288,27 @@ static int ipr_eh_abort(struct scsi_cmnd *scsi_cmd)
 {
 	unsigned long flags;
 	int rc;
+<<<<<<< HEAD
 	struct ipr_ioa_cfg *ioa_cfg;
 
 	ENTER;
 
 	ioa_cfg = (struct ipr_ioa_cfg *) scsi_cmd->device->host->hostdata;
 
+=======
+
+	ENTER;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock_irqsave(scsi_cmd->device->host->host_lock, flags);
 	rc = ipr_cancel_op(scsi_cmd);
 	spin_unlock_irqrestore(scsi_cmd->device->host->host_lock, flags);
 
+<<<<<<< HEAD
 	if (rc == SUCCESS)
 		rc = ipr_wait_for_ops(ioa_cfg, scsi_cmd->device, ipr_match_lun);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	LEAVE;
 	return rc;
 }
@@ -6147,13 +6184,18 @@ static void ipr_scsi_done(struct ipr_cmnd *ipr_cmd)
 	struct ipr_ioa_cfg *ioa_cfg = ipr_cmd->ioa_cfg;
 	struct scsi_cmnd *scsi_cmd = ipr_cmd->scsi_cmd;
 	u32 ioasc = be32_to_cpu(ipr_cmd->s.ioasa.hdr.ioasc);
+<<<<<<< HEAD
 	unsigned long lock_flags;
+=======
+	unsigned long hrrq_flags;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	scsi_set_resid(scsi_cmd, be32_to_cpu(ipr_cmd->s.ioasa.hdr.residual_data_len));
 
 	if (likely(IPR_IOASC_SENSE_KEY(ioasc) == 0)) {
 		scsi_dma_unmap(scsi_cmd);
 
+<<<<<<< HEAD
 		spin_lock_irqsave(ipr_cmd->hrrq->lock, lock_flags);
 		list_add_tail(&ipr_cmd->queue, &ipr_cmd->hrrq->hrrq_free_q);
 		scsi_cmd->scsi_done(scsi_cmd);
@@ -6164,6 +6206,16 @@ static void ipr_scsi_done(struct ipr_cmnd *ipr_cmd)
 		ipr_erp_start(ioa_cfg, ipr_cmd);
 		spin_unlock(&ipr_cmd->hrrq->_lock);
 		spin_unlock_irqrestore(ioa_cfg->host->host_lock, lock_flags);
+=======
+		spin_lock_irqsave(ipr_cmd->hrrq->lock, hrrq_flags);
+		list_add_tail(&ipr_cmd->queue, &ipr_cmd->hrrq->hrrq_free_q);
+		scsi_cmd->scsi_done(scsi_cmd);
+		spin_unlock_irqrestore(ipr_cmd->hrrq->lock, hrrq_flags);
+	} else {
+		spin_lock_irqsave(ipr_cmd->hrrq->lock, hrrq_flags);
+		ipr_erp_start(ioa_cfg, ipr_cmd);
+		spin_unlock_irqrestore(ipr_cmd->hrrq->lock, hrrq_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 }
 

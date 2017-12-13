@@ -1066,7 +1066,11 @@ static void update_backups(struct super_block *sb, int blk_off, char *data,
 			break;
 
 		if (meta_bg == 0)
+<<<<<<< HEAD
 			backup_block = ((ext4_fsblk_t)group) * bpg + blk_off;
+=======
+			backup_block = group * bpg + blk_off;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		else
 			backup_block = (ext4_group_first_block_no(sb, group) +
 					ext4_bg_has_super(sb, group));

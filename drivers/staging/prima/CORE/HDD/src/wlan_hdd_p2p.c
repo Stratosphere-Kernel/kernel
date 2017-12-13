@@ -132,10 +132,21 @@ static void hdd_sendMgmtFrameOverMonitorIface( hdd_adapter_t *pMonAdapter,
                                                tANI_U8* pbFrames,
                                                tANI_U8 frameType );
 
+<<<<<<< HEAD
 static v_BOOL_t wlan_hdd_is_type_p2p_action( const u8 *buf )
 {
     const u8 *ouiPtr;
 
+=======
+static v_BOOL_t wlan_hdd_is_type_p2p_action( const u8 *buf, uint32_t len )
+{
+    const u8 *ouiPtr;
+
+    if (len < WLAN_HDD_PUBLIC_ACTION_FRAME_SUB_TYPE_OFFSET + 1) {
+        return VOS_FALSE;
+    }
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     if ( buf[WLAN_HDD_PUBLIC_ACTION_FRAME_CATEGORY_OFFSET] !=
                WLAN_HDD_PUBLIC_ACTION_FRAME ) {
         return VOS_FALSE;
@@ -160,11 +171,19 @@ static v_BOOL_t wlan_hdd_is_type_p2p_action( const u8 *buf )
     return VOS_TRUE;
 }
 
+<<<<<<< HEAD
 static bool hdd_p2p_is_action_type_rsp( const u8 *buf )
 {
     tActionFrmType actionFrmType;
 
     if ( wlan_hdd_is_type_p2p_action(buf) )
+=======
+static bool hdd_p2p_is_action_type_rsp( const u8 *buf, uint32_t len )
+{
+    tActionFrmType actionFrmType;
+
+    if ( wlan_hdd_is_type_p2p_action(buf, len) )
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     {
         actionFrmType = buf[WLAN_HDD_PUBLIC_ACTION_FRAME_SUB_TYPE_OFFSET];
         if ( actionFrmType != WLAN_HDD_INVITATION_REQ &&
@@ -1274,17 +1293,38 @@ int __wlan_hdd_mgmt_tx( struct wiphy *wiphy, struct net_device *dev,
     hdd_cfg80211_state_t *cfgState = WLAN_HDD_GET_CFG_STATE_PTR( pAdapter );
     hdd_remain_on_chan_ctx_t *pRemainChanCtx = NULL;
     hdd_context_t *pHddCtx = WLAN_HDD_GET_CTX( pAdapter );
+<<<<<<< HEAD
     tANI_U8 type = WLAN_HDD_GET_TYPE_FRM_FC(buf[0]);
     tANI_U8 subType = WLAN_HDD_GET_SUBTYPE_FRM_FC(buf[0]);
     tActionFrmType actionFrmType = WLAN_HDD_ACTION_FRM_TYPE_MAX;
     bool noack = 0;
     int status;
+=======
+    tANI_U8 type;
+    tANI_U8 subType;
+    tActionFrmType actionFrmType = WLAN_HDD_ACTION_FRM_TYPE_MAX;
+    bool noack = 0;
+    int status;
+    uint32_t mgmt_hdr_len = sizeof(struct ieee80211_hdr_3addr);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38))
     uint8_t home_ch = 0;
 #endif
 
     ENTER();
+<<<<<<< HEAD
+=======
+
+    if (len < mgmt_hdr_len + 1) {
+        hddLog(VOS_TRACE_LEVEL_ERROR,"Invalid Length");
+        return -EINVAL;
+    }
+
+    type = WLAN_HDD_GET_TYPE_FRM_FC(buf[0]);
+    subType = WLAN_HDD_GET_SUBTYPE_FRM_FC(buf[0]);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     MTRACE(vos_trace(VOS_MODULE_ID_HDD,
                       TRACE_CODE_HDD_ACTION, pAdapter->sessionId,
                       pAdapter->device_mode ));
@@ -1301,7 +1341,12 @@ int __wlan_hdd_mgmt_tx( struct wiphy *wiphy, struct net_device *dev,
 
     if ((type == SIR_MAC_MGMT_FRAME) &&
             (subType == SIR_MAC_MGMT_ACTION) &&
+<<<<<<< HEAD
             wlan_hdd_is_type_p2p_action(&buf[WLAN_HDD_PUBLIC_ACTION_FRAME_BODY_OFFSET]))
+=======
+            wlan_hdd_is_type_p2p_action(
+            &buf[WLAN_HDD_PUBLIC_ACTION_FRAME_BODY_OFFSET], len - mgmt_hdr_len))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     {
         actionFrmType = buf[WLAN_HDD_PUBLIC_ACTION_FRAME_TYPE_OFFSET];
 #ifdef WLAN_FEATURE_P2P_DEBUG
@@ -1600,7 +1645,13 @@ bypass_lock:
 
         if ((type == SIR_MAC_MGMT_FRAME) &&
                 (subType == SIR_MAC_MGMT_ACTION) &&
+<<<<<<< HEAD
                 (buf[WLAN_HDD_PUBLIC_ACTION_FRAME_OFFSET] == WLAN_HDD_PUBLIC_ACTION_FRAME))
+=======
+            wlan_hdd_is_type_p2p_action(
+             &buf[WLAN_HDD_PUBLIC_ACTION_FRAME_BODY_OFFSET],
+             len - mgmt_hdr_len))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         {
             actionFrmType = buf[WLAN_HDD_PUBLIC_ACTION_FRAME_TYPE_OFFSET];
             hddLog(LOG1, "Tx Action Frame %u.", actionFrmType);

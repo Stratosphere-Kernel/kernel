@@ -933,7 +933,11 @@ megasas_issue_blocked_abort_cmd(struct megasas_instance *instance,
 	abort_fr->abort_mfi_phys_addr_hi = 0;
 
 	cmd->sync_cmd = 1;
+<<<<<<< HEAD
 	cmd->cmd_status = ENODATA;
+=======
+	cmd->cmd_status = 0xFF;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	instance->instancet->issue_dcmd(instance, cmd);
 

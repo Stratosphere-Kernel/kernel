@@ -164,7 +164,11 @@ static void spufs_prune_dir(struct dentry *dir)
 	struct dentry *dentry, *tmp;
 
 	mutex_lock(&dir->d_inode->i_mutex);
+<<<<<<< HEAD
 	list_for_each_entry_safe(dentry, tmp, &dir->d_subdirs, d_child) {
+=======
+	list_for_each_entry_safe(dentry, tmp, &dir->d_subdirs, d_u.d_child) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		spin_lock(&dentry->d_lock);
 		if (!(d_unhashed(dentry)) && dentry->d_inode) {
 			dget_dlock(dentry);

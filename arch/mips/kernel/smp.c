@@ -109,10 +109,17 @@ asmlinkage __cpuinit void start_secondary(void)
 	else
 #endif /* CONFIG_MIPS_MT_SMTC */
 	cpu_probe();
+<<<<<<< HEAD
 	per_cpu_trap_init(false);
 	mips_clockevent_init();
 	mp_ops->init_secondary();
 	cpu_report();
+=======
+	cpu_report();
+	per_cpu_trap_init(false);
+	mips_clockevent_init();
+	mp_ops->init_secondary();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * XXX parity protection should be folded in here when it's converted

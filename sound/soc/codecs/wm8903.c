@@ -446,7 +446,11 @@ static int wm8903_get_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm8903_priv *wm8903 = snd_soc_codec_get_drvdata(codec);
 
+<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = wm8903->deemph;
+=======
+	ucontrol->value.enumerated.item[0] = wm8903->deemph;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }
@@ -456,7 +460,11 @@ static int wm8903_put_deemph(struct snd_kcontrol *kcontrol,
 {
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct wm8903_priv *wm8903 = snd_soc_codec_get_drvdata(codec);
+<<<<<<< HEAD
 	int deemph = ucontrol->value.integer.value[0];
+=======
+	int deemph = ucontrol->value.enumerated.item[0];
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int ret = 0;
 
 	if (deemph > 1)

@@ -3481,9 +3481,12 @@ static int ata_eh_set_lpm(struct ata_link *link, enum ata_lpm_policy policy,
 		}
 	}
 
+<<<<<<< HEAD
 	link->last_lpm_change = jiffies;
 	link->flags |= ATA_LFLAG_CHANGED;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 
 fail:

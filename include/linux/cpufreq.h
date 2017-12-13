@@ -100,6 +100,11 @@ struct cpufreq_policy {
 	 *     __cpufreq_governor(data, CPUFREQ_GOV_POLICY_EXIT);
 	 */
 	struct rw_semaphore	rwsem;
+<<<<<<< HEAD
+=======
+	
+	unsigned int util;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 /* Only for ACPI */
@@ -135,6 +140,10 @@ void cpufreq_sysfs_remove_file(const struct attribute *attr);
 unsigned int cpufreq_get(unsigned int cpu);
 unsigned int cpufreq_quick_get(unsigned int cpu);
 unsigned int cpufreq_quick_get_max(unsigned int cpu);
+<<<<<<< HEAD
+=======
+unsigned int cpufreq_quick_get_util(unsigned int cpu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void disable_cpufreq(void);
 
 u64 get_cpu_idle_time(unsigned int cpu, u64 *wall, int io_busy);
@@ -164,7 +173,10 @@ static inline void disable_cpufreq(void) { }
 
 #define CPUFREQ_RELATION_L 0  /* lowest frequency at or above target */
 #define CPUFREQ_RELATION_H 1  /* highest frequency below or at target */
+<<<<<<< HEAD
 #define CPUFREQ_RELATION_C 2  /* closest frequency to target */
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 struct freq_attr {
 	struct attribute attr;
@@ -430,6 +442,7 @@ extern struct cpufreq_governor cpufreq_gov_ondemand;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_CONSERVATIVE)
 extern struct cpufreq_governor cpufreq_gov_conservative;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_conservative)
+<<<<<<< HEAD
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_PRESERVATIVE)
 extern struct cpufreq_governor cpufreq_gov_preservative;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_preservative)
@@ -439,6 +452,11 @@ extern struct cpufreq_governor cpufreq_gov_interactive;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_ELEMENTALX)
 extern struct cpufreq_governor cpufreq_gov_elementalx;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_elementalx)
+=======
+#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE)
+extern struct cpufreq_governor cpufreq_gov_interactive;
+#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_interactive)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 
 /*********************************************************************

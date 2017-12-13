@@ -61,8 +61,11 @@ typedef struct { pteval_t pte; } pte_t;
 #define MODULES_VADDR    _AC(0xffffffffa0000000, UL)
 #define MODULES_END      _AC(0xffffffffff000000, UL)
 #define MODULES_LEN   (MODULES_END - MODULES_VADDR)
+<<<<<<< HEAD
 #define ESPFIX_PGD_ENTRY _AC(-2, UL)
 #define ESPFIX_BASE_ADDR (ESPFIX_PGD_ENTRY << PGDIR_SHIFT)
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #define EARLY_DYNAMIC_PAGE_TABLES	64
 

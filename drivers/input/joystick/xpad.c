@@ -1002,6 +1002,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 		}
 
 		ep_irq_in = &intf->cur_altsetting->endpoint[1].desc;
+<<<<<<< HEAD
 		if (usb_endpoint_is_bulk_out(ep_irq_in)) {
 			usb_fill_bulk_urb(xpad->bulk_out, udev,
 					  usb_sndbulkpipe(udev,
@@ -1015,6 +1016,11 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 					 xpad->bdata, XPAD_PKT_LEN,
 					 xpad_bulk_out, xpad, 0);
 		}
+=======
+		usb_fill_bulk_urb(xpad->bulk_out, udev,
+				usb_sndbulkpipe(udev, ep_irq_in->bEndpointAddress),
+				xpad->bdata, XPAD_PKT_LEN, xpad_bulk_out, xpad);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/*
 		 * Submit the int URB immediately rather than waiting for open

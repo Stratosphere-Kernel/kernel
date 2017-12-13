@@ -1684,7 +1684,12 @@ static void ahci_handle_port_interrupt(struct ata_port *ap,
 	if (unlikely(resetting))
 		status &= ~PORT_IRQ_BAD_PMP;
 
+<<<<<<< HEAD
 	if (sata_lpm_ignore_phy_events(&ap->link)) {
+=======
+	/* if LPM is enabled, PHYRDY doesn't mean anything */
+	if (ap->link.lpm_policy > ATA_LPM_MAX_POWER) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		status &= ~PORT_IRQ_PHYRDY;
 		ahci_scr_write(&ap->link, SCR_ERROR, SERR_PHYRDY_CHG);
 	}

@@ -948,7 +948,11 @@ static int omap_calculate_ecc(struct mtd_info *mtd, const u_char *dat,
 	u32 val;
 
 	val = readl(info->reg.gpmc_ecc_config);
+<<<<<<< HEAD
 	if (((val >> ECC_CONFIG_CS_SHIFT) & CS_MASK) != info->gpmc_cs)
+=======
+	if (((val >> ECC_CONFIG_CS_SHIFT)  & ~CS_MASK) != info->gpmc_cs)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 
 	/* read ecc result */

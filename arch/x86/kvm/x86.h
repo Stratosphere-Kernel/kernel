@@ -78,6 +78,7 @@ static inline void vcpu_cache_mmio_info(struct kvm_vcpu *vcpu,
 	vcpu->arch.mmio_gva = gva & PAGE_MASK;
 	vcpu->arch.access = access;
 	vcpu->arch.mmio_gfn = gfn;
+<<<<<<< HEAD
 	vcpu->arch.mmio_gen = kvm_memslots(vcpu->kvm)->generation;
 }
 
@@ -95,6 +96,17 @@ static inline bool vcpu_match_mmio_gen(struct kvm_vcpu *vcpu)
 static inline void vcpu_clear_mmio_info(struct kvm_vcpu *vcpu, gva_t gva)
 {
 	if (gva != MMIO_GVA_ANY && vcpu->arch.mmio_gva != (gva & PAGE_MASK))
+=======
+}
+
+/*
+ * Clear the mmio cache info for the given gva,
+ * specially, if gva is ~0ul, we clear all mmio cache info.
+ */
+static inline void vcpu_clear_mmio_info(struct kvm_vcpu *vcpu, gva_t gva)
+{
+	if (gva != (~0ul) && vcpu->arch.mmio_gva != (gva & PAGE_MASK))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 
 	vcpu->arch.mmio_gva = 0;
@@ -102,8 +114,12 @@ static inline void vcpu_clear_mmio_info(struct kvm_vcpu *vcpu, gva_t gva)
 
 static inline bool vcpu_match_mmio_gva(struct kvm_vcpu *vcpu, unsigned long gva)
 {
+<<<<<<< HEAD
 	if (vcpu_match_mmio_gen(vcpu) && vcpu->arch.mmio_gva &&
 	      vcpu->arch.mmio_gva == (gva & PAGE_MASK))
+=======
+	if (vcpu->arch.mmio_gva && vcpu->arch.mmio_gva == (gva & PAGE_MASK))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return true;
 
 	return false;
@@ -111,8 +127,12 @@ static inline bool vcpu_match_mmio_gva(struct kvm_vcpu *vcpu, unsigned long gva)
 
 static inline bool vcpu_match_mmio_gpa(struct kvm_vcpu *vcpu, gpa_t gpa)
 {
+<<<<<<< HEAD
 	if (vcpu_match_mmio_gen(vcpu) && vcpu->arch.mmio_gfn &&
 	      vcpu->arch.mmio_gfn == gpa >> PAGE_SHIFT)
+=======
+	if (vcpu->arch.mmio_gfn && vcpu->arch.mmio_gfn == gpa >> PAGE_SHIFT)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return true;
 
 	return false;

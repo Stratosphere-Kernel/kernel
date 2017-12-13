@@ -587,8 +587,14 @@ _NV_TEMPLATE_TABLE NvTablesBuiltIn[/*TABLES_MAX*/][TABLE_ENTRIES_MAX] = {
          ((char *)&(nvDefaults.tables.hwCalValues.calData.psSlpTimeOvrHdxLNA5G) -
           (char *)&nvDefaults.tables.hwCalValues.calData),"psSlpTimeOvrHdxLNA5G"},
       {"ed",_ID_U8,SINGULAR,0,0,0,
+<<<<<<< HEAD
          ((char *)&(nvDefaults.tables.hwCalValues.calData.psSlpTimeOvrHdxLNA5G) -
           (char *)&nvDefaults.tables.hwCalValues.calData),"nv_TxBBFSel9MHz"},
+=======
+         (((char *)&(nvDefaults.tables.hwCalValues.calData.psSlpTimeOvrHdxLNA5G) +
+          sizeof(uint16)) - (char *)&nvDefaults.tables.hwCalValues.calData),
+         "nv_TxBBFSel9MHz"},
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
       {"ee",_ID_U8,SINGULAR,0,0,0,
          ((char *)&(nvDefaults.tables.hwCalValues.calData.hwParam2) -
           (char *)&nvDefaults.tables.hwCalValues.calData),"hwParam2"},

@@ -24,10 +24,13 @@
 #include <linux/leds-qpnp-wled.h>
 #include <linux/clk.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_STATE_NOTIFIER
 #include <linux/state_notifier.h>
 #endif
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include "mdss.h"
 #include "mdss_panel.h"
 #include "mdss_dsi.h"
@@ -1301,9 +1304,12 @@ static int mdss_dsi_event_handler(struct mdss_panel_data *pdata,
 		if (ctrl_pdata->on_cmds.link_state == DSI_HS_MODE)
 			rc = mdss_dsi_unblank(pdata);
 		pdata->panel_info.esd_rdy = true;
+<<<<<<< HEAD
 #ifdef CONFIG_STATE_NOTIFIER
 		state_resume();
 #endif
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	case MDSS_EVENT_BLANK:
 		power_state = (int) (unsigned long) arg;
@@ -1317,9 +1323,12 @@ static int mdss_dsi_event_handler(struct mdss_panel_data *pdata,
 			rc = mdss_dsi_blank(pdata, power_state);
 		if (!(pdata->panel_info.mipi.always_on))
 			rc = mdss_dsi_off(pdata, power_state);
+<<<<<<< HEAD
 #ifdef CONFIG_STATE_NOTIFIER
 		state_suspend();
 #endif
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	case MDSS_EVENT_CONT_SPLASH_FINISH:
 		if (ctrl_pdata->off_cmds.link_state == DSI_LP_MODE)

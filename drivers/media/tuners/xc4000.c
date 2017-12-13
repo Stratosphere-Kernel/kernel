@@ -93,7 +93,11 @@ struct xc4000_priv {
 	struct firmware_description *firm;
 	int	firm_size;
 	u32	if_khz;
+<<<<<<< HEAD
 	u32	freq_hz, freq_offset;
+=======
+	u32	freq_hz;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	u32	bandwidth;
 	u8	video_standard;
 	u8	rf_mode;
@@ -1157,14 +1161,22 @@ static int xc4000_set_params(struct dvb_frontend *fe)
 	case SYS_ATSC:
 		dprintk(1, "%s() VSB modulation\n", __func__);
 		priv->rf_mode = XC_RF_MODE_AIR;
+<<<<<<< HEAD
 		priv->freq_offset = 1750000;
+=======
+		priv->freq_hz = c->frequency - 1750000;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		priv->video_standard = XC4000_DTV6;
 		type = DTV6;
 		break;
 	case SYS_DVBC_ANNEX_B:
 		dprintk(1, "%s() QAM modulation\n", __func__);
 		priv->rf_mode = XC_RF_MODE_CABLE;
+<<<<<<< HEAD
 		priv->freq_offset = 1750000;
+=======
+		priv->freq_hz = c->frequency - 1750000;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		priv->video_standard = XC4000_DTV6;
 		type = DTV6;
 		break;
@@ -1173,14 +1185,21 @@ static int xc4000_set_params(struct dvb_frontend *fe)
 		dprintk(1, "%s() OFDM\n", __func__);
 		if (bw == 0) {
 			if (c->frequency < 400000000) {
+<<<<<<< HEAD
 				priv->freq_offset = 2250000;
 			} else {
 				priv->freq_offset = 2750000;
+=======
+				priv->freq_hz = c->frequency - 2250000;
+			} else {
+				priv->freq_hz = c->frequency - 2750000;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			}
 			priv->video_standard = XC4000_DTV7_8;
 			type = DTV78;
 		} else if (bw <= 6000000) {
 			priv->video_standard = XC4000_DTV6;
+<<<<<<< HEAD
 			priv->freq_offset = 1750000;
 			type = DTV6;
 		} else if (bw <= 7000000) {
@@ -1190,6 +1209,17 @@ static int xc4000_set_params(struct dvb_frontend *fe)
 		} else {
 			priv->video_standard = XC4000_DTV8;
 			priv->freq_offset = 2750000;
+=======
+			priv->freq_hz = c->frequency - 1750000;
+			type = DTV6;
+		} else if (bw <= 7000000) {
+			priv->video_standard = XC4000_DTV7;
+			priv->freq_hz = c->frequency - 2250000;
+			type = DTV7;
+		} else {
+			priv->video_standard = XC4000_DTV8;
+			priv->freq_hz = c->frequency - 2750000;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			type = DTV8;
 		}
 		priv->rf_mode = XC_RF_MODE_AIR;
@@ -1200,8 +1230,11 @@ static int xc4000_set_params(struct dvb_frontend *fe)
 		goto fail;
 	}
 
+<<<<<<< HEAD
 	priv->freq_hz = c->frequency - priv->freq_offset;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dprintk(1, "%s() frequency=%d (compensated)\n",
 		__func__, priv->freq_hz);
 
@@ -1522,7 +1555,11 @@ static int xc4000_get_frequency(struct dvb_frontend *fe, u32 *freq)
 {
 	struct xc4000_priv *priv = fe->tuner_priv;
 
+<<<<<<< HEAD
 	*freq = priv->freq_hz + priv->freq_offset;
+=======
+	*freq = priv->freq_hz;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (debug) {
 		mutex_lock(&priv->lock);

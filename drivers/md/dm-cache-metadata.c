@@ -88,9 +88,12 @@ struct cache_disk_superblock {
 } __packed;
 
 struct dm_cache_metadata {
+<<<<<<< HEAD
 	atomic_t ref_count;
 	struct list_head list;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct block_device *bdev;
 	struct dm_block_manager *bm;
 	struct dm_space_map *metadata_sm;
@@ -387,6 +390,7 @@ static int __open_metadata(struct dm_cache_metadata *cmd)
 
 	disk_super = dm_block_data(sblock);
 
+<<<<<<< HEAD
 	/* Verify the data block size hasn't changed */
 	if (le32_to_cpu(disk_super->data_block_size) != cmd->data_block_size) {
 		DMERR("changing the data block size (from %u to %llu) is not supported",
@@ -396,6 +400,8 @@ static int __open_metadata(struct dm_cache_metadata *cmd)
 		goto bad;
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	r = __check_incompat_features(disk_super, cmd);
 	if (r < 0)
 		goto bad;
@@ -637,10 +643,17 @@ static void unpack_value(__le64 value_le, dm_oblock_t *block, unsigned *flags)
 
 /*----------------------------------------------------------------*/
 
+<<<<<<< HEAD
 static struct dm_cache_metadata *metadata_open(struct block_device *bdev,
 					       sector_t data_block_size,
 					       bool may_format_device,
 					       size_t policy_hint_size)
+=======
+struct dm_cache_metadata *dm_cache_metadata_open(struct block_device *bdev,
+						 sector_t data_block_size,
+						 bool may_format_device,
+						 size_t policy_hint_size)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int r;
 	struct dm_cache_metadata *cmd;
@@ -648,10 +661,16 @@ static struct dm_cache_metadata *metadata_open(struct block_device *bdev,
 	cmd = kzalloc(sizeof(*cmd), GFP_KERNEL);
 	if (!cmd) {
 		DMERR("could not allocate metadata struct");
+<<<<<<< HEAD
 		return ERR_PTR(-ENOMEM);
 	}
 
 	atomic_set(&cmd->ref_count, 1);
+=======
+		return NULL;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	init_rwsem(&cmd->root_lock);
 	cmd->bdev = bdev;
 	cmd->data_block_size = data_block_size;
@@ -674,6 +693,7 @@ static struct dm_cache_metadata *metadata_open(struct block_device *bdev,
 	return cmd;
 }
 
+<<<<<<< HEAD
 /*
  * We keep a little list of ref counted metadata objects to prevent two
  * different target instances creating separate bufio instances.  This is
@@ -764,6 +784,12 @@ void dm_cache_metadata_close(struct dm_cache_metadata *cmd)
 		__destroy_persistent_data_objects(cmd);
 		kfree(cmd);
 	}
+=======
+void dm_cache_metadata_close(struct dm_cache_metadata *cmd)
+{
+	__destroy_persistent_data_objects(cmd);
+	kfree(cmd);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 int dm_cache_resize(struct dm_cache_metadata *cmd, dm_cblock_t new_cache_size)

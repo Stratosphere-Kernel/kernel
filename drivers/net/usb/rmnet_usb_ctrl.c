@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2011-2014, 2017, The Linux Foundation. All rights reserved.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -514,8 +518,18 @@ static int rmnet_ctl_open(struct inode *inode, struct file *file)
 	if (!dev)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	if (test_bit(RMNET_CTRL_DEV_OPEN, &dev->status))
 		goto already_opened;
+=======
+	mutex_lock(&dev->dev_lock);
+	if (test_bit(RMNET_CTRL_DEV_OPEN, &dev->status)) {
+		mutex_unlock(&dev->dev_lock);
+		goto already_opened;
+	}
+	set_bit(RMNET_CTRL_DEV_OPEN, &dev->status);
+	mutex_unlock(&dev->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (dev->mdm_wait_timeout &&
 			!test_bit(RMNET_CTRL_DEV_READY, &dev->cudev->status)) {
@@ -527,10 +541,22 @@ static int rmnet_ctl_open(struct inode *inode, struct file *file)
 		if (retval == 0) {
 			dev_err(dev->devicep, "%s: Timeout opening %s\n",
 						__func__, dev->name);
+<<<<<<< HEAD
 			return -ETIMEDOUT;
 		} else if (retval < 0) {
 			dev_err(dev->devicep, "%s: Error waiting for %s\n",
 						__func__, dev->name);
+=======
+			retval = -ETIMEDOUT;
+		} else if (retval < 0)
+			dev_err(dev->devicep, "%s: Error waiting for %s\n",
+						__func__, dev->name);
+
+		if (retval < 0) {
+			mutex_lock(&dev->dev_lock);
+			clear_bit(RMNET_CTRL_DEV_OPEN, &dev->status);
+			mutex_unlock(&dev->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return retval;
 		}
 	}
@@ -538,14 +564,23 @@ static int rmnet_ctl_open(struct inode *inode, struct file *file)
 	if (!test_bit(RMNET_CTRL_DEV_READY, &dev->cudev->status)) {
 		dev_dbg(dev->devicep, "%s: Connection timedout opening %s\n",
 					__func__, dev->name);
+<<<<<<< HEAD
+=======
+		mutex_lock(&dev->dev_lock);
+		clear_bit(RMNET_CTRL_DEV_OPEN, &dev->status);
+		mutex_unlock(&dev->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -ETIMEDOUT;
 	}
 
 	/* clear stale data if device close called but channel was ready */
 	rmnet_usb_ctrl_free_rx_list(dev);
 
+<<<<<<< HEAD
 	set_bit(RMNET_CTRL_DEV_OPEN, &dev->status);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	file->private_data = dev;
 
 already_opened:
@@ -564,7 +599,13 @@ static int rmnet_ctl_release(struct inode *inode, struct file *file)
 
 	DBG("%s Called on %s device\n", __func__, dev->name);
 
+<<<<<<< HEAD
 	clear_bit(RMNET_CTRL_DEV_OPEN, &dev->status);
+=======
+	mutex_lock(&dev->dev_lock);
+	clear_bit(RMNET_CTRL_DEV_OPEN, &dev->status);
+	mutex_unlock(&dev->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	file->private_data = NULL;
 
@@ -638,6 +679,10 @@ ctrl_read:
 
 	list_elem = list_first_entry(&dev->rx_list,
 				     struct ctrl_pkt_list_elem, list);
+<<<<<<< HEAD
+=======
+	list_del(&list_elem->list);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	bytes_to_read = (uint32_t)(list_elem->cpkt.data_size);
 	if (bytes_to_read > count) {
 		spin_unlock_irqrestore(&dev->rx_lock, flags);
@@ -654,11 +699,19 @@ ctrl_read:
 			dev_err(dev->devicep,
 				"%s: copy_to_user failed for %s\n",
 				__func__, dev->name);
+<<<<<<< HEAD
 		return -EFAULT;
 	}
 	spin_lock_irqsave(&dev->rx_lock, flags);
 	list_del(&list_elem->list);
 	spin_unlock_irqrestore(&dev->rx_lock, flags);
+=======
+		spin_lock_irqsave(&dev->rx_lock, flags);
+		list_add(&list_elem->list, &dev->rx_list);
+		spin_unlock_irqrestore(&dev->rx_lock, flags);
+		return -EFAULT;
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	kfree(list_elem->cpkt.data);
 	kfree(list_elem);

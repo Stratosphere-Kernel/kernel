@@ -1076,7 +1076,11 @@ int tcp_sendmsg(struct kiocb *iocb, struct sock *sk, struct msghdr *msg,
 	if (unlikely(tp->repair)) {
 		if (tp->repair_queue == TCP_RECV_QUEUE) {
 			copied = tcp_send_rcvq(sk, msg, size);
+<<<<<<< HEAD
 			goto out_nopush;
+=======
+			goto out;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 
 		err = -EINVAL;
@@ -1249,7 +1253,10 @@ wait_for_memory:
 out:
 	if (copied)
 		tcp_push(sk, flags, mss_now, tp->nonagle);
+<<<<<<< HEAD
 out_nopush:
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	release_sock(sk);
 
 	if (copied + copied_syn)

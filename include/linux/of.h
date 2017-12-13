@@ -254,12 +254,23 @@ extern int of_property_read_u64(const struct device_node *np,
 extern int of_property_read_string(struct device_node *np,
 				   const char *propname,
 				   const char **out_string);
+<<<<<<< HEAD
 extern int of_property_match_string(struct device_node *np,
 				    const char *propname,
 				    const char *string);
 extern int of_property_read_string_helper(struct device_node *np,
 					      const char *propname,
 					      const char **out_strs, size_t sz, int index);
+=======
+extern int of_property_read_string_index(struct device_node *np,
+					 const char *propname,
+					 int index, const char **output);
+extern int of_property_match_string(struct device_node *np,
+				    const char *propname,
+				    const char *string);
+extern int of_property_count_strings(struct device_node *np,
+				     const char *propname);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 extern int of_device_is_compatible(const struct device_node *device,
 				   const char *);
 extern int of_device_is_available(const struct device_node *device);
@@ -440,9 +451,21 @@ static inline int of_property_read_string(struct device_node *np,
 	return -ENOSYS;
 }
 
+<<<<<<< HEAD
 static inline int of_property_read_string_helper(struct device_node *np,
 						 const char *propname,
 						 const char **out_strs, size_t sz, int index)
+=======
+static inline int of_property_read_string_index(struct device_node *np,
+						const char *propname, int index,
+						const char **out_string)
+{
+	return -ENOSYS;
+}
+
+static inline int of_property_count_strings(struct device_node *np,
+					    const char *propname)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	return -ENOSYS;
 }
@@ -524,6 +547,7 @@ static inline int of_node_to_nid(struct device_node *np)
 #endif
 
 /**
+<<<<<<< HEAD
  * of_property_read_string_array() - Read an array of strings from a multiple
  * strings property.
  * @np:		device node from which the property value is to be read.
@@ -588,6 +612,8 @@ static inline int of_property_read_string_index(struct device_node *np,
 }
 
 /**
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * of_property_read_bool - Findfrom a property
  * @np:		device node from which the property value is to be read.
  * @propname:	name of the property to be searched.

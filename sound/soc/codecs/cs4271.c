@@ -267,7 +267,11 @@ static int cs4271_get_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct cs4271_private *cs4271 = snd_soc_codec_get_drvdata(codec);
 
+<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = cs4271->deemph;
+=======
+	ucontrol->value.enumerated.item[0] = cs4271->deemph;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
@@ -277,7 +281,11 @@ static int cs4271_put_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct cs4271_private *cs4271 = snd_soc_codec_get_drvdata(codec);
 
+<<<<<<< HEAD
 	cs4271->deemph = ucontrol->value.integer.value[0];
+=======
+	cs4271->deemph = ucontrol->value.enumerated.item[0];
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return cs4271_set_deemph(codec);
 }
 

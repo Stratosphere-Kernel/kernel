@@ -17,7 +17,10 @@
 	.text
 	.globl __kernel_sigreturn
 	.type __kernel_sigreturn,@function
+<<<<<<< HEAD
 	nop /* this guy is needed for .LSTARTFDEDLSI1 below (watch for HACK) */
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ALIGN
 __kernel_sigreturn:
 .LSTART_sigreturn:

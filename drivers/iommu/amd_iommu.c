@@ -3187,16 +3187,26 @@ free_domains:
 
 static void cleanup_domain(struct protection_domain *domain)
 {
+<<<<<<< HEAD
 	struct iommu_dev_data *entry;
+=======
+	struct iommu_dev_data *dev_data, *next;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	unsigned long flags;
 
 	write_lock_irqsave(&amd_iommu_devtable_lock, flags);
 
+<<<<<<< HEAD
 	while (!list_empty(&domain->dev_list)) {
 		entry = list_first_entry(&domain->dev_list,
 					 struct iommu_dev_data, list);
 		__detach_device(entry);
 		atomic_set(&entry->bind, 0);
+=======
+	list_for_each_entry_safe(dev_data, next, &domain->dev_list, list) {
+		__detach_device(dev_data);
+		atomic_set(&dev_data->bind, 0);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	write_unlock_irqrestore(&amd_iommu_devtable_lock, flags);

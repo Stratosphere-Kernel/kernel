@@ -1063,14 +1063,28 @@ static int diag_ioctl_lsm_deinit(void)
 {
 	int i;
 
+<<<<<<< HEAD
+=======
+	mutex_lock(&driver->diagchar_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	for (i = 0; i < driver->num_clients; i++)
 		if (driver->client_map[i].pid == current->tgid)
 			break;
 
+<<<<<<< HEAD
 	if (i == driver->num_clients)
 		return -EINVAL;
 
 	driver->data_ready[i] |= DEINIT_TYPE;
+=======
+	if (i == driver->num_clients) {
+		mutex_unlock(&driver->diagchar_mutex);
+		return -EINVAL;
+	}
+
+	driver->data_ready[i] |= DEINIT_TYPE;
+	mutex_unlock(&driver->diagchar_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	wake_up_interruptible(&driver->wait_q);
 
 	return 1;

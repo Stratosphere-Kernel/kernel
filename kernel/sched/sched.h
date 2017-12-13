@@ -730,6 +730,10 @@ extern void fixup_nr_big_small_task(int cpu);
 unsigned int max_task_load(void);
 extern void sched_account_irqtime(int cpu, struct task_struct *curr,
 				 u64 delta, u64 wallclock);
+<<<<<<< HEAD
+=======
+extern unsigned int nr_eligible_big_tasks(int cpu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /*
  * 'load' is in reference to "best cpu" at its best frequency.
@@ -796,6 +800,14 @@ static inline void sched_account_irqtime(int cpu, struct task_struct *curr,
 {
 }
 
+<<<<<<< HEAD
+=======
+static inline unsigned int nr_eligible_big_tasks(int cpu)
+{
+	return 0;
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif	/* CONFIG_SCHED_HMP */
 
 #ifdef CONFIG_SCHED_FREQ_INPUT
@@ -1136,6 +1148,10 @@ static inline void finish_lock_switch(struct rq *rq, struct task_struct *prev)
 #define WF_SYNC		0x01		/* waker goes to sleep after wakeup */
 #define WF_FORK		0x02		/* child wakeup after fork */
 #define WF_MIGRATED	0x4		/* internal use, task got migrated */
+<<<<<<< HEAD
+=======
+#define WF_NO_NOTIFIER	0x08		/* do not notify governor */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static inline void update_load_add(struct load_weight *lw, unsigned long inc)
 {
@@ -1329,7 +1345,11 @@ static inline u64 steal_ticks(u64 steal)
 
 static inline void inc_nr_running(struct rq *rq)
 {
+<<<<<<< HEAD
 	sched_update_nr_prod(cpu_of(rq), rq->nr_running, true);
+=======
+	sched_update_nr_prod(cpu_of(rq), 1, true);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rq->nr_running++;
 
 #ifdef CONFIG_NO_HZ_FULL
@@ -1345,7 +1365,11 @@ static inline void inc_nr_running(struct rq *rq)
 
 static inline void dec_nr_running(struct rq *rq)
 {
+<<<<<<< HEAD
 	sched_update_nr_prod(cpu_of(rq), rq->nr_running, false);
+=======
+	sched_update_nr_prod(cpu_of(rq), 1, false);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rq->nr_running--;
 }
 

@@ -117,12 +117,19 @@ static int xfrm4_mode_tunnel_output(struct xfrm_state *x, struct sk_buff *skb)
 
 	top_iph->frag_off = (flags & XFRM_STATE_NOPMTUDISC) ?
 		0 : (XFRM_MODE_SKB_CB(skb)->frag_off & htons(IP_DF));
+<<<<<<< HEAD
+=======
+	ip_select_ident(skb, dst->child, NULL);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	top_iph->ttl = ip4_dst_hoplimit(dst->child);
 
 	top_iph->saddr = x->props.saddr.a4;
 	top_iph->daddr = x->id.daddr.a4;
+<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }

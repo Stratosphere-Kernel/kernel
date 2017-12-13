@@ -799,7 +799,11 @@ static int hdd_parse_setrmcenable_command(tANI_U8 *pValue, tANI_U8 *pRmcEnable)
 
     /* getting the first argument which enables or disables RMC
          * for input IP v4 address*/
+<<<<<<< HEAD
     sscanf(inPtr, "%32s ", buf);
+=======
+    sscanf(inPtr, "%31s ", buf);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     v = kstrtos32(buf, 10, &tempInt);
     if ( v < 0)
     {
@@ -848,7 +852,11 @@ static int hdd_parse_setrmcactionperiod_command(tANI_U8 *pValue,
 
     /* getting the first argument which enables or disables RMC
          * for input IP v4 address*/
+<<<<<<< HEAD
     sscanf(inPtr, "%32s ", buf);
+=======
+    sscanf(inPtr, "%31s ", buf);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     v = kstrtos32(buf, 10, &tempInt);
     if ( v < 0)
     {
@@ -906,7 +914,11 @@ static int hdd_parse_setrmcrate_command(tANI_U8 *pValue,
     /*
      * getting the first argument which sets multicast rate.
      */
+<<<<<<< HEAD
     sscanf(inPtr, "%32s ", buf);
+=======
+    sscanf(inPtr, "%31s ", buf);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     v = kstrtos32(buf, 10, &tempInt);
     if ( v < 0)
         {
@@ -2593,16 +2605,33 @@ hdd_parse_reassoc_v1(hdd_adapter_t *pAdapter, const char *command)
  * @pAdapter: Adapter upon which the command was received
  * @command: command that was received, ASCII command followed
  *                    by binary data
+<<<<<<< HEAD
+=======
+ * @total_len: Total length of the command received
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * Return: 0 for success non-zero for failure
  */
 static int
+<<<<<<< HEAD
 hdd_parse_reassoc_v2(hdd_adapter_t *pAdapter, const char *command)
+=======
+hdd_parse_reassoc_v2(hdd_adapter_t *pAdapter, const char *command,
+		     int total_len)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct android_wifi_reassoc_params params;
 	tSirMacAddr bssid;
 	int ret;
 
+<<<<<<< HEAD
+=======
+	if (total_len < sizeof(params) + 8) {
+		hddLog(LOGE, FL("Invalid command length"));
+		return -EINVAL;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* The params are located after "REASSOC " */
 	memcpy(&params, command + 8, sizeof(params));
 
@@ -2626,11 +2655,19 @@ hdd_parse_reassoc_v2(hdd_adapter_t *pAdapter, const char *command)
  *
  *  @pAdapter: Adapter upon which the command was received
  *  @command: command that was received
+<<<<<<< HEAD
+=======
+ *  @total_len: Total length of the command received
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  *  Return: 0 for success non-zero for failure
  */
 static int
+<<<<<<< HEAD
 hdd_parse_reassoc(hdd_adapter_t *pAdapter, const char *command)
+=======
+hdd_parse_reassoc(hdd_adapter_t *pAdapter, const char *command, int total_len)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int ret;
 
@@ -2648,10 +2685,23 @@ hdd_parse_reassoc(hdd_adapter_t *pAdapter, const char *command)
 	 *           1111111111222222
 	 * 01234567890123456789012345
 	 */
+<<<<<<< HEAD
 	if (command[25])
 		ret = hdd_parse_reassoc_v1(pAdapter, command);
 	else
 		ret = hdd_parse_reassoc_v2(pAdapter, command);
+=======
+
+	if (total_len < 26) {
+		hddLog(LOGE, FL("Invalid command (total_len=%d)"), total_len);
+		return -EINVAL;
+	}
+
+	if (command[25])
+		ret = hdd_parse_reassoc_v1(pAdapter, command);
+	else
+		ret = hdd_parse_reassoc_v2(pAdapter, command, total_len);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return ret;
 }
@@ -2809,6 +2859,17 @@ static int hdd_get_dwell_time(hdd_config_t *pCfg, tANI_U8 *command, char *extra,
     return ret;
 }
 
+<<<<<<< HEAD
+=======
+int hdd_drv_cmd_validate(tANI_U8 *command, int len)
+{
+	if (command[len] != ' ')
+		return -EINVAL;
+
+	return 0;
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int hdd_set_dwell_time(hdd_adapter_t *pAdapter, tANI_U8 *command)
 {
     tHalHandle hHal;
@@ -2831,6 +2892,12 @@ static int hdd_set_dwell_time(hdd_adapter_t *pAdapter, tANI_U8 *command)
 
     if (strncmp(command, "SETDWELLTIME ACTIVE MAX", 23) == 0 )
     {
+<<<<<<< HEAD
+=======
+        if (hdd_drv_cmd_validate(command, 23))
+            return -EINVAL;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         value = value + 24;
         temp = kstrtou32(value, 10, &val);
         if (temp != 0 || val < CFG_ACTIVE_MAX_CHANNEL_TIME_MIN ||
@@ -2847,6 +2914,12 @@ static int hdd_set_dwell_time(hdd_adapter_t *pAdapter, tANI_U8 *command)
     }
     else if (strncmp(command, "SETDWELLTIME ACTIVE MIN", 23) == 0)
     {
+<<<<<<< HEAD
+=======
+        if (hdd_drv_cmd_validate(command, 23))
+            return -EINVAL;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         value = value + 24;
         temp = kstrtou32(value, 10, &val);
         if (temp !=0 || val < CFG_ACTIVE_MIN_CHANNEL_TIME_MIN  ||
@@ -2863,6 +2936,12 @@ static int hdd_set_dwell_time(hdd_adapter_t *pAdapter, tANI_U8 *command)
     }
     else if (strncmp(command, "SETDWELLTIME PASSIVE MAX", 24) == 0)
     {
+<<<<<<< HEAD
+=======
+        if (hdd_drv_cmd_validate(command, 24))
+            return -EINVAL;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         value = value + 25;
         temp = kstrtou32(value, 10, &val);
         if (temp != 0 || val < CFG_PASSIVE_MAX_CHANNEL_TIME_MIN ||
@@ -2879,6 +2958,12 @@ static int hdd_set_dwell_time(hdd_adapter_t *pAdapter, tANI_U8 *command)
     }
     else if (strncmp(command, "SETDWELLTIME PASSIVE MIN", 24) == 0)
     {
+<<<<<<< HEAD
+=======
+        if (hdd_drv_cmd_validate(command, 24))
+            return -EINVAL;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         value = value + 25;
         temp = kstrtou32(value, 10, &val);
         if (temp != 0 || val < CFG_PASSIVE_MIN_CHANNEL_TIME_MIN ||
@@ -2895,6 +2980,12 @@ static int hdd_set_dwell_time(hdd_adapter_t *pAdapter, tANI_U8 *command)
     }
     else if (strncmp(command, "SETDWELLTIME", 12) == 0)
     {
+<<<<<<< HEAD
+=======
+        if (hdd_drv_cmd_validate(command, 12))
+            return -EINVAL;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
         value = value + 13;
         temp = kstrtou32(value, 10, &val);
         if (temp != 0 || val < CFG_ACTIVE_MAX_CHANNEL_TIME_MIN ||
@@ -3204,6 +3295,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        {
            tANI_U8 *ptr = command ;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 7);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Change band request received */
 
            /* First 8 bytes will have "SETBAND " and
@@ -3222,12 +3320,28 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        else if(strncmp(command, "SETWMMPS", 8) == 0)
        {
            tANI_U8 *ptr = command;
+<<<<<<< HEAD
+=======
+
+           ret = hdd_drv_cmd_validate(command, 8);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            ret = hdd_wmmps_helper(pAdapter, ptr);
        }
 
        else if(strncmp(command, "TDLSSCAN", 8) == 0)
        {
            tANI_U8 *ptr  = command;
+<<<<<<< HEAD
+=======
+
+           ret = hdd_drv_cmd_validate(command, 8);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            ret = hdd_set_tdls_scan_type(pAdapter, ptr);
        }
 
@@ -3235,6 +3349,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        {
            char *country_code;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 7);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            country_code = command + 8;
 
            INIT_COMPLETION(pAdapter->change_country_code);
@@ -3281,7 +3402,17 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        else if(strncmp(command, "SETSUSPENDMODE", 14) == 0)
        {
            int suspend = 0;
+<<<<<<< HEAD
            tANI_U8 *ptr = (tANI_U8*)command + 15;
+=======
+           tANI_U8 *ptr;
+
+           ret = hdd_drv_cmd_validate(command, 14);
+           if (ret)
+               goto exit;
+
+           ptr = (tANI_U8*)command + 15;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
            suspend = *ptr - '0';
             MTRACE(vos_trace(VOS_MODULE_ID_HDD,
@@ -3297,6 +3428,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 lookUpThreshold = CFG_NEIGHBOR_LOOKUP_RSSI_THRESHOLD_DEFAULT;
            eHalStatus status = eHAL_STATUS_SUCCESS;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 14);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETROAMTRIGGER<delimiter> */
            value = value + 15;
 
@@ -3375,6 +3513,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 roamScanPeriod = 0;
            tANI_U16 neighborEmptyScanRefreshPeriod = CFG_EMPTY_SCAN_REFRESH_PERIOD_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 17);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* input refresh period is in terms of seconds */
            /* Move pointer to ahead of SETROAMSCANPERIOD<delimiter> */
            value = value + 18;
@@ -3442,6 +3587,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 roamScanRefreshPeriod = 0;
            tANI_U16 neighborScanRefreshPeriod = CFG_NEIGHBOR_SCAN_RESULTS_REFRESH_PERIOD_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 24);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* input refresh period is in terms of seconds */
            /* Move pointer to ahead of SETROAMSCANREFRESHPERIOD<delimiter> */
            value = value + 25;
@@ -3505,6 +3657,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
 	   tANI_BOOLEAN roamMode = CFG_LFR_FEATURE_ENABLED_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, SIZE_OF_SETROAMMODE);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	   /* Move pointer to ahead of SETROAMMODE<delimiter> */
 	   value = value + SIZE_OF_SETROAMMODE + 1;
 
@@ -3582,6 +3741,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 roamRssiDiff = CFG_ROAM_RSSI_DIFF_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 12);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETROAMDELTA<delimiter> */
            value = value + 13;
            /* Convert the value from ascii to integer */
@@ -3830,6 +3996,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 minTime = CFG_NEIGHBOR_SCAN_MIN_CHAN_TIME_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 25);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETROAMSCANCHANNELMINTIME<delimiter> */
            value = value + 26;
            /* Convert the value from ascii to integer */
@@ -4014,6 +4187,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U16 maxTime = CFG_NEIGHBOR_SCAN_MAX_CHAN_TIME_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 18);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETSCANCHANNELTIME<delimiter> */
            value = value + 19;
            /* Convert the value from ascii to integer */
@@ -4071,6 +4251,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U16 val = CFG_NEIGHBOR_SCAN_TIMER_PERIOD_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 15);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETSCANHOMETIME<delimiter> */
            value = value + 16;
            /* Convert the value from ascii to integer */
@@ -4128,6 +4315,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 val = CFG_ROAM_INTRA_BAND_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 16);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETROAMINTRABAND<delimiter> */
            value = value + 17;
            /* Convert the value from ascii to integer */
@@ -4184,6 +4378,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 nProbes = CFG_ROAM_SCAN_N_PROBES_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 14);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETSCANNPROBES<delimiter> */
            value = value + 15;
            /* Convert the value from ascii to integer */
@@ -4238,6 +4439,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U16 homeAwayTime = CFG_ROAM_SCAN_HOME_AWAY_TIME_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 19);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETSCANHOMEAWAYTIME<delimiter> */
            /* input value is in units of msec */
            value = value + 20;
@@ -4292,7 +4500,15 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        }
        else if (strncmp(command, "REASSOC", 7) == 0)
        {
+<<<<<<< HEAD
            ret = hdd_parse_reassoc(pAdapter, command);
+=======
+           ret = hdd_drv_cmd_validate(command, 7);
+           if (ret)
+               goto exit;
+
+           ret = hdd_parse_reassoc(pAdapter, command, priv_data.total_len);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            if (!ret)
                goto exit;
        }
@@ -4301,6 +4517,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_BOOLEAN wesMode = CFG_ENABLE_WES_MODE_NAME_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 10);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETWESMODE<delimiter> */
            value = value + 11;
            /* Convert the value from ascii to integer */
@@ -4356,6 +4579,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 lfrMode = CFG_LFR_FEATURE_ENABLED_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 11);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETFASTROAM<delimiter> */
            value = value + 12;
            /* Convert the value from ascii to integer */
@@ -4397,6 +4627,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 ft = CFG_FAST_TRANSITION_ENABLED_NAME_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 17);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETFASTROAM<delimiter> */
            value = value + 18;
            /* Convert the value from ascii to integer */
@@ -4436,6 +4673,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 dfsScanMode = DFS_CHNL_SCAN_ENABLED_NORMAL;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 14);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETDFSSCANMODE<delimiter> */
            value = value + 15;
            /* Convert the value from ascii to integer */
@@ -4499,6 +4743,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 eseMode = CFG_ESE_FEATURE_ENABLED_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 10);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Check if the features OKC/ESE/11R are supported simultaneously,
               then this operation is not permitted (return FAILURE) */
            if (sme_getIsEseFeatureEnabled((tHalHandle)(pHddCtx->hHal)) &&
@@ -4550,6 +4801,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_BOOLEAN roamScanControl = 0;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 18);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of SETROAMSCANCONTROL<delimiter> */
            value = value + 19;
            /* Convert the value from ascii to integer */
@@ -4583,6 +4841,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 *value = command;
            tANI_U8 okcMode = CFG_OKC_FEATURE_ENABLED_DEFAULT;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 10);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Check if the features OKC/ESE/11R are supported simultaneously,
               then this operation is not permitted (return FAILURE) */
            if (sme_getIsEseFeatureEnabled((tHalHandle)(pHddCtx->hHal)) &&
@@ -4652,6 +4917,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tANI_U8 filterType = 0;
            tANI_U8 *value = command;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 21);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of ENABLE_PKTFILTER_IPV6<delimiter> */
            value = value + 22;
 
@@ -4684,6 +4956,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            char *dhcpPhase;
            int ret;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 10);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            dhcpPhase = command + 11;
            if ('1' == *dhcpPhase)
            {
@@ -4750,6 +5029,14 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        {
            tANI_U8 filterType = 0;
            tANI_U8 *value;
+<<<<<<< HEAD
+=======
+
+           ret = hdd_drv_cmd_validate(command, 8);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            value = command + 9;
 
            /* Convert the value from ascii to integer */
@@ -4795,6 +5082,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tSirRateUpdateInd *rateUpdate;
            eHalStatus status;
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 9);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Only valid for SAP mode */
            if (WLAN_HDD_SOFTAP != pAdapter->device_mode)
            {
@@ -5587,6 +5881,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            tAniTrafStrmMetrics tsmMetrics;
            pHddStaCtx = WLAN_HDD_GET_STATION_CTX_PTR(pAdapter);
 
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 11);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* if not associated, return error */
            if (eConnectionState_Associated != pHddStaCtx->conn_info.connState)
            {
@@ -5796,6 +6097,14 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        else if (strncmp(command, "TDLSSECONDARYCHANNELOFFSET", 26) == 0) {
            tANI_U8 *value = command;
            int set_value;
+<<<<<<< HEAD
+=======
+
+           ret = hdd_drv_cmd_validate(command, 26);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of TDLSOFFCH*/
            value += 26;
            if (!(sscanf(value, "%d", &set_value))) {
@@ -5818,6 +6127,14 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        } else if (strncmp(command, "TDLSOFFCHANNELMODE", 18) == 0) {
            tANI_U8 *value = command;
            int set_value;
+<<<<<<< HEAD
+=======
+
+           ret = hdd_drv_cmd_validate(command, 18);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of tdlsoffchnmode*/
            value += 18;
            ret = sscanf(value, "%d", &set_value);
@@ -5839,6 +6156,14 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        } else if (strncmp(command, "TDLSOFFCHANNEL", 14) == 0) {
            tANI_U8 *value = command;
            int set_value;
+<<<<<<< HEAD
+=======
+
+           ret = hdd_drv_cmd_validate(command, 14);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            /* Move pointer to ahead of TDLSOFFCH*/
            value += 14;
            ret = sscanf(value, "%d", &set_value);
@@ -5869,8 +6194,18 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
            fwStatsContext_t fwStatsCtx;
            tSirFwStatsResult *fwStatsRsp = &(pAdapter->fwStatsRsp);
            tANI_U8 *ptr = command;
+<<<<<<< HEAD
            int stats = *(ptr + 11) - '0';
 
+=======
+           int stats;
+
+           ret = hdd_drv_cmd_validate(command, 10);
+           if (ret)
+               goto exit;
+
+           stats = *(ptr + 11) - '0';
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            hddLog(VOS_TRACE_LEVEL_INFO, FL("stats = %d "),stats);
            if (!IS_FEATURE_FW_STATS_ENABLE)
            {
@@ -5964,6 +6299,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        }
        else if (strncasecmp(command, "SET_FCC_CHANNEL", 15) == 0)
        {
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 15);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
           /*
            * this command wld be called by user-space when it detects WLAN
            * ON after airplane mode is set. When APM is set, WLAN turns off.
@@ -5977,6 +6319,13 @@ static int hdd_driver_command(hdd_adapter_t *pAdapter,
        }
        else if (strncasecmp(command, "DISABLE_CA_EVENT", 16) == 0)
        {
+<<<<<<< HEAD
+=======
+           ret = hdd_drv_cmd_validate(command, 16);
+           if (ret)
+               goto exit;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
            ret = hdd_enable_disable_ca_event(pHddCtx, command, 16);
        }
        else {
@@ -11789,6 +12138,10 @@ int hdd_wlan_startup(struct device *dev )
    pHddCtx->last_scan_reject_session_id = 0xFF;
    pHddCtx->last_scan_reject_reason = 0;
    pHddCtx->last_scan_reject_timestamp = 0;
+<<<<<<< HEAD
+=======
+   pHddCtx->scan_reject_cnt = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
    init_completion(&pHddCtx->full_pwr_comp_var);
    init_completion(&pHddCtx->standby_comp_var);
@@ -12452,7 +12805,11 @@ int hdd_wlan_startup(struct device *dev )
    {
        hddLog(VOS_TRACE_LEVEL_FATAL,
               "%s: oem_activate_service failed", __func__);
+<<<<<<< HEAD
        goto err_reg_netdev;
+=======
+       goto err_btc_activate_service;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
    }
 #endif
 
@@ -12461,7 +12818,11 @@ int hdd_wlan_startup(struct device *dev )
    if(ptt_sock_activate_svc(pHddCtx) != 0)
    {
       hddLog(VOS_TRACE_LEVEL_FATAL,"%s: ptt_sock_activate_svc failed",__func__);
+<<<<<<< HEAD
       goto err_reg_netdev;
+=======
+      goto err_oem_activate_service;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
    }
 #endif
 
@@ -12469,7 +12830,11 @@ int hdd_wlan_startup(struct device *dev )
    if (hdd_open_cesium_nl_sock() < 0)
    {
       hddLog(VOS_TRACE_LEVEL_FATAL,"%s: hdd_open_cesium_nl_sock failed", __func__);
+<<<<<<< HEAD
       goto err_reg_netdev;
+=======
+      goto err_ptt_sock_activate_svc;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
    }
 #endif
 
@@ -12484,7 +12849,11 @@ int hdd_wlan_startup(struct device *dev )
        {
            hddLog(VOS_TRACE_LEVEL_ERROR, "%s: wlan_logging_sock_activate_svc"
                    " failed", __func__);
+<<<<<<< HEAD
            goto err_reg_netdev;
+=======
+           goto err_open_cesium_nl_sock;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
        }
        //TODO: To Remove enableDhcpDebug and use gEnableDebugLog for
        //EAPOL and DHCP
@@ -12633,8 +13002,36 @@ int hdd_wlan_startup(struct device *dev )
    memdump_init();
    hdd_dp_util_send_rps_ind(pHddCtx);
 
+<<<<<<< HEAD
    goto success;
 
+=======
+   pHddCtx->is_fatal_event_log_sup =
+      sme_IsFeatureSupportedByFW(FATAL_EVENT_LOGGING);
+   hddLog(VOS_TRACE_LEVEL_INFO, FL("FATAL_EVENT_LOGGING: %d"),
+          pHddCtx->is_fatal_event_log_sup);
+
+   goto success;
+
+err_open_cesium_nl_sock:
+#ifdef WLAN_LOGGING_SOCK_SVC_ENABLE
+   hdd_close_cesium_nl_sock();
+#endif
+
+err_ptt_sock_activate_svc:
+#ifdef PTT_SOCK_SVC_ENABLE
+   ptt_sock_deactivate_svc(pHddCtx);
+#endif
+
+err_oem_activate_service:
+#ifdef FEATURE_OEM_DATA_SUPPORT
+   oem_deactivate_service();
+#endif
+
+err_btc_activate_service:
+   btc_deactivate_service();
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 err_reg_netdev:
    unregister_netdevice_notifier(&hdd_netdev_notifier);
 

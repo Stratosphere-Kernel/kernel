@@ -213,7 +213,10 @@ SECTIONS
 		*(.opd)
 	}
 
+<<<<<<< HEAD
 	. = ALIGN(256);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.got : AT(ADDR(.got) - LOAD_OFFSET) {
 		__toc_start = .;
 #ifndef CONFIG_RELOCATABLE

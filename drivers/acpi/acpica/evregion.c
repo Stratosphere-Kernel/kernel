@@ -141,7 +141,10 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
 	union acpi_operand_object *region_obj2;
 	void *region_context = NULL;
 	struct acpi_connection_info *context;
+<<<<<<< HEAD
 	acpi_physical_address address;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	ACPI_FUNCTION_TRACE(ev_address_space_dispatch);
 
@@ -236,12 +239,24 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
 	/* We have everything we need, we can invoke the address space handler */
 
 	handler = handler_desc->address_space.handler;
+<<<<<<< HEAD
 	address = (region_obj->region.address + region_offset);
+=======
+
+	ACPI_DEBUG_PRINT((ACPI_DB_OPREGION,
+			  "Handler %p (@%p) Address %8.8X%8.8X [%s]\n",
+			  &region_obj->region.handler->address_space, handler,
+			  ACPI_FORMAT_NATIVE_UINT(region_obj->region.address +
+						  region_offset),
+			  acpi_ut_get_region_name(region_obj->region.
+						  space_id)));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * Special handling for generic_serial_bus and general_purpose_io:
 	 * There are three extra parameters that must be passed to the
 	 * handler via the context:
+<<<<<<< HEAD
 	 *   1) Connection buffer, a resource template from Connection() op
 	 *   2) Length of the above buffer
 	 *   3) Actual access length from the access_as() op
@@ -253,6 +268,14 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
 	 *   2) bit_width is the actual bit length of the field (number of pins)
 	 */
 	if ((region_obj->region.space_id == ACPI_ADR_SPACE_GSBUS) &&
+=======
+	 *   1) Connection buffer, a resource template from Connection() op.
+	 *   2) Length of the above buffer.
+	 *   3) Actual access length from the access_as() op.
+	 */
+	if (((region_obj->region.space_id == ACPI_ADR_SPACE_GSBUS) ||
+	     (region_obj->region.space_id == ACPI_ADR_SPACE_GPIO)) &&
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	    context && field_obj) {
 
 		/* Get the Connection (resource_template) buffer */
@@ -261,6 +284,7 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
 		context->length = field_obj->field.resource_length;
 		context->access_length = field_obj->field.access_length;
 	}
+<<<<<<< HEAD
 	if ((region_obj->region.space_id == ACPI_ADR_SPACE_GPIO) &&
 	    context && field_obj) {
 
@@ -279,6 +303,8 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
 			  ACPI_FORMAT_UINT64(address),
 			  acpi_ut_get_region_name(region_obj->region.
 						  space_id)));
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!(handler_desc->address_space.handler_flags &
 	      ACPI_ADDR_HANDLER_DEFAULT_INSTALLED)) {
@@ -292,7 +318,13 @@ acpi_ev_address_space_dispatch(union acpi_operand_object *region_obj,
 
 	/* Call the handler */
 
+<<<<<<< HEAD
 	status = handler(function, address, bit_width, value, context,
+=======
+	status = handler(function,
+			 (region_obj->region.address + region_offset),
+			 bit_width, value, context,
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			 region_obj2->extra.region_context);
 
 	if (ACPI_FAILURE(status)) {

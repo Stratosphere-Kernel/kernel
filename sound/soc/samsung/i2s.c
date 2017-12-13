@@ -853,9 +853,17 @@ static int i2s_suspend(struct snd_soc_dai *dai)
 {
 	struct i2s_dai *i2s = to_info(dai);
 
+<<<<<<< HEAD
 	i2s->suspend_i2smod = readl(i2s->addr + I2SMOD);
 	i2s->suspend_i2scon = readl(i2s->addr + I2SCON);
 	i2s->suspend_i2spsr = readl(i2s->addr + I2SPSR);
+=======
+	if (dai->active) {
+		i2s->suspend_i2smod = readl(i2s->addr + I2SMOD);
+		i2s->suspend_i2scon = readl(i2s->addr + I2SCON);
+		i2s->suspend_i2spsr = readl(i2s->addr + I2SPSR);
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }
@@ -864,9 +872,17 @@ static int i2s_resume(struct snd_soc_dai *dai)
 {
 	struct i2s_dai *i2s = to_info(dai);
 
+<<<<<<< HEAD
 	writel(i2s->suspend_i2scon, i2s->addr + I2SCON);
 	writel(i2s->suspend_i2smod, i2s->addr + I2SMOD);
 	writel(i2s->suspend_i2spsr, i2s->addr + I2SPSR);
+=======
+	if (dai->active) {
+		writel(i2s->suspend_i2scon, i2s->addr + I2SCON);
+		writel(i2s->suspend_i2smod, i2s->addr + I2SMOD);
+		writel(i2s->suspend_i2spsr, i2s->addr + I2SPSR);
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }

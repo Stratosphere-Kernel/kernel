@@ -368,6 +368,11 @@ int copy_siginfo_to_user32(compat_siginfo_t __user *to, const siginfo_t *from)
 
 int copy_siginfo_from_user32(siginfo_t *to, compat_siginfo_t __user *from)
 {
+<<<<<<< HEAD
+=======
+	memset(to, 0, sizeof *to);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (copy_from_user(to, from, 3*sizeof(int)) ||
 	    copy_from_user(to->_sifields._pad,
 			   from->_sifields._pad, SI_PAD_SIZE32))

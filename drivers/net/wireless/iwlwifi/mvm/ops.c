@@ -293,7 +293,10 @@ static const char *iwl_mvm_cmd_strings[REPLY_MAX] = {
 	CMD(BT_PROFILE_NOTIFICATION),
 	CMD(BT_CONFIG),
 	CMD(MCAST_FILTER_CMD),
+<<<<<<< HEAD
 	CMD(LTR_CONFIG),
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 #undef CMD
 

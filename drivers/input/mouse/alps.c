@@ -873,6 +873,7 @@ static psmouse_ret_t alps_process_byte(struct psmouse *psmouse)
 {
 	struct alps_data *priv = psmouse->private;
 
+<<<<<<< HEAD
 	/*
 	 * Check if we are dealing with a bare PS/2 packet, presumably from
 	 * a device connected to the external PS/2 port. Because bare PS/2
@@ -880,6 +881,9 @@ static psmouse_ret_t alps_process_byte(struct psmouse *psmouse)
 	 * properly we only do this if the device is fully synchronized.
 	 */
 	if (!psmouse->out_of_sync_cnt && (psmouse->packet[0] & 0xc8) == 0x08) {
+=======
+	if ((psmouse->packet[0] & 0xc8) == 0x08) { /* PS/2 packet */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (psmouse->pktcnt == 3) {
 			alps_report_bare_ps2_packet(psmouse, psmouse->packet,
 						    true);
@@ -1822,9 +1826,12 @@ int alps_init(struct psmouse *psmouse)
 	/* We are having trouble resyncing ALPS touchpads so disable it for now */
 	psmouse->resync_time = 0;
 
+<<<<<<< HEAD
 	/* Allow 2 invalid packets without resetting device */
 	psmouse->resetafter = psmouse->pktsize * 2;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 
 init_fail:

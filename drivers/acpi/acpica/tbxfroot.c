@@ -118,7 +118,11 @@ static acpi_status acpi_tb_validate_rsdp(struct acpi_table_rsdp *rsdp)
  *
  ******************************************************************************/
 
+<<<<<<< HEAD
 acpi_status acpi_find_root_pointer(acpi_physical_address * table_address)
+=======
+acpi_status acpi_find_root_pointer(acpi_size *table_address)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	u8 *table_ptr;
 	u8 *mem_rover;
@@ -176,8 +180,12 @@ acpi_status acpi_find_root_pointer(acpi_physical_address * table_address)
 			physical_address +=
 			    (u32) ACPI_PTR_DIFF(mem_rover, table_ptr);
 
+<<<<<<< HEAD
 			*table_address =
 			    (acpi_physical_address) physical_address;
+=======
+			*table_address = physical_address;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return_ACPI_STATUS(AE_OK);
 		}
 	}
@@ -210,7 +218,11 @@ acpi_status acpi_find_root_pointer(acpi_physical_address * table_address)
 		    (ACPI_HI_RSDP_WINDOW_BASE +
 		     ACPI_PTR_DIFF(mem_rover, table_ptr));
 
+<<<<<<< HEAD
 		*table_address = (acpi_physical_address) physical_address;
+=======
+		*table_address = physical_address;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return_ACPI_STATUS(AE_OK);
 	}
 

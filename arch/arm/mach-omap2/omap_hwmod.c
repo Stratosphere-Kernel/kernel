@@ -2177,8 +2177,11 @@ static int _enable(struct omap_hwmod *oh)
 			 oh->mux->pads_dynamic))) {
 		omap_hwmod_mux(oh->mux, _HWMOD_STATE_ENABLED);
 		_reconfigure_io_chain();
+<<<<<<< HEAD
 	} else if (oh->flags & HWMOD_FORCE_MSTANDBY) {
 		_reconfigure_io_chain();
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	_add_initiator_dep(oh, mpu_oh);
@@ -2285,8 +2288,11 @@ static int _idle(struct omap_hwmod *oh)
 	if (oh->mux && oh->mux->pads_dynamic) {
 		omap_hwmod_mux(oh->mux, _HWMOD_STATE_IDLE);
 		_reconfigure_io_chain();
+<<<<<<< HEAD
 	} else if (oh->flags & HWMOD_FORCE_MSTANDBY) {
 		_reconfigure_io_chain();
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	oh->_state = _HWMOD_STATE_IDLE;

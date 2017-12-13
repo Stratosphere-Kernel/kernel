@@ -33,7 +33,10 @@
 #include <linux/device.h>
 #include <linux/hyperv.h>
 #include <linux/mempool.h>
+<<<<<<< HEAD
 #include <linux/blkdev.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <scsi/scsi.h>
 #include <scsi/scsi_cmnd.h>
 #include <scsi/scsi_host.h>
@@ -631,6 +634,7 @@ static unsigned int copy_to_bounce_buffer(struct scatterlist *orig_sgl,
 			if (bounce_sgl[j].length == PAGE_SIZE) {
 				/* full..move to next entry */
 				sg_kunmap_atomic(bounce_addr);
+<<<<<<< HEAD
 				bounce_addr = 0;
 				j++;
 			}
@@ -639,14 +643,29 @@ static unsigned int copy_to_bounce_buffer(struct scatterlist *orig_sgl,
 			if (srclen && bounce_addr == 0)
 				bounce_addr = sg_kmap_atomic(bounce_sgl, j);
 
+=======
+				j++;
+
+				/* if we need to use another bounce buffer */
+				if (srclen || i != orig_sgl_count - 1)
+					bounce_addr = sg_kmap_atomic(bounce_sgl,j);
+
+			} else if (srclen == 0 && i == orig_sgl_count - 1) {
+				/* unmap the last bounce that is < PAGE_SIZE */
+				sg_kunmap_atomic(bounce_addr);
+			}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 
 		sg_kunmap_atomic(src_addr - orig_sgl[i].offset);
 	}
 
+<<<<<<< HEAD
 	if (bounce_addr)
 		sg_kunmap_atomic(bounce_addr);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	local_irq_restore(flags);
 
 	return total_copied;
@@ -805,6 +824,7 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
 		case ATA_12:
 			set_host_byte(scmnd, DID_PASSTHROUGH);
 			break;
+<<<<<<< HEAD
 		/*
 		 * On Some Windows hosts TEST_UNIT_READY command can return
 		 * SRB_STATUS_ERROR, let the upper level code deal with it
@@ -812,6 +832,8 @@ static void storvsc_handle_error(struct vmscsi_request *vm_srb,
 		 */
 		case TEST_UNIT_READY:
 			break;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		default:
 			set_host_byte(scmnd, DID_TARGET_FAILURE);
 		}
@@ -1294,6 +1316,7 @@ static int storvsc_host_reset_handler(struct scsi_cmnd *scmnd)
 	return SUCCESS;
 }
 
+<<<<<<< HEAD
 /*
  * The host guarantees to respond to each command, although I/O latencies might
  * be unbounded on Azure.  Reset the timer unconditionally to give the host a
@@ -1304,6 +1327,8 @@ static enum blk_eh_timer_return storvsc_eh_timed_out(struct scsi_cmnd *scmnd)
 	return BLK_EH_RESET_TIMER;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static bool storvsc_scsi_cmd_ok(struct scsi_cmnd *scmnd)
 {
 	bool allowed = true;
@@ -1440,12 +1465,22 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
 	if (ret == -EAGAIN) {
 		/* no more space */
 
+<<<<<<< HEAD
 		if (cmd_request->bounce_sgl_count)
 			destroy_bounce_buffer(cmd_request->bounce_sgl,
 					cmd_request->bounce_sgl_count);
 
 		ret = SCSI_MLQUEUE_DEVICE_BUSY;
 		goto queue_error;
+=======
+		if (cmd_request->bounce_sgl_count) {
+			destroy_bounce_buffer(cmd_request->bounce_sgl,
+					cmd_request->bounce_sgl_count);
+
+			ret = SCSI_MLQUEUE_DEVICE_BUSY;
+			goto queue_error;
+		}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	return 0;
@@ -1462,7 +1497,10 @@ static struct scsi_host_template scsi_driver = {
 	.bios_param =		storvsc_get_chs,
 	.queuecommand =		storvsc_queuecommand,
 	.eh_host_reset_handler =	storvsc_host_reset_handler,
+<<<<<<< HEAD
 	.eh_timed_out =		storvsc_eh_timed_out,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.slave_alloc =		storvsc_device_alloc,
 	.slave_destroy =	storvsc_device_destroy,
 	.slave_configure =	storvsc_device_configure,

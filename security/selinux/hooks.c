@@ -469,7 +469,10 @@ next_inode:
 				list_entry(sbsec->isec_head.next,
 					   struct inode_security_struct, list);
 		struct inode *inode = isec->inode;
+<<<<<<< HEAD
 		list_del_init(&isec->list);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		spin_unlock(&sbsec->isec_lock);
 		inode = igrab(inode);
 		if (inode) {
@@ -478,6 +481,10 @@ next_inode:
 			iput(inode);
 		}
 		spin_lock(&sbsec->isec_lock);
+<<<<<<< HEAD
+=======
+		list_del_init(&isec->list);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto next_inode;
 	}
 	spin_unlock(&sbsec->isec_lock);

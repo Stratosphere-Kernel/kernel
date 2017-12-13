@@ -128,24 +128,37 @@ nfs41_callback_svc(void *vrqstp)
 		if (try_to_freeze())
 			continue;
 
+<<<<<<< HEAD
 		prepare_to_wait(&serv->sv_cb_waitq, &wq, TASK_UNINTERRUPTIBLE);
+=======
+		prepare_to_wait(&serv->sv_cb_waitq, &wq, TASK_INTERRUPTIBLE);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		spin_lock_bh(&serv->sv_cb_lock);
 		if (!list_empty(&serv->sv_cb_list)) {
 			req = list_first_entry(&serv->sv_cb_list,
 					struct rpc_rqst, rq_bc_list);
 			list_del(&req->rq_bc_list);
 			spin_unlock_bh(&serv->sv_cb_lock);
+<<<<<<< HEAD
 			finish_wait(&serv->sv_cb_waitq, &wq);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			dprintk("Invoking bc_svc_process()\n");
 			error = bc_svc_process(serv, req, rqstp);
 			dprintk("bc_svc_process() returned w/ error code= %d\n",
 				error);
 		} else {
 			spin_unlock_bh(&serv->sv_cb_lock);
+<<<<<<< HEAD
 			/* schedule_timeout to game the hung task watchdog */
 			schedule_timeout(60 * HZ);
 			finish_wait(&serv->sv_cb_waitq, &wq);
 		}
+=======
+			schedule();
+		}
+		finish_wait(&serv->sv_cb_waitq, &wq);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	return 0;
 }

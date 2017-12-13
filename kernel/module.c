@@ -1869,9 +1869,13 @@ static void free_module(struct module *mod)
 
 	/* We leave it in list to prevent duplicate loads, but make sure
 	 * that noone uses it while it's being deconstructed. */
+<<<<<<< HEAD
 	mutex_lock(&module_mutex);
 	mod->state = MODULE_STATE_UNFORMED;
 	mutex_unlock(&module_mutex);
+=======
+	mod->state = MODULE_STATE_UNFORMED;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Remove dynamic debug info */
 	ddebug_remove_module(mod->name);

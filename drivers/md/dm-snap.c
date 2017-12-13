@@ -1439,6 +1439,11 @@ out:
 		full_bio->bi_end_io = pe->full_bio_end_io;
 		full_bio->bi_private = pe->full_bio_private;
 	}
+<<<<<<< HEAD
+=======
+	free_pending_exception(pe);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	increment_pending_exceptions_done_count();
 
 	up_write(&s->lock);
@@ -1455,8 +1460,11 @@ out:
 	}
 
 	retry_origin_bios(s, origin_bios);
+<<<<<<< HEAD
 
 	free_pending_exception(pe);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void commit_callback(void *context, int success)

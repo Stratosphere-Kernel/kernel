@@ -2989,6 +2989,7 @@ static int wcd9xxx_slim_probe(struct slim_device *slim)
 		("wcd9xxx_core", 0);
 	if (!IS_ERR(debugfs_wcd9xxx_dent)) {
 		debugfs_peek = debugfs_create_file("slimslave_peek",
+<<<<<<< HEAD
 		S_IFREG | S_IRUGO, debugfs_wcd9xxx_dent,
 		(void *) "slimslave_peek", &codec_debug_ops);
 
@@ -3002,6 +3003,21 @@ static int wcd9xxx_slim_probe(struct slim_device *slim)
 
 		debugfs_reg_dump = debugfs_create_file("slimslave_reg_dump",
 		S_IFREG | S_IRUGO, debugfs_wcd9xxx_dent,
+=======
+		S_IFREG | S_IRUSR, debugfs_wcd9xxx_dent,
+		(void *) "slimslave_peek", &codec_debug_ops);
+
+		debugfs_poke = debugfs_create_file("slimslave_poke",
+		S_IFREG | S_IRUSR, debugfs_wcd9xxx_dent,
+		(void *) "slimslave_poke", &codec_debug_ops);
+
+		debugfs_power_state = debugfs_create_file("power_state",
+		S_IFREG | S_IRUSR, debugfs_wcd9xxx_dent,
+		(void *) "power_state", &codec_debug_ops);
+
+		debugfs_reg_dump = debugfs_create_file("slimslave_reg_dump",
+		S_IFREG | S_IRUSR, debugfs_wcd9xxx_dent,
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		(void *) "slimslave_reg_dump", &codec_debug_ops);
 	}
 #endif

@@ -28,11 +28,14 @@
  *
  *  Also need to add code to deal with cards endians that are different than
  *  the native cpu endians. I also need to deal with MSB position in the word.
+<<<<<<< HEAD
  *  Modified by Harm Hanemaaijer (fgenfb@yahoo.com) 2013:
  *  - Provide optimized versions of fast_imageblit for 16 and 32bpp that are
  *    significantly faster than the previous implementation.
  *  - Simplify the fast/slow_imageblit selection code, avoiding integer
  *    divides.
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  */
 #include <linux/module.h>
 #include <linux/string.h>
@@ -267,6 +270,7 @@ static inline void fast_imageblit(const struct fb_image *image, struct fb_info *
 	}
 }	
 	
+<<<<<<< HEAD
 /*
  * Optimized fast_imageblit for bpp == 16. ppw = 2, bit_mask = 3 folded
  * into the code, main loop unrolled.
@@ -394,6 +398,8 @@ static inline void fast_imageblit32(const struct fb_image *image,
 	}
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void cfb_imageblit(struct fb_info *p, const struct fb_image *image)
 {
 	u32 fgcolor, bgcolor, start_index, bitstart, pitch_index = 0;
@@ -426,6 +432,7 @@ void cfb_imageblit(struct fb_info *p, const struct fb_image *image)
 			bgcolor = image->bg_color;
 		}	
 		
+<<<<<<< HEAD
 		if (!start_index && !pitch_index) {
 			if (bpp == 32)
 				fast_imageblit32(image, p, dst1, fgcolor,
@@ -441,6 +448,13 @@ void cfb_imageblit(struct fb_info *p, const struct fb_image *image)
 					       bgcolor,
 					       start_index, pitch_index);
 		} else
+=======
+		if (32 % bpp == 0 && !start_index && !pitch_index && 
+		    ((width & (32/bpp-1)) == 0) &&
+		    bpp >= 8 && bpp <= 32) 			
+			fast_imageblit(image, p, dst1, fgcolor, bgcolor);
+		else 
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			slow_imageblit(image, p, dst1, fgcolor, bgcolor,
 					start_index, pitch_index);
 	} else
@@ -453,4 +467,7 @@ MODULE_AUTHOR("James Simmons <jsimmons@users.sf.net>");
 MODULE_DESCRIPTION("Generic software accelerated imaging drawing");
 MODULE_LICENSE("GPL");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

@@ -955,4 +955,7 @@ module_exit(cryptd_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Software async crypto daemon");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("cryptd");
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

@@ -20,7 +20,10 @@
 #include <linux/buffer_head.h>	/* grr. try_to_release_page,
 				   do_invalidatepage */
 #include <linux/cleancache.h>
+<<<<<<< HEAD
 #include <linux/rmap.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include "internal.h"
 
 
@@ -568,16 +571,25 @@ EXPORT_SYMBOL(truncate_pagecache);
  */
 void truncate_setsize(struct inode *inode, loff_t newsize)
 {
+<<<<<<< HEAD
 	loff_t oldsize = inode->i_size;
 
 	i_size_write(inode, newsize);
 	if (newsize > oldsize)
 		pagecache_isize_extended(inode, oldsize, newsize);
+=======
+	loff_t oldsize;
+
+	oldsize = inode->i_size;
+	i_size_write(inode, newsize);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	truncate_pagecache(inode, oldsize, newsize);
 }
 EXPORT_SYMBOL(truncate_setsize);
 
 /**
+<<<<<<< HEAD
  * pagecache_isize_extended - update pagecache after extension of i_size
  * @inode:	inode for which i_size was extended
  * @from:	original inode size
@@ -629,6 +641,8 @@ void pagecache_isize_extended(struct inode *inode, loff_t from, loff_t to)
 EXPORT_SYMBOL(pagecache_isize_extended);
 
 /**
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * truncate_pagecache_range - unmap and remove pagecache that is hole-punched
  * @inode: inode
  * @lstart: offset of beginning of hole

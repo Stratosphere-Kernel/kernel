@@ -1193,6 +1193,7 @@ static void ndisc_router_discovery(struct sk_buff *skb)
 	if (rt)
 		rt6_set_expires(rt, jiffies + (HZ * lifetime));
 	if (ra_msg->icmph.icmp6_hop_limit) {
+<<<<<<< HEAD
 		/* Only set hop_limit on the interface if it is higher than
 		 * the current hop_limit.
 		 */
@@ -1201,6 +1202,9 @@ static void ndisc_router_discovery(struct sk_buff *skb)
 		} else {
 			ND_PRINTK(2, warn, "RA: Got route advertisement with lower hop_limit than current\n");
 		}
+=======
+		in6_dev->cnf.hop_limit = ra_msg->icmph.icmp6_hop_limit;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (rt)
 			dst_metric_set(&rt->dst, RTAX_HOPLIMIT,
 				       ra_msg->icmph.icmp6_hop_limit);
@@ -1584,7 +1588,11 @@ static int ndisc_netdev_event(struct notifier_block *this, unsigned long event, 
 	switch (event) {
 	case NETDEV_CHANGEADDR:
 		neigh_changeaddr(&nd_tbl, dev);
+<<<<<<< HEAD
 		fib6_run_gc(0, net, false);
+=======
+		fib6_run_gc(~0UL, net);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		idev = in6_dev_get(dev);
 		if (!idev)
 			break;
@@ -1594,7 +1602,11 @@ static int ndisc_netdev_event(struct notifier_block *this, unsigned long event, 
 		break;
 	case NETDEV_DOWN:
 		neigh_ifdown(&nd_tbl, dev);
+<<<<<<< HEAD
 		fib6_run_gc(0, net, false);
+=======
+		fib6_run_gc(~0UL, net);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	case NETDEV_NOTIFY_PEERS:
 		ndisc_send_unsol_na(dev);

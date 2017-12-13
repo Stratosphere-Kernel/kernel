@@ -398,7 +398,11 @@ static struct {
 	int	user_cal_read;
 	int	user_cal_available;
 	u32	user_cal_rcvd;
+<<<<<<< HEAD
 	int	user_cal_exp_size;
+=======
+	u32	user_cal_exp_size;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int	iris_xo_mode_set;
 	int	fw_vbatt_state;
 	char	wlan_nv_macAddr[WLAN_MAC_ADDR_SIZE];
@@ -2031,21 +2035,37 @@ void extract_cal_data(int len)
 		return;
 	}
 
+<<<<<<< HEAD
+=======
+	mutex_lock(&penv->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rc = smd_read(penv->smd_ch, (unsigned char *)&calhdr,
 			sizeof(struct cal_data_params));
 	if (rc < sizeof(struct cal_data_params)) {
 		pr_err("wcnss: incomplete cal header read from smd\n");
+<<<<<<< HEAD
+=======
+		mutex_unlock(&penv->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 	}
 
 	if (penv->fw_cal_exp_frag != calhdr.frag_number) {
 		pr_err("wcnss: Invalid frgament");
+<<<<<<< HEAD
 		goto exit;
+=======
+		goto unlock_exit;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (calhdr.frag_size > WCNSS_MAX_FRAME_SIZE) {
 		pr_err("wcnss: Invalid fragment size");
+<<<<<<< HEAD
 		goto exit;
+=======
+		goto unlock_exit;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (penv->fw_cal_available) {
@@ -2054,8 +2074,14 @@ void extract_cal_data(int len)
 		penv->fw_cal_exp_frag++;
 		if (calhdr.msg_flags & LAST_FRAGMENT) {
 			penv->fw_cal_exp_frag = 0;
+<<<<<<< HEAD
 			goto exit;
 		}
+=======
+			goto unlock_exit;
+		}
+		mutex_unlock(&penv->dev_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 	}
 
@@ -2063,7 +2089,11 @@ void extract_cal_data(int len)
 		if (calhdr.total_size > MAX_CALIBRATED_DATA_SIZE) {
 			pr_err("wcnss: Invalid cal data size %d",
 				calhdr.total_size);
+<<<<<<< HEAD
 			goto exit;
+=======
+			goto unlock_exit;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 		kfree(penv->fw_cal_data);
 		penv->fw_cal_rcvd = 0;
@@ -2071,11 +2101,18 @@ void extract_cal_data(int len)
 				GFP_KERNEL);
 		if (penv->fw_cal_data == NULL) {
 			smd_read(penv->smd_ch, NULL, calhdr.frag_size);
+<<<<<<< HEAD
 			goto exit;
 		}
 	}
 
 	mutex_lock(&penv->dev_lock);
+=======
+			goto unlock_exit;
+		}
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (penv->fw_cal_rcvd + calhdr.frag_size >
 			MAX_CALIBRATED_DATA_SIZE) {
 		pr_err("calibrated data size is more than expected %d",
@@ -2110,8 +2147,11 @@ void extract_cal_data(int len)
 
 unlock_exit:
 	mutex_unlock(&penv->dev_lock);
+<<<<<<< HEAD
 
 exit:
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	wcnss_send_cal_rsp(fw_status);
 	return;
 }

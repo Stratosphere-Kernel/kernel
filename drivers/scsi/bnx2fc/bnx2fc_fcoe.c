@@ -411,7 +411,10 @@ static int bnx2fc_rcv(struct sk_buff *skb, struct net_device *dev,
 	struct fc_frame_header *fh;
 	struct fcoe_rcv_info *fr;
 	struct fcoe_percpu_s *bg;
+<<<<<<< HEAD
 	struct sk_buff *tmp_skb;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	unsigned short oxid;
 
 	interface = container_of(ptype, struct bnx2fc_interface,
@@ -424,12 +427,15 @@ static int bnx2fc_rcv(struct sk_buff *skb, struct net_device *dev,
 		goto err;
 	}
 
+<<<<<<< HEAD
 	tmp_skb = skb_share_check(skb, GFP_ATOMIC);
 	if (!tmp_skb)
 		goto err;
 
 	skb = tmp_skb;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (unlikely(eth_hdr(skb)->h_proto != htons(ETH_P_FCOE))) {
 		printk(KERN_ERR PFX "bnx2fc_rcv: Wrong FC type frame\n");
 		goto err;

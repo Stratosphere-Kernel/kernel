@@ -564,8 +564,11 @@ static int bitmap_read_sb(struct bitmap *bitmap)
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 	err = -EINVAL;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	sb = kmap_atomic(sb_page);
 
 	chunksize = le32_to_cpu(sb->chunksize);
@@ -885,6 +888,10 @@ void bitmap_unplug(struct bitmap *bitmap)
 {
 	unsigned long i;
 	int dirty, need_write;
+<<<<<<< HEAD
+=======
+	int wait = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!bitmap || !bitmap->storage.filemap ||
 	    test_bit(BITMAP_STALE, &bitmap->flags))
@@ -902,6 +909,7 @@ void bitmap_unplug(struct bitmap *bitmap)
 			clear_page_attr(bitmap, i, BITMAP_PAGE_PENDING);
 			write_page(bitmap, bitmap->storage.filemap[i], 0);
 		}
+<<<<<<< HEAD
 	}
 	if (bitmap->storage.file)
 		wait_event(bitmap->write_wait,
@@ -909,6 +917,18 @@ void bitmap_unplug(struct bitmap *bitmap)
 	else
 		md_super_wait(bitmap->mddev);
 
+=======
+		if (dirty)
+			wait = 1;
+	}
+	if (wait) { /* if any writes were performed, we need to wait on them */
+		if (bitmap->storage.file)
+			wait_event(bitmap->write_wait,
+				   atomic_read(&bitmap->pending_writes)==0);
+		else
+			md_super_wait(bitmap->mddev);
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (test_bit(BITMAP_WRITE_ERROR, &bitmap->flags))
 		bitmap_file_kick(bitmap);
 }

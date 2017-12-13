@@ -1118,6 +1118,7 @@ int usb_stor_Bulk_transport(struct scsi_cmnd *srb, struct us_data *us)
 		 */
 		if (result == USB_STOR_XFER_LONG)
 			fake_sense = 1;
+<<<<<<< HEAD
 
 		/*
 		 * Sometimes a device will mistakenly skip the data phase
@@ -1143,6 +1144,8 @@ int usb_stor_Bulk_transport(struct scsi_cmnd *srb, struct us_data *us)
 				goto skipped_data_phase;
 			}
 		}
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	/* See flow chart on pg 15 of the Bulk Only Transport spec for
@@ -1178,7 +1181,10 @@ int usb_stor_Bulk_transport(struct scsi_cmnd *srb, struct us_data *us)
 	if (result != USB_STOR_XFER_GOOD)
 		return USB_STOR_TRANSPORT_ERROR;
 
+<<<<<<< HEAD
  skipped_data_phase:
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* check bulk status */
 	residue = le32_to_cpu(bcs->Residue);
 	usb_stor_dbg(us, "Bulk Status S 0x%x T 0x%x R %u Stat 0x%x\n",

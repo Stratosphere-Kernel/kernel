@@ -593,7 +593,14 @@ MODULE_DESCRIPTION("VIA PadLock SHA1/SHA256 algorithms support.");
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Michal Ludvig");
 
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("sha1-all");
 MODULE_ALIAS_CRYPTO("sha256-all");
 MODULE_ALIAS_CRYPTO("sha1-padlock");
 MODULE_ALIAS_CRYPTO("sha256-padlock");
+=======
+MODULE_ALIAS("sha1-all");
+MODULE_ALIAS("sha256-all");
+MODULE_ALIAS("sha1-padlock");
+MODULE_ALIAS("sha256-padlock");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

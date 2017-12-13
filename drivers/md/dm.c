@@ -2270,7 +2270,11 @@ int dm_setup_md_queue(struct mapped_device *md)
 	return 0;
 }
 
+<<<<<<< HEAD
 struct mapped_device *dm_get_md(dev_t dev)
+=======
+static struct mapped_device *dm_find_md(dev_t dev)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct mapped_device *md;
 	unsigned minor = MINOR(dev);
@@ -2281,6 +2285,7 @@ struct mapped_device *dm_get_md(dev_t dev)
 	spin_lock(&_minor_lock);
 
 	md = idr_find(&_minor_idr, minor);
+<<<<<<< HEAD
 	if (md) {
 		if ((md == MINOR_ALLOCED ||
 		     (MINOR(disk_devt(dm_disk(md))) != minor) ||
@@ -2290,6 +2295,14 @@ struct mapped_device *dm_get_md(dev_t dev)
 			goto out;
 		}
 		dm_get(md);
+=======
+	if (md && (md == MINOR_ALLOCED ||
+		   (MINOR(disk_devt(dm_disk(md))) != minor) ||
+		   dm_deleting_md(md) ||
+		   test_bit(DMF_FREEING, &md->flags))) {
+		md = NULL;
+		goto out;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 out:
@@ -2297,6 +2310,19 @@ out:
 
 	return md;
 }
+<<<<<<< HEAD
+=======
+
+struct mapped_device *dm_get_md(dev_t dev)
+{
+	struct mapped_device *md = dm_find_md(dev);
+
+	if (md)
+		dm_get(md);
+
+	return md;
+}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 EXPORT_SYMBOL_GPL(dm_get_md);
 
 void *dm_get_mdptr(struct mapped_device *md)
@@ -2333,16 +2359,22 @@ static void __dm_destroy(struct mapped_device *md, bool wait)
 	set_bit(DMF_FREEING, &md->flags);
 	spin_unlock(&_minor_lock);
 
+<<<<<<< HEAD
 	/*
 	 * Take suspend_lock so that presuspend and postsuspend methods
 	 * do not race with internal suspend.
 	 */
 	mutex_lock(&md->suspend_lock);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!dm_suspended_md(md)) {
 		dm_table_presuspend_targets(map);
 		dm_table_postsuspend_targets(map);
 	}
+<<<<<<< HEAD
 	mutex_unlock(&md->suspend_lock);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * Rare, but there may be I/O requests still going to complete,

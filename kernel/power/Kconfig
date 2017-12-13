@@ -18,7 +18,10 @@ config SUSPEND_FREEZER
 
 	  Turning OFF this setting is NOT recommended! If in doubt, say Y.
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config HAS_WAKELOCK
 	bool
 	default y
@@ -27,6 +30,7 @@ config WAKELOCK
 	bool
 	default y
 
+<<<<<<< HEAD
 config POWERSUSPEND
 	bool "Power suspend"
 	default y
@@ -35,6 +39,8 @@ config POWERSUSPEND
 	  changes.
 
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config HIBERNATE_CALLBACKS
 	bool
 
@@ -297,3 +303,11 @@ config SUSPEND_TIME
 	  Prints the time spent in suspend in the kernel log, and
 	  keeps statistics on the time spent in suspend in
 	  /sys/kernel/debug/suspend_time
+<<<<<<< HEAD
+=======
+
+config PM_SYNC_BEFORE_SUSPEND
+	bool "Sync file systems before suspend"
+	depends on SUSPEND
+	default y
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

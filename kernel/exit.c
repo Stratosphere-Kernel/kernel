@@ -777,6 +777,13 @@ void do_exit(long code)
 
 	sched_exit(tsk);
 
+<<<<<<< HEAD
+=======
+	if (tsk->flags & PF_SU) {
+		su_exit();
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * tsk->flags are checked in the futex code to protect against
 	 * an exiting task cleaning up the robust pi futexes.

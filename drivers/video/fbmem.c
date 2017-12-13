@@ -1087,6 +1087,16 @@ static long do_fb_ioctl(struct fb_info *info, unsigned int cmd,
 	void __user *argp = (void __user *)arg;
 	long ret = 0;
 
+<<<<<<< HEAD
+=======
+	memset(&var, 0, sizeof(var));
+	memset(&fix, 0, sizeof(fix));
+	memset(&con2fb, 0, sizeof(con2fb));
+	memset(&cmap_from, 0, sizeof(cmap_from));
+	memset(&cmap, 0, sizeof(cmap));
+	memset(&event, 0, sizeof(event));
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	switch (cmd) {
 	case FBIOGET_VSCREENINFO:
 		if (!lock_fb_info(info))

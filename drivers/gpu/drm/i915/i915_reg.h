@@ -317,7 +317,10 @@
 #define   PIPE_CONTROL_GLOBAL_GTT_IVB			(1<<24) /* gen7+ */
 #define   PIPE_CONTROL_CS_STALL				(1<<20)
 #define   PIPE_CONTROL_TLB_INVALIDATE			(1<<18)
+<<<<<<< HEAD
 #define   PIPE_CONTROL_MEDIA_STATE_CLEAR		(1<<16)
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define   PIPE_CONTROL_QW_WRITE				(1<<14)
 #define   PIPE_CONTROL_DEPTH_STALL			(1<<13)
 #define   PIPE_CONTROL_WRITE_FLUSH			(1<<12)
@@ -909,7 +912,10 @@
 #define   GMBUS_CYCLE_INDEX	(2<<25)
 #define   GMBUS_CYCLE_STOP	(4<<25)
 #define   GMBUS_BYTE_COUNT_SHIFT 16
+<<<<<<< HEAD
 #define   GMBUS_BYTE_COUNT_MAX   256U
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define   GMBUS_SLAVE_INDEX_SHIFT 8
 #define   GMBUS_SLAVE_ADDR_SHIFT 1
 #define   GMBUS_SLAVE_READ	(1<<0)

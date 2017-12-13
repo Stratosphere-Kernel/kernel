@@ -621,8 +621,13 @@ void acpi_ex_dump_operand(union acpi_operand_object *obj_desc, u32 depth)
 			acpi_os_printf("\n");
 		} else {
 			acpi_os_printf(" base %8.8X%8.8X Length %X\n",
+<<<<<<< HEAD
 				       ACPI_FORMAT_UINT64(obj_desc->region.
 							  address),
+=======
+				       ACPI_FORMAT_NATIVE_UINT(obj_desc->region.
+							       address),
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				       obj_desc->region.length);
 		}
 		break;

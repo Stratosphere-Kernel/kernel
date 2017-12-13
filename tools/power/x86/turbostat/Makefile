@@ -1,4 +1,5 @@
 CC		= $(CROSS_COMPILE)gcc
+<<<<<<< HEAD
 BUILD_OUTPUT	:= $(CURDIR)
 PREFIX		:= /usr
 DESTDIR		:=
@@ -7,6 +8,12 @@ ifeq ("$(origin O)", "command line")
 	BUILD_OUTPUT := $(O)
 endif
 
+=======
+BUILD_OUTPUT	:= $(PWD)
+PREFIX		:= /usr
+DESTDIR		:=
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 turbostat : turbostat.c
 CFLAGS +=	-Wall
 CFLAGS +=	-DMSRHEADER='"../../../../arch/x86/include/uapi/asm/msr-index.h"'

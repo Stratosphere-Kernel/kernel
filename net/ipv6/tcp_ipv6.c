@@ -1133,6 +1133,10 @@ static struct sock * tcp_v6_syn_recv_sock(struct sock *sk, struct sk_buff *skb,
 		newtp->af_specific = &tcp_sock_ipv6_mapped_specific;
 #endif
 
+<<<<<<< HEAD
+=======
+		newnp->ipv6_mc_list = NULL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		newnp->ipv6_ac_list = NULL;
 		newnp->ipv6_fl_list = NULL;
 		newnp->pktoptions  = NULL;
@@ -1200,6 +1204,10 @@ static struct sock * tcp_v6_syn_recv_sock(struct sock *sk, struct sk_buff *skb,
 	   First: no IPv4 options.
 	 */
 	newinet->inet_opt = NULL;
+<<<<<<< HEAD
+=======
+	newnp->ipv6_mc_list = NULL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	newnp->ipv6_ac_list = NULL;
 	newnp->ipv6_fl_list = NULL;
 
@@ -1625,7 +1633,11 @@ static void tcp_v6_early_demux(struct sk_buff *skb)
 		skb->sk = sk;
 		skb->destructor = sock_edemux;
 		if (sk->sk_state != TCP_TIME_WAIT) {
+<<<<<<< HEAD
 			struct dst_entry *dst = ACCESS_ONCE(sk->sk_rx_dst);
+=======
+			struct dst_entry *dst = sk->sk_rx_dst;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 			if (dst)
 				dst = dst_check(dst, inet6_sk(sk)->rx_dst_cookie);
@@ -1660,7 +1672,10 @@ static const struct inet_connection_sock_af_ops ipv6_specific = {
 	.compat_setsockopt = compat_ipv6_setsockopt,
 	.compat_getsockopt = compat_ipv6_getsockopt,
 #endif
+<<<<<<< HEAD
 	.mtu_reduced	   = tcp_v6_mtu_reduced,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 #ifdef CONFIG_TCP_MD5SIG
@@ -1692,7 +1707,10 @@ static const struct inet_connection_sock_af_ops ipv6_mapped = {
 	.compat_setsockopt = compat_ipv6_setsockopt,
 	.compat_getsockopt = compat_ipv6_getsockopt,
 #endif
+<<<<<<< HEAD
 	.mtu_reduced	   = tcp_v4_mtu_reduced,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 #ifdef CONFIG_TCP_MD5SIG
@@ -1934,6 +1952,10 @@ struct proto tcpv6_prot = {
 	.sendpage		= tcp_sendpage,
 	.backlog_rcv		= tcp_v6_do_rcv,
 	.release_cb		= tcp_release_cb,
+<<<<<<< HEAD
+=======
+	.mtu_reduced		= tcp_v6_mtu_reduced,
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.hash			= tcp_v6_hash,
 	.unhash			= inet_unhash,
 	.get_port		= inet_csk_get_port,

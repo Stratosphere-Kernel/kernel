@@ -267,7 +267,11 @@ int ipa_query_intf_tx_props(struct ipa_ioc_query_intf_tx_props *tx)
 		if (!strncmp(entry->name, tx->name, IPA_RESOURCE_NAME_MAX)) {
 			/* add the entry check */
 			if (entry->num_tx_props != tx->num_tx_props) {
+<<<<<<< HEAD
 				IPAERR("invalid entry number(%u %u)\n",
+=======
+				IPAERR_RL("invalid entry number(%u %u)\n",
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					entry->num_tx_props,
 						tx->num_tx_props);
 				mutex_unlock(&ipa_ctx->lock);
@@ -308,7 +312,11 @@ int ipa_query_intf_rx_props(struct ipa_ioc_query_intf_rx_props *rx)
 		if (!strncmp(entry->name, rx->name, IPA_RESOURCE_NAME_MAX)) {
 			/* add the entry check */
 			if (entry->num_rx_props != rx->num_rx_props) {
+<<<<<<< HEAD
 				IPAERR("invalid entry number(%u %u)\n",
+=======
+				IPAERR_RL("invalid entry number(%u %u)\n",
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					entry->num_rx_props,
 						rx->num_rx_props);
 				mutex_unlock(&ipa_ctx->lock);
@@ -349,7 +357,11 @@ int ipa_query_intf_ext_props(struct ipa_ioc_query_intf_ext_props *ext)
 		if (!strcmp(entry->name, ext->name)) {
 			/* add the entry check */
 			if (entry->num_ext_props != ext->num_ext_props) {
+<<<<<<< HEAD
 				IPAERR("invalid entry number(%u %u)\n",
+=======
+				IPAERR_RL("invalid entry number(%u %u)\n",
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					entry->num_ext_props,
 						ext->num_ext_props);
 				mutex_unlock(&ipa_ctx->lock);
@@ -387,13 +399,21 @@ int ipa_send_msg(struct ipa_msg_meta *meta, void *buff,
 
 	if (meta == NULL || (buff == NULL && callback != NULL) ||
 	    (buff != NULL && callback == NULL)) {
+<<<<<<< HEAD
 		IPAERR("invalid param meta=%p buff=%p, callback=%p\n",
+=======
+		IPAERR_RL("invalid param meta=%p buff=%p, callback=%p\n",
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		       meta, buff, callback);
 		return -EINVAL;
 	}
 
 	if (meta->msg_type >= IPA_EVENT_MAX_NUM) {
+<<<<<<< HEAD
 		IPAERR("unsupported message type %d\n", meta->msg_type);
+=======
+		IPAERR_RL("unsupported message type %d\n", meta->msg_type);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 	}
 
@@ -435,7 +455,12 @@ int ipa_register_pull_msg(struct ipa_msg_meta *meta, ipa_msg_pull_fn callback)
 	struct ipa_pull_msg *msg;
 
 	if (meta == NULL || callback == NULL) {
+<<<<<<< HEAD
 		IPAERR("invalid param meta=%p callback=%p\n", meta, callback);
+=======
+		IPAERR_RL("invalid param meta=%p callback=%p\n",
+				meta, callback);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 	}
 

@@ -479,8 +479,11 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
 			obj_desc->field.resource_length = info->resource_length;
 		}
 
+<<<<<<< HEAD
 		obj_desc->field.pin_number_index = info->pin_number_index;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* Allow full data read from EC address space */
 
 		if ((obj_desc->field.region_obj->region.space_id ==

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2014, 2017 The Linux Foundation. All rights reserved.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -43,16 +47,36 @@ static int msm_vb2_queue_setup(struct vb2_queue *q,
 int msm_vb2_buf_init(struct vb2_buffer *vb)
 {
 	struct msm_stream *stream;
+<<<<<<< HEAD
 	struct msm_vb2_buffer *msm_vb2_buf;
+=======
+	struct msm_session *session;
+	struct msm_vb2_buffer *msm_vb2_buf;
+	unsigned long rl_flags;
+
+	session = msm_get_session_from_vb2q(vb->vb2_queue);
+	if (IS_ERR_OR_NULL(session))
+		return -EINVAL;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
 	if (!stream) {
 		pr_err("%s: Couldn't find stream\n", __func__);
+<<<<<<< HEAD
+=======
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 	}
 	msm_vb2_buf = container_of(vb, struct msm_vb2_buffer, vb2_buf);
 	msm_vb2_buf->in_freeq = 0;
+<<<<<<< HEAD
 
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
@@ -60,7 +84,12 @@ static void msm_vb2_buf_queue(struct vb2_buffer *vb)
 {
 	struct msm_vb2_buffer *msm_vb2;
 	struct msm_stream *stream;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+	struct msm_session *session;
+	unsigned long flags, rl_flags;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	msm_vb2 = container_of(vb, struct msm_vb2_buffer, vb2_buf);
 
@@ -69,22 +98,44 @@ static void msm_vb2_buf_queue(struct vb2_buffer *vb)
 		return;
 	}
 
+<<<<<<< HEAD
 	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
 	if (!stream) {
 		pr_err("%s:%d] NULL stream", __func__, __LINE__);
+=======
+	session = msm_get_session_from_vb2q(vb->vb2_queue);
+	if (IS_ERR_OR_NULL(session))
+		return;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+
+	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
+	if (!stream) {
+		pr_err("%s:%d] NULL stream", __func__, __LINE__);
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 	}
 
 	spin_lock_irqsave(&stream->stream_lock, flags);
 	list_add_tail(&msm_vb2->list, &stream->queued_list);
 	spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int msm_vb2_buf_finish(struct vb2_buffer *vb)
 {
 	struct msm_vb2_buffer *msm_vb2;
 	struct msm_stream *stream;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+	struct msm_session *session;
+	unsigned long flags, rl_flags;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct msm_vb2_buffer *msm_vb2_entry, *temp;
 
 	msm_vb2 = container_of(vb, struct msm_vb2_buffer, vb2_buf);
@@ -94,9 +145,22 @@ static int msm_vb2_buf_finish(struct vb2_buffer *vb)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
 	if (!stream) {
 		pr_err("%s:%d] NULL stream", __func__, __LINE__);
+=======
+	session = msm_get_session_from_vb2q(vb->vb2_queue);
+	if (IS_ERR_OR_NULL(session))
+		return -EINVAL;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+
+	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
+	if (!stream) {
+		pr_err("%s:%d] NULL stream", __func__, __LINE__);
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return -EINVAL;
 	}
 
@@ -109,6 +173,10 @@ static int msm_vb2_buf_finish(struct vb2_buffer *vb)
 		}
 	}
 	spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
@@ -116,7 +184,12 @@ static void msm_vb2_buf_cleanup(struct vb2_buffer *vb)
 {
 	struct msm_vb2_buffer *msm_vb2;
 	struct msm_stream *stream;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+	struct msm_session *session;
+	unsigned long flags, rl_flags;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	msm_vb2 = container_of(vb, struct msm_vb2_buffer, vb2_buf);
 
@@ -125,16 +198,52 @@ static void msm_vb2_buf_cleanup(struct vb2_buffer *vb)
 		return;
 	}
 
+<<<<<<< HEAD
 	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
 	if (!stream) {
 		pr_err("%s:%d] NULL stream", __func__, __LINE__);
+=======
+	session = msm_get_session_from_vb2q(vb->vb2_queue);
+	if (IS_ERR_OR_NULL(session))
+		return;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+
+	stream = msm_get_stream_from_vb2q(vb->vb2_queue);
+	if (!stream) {
+		pr_err("%s:%d] NULL stream", __func__, __LINE__);
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 	}
 
 	spin_lock_irqsave(&stream->stream_lock, flags);
 	INIT_LIST_HEAD(&stream->queued_list);
 	spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
 }
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+}
+
+int msm_vb2_get_stream_state(struct msm_stream *stream)
+{
+	struct msm_vb2_buffer *msm_vb2, *temp;
+	unsigned long flags;
+	int rc = 1;
+
+	spin_lock_irqsave(&stream->stream_lock, flags);
+	list_for_each_entry_safe(msm_vb2, temp, &(stream->queued_list), list) {
+		if (msm_vb2->in_freeq != 0) {
+			rc = 0;
+			break;
+		}
+	}
+	spin_unlock_irqrestore(&stream->stream_lock, flags);
+	return rc;
+}
+EXPORT_SYMBOL(msm_vb2_get_stream_state);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static struct vb2_ops msm_vb2_get_q_op = {
 	.queue_setup	= msm_vb2_queue_setup,
@@ -188,6 +297,7 @@ static struct vb2_buffer *msm_vb2_get_buf(int session_id,
 	unsigned int stream_id)
 {
 	struct msm_stream *stream;
+<<<<<<< HEAD
 	struct vb2_buffer *vb2_buf = NULL;
 	struct msm_vb2_buffer *msm_vb2 = NULL;
 	unsigned long flags;
@@ -196,6 +306,25 @@ static struct vb2_buffer *msm_vb2_get_buf(int session_id,
 	if (IS_ERR_OR_NULL(stream))
 		return NULL;
 
+=======
+	struct msm_session *session;
+	struct vb2_buffer *vb2_buf = NULL;
+	struct msm_vb2_buffer *msm_vb2 = NULL;
+	unsigned long flags, rl_flags;
+
+	session = msm_get_session(session_id);
+	if (IS_ERR_OR_NULL(session))
+		return NULL;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+
+	stream = msm_get_stream(session, stream_id);
+	if (IS_ERR_OR_NULL(stream)) {
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+		return NULL;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock_irqsave(&stream->stream_lock, flags);
 
 	if (!stream->vb2_q) {
@@ -218,6 +347,10 @@ static struct vb2_buffer *msm_vb2_get_buf(int session_id,
 	vb2_buf = NULL;
 end:
 	spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return vb2_buf;
 }
 
@@ -225,6 +358,7 @@ static int msm_vb2_put_buf(struct vb2_buffer *vb, int session_id,
 				unsigned int stream_id)
 {
 	struct msm_stream *stream;
+<<<<<<< HEAD
 	struct msm_vb2_buffer *msm_vb2;
 	struct vb2_buffer *vb2_buf = NULL;
 	int rc = 0;
@@ -233,6 +367,26 @@ static int msm_vb2_put_buf(struct vb2_buffer *vb, int session_id,
 	if (IS_ERR_OR_NULL(stream))
 		return -EINVAL;
 
+=======
+	struct msm_session *session;
+	struct msm_vb2_buffer *msm_vb2;
+	struct vb2_buffer *vb2_buf = NULL;
+	int rc = 0;
+	unsigned long flags, rl_flags;
+
+	session = msm_get_session(session_id);
+	if (IS_ERR_OR_NULL(session))
+		return -EINVAL;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+
+	stream = msm_get_stream(session, stream_id);
+	if (IS_ERR_OR_NULL(stream)) {
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+		return -EINVAL;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock_irqsave(&stream->stream_lock, flags);
 	if (vb) {
 		list_for_each_entry(msm_vb2, &(stream->queued_list), list) {
@@ -244,6 +398,10 @@ static int msm_vb2_put_buf(struct vb2_buffer *vb, int session_id,
 			pr_err("VB buffer is INVALID vb=%p, ses_id=%d, str_id=%d\n",
 					vb, session_id, stream_id);
 			spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+			read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return -EINVAL;
 		}
 		msm_vb2 =
@@ -259,12 +417,17 @@ static int msm_vb2_put_buf(struct vb2_buffer *vb, int session_id,
 		rc = -EINVAL;
 	}
 	spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return rc;
 }
 
 static int msm_vb2_buf_done(struct vb2_buffer *vb, int session_id,
 				unsigned int stream_id)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 	struct msm_vb2_buffer *msm_vb2;
 	struct msm_stream *stream;
@@ -274,6 +437,27 @@ static int msm_vb2_buf_done(struct vb2_buffer *vb, int session_id,
 	stream = msm_get_stream(session_id, stream_id);
 	if (IS_ERR_OR_NULL(stream))
 		return 0;
+=======
+	unsigned long flags, rl_flags;
+	struct msm_vb2_buffer *msm_vb2;
+	struct msm_stream *stream;
+	struct msm_session *session;
+	struct vb2_buffer *vb2_buf = NULL;
+	int rc = 0;
+
+	session = msm_get_session(session_id);
+	if (IS_ERR_OR_NULL(session))
+		return 0;
+
+	read_lock_irqsave(&session->stream_rwlock, rl_flags);
+
+	stream = msm_get_stream(session, stream_id);
+	if (IS_ERR_OR_NULL(stream)) {
+		read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+		return -EINVAL;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock_irqsave(&stream->stream_lock, flags);
 	if (vb) {
 		list_for_each_entry(msm_vb2, &(stream->queued_list), list) {
@@ -285,6 +469,10 @@ static int msm_vb2_buf_done(struct vb2_buffer *vb, int session_id,
 			pr_err("VB buffer is INVALID ses_id=%d, str_id=%d, vb=%p\n",
 				    session_id, stream_id, vb);
 			spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+			read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return -EINVAL;
 		}
 		msm_vb2 =
@@ -302,6 +490,10 @@ static int msm_vb2_buf_done(struct vb2_buffer *vb, int session_id,
 		rc = -EINVAL;
 	}
 	spin_unlock_irqrestore(&stream->stream_lock, flags);
+<<<<<<< HEAD
+=======
+	read_unlock_irqrestore(&session->stream_rwlock, rl_flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return rc;
 }
 
@@ -319,4 +511,7 @@ int msm_vb2_request_cb(struct msm_sd_req_vb2_q *req)
 
 	return 0;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

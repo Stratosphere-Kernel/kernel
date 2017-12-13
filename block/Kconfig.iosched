@@ -43,6 +43,7 @@ config IOSCHED_ROW
 	  according to queue priority.
 	  Most suitable for mobile devices.
 
+<<<<<<< HEAD
 config IOSCHED_SIO
 	tristate "Simple I/O scheduler"
 	default y
@@ -60,6 +61,8 @@ config IOSCHED_ZEN
 	FCFS, dispatches are back-inserted, deadlines ensure fairness.
         Should work best with devices where there is no travel delay.
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 config IOSCHED_CFQ
 	tristate "CFQ I/O scheduler"
 	default y
@@ -78,6 +81,7 @@ config CFQ_GROUP_IOSCHED
 	---help---
 	  Enable group IO scheduling in CFQ.
 
+<<<<<<< HEAD
 
 config IOSCHED_FIFO
 	tristate "FIFO I/O scheduler"
@@ -129,6 +133,8 @@ config IOSCHED_FIOPS
           IOPS equally among all processes in the system. It's mainly for
           Flash based storage.
 		  
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -152,6 +158,7 @@ choice
 	config DEFAULT_CFQ
 		bool "CFQ" if IOSCHED_CFQ=y
 
+<<<<<<< HEAD
 	config DEFAULT_BFQ
 		bool "BFQ" if IOSCHED_BFQ=y
 		help
@@ -181,6 +188,11 @@ choice
 	config DEFAULT_VR
 		bool "VR" if IOSCHED_ZEN=y
 
+=======
+	config DEFAULT_NOOP
+		bool "No-op"
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 endchoice
 
 config DEFAULT_IOSCHED
@@ -188,12 +200,16 @@ config DEFAULT_IOSCHED
 	default "deadline" if DEFAULT_DEADLINE
 	default "row" if DEFAULT_ROW
 	default "cfq" if DEFAULT_CFQ
+<<<<<<< HEAD
 	default "bfq" if DEFAULT_BFQ
 	default "fiops" if DEFAULT_FIOPS
 	default "noop" if DEFAULT_NOOP
 	default "zen" if DEFAULT_ZEN
 	default "tripndroid" if DEFAULT_TRIPNDROID
  	default "vr" if DEFAULT_VR 
+=======
+	default "noop" if DEFAULT_NOOP
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 endmenu
 

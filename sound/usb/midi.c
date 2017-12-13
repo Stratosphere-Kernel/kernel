@@ -364,8 +364,11 @@ static void snd_usbmidi_error_timer(unsigned long data)
 		if (in && in->error_resubmit) {
 			in->error_resubmit = 0;
 			for (j = 0; j < INPUT_URBS; ++j) {
+<<<<<<< HEAD
 				if (atomic_read(&in->urbs[j]->use_count))
 					continue;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				in->urbs[j]->dev = umidi->dev;
 				snd_usbmidi_submit_urb(in->urbs[j], GFP_ATOMIC);
 			}

@@ -5789,9 +5789,12 @@ static int snd_hdspm_playback_open(struct snd_pcm_substream *substream)
 		snd_pcm_hw_constraint_minmax(runtime,
 					     SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
 					     64, 8192);
+<<<<<<< HEAD
 		snd_pcm_hw_constraint_minmax(runtime,
 					     SNDRV_PCM_HW_PARAM_PERIODS,
 					     2, 2);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	}
 
@@ -5866,9 +5869,12 @@ static int snd_hdspm_capture_open(struct snd_pcm_substream *substream)
 		snd_pcm_hw_constraint_minmax(runtime,
 					     SNDRV_PCM_HW_PARAM_PERIOD_SIZE,
 					     64, 8192);
+<<<<<<< HEAD
 		snd_pcm_hw_constraint_minmax(runtime,
 					     SNDRV_PCM_HW_PARAM_PERIODS,
 					     2, 2);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	}
 

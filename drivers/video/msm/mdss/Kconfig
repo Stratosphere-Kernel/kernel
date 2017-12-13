@@ -43,6 +43,7 @@ config FB_MSM_MDSS_MDP3
 	---help---
 	The MDP3 provides support for an older version display controller
 	included in latest display sub-system, known as MDSS.
+<<<<<<< HEAD
 
 config FB_MSM_MDSS_TIMEOUT_DUMP
 	bool 'MDSS Timeout Dump'
@@ -70,3 +71,5 @@ config FB_MSM_MDSS_KCAL_CTRL
 	  Enable sysfs for post-processing control of mdss-mdp5 display
 	  controllers in MDSS.
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

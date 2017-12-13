@@ -1146,10 +1146,21 @@ static const struct nla_policy ifla_vfinfo_policy[IFLA_VF_INFO_MAX+1] = {
 };
 
 static const struct nla_policy ifla_vf_policy[IFLA_VF_MAX+1] = {
+<<<<<<< HEAD
 	[IFLA_VF_MAC]		= { .len = sizeof(struct ifla_vf_mac) },
 	[IFLA_VF_VLAN]		= { .len = sizeof(struct ifla_vf_vlan) },
 	[IFLA_VF_TX_RATE]	= { .len = sizeof(struct ifla_vf_tx_rate) },
 	[IFLA_VF_SPOOFCHK]	= { .len = sizeof(struct ifla_vf_spoofchk) },
+=======
+	[IFLA_VF_MAC]		= { .type = NLA_BINARY,
+				    .len = sizeof(struct ifla_vf_mac) },
+	[IFLA_VF_VLAN]		= { .type = NLA_BINARY,
+				    .len = sizeof(struct ifla_vf_vlan) },
+	[IFLA_VF_TX_RATE]	= { .type = NLA_BINARY,
+				    .len = sizeof(struct ifla_vf_tx_rate) },
+	[IFLA_VF_SPOOFCHK]	= { .type = NLA_BINARY,
+				    .len = sizeof(struct ifla_vf_spoofchk) },
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 static const struct nla_policy ifla_port_policy[IFLA_PORT_MAX+1] = {
@@ -1322,7 +1333,10 @@ static int do_setlink(const struct sk_buff *skb,
 			goto errout;
 		}
 		if (!netlink_ns_capable(skb, net->user_ns, CAP_NET_ADMIN)) {
+<<<<<<< HEAD
 			put_net(net);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			err = -EPERM;
 			goto errout;
 		}
@@ -1859,6 +1873,7 @@ replay:
 			goto out;
 
 		err = rtnl_configure_link(dev, ifm);
+<<<<<<< HEAD
 		if (err < 0) {
 			if (ops->newlink) {
 				LIST_HEAD(list_kill);
@@ -1869,6 +1884,10 @@ replay:
 				unregister_netdevice(dev);
 			}
 		}
+=======
+		if (err < 0)
+			unregister_netdevice(dev);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 out:
 		put_net(dest_net);
 		return err;
@@ -2489,16 +2508,23 @@ static int rtnl_bridge_notify(struct net_device *dev, u16 flags)
 			goto errout;
 	}
 
+<<<<<<< HEAD
 	if (!skb->len)
 		goto errout;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rtnl_notify(skb, net, 0, RTNLGRP_LINK, NULL, GFP_ATOMIC);
 	return 0;
 errout:
 	WARN_ON(err == -EMSGSIZE);
 	kfree_skb(skb);
+<<<<<<< HEAD
 	if (err)
 		rtnl_set_sk_err(net, RTNLGRP_LINK, err);
+=======
+	rtnl_set_sk_err(net, RTNLGRP_LINK, err);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return err;
 }
 

@@ -427,7 +427,10 @@ static int do_one_pass(journal_t *journal,
 	int			tag_bytes = journal_tag_bytes(journal);
 	__u32			crc32_sum = ~0; /* Transactional Checksums */
 	int			descr_csum_size = 0;
+<<<<<<< HEAD
 	int			block_error = 0;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * First thing is to establish what we expect to find in the log
@@ -522,7 +525,10 @@ static int do_one_pass(journal_t *journal,
 			    !jbd2_descr_block_csum_verify(journal,
 							  bh->b_data)) {
 				err = -EIO;
+<<<<<<< HEAD
 				brelse(bh);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				goto failed;
 			}
 
@@ -601,8 +607,12 @@ static int do_one_pass(journal_t *journal,
 						       "checksum recovering "
 						       "block %llu in log\n",
 						       blocknr);
+<<<<<<< HEAD
 						block_error = 1;
 						goto skip_write;
+=======
+						continue;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					}
 
 					/* Find a buffer for the new
@@ -801,8 +811,12 @@ static int do_one_pass(journal_t *journal,
 				success = -EIO;
 		}
 	}
+<<<<<<< HEAD
 	if (block_error && success == 0)
 		success = -EIO;
+=======
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return success;
 
  failed:

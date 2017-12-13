@@ -126,9 +126,12 @@ int ip_forward(struct sk_buff *skb)
 	struct rtable *rt;	/* Route we use */
 	struct ip_options *opt	= &(IPCB(skb)->opt);
 
+<<<<<<< HEAD
 	if (unlikely(skb->sk))
 		goto drop;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (skb_warn_if_lro(skb))
 		goto drop;
 
@@ -178,8 +181,12 @@ int ip_forward(struct sk_buff *skb)
 	 *	We now generate an ICMP HOST REDIRECT giving the route
 	 *	we calculated.
 	 */
+<<<<<<< HEAD
 	if (IPCB(skb)->flags & IPSKB_DOREDIRECT && !opt->srr &&
 	    !skb_sec_path(skb))
+=======
+	if (rt->rt_flags&RTCF_DOREDIRECT && !opt->srr && !skb_sec_path(skb))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ip_rt_send_redirect(skb);
 
 	skb->priority = rt_tos2priority(iph->tos);

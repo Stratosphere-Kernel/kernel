@@ -1527,12 +1527,20 @@ ixgb_xmit_frame(struct sk_buff *skb, struct net_device *netdev)
 	int tso;
 
 	if (test_bit(__IXGB_DOWN, &adapter->flags)) {
+<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
+=======
+		dev_kfree_skb(skb);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return NETDEV_TX_OK;
 	}
 
 	if (skb->len <= 0) {
+<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
+=======
+		dev_kfree_skb(skb);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return NETDEV_TX_OK;
 	}
 
@@ -1549,7 +1557,11 @@ ixgb_xmit_frame(struct sk_buff *skb, struct net_device *netdev)
 
 	tso = ixgb_tso(adapter, skb);
 	if (tso < 0) {
+<<<<<<< HEAD
 		dev_kfree_skb_any(skb);
+=======
+		dev_kfree_skb(skb);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return NETDEV_TX_OK;
 	}
 

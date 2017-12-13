@@ -1534,11 +1534,14 @@ retry:
 	 */
 	if (ctx->is_active) {
 		raw_spin_unlock_irq(&ctx->lock);
+<<<<<<< HEAD
 		/*
 		 * Reload the task pointer, it might have been changed by
 		 * a concurrent perf_event_context_sched_out().
 		 */
 		task = ctx->task;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto retry;
 	}
 
@@ -1986,11 +1989,14 @@ retry:
 	 */
 	if (ctx->is_active) {
 		raw_spin_unlock_irq(&ctx->lock);
+<<<<<<< HEAD
 		/*
 		 * Reload the task pointer, it might have been changed by
 		 * a concurrent perf_event_context_sched_out().
 		 */
 		task = ctx->task;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		goto retry;
 	}
 
@@ -3741,6 +3747,7 @@ static long _perf_ioctl(struct perf_event *event, unsigned int cmd,
 
 static long perf_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
+<<<<<<< HEAD
         struct perf_event *event = file->private_data;
         struct perf_event_context *ctx;
         long ret;
@@ -3750,6 +3757,17 @@ static long perf_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
         perf_event_ctx_unlock(event, ctx);
 
         return ret;
+=======
+	struct perf_event *event = file->private_data;
+	struct perf_event_context *ctx;
+	long ret;
+
+	ctx = perf_event_ctx_lock(event);
+	ret = _perf_ioctl(event, cmd, arg);
+	perf_event_ctx_unlock(event, ctx);
+
+	return ret;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 
@@ -4263,6 +4281,7 @@ static const struct file_operations perf_fops = {
  * to user-space before waking everybody up.
  */
 
+<<<<<<< HEAD
 static inline struct fasync_struct **perf_event_fasync(struct perf_event *event)
 {
 	/* only the parent has fasync state */
@@ -4271,12 +4290,18 @@ static inline struct fasync_struct **perf_event_fasync(struct perf_event *event)
 	return &event->fasync;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void perf_event_wakeup(struct perf_event *event)
 {
 	ring_buffer_wakeup(event);
 
 	if (event->pending_kill) {
+<<<<<<< HEAD
 		kill_fasync(perf_event_fasync(event), SIGIO, event->pending_kill);
+=======
+		kill_fasync(&event->fasync, SIGIO, event->pending_kill);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		event->pending_kill = 0;
 	}
 }
@@ -5431,7 +5456,11 @@ static int __perf_event_overflow(struct perf_event *event,
 	else
 		perf_event_output(event, data, regs);
 
+<<<<<<< HEAD
 	if (*perf_event_fasync(event) && event->pending_kill) {
+=======
+	if (event->fasync && event->pending_kill) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		event->pending_wakeup = 1;
 		irq_work_queue(&event->pending);
 	}
@@ -6962,6 +6991,40 @@ static void mutex_lock_double(struct mutex *a, struct mutex *b)
 	mutex_lock_nested(b, SINGLE_DEPTH_NESTING);
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * Variation on perf_event_ctx_lock_nested(), except we take two context
+ * mutexes.
+ */
+static struct perf_event_context *
+__perf_event_ctx_lock_double(struct perf_event *group_leader,
+			     struct perf_event_context *ctx)
+{
+	struct perf_event_context *gctx;
+
+again:
+	rcu_read_lock();
+	gctx = ACCESS_ONCE(group_leader->ctx);
+	if (!atomic_inc_not_zero(&gctx->refcount)) {
+		rcu_read_unlock();
+		goto again;
+	}
+	rcu_read_unlock();
+
+	mutex_lock_double(&gctx->mutex, &ctx->mutex);
+
+	if (group_leader->ctx != gctx) {
+		mutex_unlock(&ctx->mutex);
+		mutex_unlock(&gctx->mutex);
+		put_ctx(gctx);
+		goto again;
+	}
+
+	return gctx;
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * sys_perf_event_open - open a performance event, associate it to a task/cpu
  *
@@ -7176,15 +7239,41 @@ SYSCALL_DEFINE5(perf_event_open,
 	}
 
 	if (move_group) {
+<<<<<<< HEAD
 		gctx = group_leader->ctx;
+=======
+		gctx = __perf_event_ctx_lock_double(group_leader, ctx);
+
+		/*
+		 * Check if we raced against another sys_perf_event_open() call
+		 * moving the software group underneath us.
+		 */
+		if (!(group_leader->group_flags & PERF_GROUP_SOFTWARE)) {
+			/*
+			 * If someone moved the group out from under us, check
+			 * if this new event wound up on the same ctx, if so
+			 * its the regular !move_group case, otherwise fail.
+			 */
+			if (gctx != ctx) {
+				err = -EINVAL;
+				goto err_locked;
+			} else {
+				perf_event_ctx_unlock(group_leader, gctx);
+				move_group = 0;
+			}
+		}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/*
 		 * See perf_event_ctx_lock() for comments on the details
 		 * of swizzling perf_event::ctx.
 		 */
+<<<<<<< HEAD
 		mutex_lock_double(&gctx->mutex, &ctx->mutex);
 
 		mutex_lock(&gctx->mutex);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		perf_remove_from_context(group_leader, false);
 
 		/*
@@ -7211,11 +7300,19 @@ SYSCALL_DEFINE5(perf_event_open,
 		 * the old lists, before installing it on new lists.
 		 */
 		synchronize_rcu();
+<<<<<<< HEAD
 		perf_install_in_context(ctx, group_leader, group_leader->cpu);
 		get_ctx(ctx);
 		list_for_each_entry(sibling, &group_leader->sibling_list,
 				    group_entry) {
 			perf_install_in_context(ctx, sibling, sibling->cpu);
+=======
+		perf_install_in_context(ctx, group_leader, event->cpu);
+		get_ctx(ctx);
+		list_for_each_entry(sibling, &group_leader->sibling_list,
+				    group_entry) {
+			perf_install_in_context(ctx, sibling, event->cpu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			get_ctx(ctx);
 		}
 	}
@@ -7225,7 +7322,11 @@ SYSCALL_DEFINE5(perf_event_open,
 	perf_unpin_context(ctx);
 
 	if (move_group) {
+<<<<<<< HEAD
 		mutex_unlock(&gctx->mutex);
+=======
+		perf_event_ctx_unlock(group_leader, gctx);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		put_ctx(gctx);
 	}
 	mutex_unlock(&ctx->mutex);
@@ -7256,6 +7357,14 @@ SYSCALL_DEFINE5(perf_event_open,
 	fd_install(event_fd, event_file);
 	return event_fd;
 
+<<<<<<< HEAD
+=======
+err_locked:
+	if (move_group)
+		perf_event_ctx_unlock(group_leader, gctx);
+	mutex_unlock(&ctx->mutex);
+	fput(event_file);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 err_context:
 	perf_unpin_context(ctx);
 	put_ctx(ctx);

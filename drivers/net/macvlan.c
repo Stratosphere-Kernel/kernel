@@ -500,7 +500,10 @@ static int macvlan_init(struct net_device *dev)
 				  (lowerdev->state & MACVLAN_STATE_MASK);
 	dev->features 		= lowerdev->features & MACVLAN_FEATURES;
 	dev->features		|= NETIF_F_LLTX;
+<<<<<<< HEAD
 	dev->vlan_features	= lowerdev->vlan_features & MACVLAN_FEATURES;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dev->gso_max_size	= lowerdev->gso_max_size;
 	dev->iflink		= lowerdev->ifindex;
 	dev->hard_header_len	= lowerdev->hard_header_len;

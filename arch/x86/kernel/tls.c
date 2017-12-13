@@ -27,6 +27,7 @@ static int get_free_idx(void)
 	return -ESRCH;
 }
 
+<<<<<<< HEAD
 static bool tls_desc_okay(const struct user_desc *info)
 {
 	/*
@@ -79,6 +80,8 @@ static bool tls_desc_okay(const struct user_desc *info)
 	return true;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void set_tls_desc(struct task_struct *p, int idx,
 			 const struct user_desc *info, int n)
 {
@@ -92,7 +95,11 @@ static void set_tls_desc(struct task_struct *p, int idx,
 	cpu = get_cpu();
 
 	while (n-- > 0) {
+<<<<<<< HEAD
 		if (LDT_empty(info) || LDT_zero(info))
+=======
+		if (LDT_empty(info))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			desc->a = desc->b = 0;
 		else
 			fill_ldt(desc, info);
@@ -118,9 +125,12 @@ int do_set_thread_area(struct task_struct *p, int idx,
 	if (copy_from_user(&info, u_info, sizeof(info)))
 		return -EFAULT;
 
+<<<<<<< HEAD
 	if (!tls_desc_okay(&info))
 		return -EINVAL;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (idx == -1)
 		idx = info.entry_number;
 
@@ -247,7 +257,10 @@ int regset_tls_set(struct task_struct *target, const struct user_regset *regset,
 {
 	struct user_desc infobuf[GDT_ENTRY_TLS_ENTRIES];
 	const struct user_desc *info;
+<<<<<<< HEAD
 	int i;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (pos >= GDT_ENTRY_TLS_ENTRIES * sizeof(struct user_desc) ||
 	    (pos % sizeof(struct user_desc)) != 0 ||
@@ -261,10 +274,13 @@ int regset_tls_set(struct task_struct *target, const struct user_regset *regset,
 	else
 		info = infobuf;
 
+<<<<<<< HEAD
 	for (i = 0; i < count / sizeof(struct user_desc); i++)
 		if (!tls_desc_okay(info + i))
 			return -EINVAL;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	set_tls_desc(target,
 		     GDT_ENTRY_TLS_MIN + (pos / sizeof(struct user_desc)),
 		     info, count / sizeof(struct user_desc));

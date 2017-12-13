@@ -40,14 +40,18 @@
 
 #ifndef __ASSEMBLY__
 
+<<<<<<< HEAD
 #include <asm/barrier.h>	/* for smp_rmb() */
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * With 64K pages on hash table, we have a special PTE format that
  * uses a second "half" of the page table to encode sub-page information
  * in order to deal with 64K made of 4K HW pages. Thus we override the
  * generic accessors and iterators here
  */
+<<<<<<< HEAD
 #define __real_pte __real_pte
 static inline real_pte_t __real_pte(pte_t pte, pte_t *ptep)
 {
@@ -73,6 +77,13 @@ static inline unsigned long __rpte_to_hidx(real_pte_t rpte, unsigned long index)
 	return (pte_val(rpte.pte) >> 12) & 0xf;
 }
 
+=======
+#define __real_pte(e,p) 	((real_pte_t) { \
+			(e), (pte_val(e) & _PAGE_COMBO) ? \
+				(pte_val(*((p) + PTRS_PER_PTE))) : 0 })
+#define __rpte_to_hidx(r,index)	((pte_val((r).pte) & _PAGE_COMBO) ? \
+        (((r).hidx >> ((index)<<2)) & 0xf) : ((pte_val((r).pte) >> 12) & 0xf))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define __rpte_to_pte(r)	((r).pte)
 #define __rpte_sub_valid(rpte, index) \
 	(pte_val(rpte.pte) & (_PAGE_HPTE_SUB0 >> (index)))

@@ -183,6 +183,10 @@ void radeon_atom_backlight_init(struct radeon_encoder *radeon_encoder,
 	struct backlight_properties props;
 	struct radeon_backlight_privdata *pdata;
 	struct radeon_encoder_atom_dig *dig;
+<<<<<<< HEAD
+=======
+	u8 backlight_level;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	char bl_name[16];
 
 	/* Mac laptops with multiple GPUs use the gmux driver for backlight
@@ -221,10 +225,16 @@ void radeon_atom_backlight_init(struct radeon_encoder *radeon_encoder,
 
 	pdata->encoder = radeon_encoder;
 
+<<<<<<< HEAD
+=======
+	backlight_level = radeon_atom_get_backlight_level_from_reg(rdev);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dig = radeon_encoder->enc_priv;
 	dig->bl_dev = bd;
 
 	bd->props.brightness = radeon_atom_backlight_get_brightness(bd);
+<<<<<<< HEAD
 	/* Set a reasonable default here if the level is 0 otherwise
 	 * fbdev will attempt to turn the backlight on after console
 	 * unblanking and it will try and restore 0 which turns the backlight
@@ -232,6 +242,8 @@ void radeon_atom_backlight_init(struct radeon_encoder *radeon_encoder,
 	 */
 	if (bd->props.brightness == 0)
 		bd->props.brightness = RADEON_MAX_BL_LEVEL;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	bd->props.power = FB_BLANK_UNBLANK;
 	backlight_update_status(bd);
 

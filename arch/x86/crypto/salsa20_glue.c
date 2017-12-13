@@ -119,5 +119,10 @@ module_exit(fini);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION ("Salsa20 stream cipher algorithm (optimized assembly version)");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("salsa20");
 MODULE_ALIAS_CRYPTO("salsa20-asm");
+=======
+MODULE_ALIAS("salsa20");
+MODULE_ALIAS("salsa20-asm");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

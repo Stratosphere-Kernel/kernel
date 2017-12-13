@@ -93,7 +93,10 @@ static void srp_send_completion(struct ib_cq *cq, void *target_ptr);
 static int srp_cm_handler(struct ib_cm_id *cm_id, struct ib_cm_event *event);
 
 static struct scsi_transport_template *ib_srp_transport_template;
+<<<<<<< HEAD
 static struct workqueue_struct *srp_remove_wq;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static struct ib_client srp_client = {
 	.name   = "srp",
@@ -457,7 +460,11 @@ static bool srp_queue_remove_work(struct srp_target_port *target)
 	spin_unlock_irq(&target->lock);
 
 	if (changed)
+<<<<<<< HEAD
 		queue_work(srp_remove_wq, &target->remove_work);
+=======
+		queue_work(system_long_wq, &target->remove_work);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return changed;
 }
@@ -2531,10 +2538,16 @@ static void srp_remove_one(struct ib_device *device)
 		spin_unlock(&host->target_lock);
 
 		/*
+<<<<<<< HEAD
 		 * Wait for tl_err and target port removal tasks.
 		 */
 		flush_workqueue(system_long_wq);
 		flush_workqueue(srp_remove_wq);
+=======
+		 * Wait for target port removal tasks.
+		 */
+		flush_workqueue(system_long_wq);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		kfree(host);
 	}
@@ -2579,6 +2592,7 @@ static int __init srp_init_module(void)
 		indirect_sg_entries = cmd_sg_entries;
 	}
 
+<<<<<<< HEAD
 	srp_remove_wq = create_workqueue("srp_remove");
 	if (IS_ERR(srp_remove_wq)) {
 		ret = PTR_ERR(srp_remove_wq);
@@ -2590,11 +2604,22 @@ static int __init srp_init_module(void)
 		srp_attach_transport(&ib_srp_transport_functions);
 	if (!ib_srp_transport_template)
 		goto destroy_wq;
+=======
+	ib_srp_transport_template =
+		srp_attach_transport(&ib_srp_transport_functions);
+	if (!ib_srp_transport_template)
+		return -ENOMEM;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	ret = class_register(&srp_class);
 	if (ret) {
 		pr_err("couldn't register class infiniband_srp\n");
+<<<<<<< HEAD
 		goto release_tr;
+=======
+		srp_release_transport(ib_srp_transport_template);
+		return ret;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	ib_sa_register_client(&srp_sa_client);
@@ -2602,6 +2627,7 @@ static int __init srp_init_module(void)
 	ret = ib_register_client(&srp_client);
 	if (ret) {
 		pr_err("couldn't register IB client\n");
+<<<<<<< HEAD
 		goto unreg_sa;
 	}
 
@@ -2618,6 +2644,15 @@ release_tr:
 destroy_wq:
 	destroy_workqueue(srp_remove_wq);
 	goto out;
+=======
+		srp_release_transport(ib_srp_transport_template);
+		ib_sa_unregister_client(&srp_sa_client);
+		class_unregister(&srp_class);
+		return ret;
+	}
+
+	return 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void __exit srp_cleanup_module(void)
@@ -2626,7 +2661,10 @@ static void __exit srp_cleanup_module(void)
 	ib_sa_unregister_client(&srp_sa_client);
 	class_unregister(&srp_class);
 	srp_release_transport(ib_srp_transport_template);
+<<<<<<< HEAD
 	destroy_workqueue(srp_remove_wq);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 module_init(srp_init_module);

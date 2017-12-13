@@ -1195,9 +1195,16 @@ static inline int queue_alignment_offset(struct request_queue *q)
 static inline int queue_limit_alignment_offset(struct queue_limits *lim, sector_t sector)
 {
 	unsigned int granularity = max(lim->physical_block_size, lim->io_min);
+<<<<<<< HEAD
 	unsigned int alignment = sector_div(sector, granularity >> 9) << 9;
 
 	return (granularity + lim->alignment_offset - alignment) % granularity;
+=======
+	unsigned int alignment = (sector << 9) & (granularity - 1);
+
+	return (granularity + lim->alignment_offset - alignment)
+		& (granularity - 1);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static inline int bdev_alignment_offset(struct block_device *bdev)

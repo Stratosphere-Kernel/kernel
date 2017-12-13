@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+=======
+/* Copyright (c) 2012-2014, 2017, The Linux Foundation. All rights reserved.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -50,6 +54,11 @@
 
 #define GET_FIELD(a) ((strnstr(#a, ".", 80) + 1))
 
+<<<<<<< HEAD
+=======
+static DEFINE_MUTEX(msm_rpm_master_stats_mutex);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 struct msm_rpm_master_stats {
 	uint32_t active_cores;
 	uint32_t numshutdowns;
@@ -76,9 +85,17 @@ int msm_rpm_master_stats_file_close(struct inode *inode,
 {
 	struct msm_rpm_master_stats_private_data *private = file->private_data;
 
+<<<<<<< HEAD
 	if (private->reg_base)
 		iounmap(private->reg_base);
 	kfree(file->private_data);
+=======
+	mutex_lock(&msm_rpm_master_stats_mutex);
+	if (private->reg_base)
+		iounmap(private->reg_base);
+	kfree(file->private_data);
+	mutex_unlock(&msm_rpm_master_stats_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }
@@ -91,14 +108,20 @@ static int msm_rpm_master_copy_stats(
 	static int master_cnt;
 	int count, j = 0;
 	char *buf;
+<<<<<<< HEAD
 	static DEFINE_MUTEX(msm_rpm_master_stats_mutex);
 
 	mutex_lock(&msm_rpm_master_stats_mutex);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Iterate possible number of masters */
 	if (master_cnt > prvdata->num_masters - 1) {
 		master_cnt = 0;
+<<<<<<< HEAD
 		mutex_unlock(&msm_rpm_master_stats_mutex);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return 0;
 	}
 
@@ -214,7 +237,10 @@ static int msm_rpm_master_copy_stats(
 	}
 
 	master_cnt++;
+<<<<<<< HEAD
 	mutex_unlock(&msm_rpm_master_stats_mutex);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return RPM_MASTERS_BUF_LEN - count;
 }
 
@@ -223,6 +249,7 @@ static ssize_t msm_rpm_master_stats_file_read(struct file *file,
 {
 	struct msm_rpm_master_stats_private_data *prvdata;
 	struct msm_rpm_master_stats_platform_data *pdata;
+<<<<<<< HEAD
 
 	prvdata = file->private_data;
 	if (!prvdata)
@@ -234,14 +261,43 @@ static ssize_t msm_rpm_master_stats_file_read(struct file *file,
 
 	if (!bufu || count == 0)
 		return -EINVAL;
+=======
+	ssize_t ret;
+
+	mutex_lock(&msm_rpm_master_stats_mutex);
+	prvdata = file->private_data;
+	if (!prvdata) {
+		ret = -EINVAL;
+		goto exit;
+	}
+
+	pdata = prvdata->platform_data;
+	if (!pdata) {
+		ret = -EINVAL;
+		goto exit;
+	}
+
+	if (!bufu || count == 0) {
+		ret = -EINVAL;
+		goto exit;
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if ((*ppos <= pdata->phys_size)) {
 		prvdata->len = msm_rpm_master_copy_stats(prvdata);
 		*ppos = 0;
 	}
 
+<<<<<<< HEAD
 	return simple_read_from_buffer(bufu, count, ppos,
 			prvdata->buf, prvdata->len);
+=======
+	ret = simple_read_from_buffer(bufu, count, ppos,
+			prvdata->buf, prvdata->len);
+exit:
+	mutex_unlock(&msm_rpm_master_stats_mutex);
+	return ret;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int msm_rpm_master_stats_file_open(struct inode *inode,
@@ -249,15 +305,29 @@ static int msm_rpm_master_stats_file_open(struct inode *inode,
 {
 	struct msm_rpm_master_stats_private_data *prvdata;
 	struct msm_rpm_master_stats_platform_data *pdata;
+<<<<<<< HEAD
 
+=======
+	int ret = 0;
+
+	mutex_lock(&msm_rpm_master_stats_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	pdata = inode->i_private;
 
 	file->private_data =
 		kzalloc(sizeof(struct msm_rpm_master_stats_private_data),
 			GFP_KERNEL);
 
+<<<<<<< HEAD
 	if (!file->private_data)
 		return -ENOMEM;
+=======
+	if (!file->private_data) {
+		ret = -ENOMEM;
+		goto exit;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	prvdata = file->private_data;
 
 	prvdata->reg_base = ioremap(pdata->phys_addr_base,
@@ -268,14 +338,25 @@ static int msm_rpm_master_stats_file_open(struct inode *inode,
 		pr_err("%s: ERROR could not ioremap start=%pa, len=%u\n",
 			__func__, &pdata->phys_addr_base,
 			pdata->phys_size);
+<<<<<<< HEAD
 		return -EBUSY;
+=======
+		ret = -EBUSY;
+		goto exit;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	prvdata->len = 0;
 	prvdata->num_masters = pdata->num_masters;
 	prvdata->master_names = pdata->masters;
 	prvdata->platform_data = pdata;
+<<<<<<< HEAD
 	return 0;
+=======
+exit:
+	mutex_unlock(&msm_rpm_master_stats_mutex);
+	return ret;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static const struct file_operations msm_rpm_master_stats_fops = {

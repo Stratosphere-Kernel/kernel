@@ -883,7 +883,11 @@ ip_vs_tunnel_xmit(struct sk_buff *skb, struct ip_vs_conn *cp,
 	iph->daddr		=	cp->daddr.ip;
 	iph->saddr		=	saddr;
 	iph->ttl		=	old_iph->ttl;
+<<<<<<< HEAD
 	ip_select_ident(skb, NULL);
+=======
+	ip_select_ident(skb, &rt->dst, NULL);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Another hack: avoid icmp_send in ip_fragment */
 	skb->local_df = 1;
@@ -967,8 +971,13 @@ ip_vs_tunnel_xmit_v6(struct sk_buff *skb, struct ip_vs_conn *cp,
 	iph->nexthdr		=	IPPROTO_IPV6;
 	iph->payload_len	=	old_iph->payload_len;
 	be16_add_cpu(&iph->payload_len, sizeof(*old_iph));
+<<<<<<< HEAD
 	memset(&iph->flow_lbl, 0, sizeof(iph->flow_lbl));
 	ipv6_change_dsfield(iph, 0, ipv6_get_dsfield(old_iph));
+=======
+	iph->priority		=	old_iph->priority;
+	memset(&iph->flow_lbl, 0, sizeof(iph->flow_lbl));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	iph->daddr = cp->daddr.in6;
 	iph->saddr = saddr;
 	iph->hop_limit		=	old_iph->hop_limit;

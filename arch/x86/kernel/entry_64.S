@@ -58,7 +58,10 @@
 #include <asm/asm.h>
 #include <asm/context_tracking.h>
 #include <asm/smap.h>
+<<<<<<< HEAD
 #include <asm/pgtable_types.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <linux/err.h>
 
 /* Avoid __ASSEMBLER__'ifying <linux/audit.h> just for this.  */
@@ -366,7 +369,11 @@ ENDPROC(native_usergs_sysret64)
 	/*CFI_REL_OFFSET	ss,0*/
 	pushq_cfi %rax /* rsp */
 	CFI_REL_OFFSET	rsp,0
+<<<<<<< HEAD
 	pushq_cfi $(X86_EFLAGS_IF|X86_EFLAGS_FIXED) /* eflags - interrupts on */
+=======
+	pushq_cfi $(X86_EFLAGS_IF|X86_EFLAGS_BIT1) /* eflags - interrupts on */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*CFI_REL_OFFSET	rflags,0*/
 	pushq_cfi $__KERNEL_CS /* cs */
 	/*CFI_REL_OFFSET	cs,0*/
@@ -557,6 +564,7 @@ ENTRY(ret_from_fork)
 	testl $3, CS-ARGOFFSET(%rsp)		# from kernel_thread?
 	jz   1f
 
+<<<<<<< HEAD
 	/*
 	 * By the time we get here, we have no idea whether our pt_regs,
 	 * ti flags, and ti status came from the 64-bit SYSCALL fast path,
@@ -565,6 +573,13 @@ ENTRY(ret_from_fork)
 	 * all of the above.
 	 */
 	jmp  int_ret_from_sys_call
+=======
+	testl $_TIF_IA32, TI_flags(%rcx)	# 32-bit compat task needs IRET
+	jnz  int_ret_from_sys_call
+
+	RESTORE_TOP_OF_STACK %rdi, -ARGOFFSET
+	jmp ret_from_sys_call			# go to the SYSRET fastpath
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 1:
 	subq $REST_SKIP, %rsp	# leave space for volatiles
@@ -1060,6 +1075,7 @@ restore_args:
 
 irq_return:
 	INTERRUPT_RETURN
+<<<<<<< HEAD
 
 ENTRY(native_iret)
 	/*
@@ -1106,6 +1122,34 @@ native_irq_return_ldt:
 	popq_cfi %rax
 	jmp native_irq_return_iret
 #endif
+=======
+	_ASM_EXTABLE(irq_return, bad_iret)
+
+#ifdef CONFIG_PARAVIRT
+ENTRY(native_iret)
+	iretq
+	_ASM_EXTABLE(native_iret, bad_iret)
+#endif
+
+	.section .fixup,"ax"
+bad_iret:
+	/*
+	 * The iret traps when the %cs or %ss being restored is bogus.
+	 * We've lost the original trap vector and error code.
+	 * #GPF is the most likely one to get for an invalid selector.
+	 * So pretend we completed the iret and took the #GPF in user mode.
+	 *
+	 * We are now running with the kernel GS after exception recovery.
+	 * But error_entry expects us to have user GS to match the user %cs,
+	 * so swap back.
+	 */
+	pushq $0
+
+	SWAPGS
+	jmp general_protection
+
+	.previous
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* edi: workmask, edx: work */
 retint_careful:
@@ -1151,9 +1195,15 @@ ENTRY(retint_kernel)
 	call preempt_schedule_irq
 	jmp exit_intr
 #endif
+<<<<<<< HEAD
 	CFI_ENDPROC
 END(common_interrupt)
 
+=======
+
+	CFI_ENDPROC
+END(common_interrupt)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * End of kprobes section
  */
@@ -1492,7 +1542,11 @@ apicinterrupt HYPERVISOR_CALLBACK_VECTOR \
 
 paranoidzeroentry_ist debug do_debug DEBUG_STACK
 paranoidzeroentry_ist int3 do_int3 DEBUG_STACK
+<<<<<<< HEAD
 errorentry stack_segment do_stack_segment
+=======
+paranoiderrorentry stack_segment do_stack_segment
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifdef CONFIG_XEN
 zeroentry xen_debug do_debug
 zeroentry xen_int3 do_int3
@@ -1602,6 +1656,7 @@ error_sti:
 
 /*
  * There are two places in the kernel that can potentially fault with
+<<<<<<< HEAD
  * usergs. Handle them here.  B stepping K8s sometimes report a
  * truncated RIP for IRET exceptions returning to compat mode. Check
  * for these here too.
@@ -1611,6 +1666,18 @@ error_kernelspace:
 	leaq native_irq_return_iret(%rip),%rcx
 	cmpq %rcx,RIP+8(%rsp)
 	je error_bad_iret
+=======
+ * usergs. Handle them here. The exception handlers after iret run with
+ * kernel gs again, so don't set the user space flag. B stepping K8s
+ * sometimes report an truncated RIP for IRET exceptions returning to
+ * compat mode. Check for these here too.
+ */
+error_kernelspace:
+	incl %ebx
+	leaq irq_return(%rip),%rcx
+	cmpq %rcx,RIP+8(%rsp)
+	je error_swapgs
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	movl %ecx,%eax	/* zero extend */
 	cmpq %rax,RIP+8(%rsp)
 	je bstep_iret
@@ -1621,6 +1688,7 @@ error_kernelspace:
 bstep_iret:
 	/* Fix truncated RIP */
 	movq %rcx,RIP+8(%rsp)
+<<<<<<< HEAD
 	/* fall through */
 
 error_bad_iret:
@@ -1630,6 +1698,9 @@ error_bad_iret:
 	mov %rax,%rsp
 	decl %ebx	/* Return to usergs */
 	jmp error_sti
+=======
+	jmp error_swapgs
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	CFI_ENDPROC
 END(error_entry)
 

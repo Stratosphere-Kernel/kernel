@@ -23,7 +23,10 @@
 #include <linux/slab.h>
 #include <linux/mount.h>
 #include <linux/magic.h>
+<<<<<<< HEAD
 #include <linux/namei.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #include <asm/uaccess.h>
 
@@ -374,6 +377,7 @@ static const struct file_operations proc_reg_file_ops_no_compat = {
 };
 #endif
 
+<<<<<<< HEAD
 static void *proc_follow_link(struct dentry *dentry, struct nameidata *nd)
 {
 	struct proc_dir_entry *pde = PDE(dentry->d_inode);
@@ -394,6 +398,8 @@ const struct inode_operations proc_link_inode_operations = {
 	.put_link	= proc_put_link,
 };
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 struct inode *proc_get_inode(struct super_block *sb, struct proc_dir_entry *de)
 {
 	struct inode *inode = new_inode_pseudo(sb);

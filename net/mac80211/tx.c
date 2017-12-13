@@ -398,9 +398,12 @@ ieee80211_tx_h_multicast_ps_buf(struct ieee80211_tx_data *tx)
 	if (ieee80211_has_order(hdr->frame_control))
 		return TX_CONTINUE;
 
+<<<<<<< HEAD
 	if (ieee80211_is_probe_req(hdr->frame_control))
 		return TX_CONTINUE;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* no stations in PS mode */
 	if (!atomic_read(&ps->num_sta_ps))
 		return TX_CONTINUE;
@@ -450,7 +453,10 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 {
 	struct sta_info *sta = tx->sta;
 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+<<<<<<< HEAD
 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct ieee80211_local *local = tx->local;
 
 	if (unlikely(!sta))
@@ -461,6 +467,7 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 		     !(info->flags & IEEE80211_TX_CTL_NO_PS_BUFFER))) {
 		int ac = skb_get_queue_mapping(tx->skb);
 
+<<<<<<< HEAD
 		/* only deauth, disassoc and action are bufferable MMPDUs */
 		if (ieee80211_is_mgmt(hdr->frame_control) &&
 		    !ieee80211_is_deauth(hdr->frame_control) &&
@@ -470,6 +477,8 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 			return TX_CONTINUE;
 		}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ps_dbg(sta->sdata, "STA %pM aid %d: PS buffer for AC %d\n",
 		       sta->sta.addr, sta->sta.aid, ac);
 		if (tx->local->total_ps_buffered >= TOTAL_MAX_TX_BUFFER)
@@ -527,8 +536,27 @@ ieee80211_tx_h_unicast_ps_buf(struct ieee80211_tx_data *tx)
 static ieee80211_tx_result debug_noinline
 ieee80211_tx_h_ps_buf(struct ieee80211_tx_data *tx)
 {
+<<<<<<< HEAD
 	if (unlikely(tx->flags & IEEE80211_TX_PS_BUFFERED))
 		return TX_CONTINUE;
+=======
+	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+
+	if (unlikely(tx->flags & IEEE80211_TX_PS_BUFFERED))
+		return TX_CONTINUE;
+
+	/* only deauth, disassoc and action are bufferable MMPDUs */
+	if (ieee80211_is_mgmt(hdr->frame_control) &&
+	    !ieee80211_is_deauth(hdr->frame_control) &&
+	    !ieee80211_is_disassoc(hdr->frame_control) &&
+	    !ieee80211_is_action(hdr->frame_control)) {
+		if (tx->flags & IEEE80211_TX_UNICAST)
+			info->flags |= IEEE80211_TX_CTL_NO_PS_BUFFER;
+		return TX_CONTINUE;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (tx->flags & IEEE80211_TX_UNICAST)
 		return ieee80211_tx_h_unicast_ps_buf(tx);
 	else

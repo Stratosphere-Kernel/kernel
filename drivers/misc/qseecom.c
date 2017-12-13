@@ -4424,6 +4424,11 @@ static int __qseecom_qteec_issue_cmd(struct qseecom_dev_handle *data,
 	struct qseecom_qteec_ireq ireq;
 	int ret = 0;
 	uint32_t reqd_len_sb_in = 0;
+<<<<<<< HEAD
+=======
+	void *req_ptr = NULL;
+	void *resp_ptr = NULL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!data || !data->client.ihandle) {
 		pr_err("Client or client handle is not initialized\n");
@@ -4442,6 +4447,17 @@ static int __qseecom_qteec_issue_cmd(struct qseecom_dev_handle *data,
 						(uintptr_t)req->resp_ptr);
 	ireq.resp_len = req->resp_len;
 
+<<<<<<< HEAD
+=======
+	req_ptr = req->req_ptr;
+	resp_ptr = req->resp_ptr;
+
+	req->req_ptr = (void *)__qseecom_uvirt_to_kvirt(data,
+						(uintptr_t)req->req_ptr);
+	req->resp_ptr = (void *)__qseecom_uvirt_to_kvirt(data,
+						(uintptr_t)req->resp_ptr);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	reqd_len_sb_in = req->req_len + req->resp_len;
 	ret = msm_ion_do_cache_op(qseecom.ion_clnt, data->client.ihandle,
 					data->client.sb_virt,

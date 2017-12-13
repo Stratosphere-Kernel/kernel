@@ -2572,11 +2572,14 @@ static noinline long btrfs_ioctl_clone(struct file *file, unsigned long srcfd,
 	if (off + len == src->i_size)
 		len = ALIGN(src->i_size, bs) - off;
 
+<<<<<<< HEAD
 	if (len == 0) {
 		ret = 0;
 		goto out_unlock;
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* verify the end result is block aligned */
 	if (!IS_ALIGNED(off, bs) || !IS_ALIGNED(off + len, bs) ||
 	    !IS_ALIGNED(destoff, bs))

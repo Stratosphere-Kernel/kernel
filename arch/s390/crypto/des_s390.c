@@ -619,8 +619,13 @@ static void __exit des_s390_exit(void)
 module_init(des_s390_init);
 module_exit(des_s390_exit);
 
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("des");
 MODULE_ALIAS_CRYPTO("des3_ede");
+=======
+MODULE_ALIAS("des");
+MODULE_ALIAS("des3_ede");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("DES & Triple DES EDE Cipher Algorithms");

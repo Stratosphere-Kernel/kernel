@@ -52,12 +52,16 @@
  */
 	.macro	get_fs	ad, sp
 	GET_CURRENT(\ad,\sp)
+<<<<<<< HEAD
 #if THREAD_CURRENT_DS > 1020
 	addi	\ad, \ad, TASK_THREAD
 	l32i	\ad, \ad, THREAD_CURRENT_DS - TASK_THREAD
 #else
 	l32i	\ad, \ad, THREAD_CURRENT_DS
 #endif
+=======
+	l32i	\ad, \ad, THREAD_CURRENT_DS
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.endm
 
 /*

@@ -978,7 +978,11 @@ static int acpi_processor_setup_cpuidle_states(struct acpi_processor *pr)
 		return -EINVAL;
 
 	drv->safe_state_index = -1;
+<<<<<<< HEAD
 	for (i = CPUIDLE_DRIVER_STATE_START; i < CPUIDLE_STATE_MAX; i++) {
+=======
+	for (i = 0; i < CPUIDLE_STATE_MAX; i++) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		drv->states[i].name[0] = '\0';
 		drv->states[i].desc[0] = '\0';
 	}
@@ -1101,9 +1105,15 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 
 	if (pr->id == 0 && cpuidle_get_driver() == &acpi_idle_driver) {
 
+<<<<<<< HEAD
 		/* Protect against cpu-hotplug */
 		get_online_cpus();
 		cpuidle_pause_and_lock();
+=======
+		cpuidle_pause_and_lock();
+		/* Protect against cpu-hotplug */
+		get_online_cpus();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/* Disable all cpuidle devices */
 		for_each_online_cpu(cpu) {
@@ -1130,8 +1140,13 @@ int acpi_processor_cst_has_changed(struct acpi_processor *pr)
 				cpuidle_enable_device(dev);
 			}
 		}
+<<<<<<< HEAD
 		cpuidle_resume_and_unlock();
 		put_online_cpus();
+=======
+		put_online_cpus();
+		cpuidle_resume_and_unlock();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	return 0;

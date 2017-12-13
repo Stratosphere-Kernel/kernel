@@ -380,7 +380,11 @@ static unsigned long quick_pit_calibrate(void)
 			goto success;
 		}
 	}
+<<<<<<< HEAD
 	pr_info("Fast TSC calibration failed\n");
+=======
+	pr_err("Fast TSC calibration failed\n");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 
 success:
@@ -968,17 +972,25 @@ void __init tsc_init(void)
 
 	x86_init.timers.tsc_pre_init();
 
+<<<<<<< HEAD
 	if (!cpu_has_tsc) {
 		setup_clear_cpu_cap(X86_FEATURE_TSC_DEADLINE_TIMER);
 		return;
 	}
+=======
+	if (!cpu_has_tsc)
+		return;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	tsc_khz = x86_platform.calibrate_tsc();
 	cpu_khz = tsc_khz;
 
 	if (!tsc_khz) {
 		mark_tsc_unstable("could not calculate TSC khz");
+<<<<<<< HEAD
 		setup_clear_cpu_cap(X86_FEATURE_TSC_DEADLINE_TIMER);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		return;
 	}
 

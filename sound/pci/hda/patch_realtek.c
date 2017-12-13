@@ -175,8 +175,11 @@ static void alc_fix_pll(struct hda_codec *codec)
 			    spec->pll_coef_idx);
 	val = snd_hda_codec_read(codec, spec->pll_nid, 0,
 				 AC_VERB_GET_PROC_COEF, 0);
+<<<<<<< HEAD
 	if (val == -1)
 		return;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	snd_hda_codec_write(codec, spec->pll_nid, 0, AC_VERB_SET_COEF_INDEX,
 			    spec->pll_coef_idx);
 	snd_hda_codec_write(codec, spec->pll_nid, 0, AC_VERB_SET_PROC_COEF,
@@ -266,7 +269,11 @@ static void alc_auto_setup_eapd(struct hda_codec *codec, bool on)
 {
 	/* We currently only handle front, HP */
 	static hda_nid_t pins[] = {
+<<<<<<< HEAD
 		0x0f, 0x10, 0x14, 0x15, 0x17, 0
+=======
+		0x0f, 0x10, 0x14, 0x15, 0
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	};
 	hda_nid_t *p;
 	for (p = pins; *p; p++)
@@ -318,7 +325,10 @@ static void alc_auto_init_amp(struct hda_codec *codec, int type)
 		case 0x10ec0885:
 		case 0x10ec0887:
 		/*case 0x10ec0889:*/ /* this causes an SPDIF problem */
+<<<<<<< HEAD
 		case 0x10ec0900:
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			alc889_coef_init(codec);
 			break;
 		case 0x10ec0888:
@@ -2148,7 +2158,10 @@ static const struct hda_fixup alc882_fixups[] = {
 static const struct snd_pci_quirk alc882_fixup_tbl[] = {
 	SND_PCI_QUIRK(0x1025, 0x006c, "Acer Aspire 9810", ALC883_FIXUP_ACER_EAPD),
 	SND_PCI_QUIRK(0x1025, 0x0090, "Acer Aspire", ALC883_FIXUP_ACER_EAPD),
+<<<<<<< HEAD
 	SND_PCI_QUIRK(0x1025, 0x0107, "Acer Aspire", ALC883_FIXUP_ACER_EAPD),
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	SND_PCI_QUIRK(0x1025, 0x010a, "Acer Ferrari 5000", ALC883_FIXUP_ACER_EAPD),
 	SND_PCI_QUIRK(0x1025, 0x0110, "Acer Aspire", ALC883_FIXUP_ACER_EAPD),
 	SND_PCI_QUIRK(0x1025, 0x0112, "Acer Aspire 9303", ALC883_FIXUP_ACER_EAPD),
@@ -2204,7 +2217,11 @@ static const struct snd_pci_quirk alc882_fixup_tbl[] = {
 	SND_PCI_QUIRK(0x106b, 0x4300, "iMac 9,1", ALC889_FIXUP_IMAC91_VREF),
 	SND_PCI_QUIRK(0x106b, 0x4600, "MacbookPro 5,2", ALC889_FIXUP_IMAC91_VREF),
 	SND_PCI_QUIRK(0x106b, 0x4900, "iMac 9,1 Aluminum", ALC889_FIXUP_IMAC91_VREF),
+<<<<<<< HEAD
 	SND_PCI_QUIRK(0x106b, 0x4a00, "Macbook 5,2", ALC889_FIXUP_MBA11_VREF),
+=======
+	SND_PCI_QUIRK(0x106b, 0x4a00, "Macbook 5,2", ALC889_FIXUP_IMAC91_VREF),
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	SND_PCI_QUIRK(0x1071, 0x8258, "Evesham Voyaeger", ALC882_FIXUP_EAPD),
 	SND_PCI_QUIRK(0x1462, 0x7350, "MSI-7350", ALC889_FIXUP_CD),
@@ -2254,7 +2271,10 @@ static int patch_alc882(struct hda_codec *codec)
 	switch (codec->vendor_id) {
 	case 0x10ec0882:
 	case 0x10ec0885:
+<<<<<<< HEAD
 	case 0x10ec0900:
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	default:
 		/* ALC883 and variants */
@@ -2682,8 +2702,11 @@ static int alc269_parse_auto_config(struct hda_codec *codec)
 static void alc269vb_toggle_power_output(struct hda_codec *codec, int power_up)
 {
 	int val = alc_read_coef_idx(codec, 0x04);
+<<<<<<< HEAD
 	if (val == -1)
 		return;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (power_up)
 		val |= 1 << 11;
 	else
@@ -3364,8 +3387,11 @@ enum {
 	ALC269_FIXUP_QUANTA_MUTE,
 	ALC269_FIXUP_LIFEBOOK,
 	ALC269_FIXUP_LIFEBOOK_EXTMIC,
+<<<<<<< HEAD
 	ALC269_FIXUP_LIFEBOOK_HP_PIN,
 	ALC269_FIXUP_LIFEBOOK_NO_HP_TO_LINEOUT,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ALC269_FIXUP_AMIC,
 	ALC269_FIXUP_DMIC,
 	ALC269VB_FIXUP_AMIC,
@@ -3384,7 +3410,10 @@ enum {
 	ALC290_FIXUP_MONO_SPEAKERS,
 	ALC269_FIXUP_HEADSET_MODE,
 	ALC269_FIXUP_HEADSET_MODE_NO_HP_MIC,
+<<<<<<< HEAD
 	ALC269_FIXUP_ASPIRE_HEADSET_MIC,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ALC269_FIXUP_ASUS_X101_FUNC,
 	ALC269_FIXUP_ASUS_X101_VERB,
 	ALC269_FIXUP_ASUS_X101,
@@ -3481,6 +3510,7 @@ static const struct hda_fixup alc269_fixups[] = {
 			{ }
 		},
 	},
+<<<<<<< HEAD
 	[ALC269_FIXUP_LIFEBOOK_HP_PIN] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = (const struct hda_pintbl[]) {
@@ -3492,6 +3522,8 @@ static const struct hda_fixup alc269_fixups[] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = alc269_fixup_pincfg_no_hp_to_lineout,
 	},
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	[ALC269_FIXUP_AMIC] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = (const struct hda_pintbl[]) {
@@ -3604,6 +3636,7 @@ static const struct hda_fixup alc269_fixups[] = {
 		.type = HDA_FIXUP_FUNC,
 		.v.func = alc_fixup_headset_mode_no_hp_mic,
 	},
+<<<<<<< HEAD
 	[ALC269_FIXUP_ASPIRE_HEADSET_MIC] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = (const struct hda_pintbl[]) {
@@ -3613,6 +3646,8 @@ static const struct hda_fixup alc269_fixups[] = {
 		.chained = true,
 		.chain_id = ALC269_FIXUP_HEADSET_MODE,
 	},
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	[ALC286_FIXUP_SONY_MIC_NO_PRESENCE] = {
 		.type = HDA_FIXUP_PINS,
 		.v.pins = (const struct hda_pintbl[]) {
@@ -3747,15 +3782,21 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
 	SND_PCI_QUIRK_VENDOR(0x104d, "Sony VAIO", ALC269_FIXUP_SONY_VAIO),
 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
 	SND_PCI_QUIRK(0x1025, 0x047c, "Acer AC700", ALC269_FIXUP_ACER_AC700),
+<<<<<<< HEAD
 	SND_PCI_QUIRK(0x1025, 0x072d, "Acer Aspire V5-571G", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
 	SND_PCI_QUIRK(0x1025, 0x080d, "Acer Aspire V5-122P", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	SND_PCI_QUIRK(0x1025, 0x0740, "Acer AO725", ALC271_FIXUP_HP_GATE_MIC_JACK),
 	SND_PCI_QUIRK(0x1025, 0x0742, "Acer AO756", ALC271_FIXUP_HP_GATE_MIC_JACK),
 	SND_PCI_QUIRK_VENDOR(0x1025, "Acer Aspire", ALC271_FIXUP_DMIC),
 	SND_PCI_QUIRK(0x10cf, 0x1475, "Lifebook", ALC269_FIXUP_LIFEBOOK),
+<<<<<<< HEAD
 	SND_PCI_QUIRK(0x10cf, 0x159f, "Lifebook E780", ALC269_FIXUP_LIFEBOOK_NO_HP_TO_LINEOUT),
 	SND_PCI_QUIRK(0x10cf, 0x15dc, "Lifebook T731", ALC269_FIXUP_LIFEBOOK_HP_PIN),
 	SND_PCI_QUIRK(0x10cf, 0x1757, "Lifebook E752", ALC269_FIXUP_LIFEBOOK_HP_PIN),
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Thinkpad SL410/510", ALC269_FIXUP_SKU_IGNORE),
 	SND_PCI_QUIRK(0x17aa, 0x215e, "Thinkpad L512", ALC269_FIXUP_SKU_IGNORE),
@@ -3857,30 +3898,49 @@ static void alc269_fill_coef(struct hda_codec *codec)
 	if ((alc_get_coef0(codec) & 0x00ff) == 0x017) {
 		val = alc_read_coef_idx(codec, 0x04);
 		/* Power up output pin */
+<<<<<<< HEAD
 		if (val != -1)
 			alc_write_coef_idx(codec, 0x04, val | (1<<11));
+=======
+		alc_write_coef_idx(codec, 0x04, val | (1<<11));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if ((alc_get_coef0(codec) & 0x00ff) == 0x018) {
 		val = alc_read_coef_idx(codec, 0xd);
+<<<<<<< HEAD
 		if (val != -1 && (val & 0x0c00) >> 10 != 0x1) {
+=======
+		if ((val & 0x0c00) >> 10 != 0x1) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			/* Capless ramp up clock control */
 			alc_write_coef_idx(codec, 0xd, val | (1<<10));
 		}
 		val = alc_read_coef_idx(codec, 0x17);
+<<<<<<< HEAD
 		if (val != -1 && (val & 0x01c0) >> 6 != 0x4) {
+=======
+		if ((val & 0x01c0) >> 6 != 0x4) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			/* Class D power on reset */
 			alc_write_coef_idx(codec, 0x17, val | (1<<7));
 		}
 	}
 
 	val = alc_read_coef_idx(codec, 0xd); /* Class D */
+<<<<<<< HEAD
 	if (val != -1)
 		alc_write_coef_idx(codec, 0xd, val | (1<<14));
 
 	val = alc_read_coef_idx(codec, 0x4); /* HP */
 	if (val != -1)
 		alc_write_coef_idx(codec, 0x4, val | (1<<11));
+=======
+	alc_write_coef_idx(codec, 0xd, val | (1<<14));
+
+	val = alc_read_coef_idx(codec, 0x4); /* HP */
+	alc_write_coef_idx(codec, 0x4, val | (1<<11));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*

@@ -591,6 +591,7 @@ static int __open_metadata(struct dm_pool_metadata *pmd)
 
 	disk_super = dm_block_data(sblock);
 
+<<<<<<< HEAD
 	/* Verify the data block size hasn't changed */
 	if (le32_to_cpu(disk_super->data_block_size) != pmd->data_block_size) {
 		DMERR("changing the data block size (from %u to %llu) is not supported",
@@ -600,6 +601,8 @@ static int __open_metadata(struct dm_pool_metadata *pmd)
 		goto bad_unlock_sblock;
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	r = __check_incompat_features(disk_super, pmd);
 	if (r < 0)
 		goto bad_unlock_sblock;
@@ -1281,8 +1284,13 @@ static int __release_metadata_snap(struct dm_pool_metadata *pmd)
 		return r;
 
 	disk_super = dm_block_data(copy);
+<<<<<<< HEAD
 	dm_btree_del(&pmd->info, le64_to_cpu(disk_super->data_mapping_root));
 	dm_btree_del(&pmd->details_info, le64_to_cpu(disk_super->device_details_root));
+=======
+	dm_sm_dec_block(pmd->metadata_sm, le64_to_cpu(disk_super->data_mapping_root));
+	dm_sm_dec_block(pmd->metadata_sm, le64_to_cpu(disk_super->device_details_root));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	dm_sm_dec_block(pmd->metadata_sm, held_root);
 
 	return dm_tm_unlock(pmd->tm, copy);

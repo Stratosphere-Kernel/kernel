@@ -322,6 +322,7 @@ static struct usbmix_name_map hercules_usb51_map[] = {
 	{ 0 }				/* terminator */
 };
 
+<<<<<<< HEAD
 /* some (all?) SCMS USB3318 devices are affected by a firmware lock up
  * when anything attempts to access FU 10 (control)
  */
@@ -344,6 +345,13 @@ static struct usbmix_name_map dragonfly_1_2_map[] = {
 	{ 0 }	/* terminator */
 };
 
+=======
+static const struct usbmix_name_map kef_x300a_map[] = {
+	{ 10, NULL }, /* firmware locks up (?) when we try to access this FU */
+	{ 0 }
+};
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  * Control map entries
  */
@@ -432,6 +440,7 @@ static struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		.map = ebox44_map,
 	},
 	{
+<<<<<<< HEAD
 		/* MAYA44 USB+ */
 		.id = USB_ID(0x2573, 0x0008),
 		.map = maya44_map,
@@ -455,6 +464,10 @@ static struct usbmix_ctl_map usbmix_ctl_maps[] = {
 		/* Dragonfly DAC 1.2 */
 		.id = USB_ID(0x21b4, 0x0081),
 		.map = dragonfly_1_2_map,
+=======
+		.id = USB_ID(0x27ac, 0x1000),
+		.map = kef_x300a_map,
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	},
 	{ 0 } /* terminator */
 };

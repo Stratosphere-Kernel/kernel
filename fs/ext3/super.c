@@ -1300,6 +1300,16 @@ set_qf_format:
 					"not specified.");
 			return 0;
 		}
+<<<<<<< HEAD
+=======
+	} else {
+		if (sbi->s_jquota_fmt) {
+			ext3_msg(sb, KERN_ERR, "error: journaled quota format "
+					"specified with no journaling "
+					"enabled.");
+			return 0;
+		}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 #endif
 	return 1;

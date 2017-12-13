@@ -927,7 +927,11 @@ bool dev_valid_name(const char *name)
 		return false;
 
 	while (*name) {
+<<<<<<< HEAD
 		if (*name == '/' || *name == ':' || isspace(*name))
+=======
+		if (*name == '/' || isspace(*name))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return false;
 		name++;
 	}

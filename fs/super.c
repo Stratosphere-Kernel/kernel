@@ -76,8 +76,11 @@ static int prune_super(struct shrinker *shrink, struct shrink_control *sc)
 
 	total_objects = sb->s_nr_dentry_unused +
 			sb->s_nr_inodes_unused + fs_objects + 1;
+<<<<<<< HEAD
 	if (!total_objects)
 		total_objects = 1;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (sc->nr_to_scan) {
 		int	dentries;
@@ -163,6 +166,22 @@ static struct super_block *alloc_super(struct file_system_type *type, int flags)
 			s = NULL;
 			goto out;
 		}
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SMP
+		s->s_files = alloc_percpu(struct list_head);
+		if (!s->s_files)
+			goto err_out;
+		else {
+			int i;
+
+			for_each_possible_cpu(i)
+				INIT_LIST_HEAD(per_cpu_ptr(s->s_files, i));
+		}
+#else
+		INIT_LIST_HEAD(&s->s_files);
+#endif
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (init_sb_writers(s, type))
 			goto err_out;
 		s->s_flags = flags;
@@ -212,6 +231,13 @@ out:
 	return s;
 err_out:
 	security_sb_free(s);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SMP
+	if (s->s_files)
+		free_percpu(s->s_files);
+#endif
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	destroy_sb_writers(s);
 	kfree(s);
 	s = NULL;
@@ -226,6 +252,12 @@ err_out:
  */
 static inline void destroy_super(struct super_block *s)
 {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SMP
+	free_percpu(s->s_files);
+#endif
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	destroy_sb_writers(s);
 	security_sb_free(s);
 	WARN_ON(!list_empty(&s->s_mounts));
@@ -675,7 +707,12 @@ rescan:
 }
 
 /**
+<<<<<<< HEAD
  *	do_remount_sb - asks filesystem to change mount options.
+=======
+ *	do_remount_sb2 - asks filesystem to change mount options.
+ *	@mnt:   mount we are looking at
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *	@sb:	superblock in question
  *	@flags:	numeric part of options
  *	@data:	the rest of options
@@ -683,7 +720,11 @@ rescan:
  *
  *	Alters the mount options of a mounted file system.
  */
+<<<<<<< HEAD
 int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
+=======
+int do_remount_sb2(struct vfsmount *mnt, struct super_block *sb, int flags, void *data, int force)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int retval;
 	int remount_ro;
@@ -706,8 +747,12 @@ int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 	   make sure there are no rw files opened */
 	if (remount_ro) {
 		if (force) {
+<<<<<<< HEAD
 			sb->s_readonly_remount = 1;
 			smp_wmb();
+=======
+			mark_files_ro(sb);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		} else {
 			retval = sb_prepare_remount_readonly(sb);
 			if (retval)
@@ -717,7 +762,20 @@ int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 
 	sync_filesystem(sb);
 
+<<<<<<< HEAD
 	if (sb->s_op->remount_fs) {
+=======
+	if (mnt && sb->s_op->remount_fs2) {
+		retval = sb->s_op->remount_fs2(mnt, sb, &flags, data);
+		if (retval) {
+			if (!force)
+				goto cancel_readonly;
+			/* If forced remount, go ahead despite any errors */
+			WARN(1, "forced remount of a %s fs returned %i\n",
+			     sb->s_type->name, retval);
+		}
+	} else if (sb->s_op->remount_fs) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		retval = sb->s_op->remount_fs(sb, &flags, data);
 		if (retval) {
 			if (!force)
@@ -749,6 +807,14 @@ cancel_readonly:
 	return retval;
 }
 
+<<<<<<< HEAD
+=======
+int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
+{
+	return do_remount_sb2(NULL, sb, flags, data, force);
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void do_emergency_remount(struct work_struct *work)
 {
 	struct super_block *sb, *p = NULL;
@@ -1068,7 +1134,11 @@ struct dentry *mount_single(struct file_system_type *fs_type,
 EXPORT_SYMBOL(mount_single);
 
 struct dentry *
+<<<<<<< HEAD
 mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
+=======
+mount_fs(struct file_system_type *type, int flags, const char *name, struct vfsmount *mnt, void *data)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct dentry *root;
 	struct super_block *sb;
@@ -1085,7 +1155,14 @@ mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
 			goto out_free_secdata;
 	}
 
+<<<<<<< HEAD
 	root = type->mount(type, flags, name, data);
+=======
+	if (type->mount2)
+		root = type->mount2(mnt, type, flags, name, data);
+	else
+		root = type->mount(type, flags, name, data);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (IS_ERR(root)) {
 		error = PTR_ERR(root);
 		goto out_free_secdata;

@@ -666,8 +666,11 @@ int radeon_get_vblank_timestamp_kms(struct drm_device *dev, int crtc,
 
 	/* Get associated drm_crtc: */
 	drmcrtc = &rdev->mode_info.crtcs[crtc]->base;
+<<<<<<< HEAD
 	if (!drmcrtc)
 		return -EINVAL;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Helper routine in DRM core does all the work: */
 	return drm_calc_vbltimestamp_from_scanoutpos(dev, crtc, max_error,

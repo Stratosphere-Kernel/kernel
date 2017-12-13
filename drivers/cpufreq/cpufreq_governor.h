@@ -126,7 +126,10 @@ static void *get_cpu_dbs_info_s(int cpu)				\
  * cdbs: common dbs
  * od_*: On-demand governor
  * cs_*: Conservative governor
+<<<<<<< HEAD
  * ex_*: ElementalX governor
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  */
 
 /* Per cpu structures */
@@ -163,12 +166,15 @@ struct cs_cpu_dbs_info_s {
 	unsigned int enable:1;
 };
 
+<<<<<<< HEAD
 struct ex_cpu_dbs_info_s {
 	struct cpu_dbs_common_info cdbs;
 	unsigned int down_floor;
 	unsigned int enable:1;
 };
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* Per policy Governors sysfs tunables */
 struct od_dbs_tuners {
 	unsigned int ignore_nice_load;
@@ -186,6 +192,7 @@ struct cs_dbs_tuners {
 	unsigned int up_threshold;
 	unsigned int down_threshold;
 	unsigned int freq_step;
+<<<<<<< HEAD
 	unsigned int touch_load_duration;
 	unsigned int input_boost_freq;
 	unsigned int input_boost_duration;
@@ -206,13 +213,20 @@ struct ex_dbs_tuners {
 };
 
 
+=======
+};
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* Common Governor data across policies */
 struct dbs_data;
 struct common_dbs_data {
 	/* Common across governors */
 	#define GOV_ONDEMAND		0
 	#define GOV_CONSERVATIVE	1
+<<<<<<< HEAD
 	#define GOV_ELEMENTALX		2
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int governor;
 	struct attribute_group *attr_group_gov_sys; /* one governor - system */
 	struct attribute_group *attr_group_gov_pol; /* one governor - policy */
@@ -228,7 +242,10 @@ struct common_dbs_data {
 	void (*gov_dbs_timer)(struct work_struct *work);
 	void (*gov_check_cpu)(int cpu, unsigned int load);
 	int (*init)(struct dbs_data *dbs_data);
+<<<<<<< HEAD
 	int (*init_ex)(struct dbs_data *dbs_data, struct cpufreq_policy *policy);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	void (*exit)(struct dbs_data *dbs_data);
 
 	/* Governor specific ops, see below */
@@ -239,7 +256,10 @@ struct common_dbs_data {
 struct dbs_data {
 	struct common_dbs_data *cdata;
 	unsigned int min_sampling_rate;
+<<<<<<< HEAD
 	struct cpufreq_frequency_table *freq_table;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int usage_count;
 	void *tuners;
 
@@ -297,4 +317,7 @@ void od_register_powersave_bias_handler(unsigned int (*f)
 		unsigned int powersave_bias);
 void od_unregister_powersave_bias_handler(void);
 #endif /* _CPUFREQ_GOVERNOR_H */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

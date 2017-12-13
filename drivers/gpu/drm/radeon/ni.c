@@ -930,12 +930,21 @@ static void cayman_gpu_init(struct radeon_device *rdev)
 
 	if ((rdev->config.cayman.max_backends_per_se == 1) &&
 	    (rdev->flags & RADEON_IS_IGP)) {
+<<<<<<< HEAD
 		if ((disabled_rb_mask & 3) == 2) {
 			/* RB1 disabled, RB0 enabled */
 			tmp = 0x00000000;
 		} else {
 			/* RB0 disabled, RB1 enabled */
 			tmp = 0x11111111;
+=======
+		if ((disabled_rb_mask & 3) == 1) {
+			/* RB0 disabled, RB1 enabled */
+			tmp = 0x11111111;
+		} else {
+			/* RB1 disabled, RB0 enabled */
+			tmp = 0x00000000;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 	} else {
 		tmp = gb_addr_config & NUM_PIPES_MASK;

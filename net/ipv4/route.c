@@ -89,7 +89,10 @@
 #include <linux/rcupdate.h>
 #include <linux/times.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/jhash.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <net/dst.h>
 #include <net/net_namespace.h>
 #include <net/protocol.h>
@@ -465,6 +468,7 @@ static struct neighbour *ipv4_neigh_lookup(const struct dst_entry *dst,
 	return neigh_create(&arp_tbl, pkey, dev);
 }
 
+<<<<<<< HEAD
 #define IP_IDENTS_SZ 2048u
 struct ip_ident_bucket {
 	atomic_t	id;
@@ -512,6 +516,41 @@ void __ip_select_ident(struct iphdr *iph, int segs)
 			    ip_idents_hashrnd);
 	id = ip_idents_reserve(hash, segs);
 	iph->id = htons(id);
+=======
+/*
+ * Peer allocation may fail only in serious out-of-memory conditions.  However
+ * we still can generate some output.
+ * Random ID selection looks a bit dangerous because we have no chances to
+ * select ID being unique in a reasonable period of time.
+ * But broken packet identifier may be better than no packet at all.
+ */
+static void ip_select_fb_ident(struct iphdr *iph)
+{
+	static DEFINE_SPINLOCK(ip_fb_id_lock);
+	static u32 ip_fallback_id;
+	u32 salt;
+
+	spin_lock_bh(&ip_fb_id_lock);
+	salt = secure_ip_id((__force __be32)ip_fallback_id ^ iph->daddr);
+	iph->id = htons(salt & 0xFFFF);
+	ip_fallback_id = salt;
+	spin_unlock_bh(&ip_fb_id_lock);
+}
+
+void __ip_select_ident(struct iphdr *iph, struct dst_entry *dst, int more)
+{
+	struct net *net = dev_net(dst->dev);
+	struct inet_peer *peer;
+
+	peer = inet_getpeer_v4(net->ipv4.peers, iph->daddr, 1);
+	if (peer) {
+		iph->id = htons(inet_getid(peer, more));
+		inet_putpeer(peer);
+		return;
+	}
+
+	ip_select_fb_ident(iph);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 EXPORT_SYMBOL(__ip_select_ident);
 
@@ -872,10 +911,13 @@ static int ip_error(struct sk_buff *skb)
 	bool send;
 	int code;
 
+<<<<<<< HEAD
 	/* IP on this device is disabled. */
 	if (!in_dev)
 		goto out;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	net = dev_net(rt->dst.dev);
 	if (!IN_DEV_FORWARD(in_dev)) {
 		switch (rt->dst.error) {
@@ -1012,6 +1054,7 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	const struct iphdr *iph = (const struct iphdr *) skb->data;
 	struct flowi4 fl4;
 	struct rtable *rt;
+<<<<<<< HEAD
 	struct dst_entry *odst = NULL;
 	bool new = false;
 
@@ -1019,14 +1062,27 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	odst = sk_dst_get(sk);
 
 	if (sock_owned_by_user(sk) || !odst) {
+=======
+	struct dst_entry *dst;
+	bool new = false;
+
+	bh_lock_sock(sk);
+	rt = (struct rtable *) __sk_dst_get(sk);
+
+	if (sock_owned_by_user(sk) || !rt) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		__ipv4_sk_update_pmtu(skb, sk, mtu);
 		goto out;
 	}
 
 	__build_flow_key(&fl4, sk, iph, 0, 0, 0, 0, 0);
 
+<<<<<<< HEAD
 	rt = (struct rtable *)odst;
 	if (odst->obsolete && odst->ops->check(odst, 0) == NULL) {
+=======
+	if (!__sk_dst_check(sk, 0)) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		rt = ip_route_output_flow(sock_net(sk), &fl4, sk);
 		if (IS_ERR(rt))
 			goto out;
@@ -1036,7 +1092,12 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 
 	__ip_rt_update_pmtu((struct rtable *) rt->dst.path, &fl4, mtu);
 
+<<<<<<< HEAD
 	if (!dst_check(&rt->dst, 0)) {
+=======
+	dst = dst_check(&rt->dst, 0);
+	if (!dst) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (new)
 			dst_release(&rt->dst);
 
@@ -1048,11 +1109,18 @@ void ipv4_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, u32 mtu)
 	}
 
 	if (new)
+<<<<<<< HEAD
 		sk_dst_set(sk, &rt->dst);
 
 out:
 	bh_unlock_sock(sk);
 	dst_release(odst);
+=======
+		__sk_dst_set(sk, &rt->dst);
+
+out:
+	bh_unlock_sock(sk);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 EXPORT_SYMBOL_GPL(ipv4_sk_update_pmtu);
 
@@ -1528,10 +1596,18 @@ static int __mkroute_input(struct sk_buff *skb,
 
 	do_cache = res->fi && !itag;
 	if (out_dev == in_dev && err && IN_DEV_TX_REDIRECTS(out_dev) &&
+<<<<<<< HEAD
 	    skb->protocol == htons(ETH_P_IP) &&
 	    (IN_DEV_SHARED_MEDIA(out_dev) ||
 	     inet_addr_onlink(out_dev, saddr, FIB_RES_GW(*res))))
 		IPCB(skb)->flags |= IPSKB_DOREDIRECT;
+=======
+	    (IN_DEV_SHARED_MEDIA(out_dev) ||
+	     inet_addr_onlink(out_dev, saddr, FIB_RES_GW(*res)))) {
+		flags |= RTCF_DOREDIRECT;
+		do_cache = false;
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (skb->protocol != htons(ETH_P_IP)) {
 		/* Not IP (i.e. ARP). Do not create route, if it is
@@ -2272,8 +2348,11 @@ static int rt_fill_info(struct net *net,  __be32 dst, __be32 src,
 	r->rtm_flags	= (rt->rt_flags & ~0xFFFF) | RTM_F_CLONED;
 	if (rt->rt_flags & RTCF_NOTIFY)
 		r->rtm_flags |= RTM_F_NOTIFY;
+<<<<<<< HEAD
 	if (IPCB(skb)->flags & IPSKB_DOREDIRECT)
 		r->rtm_flags |= RTCF_DOREDIRECT;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (nla_put_be32(skb, RTA_DST, dst))
 		goto nla_put_failure;
@@ -2694,12 +2773,15 @@ int __init ip_rt_init(void)
 {
 	int rc = 0;
 
+<<<<<<< HEAD
 	ip_idents = kmalloc(IP_IDENTS_SZ * sizeof(*ip_idents), GFP_KERNEL);
 	if (!ip_idents)
 		panic("IP: failed to allocate ip_idents\n");
 
 	prandom_bytes(ip_idents, IP_IDENTS_SZ * sizeof(*ip_idents));
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifdef CONFIG_IP_ROUTE_CLASSID
 	ip_rt_acct = __alloc_percpu(256 * sizeof(struct ip_rt_acct), __alignof__(struct ip_rt_acct));
 	if (!ip_rt_acct)

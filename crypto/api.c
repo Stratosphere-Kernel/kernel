@@ -216,11 +216,19 @@ struct crypto_alg *crypto_larval_lookup(const char *name, u32 type, u32 mask)
 
 	alg = crypto_alg_lookup(name, type, mask);
 	if (!alg) {
+<<<<<<< HEAD
 		request_module("crypto-%s", name);
 
 		if (!((type ^ CRYPTO_ALG_NEED_FALLBACK) & mask &
 		      CRYPTO_ALG_NEED_FALLBACK))
 			request_module("crypto-%s-all", name);
+=======
+		request_module("%s", name);
+
+		if (!((type ^ CRYPTO_ALG_NEED_FALLBACK) & mask &
+		      CRYPTO_ALG_NEED_FALLBACK))
+			request_module("%s-all", name);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		alg = crypto_alg_lookup(name, type, mask);
 	}

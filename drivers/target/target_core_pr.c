@@ -518,6 +518,7 @@ static int core_scsi3_pr_seq_non_holder(
 
 			return 0;
 		}
+<<<<<<< HEAD
        } else if (we && registered_nexus) {
                /*
                 * Reads are allowed for Write Exclusive locks
@@ -530,6 +531,8 @@ static int core_scsi3_pr_seq_non_holder(
 
                        return 0;
                }
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	pr_debug("%s Conflict for %sregistered nexus %s CDB: 0x%2x"
 		" for %s reservation\n", transport_dump_cmd_direction(cmd),
@@ -957,10 +960,17 @@ int core_scsi3_check_aptpl_registration(
 	struct se_device *dev,
 	struct se_portal_group *tpg,
 	struct se_lun *lun,
+<<<<<<< HEAD
 	struct se_node_acl *nacl,
 	u32 mapped_lun)
 {
 	struct se_dev_entry *deve = nacl->device_list[mapped_lun];
+=======
+	struct se_lun_acl *lun_acl)
+{
+	struct se_node_acl *nacl = lun_acl->se_lun_nacl;
+	struct se_dev_entry *deve = nacl->device_list[lun_acl->mapped_lun];
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (dev->dev_reservation_flags & DRF_SPC2_RESERVATIONS)
 		return 0;
@@ -2409,7 +2419,10 @@ core_scsi3_pro_reserve(struct se_cmd *cmd, int type, int scope, u64 res_key)
 	spin_lock(&dev->dev_reservation_lock);
 	pr_res_holder = dev->dev_pr_res_holder;
 	if (pr_res_holder) {
+<<<<<<< HEAD
 		int pr_res_type = pr_res_holder->pr_res_type;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/*
 		 * From spc4r17 Section 5.7.9: Reserving:
 		 *
@@ -2420,9 +2433,13 @@ core_scsi3_pro_reserve(struct se_cmd *cmd, int type, int scope, u64 res_key)
 		 * the logical unit, then the command shall be completed with
 		 * RESERVATION CONFLICT status.
 		 */
+<<<<<<< HEAD
 		if ((pr_res_holder != pr_reg) &&
 		    (pr_res_type != PR_TYPE_WRITE_EXCLUSIVE_ALLREG) &&
 		    (pr_res_type != PR_TYPE_EXCLUSIVE_ACCESS_ALLREG)) {
+=======
+		if (pr_res_holder != pr_reg) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			struct se_node_acl *pr_res_nacl = pr_res_holder->pr_reg_nacl;
 			pr_err("SPC-3 PR: Attempted RESERVE from"
 				" [%s]: %s while reservation already held by"
@@ -4027,8 +4044,12 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	unsigned char *buf;
 	u32 add_desc_len = 0, add_len = 0, desc_len, exp_desc_len;
 	u32 off = 8; /* off into first Full Status descriptor */
+<<<<<<< HEAD
 	int format_code = 0, pr_res_type = 0, pr_res_scope = 0;
 	bool all_reg = false;
+=======
+	int format_code = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (cmd->data_length < 8) {
 		pr_err("PRIN SA READ_FULL_STATUS SCSI Data Length: %u"
@@ -4045,6 +4066,7 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	buf[2] = ((dev->t10_pr.pr_generation >> 8) & 0xff);
 	buf[3] = (dev->t10_pr.pr_generation & 0xff);
 
+<<<<<<< HEAD
 	spin_lock(&dev->dev_reservation_lock);
 	if (dev->dev_pr_res_holder) {
 		struct t10_pr_registration *pr_holder = dev->dev_pr_res_holder;
@@ -4058,6 +4080,8 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 	}
 	spin_unlock(&dev->dev_reservation_lock);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock(&pr_tmpl->registration_lock);
 	list_for_each_entry_safe(pr_reg, pr_reg_tmp,
 			&pr_tmpl->registration_list, pr_reg_list) {
@@ -4107,13 +4131,18 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 		 * reservation holder for PR_HOLDER bit.
 		 *
 		 * Also, if this registration is the reservation
+<<<<<<< HEAD
 		 * holder or there is an All Registrants reservation
 		 * active, fill in SCOPE and TYPE in the next byte.
+=======
+		 * holder, fill in SCOPE and TYPE in the next byte.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		 */
 		if (pr_reg->pr_res_holder) {
 			buf[off++] |= 0x01;
 			buf[off++] = (pr_reg->pr_res_scope & 0xf0) |
 				     (pr_reg->pr_res_type & 0x0f);
+<<<<<<< HEAD
 		} else if (all_reg) {
 			buf[off++] |= 0x01;
 			buf[off++] = (pr_res_scope & 0xf0) |
@@ -4121,6 +4150,10 @@ core_scsi3_pri_read_full_status(struct se_cmd *cmd)
 		} else {
 			off += 2;
 		}
+=======
+		} else
+			off += 2;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		off += 4; /* Skip over reserved area */
 		/*

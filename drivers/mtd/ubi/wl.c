@@ -1198,7 +1198,11 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
 				int cancel)
 {
 	int err, scrubbing = 0, torture = 0, protect = 0, erroneous = 0;
+<<<<<<< HEAD
 	int vol_id = -1, lnum = -1;
+=======
+	int vol_id = -1, uninitialized_var(lnum);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifdef CONFIG_MTD_UBI_FASTMAP
 	int anchor = wrk->anchor;
 #endif
@@ -1412,6 +1416,10 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
 
 	err = do_sync_erase(ubi, e1, vol_id, lnum, 0);
 	if (err) {
+<<<<<<< HEAD
+=======
+		kmem_cache_free(ubi_wl_entry_slab, e1);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (e2)
 			kmem_cache_free(ubi_wl_entry_slab, e2);
 		goto out_ro;
@@ -1425,8 +1433,15 @@ static int wear_leveling_worker(struct ubi_device *ubi, struct ubi_work *wrk,
 		dbg_wl("PEB %d (LEB %d:%d) was put meanwhile, erase",
 		       e2->pnum, vol_id, lnum);
 		err = do_sync_erase(ubi, e2, vol_id, lnum, 0);
+<<<<<<< HEAD
 		if (err)
 			goto out_ro;
+=======
+		if (err) {
+			kmem_cache_free(ubi_wl_entry_slab, e2);
+			goto out_ro;
+		}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	dbg_wl("done");
@@ -1462,9 +1477,16 @@ out_not_moved:
 
 	ubi_free_vid_hdr(ubi, vid_hdr);
 	err = do_sync_erase(ubi, e2, vol_id, lnum, torture);
+<<<<<<< HEAD
 	if (err)
 		goto out_ro;
 
+=======
+	if (err) {
+		kmem_cache_free(ubi_wl_entry_slab, e2);
+		goto out_ro;
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mutex_unlock(&ubi->move_mutex);
 	return 0;
 

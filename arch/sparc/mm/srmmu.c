@@ -455,12 +455,19 @@ static void __init sparc_context_init(int numctx)
 void switch_mm(struct mm_struct *old_mm, struct mm_struct *mm,
 	       struct task_struct *tsk)
 {
+<<<<<<< HEAD
 	unsigned long flags;
 
 	if (mm->context == NO_CONTEXT) {
 		spin_lock_irqsave(&srmmu_context_spinlock, flags);
 		alloc_context(old_mm, mm);
 		spin_unlock_irqrestore(&srmmu_context_spinlock, flags);
+=======
+	if (mm->context == NO_CONTEXT) {
+		spin_lock(&srmmu_context_spinlock);
+		alloc_context(old_mm, mm);
+		spin_unlock(&srmmu_context_spinlock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		srmmu_ctxd_set(&srmmu_context_table[mm->context], mm->pgd);
 	}
 
@@ -985,15 +992,24 @@ int init_new_context(struct task_struct *tsk, struct mm_struct *mm)
 
 void destroy_context(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (mm->context != NO_CONTEXT) {
 		flush_cache_mm(mm);
 		srmmu_ctxd_set(&srmmu_context_table[mm->context], srmmu_swapper_pg_dir);
 		flush_tlb_mm(mm);
+<<<<<<< HEAD
 		spin_lock_irqsave(&srmmu_context_spinlock, flags);
 		free_context(mm->context);
 		spin_unlock_irqrestore(&srmmu_context_spinlock, flags);
+=======
+		spin_lock(&srmmu_context_spinlock);
+		free_context(mm->context);
+		spin_unlock(&srmmu_context_spinlock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mm->context = NO_CONTEXT;
 	}
 }

@@ -2400,7 +2400,10 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
 		} else {
 			if (cow)
 				huge_ptep_set_wrprotect(src, addr, src_pte);
+<<<<<<< HEAD
 			entry = huge_ptep_get(src_pte);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			ptepage = pte_page(entry);
 			get_page(ptepage);
 			page_dup_rmap(ptepage);
@@ -2451,10 +2454,16 @@ again:
 			continue;
 
 		/*
+<<<<<<< HEAD
 		 * Migrating hugepage or HWPoisoned hugepage is already
 		 * unmapped and its refcount is dropped, so just clear pte here.
 		 */
 		if (unlikely(!pte_present(pte))) {
+=======
+		 * HWPoisoned hugepage is already unmapped and dropped reference
+		 */
+		if (unlikely(is_hugetlb_entry_hwpoisoned(pte))) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			huge_pte_clear(mm, address, ptep);
 			continue;
 		}

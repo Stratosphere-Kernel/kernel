@@ -105,6 +105,10 @@ good_area:
 			goto bad_area;
 	}
 
+<<<<<<< HEAD
+=======
+survive:
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	* If for any reason at all we couldn't handle the fault,
 	* make sure we exit gracefully rather than endlessly redo
@@ -114,8 +118,11 @@ good_area:
 	if (unlikely(fault & VM_FAULT_ERROR)) {
 		if (fault & VM_FAULT_OOM)
 			goto out_of_memory;
+<<<<<<< HEAD
 		else if (fault & VM_FAULT_SIGSEGV)
 			goto bad_area;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		else if (fault & VM_FAULT_SIGBUS)
 			goto do_sigbus;
 		BUG();
@@ -173,10 +180,22 @@ no_context:
 	*/
 out_of_memory:
 	up_read(&mm->mmap_sem);
+<<<<<<< HEAD
 	if (!user_mode(regs))
 		goto no_context;
 	pagefault_out_of_memory();
 	return;
+=======
+	if (is_global_init(tsk)) {
+		yield();
+		down_read(&mm->mmap_sem);
+		goto survive;
+	}
+	printk("VM: killing process %s\n", tsk->comm);
+	if (user_mode(regs))
+		do_group_exit(SIGKILL);
+	goto no_context;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 do_sigbus:
 	up_read(&mm->mmap_sem);

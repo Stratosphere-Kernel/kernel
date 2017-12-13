@@ -166,7 +166,10 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 
 	hlist_for_each_entry_rcu(t, head, hash_node) {
 		if (remote != t->parms.iph.daddr ||
+<<<<<<< HEAD
 		    t->parms.iph.saddr != 0 ||
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    !(t->dev->flags & IFF_UP))
 			continue;
 
@@ -183,11 +186,18 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 	head = &itn->tunnels[hash];
 
 	hlist_for_each_entry_rcu(t, head, hash_node) {
+<<<<<<< HEAD
 		if ((local != t->parms.iph.saddr || t->parms.iph.daddr != 0) &&
 		    (local != t->parms.iph.daddr || !ipv4_is_multicast(local)))
 			continue;
 
 		if (!(t->dev->flags & IFF_UP))
+=======
+		if ((local != t->parms.iph.saddr &&
+		     (local != t->parms.iph.daddr ||
+		      !ipv4_is_multicast(local))) ||
+		    !(t->dev->flags & IFF_UP))
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			continue;
 
 		if (!ip_tunnel_key_match(&t->parms, flags, key))
@@ -204,8 +214,11 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
 
 	hlist_for_each_entry_rcu(t, head, hash_node) {
 		if (t->parms.i_key != key ||
+<<<<<<< HEAD
 		    t->parms.iph.saddr != 0 ||
 		    t->parms.iph.daddr != 0 ||
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		    !(t->dev->flags & IFF_UP))
 			continue;
 
@@ -691,7 +704,11 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
 	iph->daddr	=	fl4.daddr;
 	iph->saddr	=	fl4.saddr;
 	iph->ttl	=	ttl;
+<<<<<<< HEAD
 	__ip_select_ident(iph, skb_shinfo(skb)->gso_segs ?: 1);
+=======
+	__ip_select_ident(iph, &rt->dst, (skb_shinfo(skb)->gso_segs ?: 1) - 1);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	iptunnel_xmit(skb, dev);
 	return;

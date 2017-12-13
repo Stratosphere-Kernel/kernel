@@ -149,9 +149,15 @@ static struct crypto_alg null_algs[3] = { {
 	.coa_decompress		=	null_compress } }
 } };
 
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("compress_null");
 MODULE_ALIAS_CRYPTO("digest_null");
 MODULE_ALIAS_CRYPTO("cipher_null");
+=======
+MODULE_ALIAS("compress_null");
+MODULE_ALIAS("digest_null");
+MODULE_ALIAS("cipher_null");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static int __init crypto_null_mod_init(void)
 {

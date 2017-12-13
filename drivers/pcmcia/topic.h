@@ -104,9 +104,12 @@
 #define TOPIC_EXCA_IF_CONTROL		0x3e	/* 8 bit */
 #define TOPIC_EXCA_IFC_33V_ENA		0x01
 
+<<<<<<< HEAD
 #define TOPIC_PCI_CFG_PPBCN		0x3e	/* 16-bit */
 #define TOPIC_PCI_CFG_PPBCN_WBEN	0x0400
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void topic97_zoom_video(struct pcmcia_socket *sock, int onoff)
 {
 	struct yenta_socket *socket = container_of(sock, struct yenta_socket, socket);
@@ -141,7 +144,10 @@ static int topic97_override(struct yenta_socket *socket)
 static int topic95_override(struct yenta_socket *socket)
 {
 	u8 fctrl;
+<<<<<<< HEAD
 	u16 ppbcn;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* enable 3.3V support for 16bit cards */
 	fctrl = exca_readb(socket, TOPIC_EXCA_IF_CONTROL);
@@ -150,6 +156,7 @@ static int topic95_override(struct yenta_socket *socket)
 	/* tell yenta to use exca registers to power 16bit cards */
 	socket->flags |= YENTA_16BIT_POWER_EXCA | YENTA_16BIT_POWER_DF;
 
+<<<<<<< HEAD
 	/* Disable write buffers to prevent lockups under load with numerous
 	   Cardbus cards, observed on Tecra 500CDT and reported elsewhere on the
 	   net.  This is not a power-on default according to the datasheet
@@ -162,6 +169,8 @@ static int topic95_override(struct yenta_socket *socket)
 		dev_info(&socket->dev->dev, "Disabled ToPIC95 Cardbus write buffers.\n");
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 

@@ -1168,10 +1168,13 @@ static int snd_ctl_elem_add(struct snd_ctl_file *file,
 
 	if (info->count < 1)
 		return -EINVAL;
+<<<<<<< HEAD
 	if (!*info->id.name)
 		return -EINVAL;
 	if (strnlen(info->id.name, sizeof(info->id.name)) >= sizeof(info->id.name))
 		return -EINVAL;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	access = info->access == 0 ? SNDRV_CTL_ELEM_ACCESS_READWRITE :
 		(info->access & (SNDRV_CTL_ELEM_ACCESS_READWRITE|
 				 SNDRV_CTL_ELEM_ACCESS_INACTIVE|

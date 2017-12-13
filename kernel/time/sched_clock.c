@@ -32,6 +32,10 @@ struct clock_data {
 
 static struct hrtimer sched_clock_timer;
 static int irqtime = -1;
+<<<<<<< HEAD
+=======
+static int initialized;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 core_param(irqtime, irqtime, int, 0400);
 
@@ -178,6 +182,14 @@ unsigned long long notrace sched_clock(void)
 	return sched_clock_func();
 }
 
+<<<<<<< HEAD
+=======
+int sched_clock_initialized(void)
+{
+	return initialized;
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void __init sched_clock_postinit(void)
 {
 	/*
@@ -196,6 +208,11 @@ void __init sched_clock_postinit(void)
 	hrtimer_init(&sched_clock_timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
 	sched_clock_timer.function = sched_clock_poll;
 	hrtimer_start(&sched_clock_timer, cd.wrap_kt, HRTIMER_MODE_REL);
+<<<<<<< HEAD
+=======
+
+	initialized = 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int sched_clock_suspend(void)

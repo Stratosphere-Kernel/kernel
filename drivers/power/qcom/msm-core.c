@@ -311,10 +311,21 @@ static int update_userspace_power(struct sched_params __user *argp)
 	int cpu;
 	struct cpu_activity_info *node;
 	struct cpu_static_info *sp, *clear_sp;
+<<<<<<< HEAD
 	int mpidr = (argp->cluster << 8);
 	int cpumask = argp->cpumask;
 
 	pr_debug("cpumask %d, cluster: %d\n", argp->cpumask, argp->cluster);
+=======
+	int cpumask, cluster, mpidr;
+
+	get_user(cpumask, &argp->cpumask);
+	get_user(cluster, &argp->cluster);
+	mpidr = cluster << 8;
+
+	pr_debug("%s: cpumask %d, cluster: %d\n", __func__, cpumask,
+					cluster);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	for (i = 0; i < MAX_CORES_PER_CLUSTER; i++, cpumask >>= 1) {
 		if (!(cpumask & 0x01))
 			continue;
@@ -337,9 +348,16 @@ static int update_userspace_power(struct sched_params __user *argp)
 	if (!sp)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 
 	sp->power = allocate_2d_array_uint32_t(node->sp->num_of_freqs);
 	if (IS_ERR_OR_NULL(sp->power)) {
+=======
+	mutex_lock(&policy_update_mutex);
+	sp->power = allocate_2d_array_uint32_t(node->sp->num_of_freqs);
+	if (IS_ERR_OR_NULL(sp->power)) {
+		mutex_unlock(&policy_update_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		ret = PTR_ERR(sp->power);
 		kfree(sp);
 		return ret;
@@ -358,11 +376,20 @@ static int update_userspace_power(struct sched_params __user *argp)
 	/* Copy the same power values for all the cpus in the cpumask
 	 * argp->cpumask within the cluster (argp->cluster)
 	 */
+<<<<<<< HEAD
 	cpumask = argp->cpumask;
 	for (i = 0; i < MAX_CORES_PER_CLUSTER; i++, cpumask >>= 1) {
 		if (!(cpumask & 0x01))
 			continue;
 		mpidr = (argp->cluster << CLUSTER_OFFSET_FOR_MPIDR);
+=======
+	spin_lock(&update_lock);
+	get_user(cpumask, &argp->cpumask);
+	for (i = 0; i < MAX_CORES_PER_CLUSTER; i++, cpumask >>= 1) {
+		if (!(cpumask & 0x01))
+			continue;
+		mpidr = (cluster << CLUSTER_OFFSET_FOR_MPIDR);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mpidr |= i;
 		for_each_possible_cpu(cpu) {
 			if (!(cpu_logical_map(cpu) == mpidr))
@@ -380,11 +407,19 @@ static int update_userspace_power(struct sched_params __user *argp)
 			repopulate_stats(cpu);
 		}
 	}
+<<<<<<< HEAD
+=======
+	mutex_unlock(&policy_update_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	activate_power_table = true;
 	return 0;
 
 failed:
+<<<<<<< HEAD
+=======
+	mutex_unlock(&policy_update_mutex);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	for (i = 0; i < TEMP_DATA_POINTS; i++)
 		kfree(sp->power[i]);
 	kfree(sp->power);

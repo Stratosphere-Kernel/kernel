@@ -2595,10 +2595,14 @@ do_addr_param:
 
 		addr_param = param.v + sizeof(sctp_addip_param_t);
 
+<<<<<<< HEAD
 		af = sctp_get_af_specific(param_type2af(addr_param->p.type));
 		if (af == NULL)
 			break;
 
+=======
+		af = sctp_get_af_specific(param_type2af(param.p->type));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		af->from_addr_param(&addr, addr_param,
 				    htons(asoc->peer.port), 0);
 
@@ -3097,6 +3101,7 @@ static __be16 sctp_process_asconf_param(struct sctp_association *asoc,
 	return SCTP_ERROR_NO_ERROR;
 }
 
+<<<<<<< HEAD
 /* Verify the ASCONF packet before we process it. */
 bool sctp_verify_asconf(const struct sctp_association *asoc,
 			struct sctp_chunk *chunk, bool addr_param_needed,
@@ -3133,10 +3138,39 @@ bool sctp_verify_asconf(const struct sctp_association *asoc,
 			if (length < sizeof(sctp_addip_param_t) +
 				     sizeof(sctp_paramhdr_t))
 				return false;
+=======
+/* Verify the ASCONF packet before we process it.  */
+int sctp_verify_asconf(const struct sctp_association *asoc,
+		       struct sctp_paramhdr *param_hdr, void *chunk_end,
+		       struct sctp_paramhdr **errp) {
+	sctp_addip_param_t *asconf_param;
+	union sctp_params param;
+	int length, plen;
+
+	param.v = (sctp_paramhdr_t *) param_hdr;
+	while (param.v <= chunk_end - sizeof(sctp_paramhdr_t)) {
+		length = ntohs(param.p->length);
+		*errp = param.p;
+
+		if (param.v > chunk_end - length ||
+		    length < sizeof(sctp_paramhdr_t))
+			return 0;
+
+		switch (param.p->type) {
+		case SCTP_PARAM_ADD_IP:
+		case SCTP_PARAM_DEL_IP:
+		case SCTP_PARAM_SET_PRIMARY:
+			asconf_param = (sctp_addip_param_t *)param.v;
+			plen = ntohs(asconf_param->param_hdr.length);
+			if (plen < sizeof(sctp_addip_param_t) +
+			    sizeof(sctp_paramhdr_t))
+				return 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			break;
 		case SCTP_PARAM_SUCCESS_REPORT:
 		case SCTP_PARAM_ADAPTATION_LAYER_IND:
 			if (length != sizeof(sctp_addip_param_t))
+<<<<<<< HEAD
 				return false;
 			break;
 		default:
@@ -3154,6 +3188,22 @@ bool sctp_verify_asconf(const struct sctp_association *asoc,
 		return false;
 
 	return true;
+=======
+				return 0;
+
+			break;
+		default:
+			break;
+		}
+
+		param.v += WORD_ROUND(length);
+	}
+
+	if (param.v != chunk_end)
+		return 0;
+
+	return 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /* Process an incoming ASCONF chunk with the next expected serial no. and
@@ -3162,17 +3212,28 @@ bool sctp_verify_asconf(const struct sctp_association *asoc,
 struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
 				       struct sctp_chunk *asconf)
 {
+<<<<<<< HEAD
 	sctp_addip_chunk_t *addip = (sctp_addip_chunk_t *) asconf->chunk_hdr;
 	bool all_param_pass = true;
 	union sctp_params param;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	sctp_addiphdr_t		*hdr;
 	union sctp_addr_param	*addr_param;
 	sctp_addip_param_t	*asconf_param;
 	struct sctp_chunk	*asconf_ack;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	__be16	err_code;
 	int	length = 0;
 	int	chunk_len;
 	__u32	serial;
+<<<<<<< HEAD
+=======
+	int	all_param_pass = 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	chunk_len = ntohs(asconf->chunk_hdr->length) - sizeof(sctp_chunkhdr_t);
 	hdr = (sctp_addiphdr_t *)asconf->skb->data;
@@ -3200,6 +3261,7 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
 		goto done;
 
 	/* Process the TLVs contained within the ASCONF chunk. */
+<<<<<<< HEAD
 	sctp_walk_params(param, addip, addip_hdr.params) {
 		/* Skip preceeding address parameters. */
 		if (param.p->type == SCTP_PARAM_IPV4_ADDRESS ||
@@ -3208,6 +3270,11 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
 
 		err_code = sctp_process_asconf_param(asoc, asconf,
 						     param.addip);
+=======
+	while (chunk_len > 0) {
+		err_code = sctp_process_asconf_param(asoc, asconf,
+						     asconf_param);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/* ADDIP 4.1 A7)
 		 * If an error response is received for a TLV parameter,
 		 * all TLVs with no response before the failed TLV are
@@ -3215,20 +3282,42 @@ struct sctp_chunk *sctp_process_asconf(struct sctp_association *asoc,
 		 * the failed response are considered unsuccessful unless
 		 * a specific success indication is present for the parameter.
 		 */
+<<<<<<< HEAD
 		if (err_code != SCTP_ERROR_NO_ERROR)
 			all_param_pass = false;
 		if (!all_param_pass)
 			sctp_add_asconf_response(asconf_ack, param.addip->crr_id,
 						 err_code, param.addip);
+=======
+		if (SCTP_ERROR_NO_ERROR != err_code)
+			all_param_pass = 0;
+
+		if (!all_param_pass)
+			sctp_add_asconf_response(asconf_ack,
+						 asconf_param->crr_id, err_code,
+						 asconf_param);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		/* ADDIP 4.3 D11) When an endpoint receiving an ASCONF to add
 		 * an IP address sends an 'Out of Resource' in its response, it
 		 * MUST also fail any subsequent add or delete requests bundled
 		 * in the ASCONF.
 		 */
+<<<<<<< HEAD
 		if (err_code == SCTP_ERROR_RSRC_LOW)
 			goto done;
 	}
+=======
+		if (SCTP_ERROR_RSRC_LOW == err_code)
+			goto done;
+
+		/* Move to the next ASCONF param. */
+		length = ntohs(asconf_param->param_hdr.length);
+		asconf_param = (void *)asconf_param + length;
+		chunk_len -= length;
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 done:
 	asoc->peer.addip_serial++;
 

@@ -481,7 +481,10 @@ static void set_aliased_prot(void *v, pgprot_t prot)
 	pte_t pte;
 	unsigned long pfn;
 	struct page *page;
+<<<<<<< HEAD
 	unsigned char dummy;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	ptep = lookup_address((unsigned long)v, &level);
 	BUG_ON(ptep == NULL);
@@ -491,6 +494,7 @@ static void set_aliased_prot(void *v, pgprot_t prot)
 
 	pte = pfn_pte(pfn, prot);
 
+<<<<<<< HEAD
 	/*
 	 * Careful: update_va_mapping() will fail if the virtual address
 	 * we're poking isn't populated in the page tables.  We don't
@@ -517,6 +521,8 @@ static void set_aliased_prot(void *v, pgprot_t prot)
 	__get_user(dummy, (unsigned char __user __force *)v);
 	pagefault_enable();
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (HYPERVISOR_update_va_mapping((unsigned long)v, pte, 0))
 		BUG();
 
@@ -528,8 +534,11 @@ static void set_aliased_prot(void *v, pgprot_t prot)
 				BUG();
 	} else
 		kmap_flush_unused();
+<<<<<<< HEAD
 
 	preempt_enable();
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void xen_alloc_ldt(struct desc_struct *ldt, unsigned entries)
@@ -537,6 +546,7 @@ static void xen_alloc_ldt(struct desc_struct *ldt, unsigned entries)
 	const unsigned entries_per_page = PAGE_SIZE / LDT_ENTRY_SIZE;
 	int i;
 
+<<<<<<< HEAD
 	/*
 	 * We need to mark the all aliases of the LDT pages RO.  We
 	 * don't need to call vm_flush_aliases(), though, since that's
@@ -548,6 +558,8 @@ static void xen_alloc_ldt(struct desc_struct *ldt, unsigned entries)
 	 * LDT is faulted in due to subsequent descriptor access.
 	 */
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	for(i = 0; i < entries; i += entries_per_page)
 		set_aliased_prot(ldt + i, PAGE_KERNEL_RO);
 }

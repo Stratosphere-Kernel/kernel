@@ -144,8 +144,11 @@ EXPORT_PER_CPU_SYMBOL_GPL(gdt_page);
 
 static int __init x86_xsave_setup(char *s)
 {
+<<<<<<< HEAD
 	if (strlen(s))
 		return 0;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	setup_clear_cpu_cap(X86_FEATURE_XSAVE);
 	setup_clear_cpu_cap(X86_FEATURE_XSAVEOPT);
 	setup_clear_cpu_cap(X86_FEATURE_AVX);
@@ -1136,7 +1139,11 @@ void syscall_init(void)
 	/* Flags to clear on syscall */
 	wrmsrl(MSR_SYSCALL_MASK,
 	       X86_EFLAGS_TF|X86_EFLAGS_DF|X86_EFLAGS_IF|
+<<<<<<< HEAD
 	       X86_EFLAGS_IOPL|X86_EFLAGS_AC|X86_EFLAGS_NT);
+=======
+	       X86_EFLAGS_IOPL|X86_EFLAGS_AC);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*

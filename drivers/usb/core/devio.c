@@ -501,7 +501,10 @@ static void async_completed(struct urb *urb)
 	as->status = urb->status;
 	signr = as->signr;
 	if (signr) {
+<<<<<<< HEAD
 		memset(&sinfo, 0, sizeof(sinfo));
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		sinfo.si_signo = as->signr;
 		sinfo.si_errno = as->status;
 		sinfo.si_code = SI_ASYNCIO;
@@ -513,7 +516,11 @@ static void async_completed(struct urb *urb)
 	snoop(&urb->dev->dev, "urb complete\n");
 	snoop_urb(urb->dev, as->userurb, urb->pipe, urb->actual_length,
 			as->status, COMPLETE, NULL, 0);
+<<<<<<< HEAD
 	if ((urb->transfer_flags & URB_DIR_MASK) == URB_DIR_IN)
+=======
+	if ((urb->transfer_flags & URB_DIR_MASK) == USB_DIR_IN)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		snoop_urb_data(urb, urb->actual_length);
 
 	if (as->status < 0 && as->bulk_addr && as->status != -ECONNRESET &&
@@ -1594,7 +1601,11 @@ static struct async *reap_as(struct dev_state *ps)
 	for (;;) {
 		__set_current_state(TASK_INTERRUPTIBLE);
 		as = async_getcompleted(ps);
+<<<<<<< HEAD
 		if (as || !connected(ps))
+=======
+		if (as)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			break;
 		if (signal_pending(current))
 			break;
@@ -1617,7 +1628,11 @@ static int proc_reapurb(struct dev_state *ps, void __user *arg)
 	}
 	if (signal_pending(current))
 		return -EINTR;
+<<<<<<< HEAD
 	return -ENODEV;
+=======
+	return -EIO;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int proc_reapurbnonblock(struct dev_state *ps, void __user *arg)
@@ -1626,11 +1641,18 @@ static int proc_reapurbnonblock(struct dev_state *ps, void __user *arg)
 	struct async *as;
 
 	as = async_getcompleted(ps);
+<<<<<<< HEAD
 	if (as) {
 		retval = processcompl(as, (void __user * __user *)arg);
 		free_async(as);
 	} else {
 		retval = (connected(ps) ? -EAGAIN : -ENODEV);
+=======
+	retval = -EAGAIN;
+	if (as) {
+		retval = processcompl(as, (void __user * __user *)arg);
+		free_async(as);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	return retval;
 }
@@ -1760,7 +1782,11 @@ static int proc_reapurb_compat(struct dev_state *ps, void __user *arg)
 	}
 	if (signal_pending(current))
 		return -EINTR;
+<<<<<<< HEAD
 	return -ENODEV;
+=======
+	return -EIO;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int proc_reapurbnonblock_compat(struct dev_state *ps, void __user *arg)
@@ -1768,12 +1794,19 @@ static int proc_reapurbnonblock_compat(struct dev_state *ps, void __user *arg)
 	int retval;
 	struct async *as;
 
+<<<<<<< HEAD
+=======
+	retval = -EAGAIN;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	as = async_getcompleted(ps);
 	if (as) {
 		retval = processcompl_compat(as, (void __user * __user *)arg);
 		free_async(as);
+<<<<<<< HEAD
 	} else {
 		retval = (connected(ps) ? -EAGAIN : -ENODEV);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	return retval;
 }
@@ -1944,8 +1977,12 @@ static int proc_get_capabilities(struct dev_state *ps, void __user *arg)
 {
 	__u32 caps;
 
+<<<<<<< HEAD
 	caps = USBDEVFS_CAP_ZERO_PACKET | USBDEVFS_CAP_NO_PACKET_SIZE_LIM |
 			USBDEVFS_CAP_REAP_AFTER_DISCONNECT;
+=======
+	caps = USBDEVFS_CAP_ZERO_PACKET | USBDEVFS_CAP_NO_PACKET_SIZE_LIM;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!ps->dev->bus->no_stop_on_short)
 		caps |= USBDEVFS_CAP_BULK_CONTINUATION;
 	if (ps->dev->bus->sg_tablesize)
@@ -2006,6 +2043,7 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		return -EPERM;
 
 	usb_lock_device(dev);
+<<<<<<< HEAD
 
 	/* Reap operations are allowed even after disconnection */
 	switch (cmd) {
@@ -2032,6 +2070,8 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 #endif
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!connected(ps)) {
 		usb_unlock_device(dev);
 		return -ENODEV;
@@ -2125,6 +2165,19 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 			inode->i_mtime = CURRENT_TIME;
 		break;
 
+<<<<<<< HEAD
+=======
+	case USBDEVFS_REAPURB32:
+		snoop(&dev->dev, "%s: REAPURB32\n", __func__);
+		ret = proc_reapurb_compat(ps, p);
+		break;
+
+	case USBDEVFS_REAPURBNDELAY32:
+		snoop(&dev->dev, "%s: REAPURBNDELAY32\n", __func__);
+		ret = proc_reapurbnonblock_compat(ps, p);
+		break;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	case USBDEVFS_IOCTL32:
 		snoop(&dev->dev, "%s: IOCTL32\n", __func__);
 		ret = proc_ioctl_compat(ps, ptr_to_compat(p));
@@ -2136,6 +2189,19 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		ret = proc_unlinkurb(ps, p);
 		break;
 
+<<<<<<< HEAD
+=======
+	case USBDEVFS_REAPURB:
+		snoop(&dev->dev, "%s: REAPURB\n", __func__);
+		ret = proc_reapurb(ps, p);
+		break;
+
+	case USBDEVFS_REAPURBNDELAY:
+		snoop(&dev->dev, "%s: REAPURBNDELAY\n", __func__);
+		ret = proc_reapurbnonblock(ps, p);
+		break;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	case USBDEVFS_DISCSIGNAL:
 		snoop(&dev->dev, "%s: DISCSIGNAL\n", __func__);
 		ret = proc_disconnectsignal(ps, p);
@@ -2172,8 +2238,11 @@ static long usbdev_do_ioctl(struct file *file, unsigned int cmd,
 		ret = proc_disconnect_claim(ps, p);
 		break;
 	}
+<<<<<<< HEAD
 
  done:
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	usb_unlock_device(dev);
 	if (ret >= 0)
 		inode->i_atime = CURRENT_TIME;
@@ -2241,7 +2310,10 @@ static void usbdev_remove(struct usb_device *udev)
 		wake_up_all(&ps->wait);
 		list_del_init(&ps->list);
 		if (ps->discsignr) {
+<<<<<<< HEAD
 			memset(&sinfo, 0, sizeof(sinfo));
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			sinfo.si_signo = ps->discsignr;
 			sinfo.si_errno = EPIPE;
 			sinfo.si_code = SI_ASYNCIO;

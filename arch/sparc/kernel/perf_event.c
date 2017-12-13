@@ -960,8 +960,11 @@ out:
 	cpuc->pcr[0] |= cpuc->event[0]->hw.config_base;
 }
 
+<<<<<<< HEAD
 static void sparc_pmu_start(struct perf_event *event, int flags);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* On this PMU each PIC has it's own PCR control register.  */
 static void calculate_multiple_pcrs(struct cpu_hw_events *cpuc)
 {
@@ -974,13 +977,29 @@ static void calculate_multiple_pcrs(struct cpu_hw_events *cpuc)
 		struct perf_event *cp = cpuc->event[i];
 		struct hw_perf_event *hwc = &cp->hw;
 		int idx = hwc->idx;
+<<<<<<< HEAD
+=======
+		u64 enc;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		if (cpuc->current_idx[i] != PIC_NO_INDEX)
 			continue;
 
+<<<<<<< HEAD
 		cpuc->current_idx[i] = idx;
 
 		sparc_pmu_start(cp, PERF_EF_RELOAD);
+=======
+		sparc_perf_event_set_period(cp, hwc, idx);
+		cpuc->current_idx[i] = idx;
+
+		enc = perf_event_get_enc(cpuc->events[i]);
+		cpuc->pcr[idx] &= ~mask_for_index(idx);
+		if (hwc->state & PERF_HES_STOPPED)
+			cpuc->pcr[idx] |= nop_for_index(idx);
+		else
+			cpuc->pcr[idx] |= event_encoding(enc, idx);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 out:
 	for (i = 0; i < cpuc->n_events; i++) {
@@ -1096,6 +1115,10 @@ static void sparc_pmu_del(struct perf_event *event, int _flags)
 	int i;
 
 	local_irq_save(flags);
+<<<<<<< HEAD
+=======
+	perf_pmu_disable(event->pmu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	for (i = 0; i < cpuc->n_events; i++) {
 		if (event == cpuc->event[i]) {
@@ -1121,6 +1144,10 @@ static void sparc_pmu_del(struct perf_event *event, int _flags)
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	perf_pmu_enable(event->pmu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	local_irq_restore(flags);
 }
 
@@ -1354,6 +1381,10 @@ static int sparc_pmu_add(struct perf_event *event, int ef_flags)
 	unsigned long flags;
 
 	local_irq_save(flags);
+<<<<<<< HEAD
+=======
+	perf_pmu_disable(event->pmu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	n0 = cpuc->n_events;
 	if (n0 >= sparc_pmu->max_hw_events)
@@ -1386,6 +1417,10 @@ nocheck:
 
 	ret = 0;
 out:
+<<<<<<< HEAD
+=======
+	perf_pmu_enable(event->pmu);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	local_irq_restore(flags);
 	return ret;
 }

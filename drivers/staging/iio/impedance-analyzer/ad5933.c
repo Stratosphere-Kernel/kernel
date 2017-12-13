@@ -115,7 +115,10 @@ static const struct iio_chan_spec ad5933_channels[] = {
 		.channel = 0,
 		.info_mask_separate = BIT(IIO_CHAN_INFO_PROCESSED),
 		.address = AD5933_REG_TEMP_DATA,
+<<<<<<< HEAD
 		.scan_index = -1,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		.scan_type = {
 			.sign = 's',
 			.realbits = 14,
@@ -125,7 +128,13 @@ static const struct iio_chan_spec ad5933_channels[] = {
 		.type = IIO_VOLTAGE,
 		.indexed = 1,
 		.channel = 0,
+<<<<<<< HEAD
 		.extend_name = "real",
+=======
+		.extend_name = "real_raw",
+		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+		BIT(IIO_CHAN_INFO_SCALE),
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		.address = AD5933_REG_REAL_DATA,
 		.scan_index = 0,
 		.scan_type = {
@@ -137,7 +146,13 @@ static const struct iio_chan_spec ad5933_channels[] = {
 		.type = IIO_VOLTAGE,
 		.indexed = 1,
 		.channel = 0,
+<<<<<<< HEAD
 		.extend_name = "imag",
+=======
+		.extend_name = "imag_raw",
+		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+		BIT(IIO_CHAN_INFO_SCALE),
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		.address = AD5933_REG_IMAG_DATA,
 		.scan_index = 1,
 		.scan_type = {
@@ -743,14 +758,23 @@ static int ad5933_probe(struct i2c_client *client,
 	indio_dev->name = id->name;
 	indio_dev->modes = INDIO_DIRECT_MODE;
 	indio_dev->channels = ad5933_channels;
+<<<<<<< HEAD
 	indio_dev->num_channels = ARRAY_SIZE(ad5933_channels);
+=======
+	indio_dev->num_channels = 1; /* only register temp0_input */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	ret = ad5933_register_ring_funcs_and_init(indio_dev);
 	if (ret)
 		goto error_disable_reg;
 
+<<<<<<< HEAD
 	ret = iio_buffer_register(indio_dev, ad5933_channels,
 		ARRAY_SIZE(ad5933_channels));
+=======
+	/* skip temp0_input, register in0_(real|imag)_raw */
+	ret = iio_buffer_register(indio_dev, &ad5933_channels[1], 2);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (ret)
 		goto error_unreg_ring;
 

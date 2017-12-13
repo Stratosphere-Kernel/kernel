@@ -172,8 +172,11 @@ retry:
 		 */
 		if (fault & VM_FAULT_OOM) {
 			goto out_of_memory;
+<<<<<<< HEAD
 		} else if (fault & VM_FAULT_SIGSEGV) {
 			goto bad_area;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		} else if (fault & VM_FAULT_SIGBUS) {
 			signal = SIGBUS;
 			goto bad_area;

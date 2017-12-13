@@ -648,6 +648,7 @@ static __initconst const struct x86_pmu amd_pmu = {
 	.cpu_dead		= amd_pmu_cpu_dead,
 };
 
+<<<<<<< HEAD
 static int __init amd_core_pmu_init(void)
 {
 	if (!cpu_has_perfctr_core)
@@ -668,28 +669,65 @@ static int __init amd_core_pmu_init(void)
 	 * If core performance counter extensions exists, we must use
 	 * MSR_F15H_PERF_CTL/MSR_F15H_PERF_CTR msrs. See also
 	 * amd_pmu_addr_offset().
+=======
+static int setup_event_constraints(void)
+{
+	if (boot_cpu_data.x86 == 0x15)
+		x86_pmu.get_event_constraints = amd_get_event_constraints_f15h;
+	return 0;
+}
+
+static int setup_perfctr_core(void)
+{
+	if (!cpu_has_perfctr_core) {
+		WARN(x86_pmu.get_event_constraints == amd_get_event_constraints_f15h,
+		     KERN_ERR "Odd, counter constraints enabled but no core perfctrs detected!");
+		return -ENODEV;
+	}
+
+	WARN(x86_pmu.get_event_constraints == amd_get_event_constraints,
+	     KERN_ERR "hw perf events core counters need constraints handler!");
+
+	/*
+	 * If core performance counter extensions exists, we must use
+	 * MSR_F15H_PERF_CTL/MSR_F15H_PERF_CTR msrs. See also
+	 * x86_pmu_addr_offset().
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	 */
 	x86_pmu.eventsel	= MSR_F15H_PERF_CTL;
 	x86_pmu.perfctr		= MSR_F15H_PERF_CTR;
 	x86_pmu.num_counters	= AMD64_NUM_COUNTERS_CORE;
 
+<<<<<<< HEAD
 	pr_cont("core perfctr, ");
+=======
+	printk(KERN_INFO "perf: AMD core performance counters detected\n");
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return 0;
 }
 
 __init int amd_pmu_init(void)
 {
+<<<<<<< HEAD
 	int ret;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* Performance-monitoring supported from K7 and later: */
 	if (boot_cpu_data.x86 < 6)
 		return -ENODEV;
 
 	x86_pmu = amd_pmu;
 
+<<<<<<< HEAD
 	ret = amd_core_pmu_init();
 	if (ret)
 		return ret;
+=======
+	setup_event_constraints();
+	setup_perfctr_core();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Events are common for all AMDs */
 	memcpy(hw_cache_event_ids, amd_hw_cache_event_ids,

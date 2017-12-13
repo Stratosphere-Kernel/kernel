@@ -176,7 +176,11 @@ static void unmap_switcher(void)
 bool lguest_address_ok(const struct lguest *lg,
 		       unsigned long addr, unsigned long len)
 {
+<<<<<<< HEAD
 	return addr+len <= lg->pfn_limit * PAGE_SIZE && (addr+len >= addr);
+=======
+	return (addr+len) / PAGE_SIZE < lg->pfn_limit && (addr+len >= addr);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /*

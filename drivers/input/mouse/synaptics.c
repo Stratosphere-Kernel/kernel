@@ -549,6 +549,7 @@ static int synaptics_parse_hw_state(const unsigned char buf[],
 			 ((buf[0] & 0x04) >> 1) |
 			 ((buf[3] & 0x04) >> 2));
 
+<<<<<<< HEAD
 		if ((SYN_CAP_ADV_GESTURE(priv->ext_cap_0c) ||
 			SYN_CAP_IMAGE_SENSOR(priv->ext_cap_0c)) &&
 		    hw->w == 2) {
@@ -604,6 +605,12 @@ static int synaptics_parse_hw_state(const unsigned char buf[],
 			hw->left = priv->report_press;
 
 		} else if (SYN_CAP_CLICKPAD(priv->ext_cap_0c)) {
+=======
+		hw->left  = (buf[0] & 0x01) ? 1 : 0;
+		hw->right = (buf[0] & 0x02) ? 1 : 0;
+
+		if (SYN_CAP_CLICKPAD(priv->ext_cap_0c)) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			/*
 			 * Clickpad's button is transmitted as middle button,
 			 * however, since it is primary button, we will report
@@ -622,6 +629,24 @@ static int synaptics_parse_hw_state(const unsigned char buf[],
 			hw->down = ((buf[0] ^ buf[3]) & 0x02) ? 1 : 0;
 		}
 
+<<<<<<< HEAD
+=======
+		if ((SYN_CAP_ADV_GESTURE(priv->ext_cap_0c) ||
+			SYN_CAP_IMAGE_SENSOR(priv->ext_cap_0c)) &&
+		    hw->w == 2) {
+			synaptics_parse_agm(buf, priv, hw);
+			return 1;
+		}
+
+		hw->x = (((buf[3] & 0x10) << 8) |
+			 ((buf[1] & 0x0f) << 8) |
+			 buf[4]);
+		hw->y = (((buf[3] & 0x20) << 7) |
+			 ((buf[1] & 0xf0) << 4) |
+			 buf[5]);
+		hw->z = buf[2];
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (SYN_CAP_MULTI_BUTTON_NO(priv->ext_cap) &&
 		    ((buf[0] ^ buf[3]) & 0x02)) {
 			switch (SYN_CAP_MULTI_BUTTON_NO(priv->ext_cap) & ~0x01) {

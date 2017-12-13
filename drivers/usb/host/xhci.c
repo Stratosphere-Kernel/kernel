@@ -3378,9 +3378,12 @@ int xhci_discover_or_reset_device(struct usb_hcd *hcd, struct usb_device *udev)
 			return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (virt_dev->tt_info)
 		old_active_eps = virt_dev->tt_info->active_eps;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (virt_dev->udev != udev) {
 		/* If the virt_dev and the udev does not match, this virt_dev
 		 * may belong to another udev.
@@ -4448,6 +4451,7 @@ static int xhci_change_max_exit_latency(struct xhci_hcd *xhci,
 	int ret;
 
 	spin_lock_irqsave(&xhci->lock, flags);
+<<<<<<< HEAD
 
 	virt_dev = xhci->devs[udev->slot_id];
 
@@ -4458,11 +4462,18 @@ static int xhci_change_max_exit_latency(struct xhci_hcd *xhci,
 	 */
 
 	if (!virt_dev || max_exit_latency == virt_dev->current_mel) {
+=======
+	if (max_exit_latency == xhci->devs[udev->slot_id]->current_mel) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		spin_unlock_irqrestore(&xhci->lock, flags);
 		return 0;
 	}
 
 	/* Attempt to issue an Evaluate Context command to change the MEL. */
+<<<<<<< HEAD
+=======
+	virt_dev = xhci->devs[udev->slot_id];
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	command = xhci->lpm_command;
 	xhci_slot_copy(xhci, command->in_ctx, virt_dev->out_ctx);
 	spin_unlock_irqrestore(&xhci->lock, flags);

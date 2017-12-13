@@ -702,7 +702,11 @@ static const struct drm_encoder_funcs intel_crt_enc_funcs = {
 	.destroy = intel_encoder_destroy,
 };
 
+<<<<<<< HEAD
 static int intel_no_crt_dmi_callback(const struct dmi_system_id *id)
+=======
+static int __init intel_no_crt_dmi_callback(const struct dmi_system_id *id)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	DRM_INFO("Skipping CRT initialization for %s\n", id->ident);
 	return 1;

@@ -28,6 +28,7 @@
 };
 
 &tlmm_pinmux {
+<<<<<<< HEAD
 	ltr553_int_pin {
 		qcom,pins = <&gp 113>;
 		qcom,pin-func = <0>;
@@ -38,6 +39,18 @@
 			bias-pull-up;
 		};
 		ltr553_sleep: ltr553_sleep {
+=======
+	ltr559_int_pin {
+		qcom,pins = <&gp 113>;
+		qcom,pin-func = <0>;
+		qcom,num-grp-pins = <1>;
+		label = "ltr559-irq";
+		ltr559_default: ltr559_default {
+			drive-strength = <6>;
+			bias-pull-up;
+		};
+		ltr559_sleep: ltr559_sleep {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			drive-strength = <2>;
 			bias-pull-down;
 		};
@@ -73,15 +86,24 @@
 	};
 	
 	liteon@23 {
+<<<<<<< HEAD
 		compatible = "liteon,ltr553";
 		reg = <0x23>;
 		pinctrl-names = "default","sleep";
 		pinctrl-0 = <&ltr553_default>;
 		pinctrl-1 = <&ltr553_sleep>;
+=======
+		compatible = "ltr,ltr559";
+		reg = <0x23>;
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&ltr559_default>;
+		pinctrl-1 = <&ltr559_sleep>;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		interrupt-parent = <&msm_gpio>;
 		interrupts = <113 0x2002>;
 		vdd-supply = <&pm8916_l17>;
 		vio-supply = <&pm8916_l6>;
+<<<<<<< HEAD
 		liteon,irq-gpio = <&msm_gpio 113 0x2002>;
 		liteon,ps-threshold = <250>;
 		liteon,ps-hysteresis-threshold = <150>;
@@ -95,6 +117,12 @@
 		liteon,als-equation-1 = <4 1 2785 696 240 (-1)>;
 		liteon,als-equation-2 = <0 0 5926 1300 44 1>;
 		liteon,als-equation-3 = <0 0 0 0 1 1>;
+=======
+		ltr,irq-gpio = <&msm_gpio 113 0x2002>;
+		ltr,ps-threshold = <45>;
+		ltr,ps-hysteresis-threshold = <30>;
+		ltr,als-polling-time = <200>;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	};
 
 	mpu6050@68 {

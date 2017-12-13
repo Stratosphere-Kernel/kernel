@@ -32,7 +32,10 @@ struct svc_xprt_class {
 	struct svc_xprt_ops	*xcl_ops;
 	struct list_head	xcl_list;
 	u32			xcl_max_payload;
+<<<<<<< HEAD
 	int			xcl_ident;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 /*

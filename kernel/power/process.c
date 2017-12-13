@@ -107,6 +107,7 @@ static int try_to_freeze_tasks(bool user_only)
 	return todo ? -EBUSY : 0;
 }
 
+<<<<<<< HEAD
 /*
  * Returns true if all freezable tasks (except for current) are frozen already
  */
@@ -129,6 +130,8 @@ done:
 	return ret;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /**
  * freeze_processes - Signal user space processes to enter the refrigerator.
  *
@@ -137,7 +140,10 @@ done:
 int freeze_processes(void)
 {
 	int error;
+<<<<<<< HEAD
 	int oom_kills_saved;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	error = __usermodehelper_disable(UMH_FREEZING);
 	if (error)
@@ -146,6 +152,7 @@ int freeze_processes(void)
 	if (!pm_freezing)
 		atomic_inc(&system_freezing_cnt);
 
+<<<<<<< HEAD
 	printk("Freezing user space processes ... ");
 	pm_freezing = true;
 	oom_kills_saved = oom_kills_count();
@@ -169,6 +176,17 @@ int freeze_processes(void)
 		printk("done.");
 	}
 done:
+=======
+	pm_wakeup_clear();
+	printk("Freezing user space processes ... ");
+	pm_freezing = true;
+	error = try_to_freeze_tasks(true);
+	if (!error) {
+		printk("done.");
+		__usermodehelper_set_disable_depth(UMH_DISABLED);
+		oom_killer_disable();
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	printk("\n");
 	BUG_ON(in_atomic());
 
@@ -216,7 +234,10 @@ void thaw_processes(void)
 
 	printk("Restarting tasks ... ");
 
+<<<<<<< HEAD
 	__usermodehelper_set_disable_depth(UMH_FREEZING);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	thaw_workqueues();
 
 	read_lock(&tasklist_lock);

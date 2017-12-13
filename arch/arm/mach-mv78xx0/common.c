@@ -337,11 +337,19 @@ void __init mv78xx0_init_early(void)
 	if (mv78xx0_core_index() == 0)
 		mvebu_mbus_init("marvell,mv78xx0-mbus",
 				BRIDGE_WINS_CPU0_BASE, BRIDGE_WINS_SZ,
+<<<<<<< HEAD
 				DDR_WINDOW_CPU0_BASE, DDR_WINDOW_CPU_SZ, 0);
 	else
 		mvebu_mbus_init("marvell,mv78xx0-mbus",
 				BRIDGE_WINS_CPU1_BASE, BRIDGE_WINS_SZ,
 				DDR_WINDOW_CPU1_BASE, DDR_WINDOW_CPU_SZ, 0);
+=======
+				DDR_WINDOW_CPU0_BASE, DDR_WINDOW_CPU_SZ);
+	else
+		mvebu_mbus_init("marvell,mv78xx0-mbus",
+				BRIDGE_WINS_CPU1_BASE, BRIDGE_WINS_SZ,
+				DDR_WINDOW_CPU1_BASE, DDR_WINDOW_CPU_SZ);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 void __init_refok mv78xx0_timer_init(void)

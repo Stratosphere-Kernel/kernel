@@ -614,7 +614,14 @@ limEncryptAuthFrame(tpAniSirGlobal pMac, tANI_U8 keyId, tANI_U8 *pKey, tANI_U8 *
                     tANI_U8 *pEncrBody, tANI_U32 keyLength)
 {
     tANI_U8  seed[LIM_SEED_LENGTH], icv[SIR_MAC_WEP_ICV_LENGTH];
+<<<<<<< HEAD
 
+=======
+    tANI_U16 frame_len;
+
+    frame_len = ((tpSirMacAuthFrameBody)pPlainText)->length +
+		 SIR_MAC_AUTH_FRAME_INFO_LEN + SIR_MAC_CHALLENGE_ID_LEN;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     keyLength += 3;
 
     // Bytes 0-2 of seed is IV
@@ -625,15 +632,25 @@ limEncryptAuthFrame(tpAniSirGlobal pMac, tANI_U8 keyId, tANI_U8 *pKey, tANI_U8 *
     vos_mem_copy((tANI_U8 *) &seed[3], pKey, keyLength - 3);
 
     // Compute CRC-32 and place them in last 4 bytes of plain text
+<<<<<<< HEAD
     limComputeCrc32(icv, pPlainText, sizeof(tSirMacAuthFrameBody));
 
     vos_mem_copy( pPlainText + sizeof(tSirMacAuthFrameBody),
+=======
+    limComputeCrc32(icv, pPlainText, frame_len);
+
+    vos_mem_copy( pPlainText + frame_len,
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
                   icv, SIR_MAC_WEP_ICV_LENGTH);
 
     // Run RC4 on plain text with the seed
     limRC4(pEncrBody + SIR_MAC_WEP_IV_LENGTH,
            (tANI_U8 *) pPlainText, seed, keyLength,
+<<<<<<< HEAD
            LIM_ENCR_AUTH_BODY_LEN - SIR_MAC_WEP_IV_LENGTH);
+=======
+           frame_len + SIR_MAC_WEP_ICV_LENGTH);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
     // Prepare IV
     pEncrBody[0] = seed[0];
@@ -666,7 +683,11 @@ limEncryptAuthFrame(tpAniSirGlobal pMac, tANI_U8 keyId, tANI_U8 *pKey, tANI_U8 *
  */
 
 void
+<<<<<<< HEAD
 limComputeCrc32(tANI_U8 *pDest, tANI_U8 * pSrc, tANI_U8 len)
+=======
+limComputeCrc32(tANI_U8 *pDest, tANI_U8 * pSrc, tANI_U16 len)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
     tANI_U32 crc;
     int i;
@@ -753,7 +774,11 @@ limRC4(tANI_U8 *pDest, tANI_U8 *pSrc, tANI_U8 *seed, tANI_U32 keyLength, tANI_U1
     {
         tANI_U8 i   = ctx.i;
         tANI_U8 j   = ctx.j;
+<<<<<<< HEAD
         tANI_U8 len = (tANI_U8) frameLen;
+=======
+        tANI_U16 len = frameLen;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
         while (len-- > 0)
         {
@@ -835,7 +860,11 @@ limDecryptAuthFrame(tpAniSirGlobal pMac, tANI_U8 *pKey, tANI_U8 *pEncrBody,
     // Compute CRC-32 and place them in last 4 bytes of encrypted body
     limComputeCrc32(icv,
                     (tANI_U8 *) pPlainBody,
+<<<<<<< HEAD
                     (tANI_U8) (frameLen - SIR_MAC_WEP_ICV_LENGTH));
+=======
+                    (frameLen - SIR_MAC_WEP_ICV_LENGTH));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
     // Compare RX_ICV with computed ICV
     for (i = 0; i < SIR_MAC_WEP_ICV_LENGTH; i++)

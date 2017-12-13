@@ -541,6 +541,10 @@ int sb_prepare_remount_readonly(struct super_block *sb)
 
 static void free_vfsmnt(struct mount *mnt)
 {
+<<<<<<< HEAD
+=======
+	kfree(mnt->mnt.data);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	kfree(mnt->mnt_devname);
 	mnt_free_id(mnt);
 #ifdef CONFIG_SMP
@@ -784,11 +788,29 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 	if (!mnt)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
 	if (flags & MS_KERNMOUNT)
 		mnt->mnt.mnt_flags = MNT_INTERNAL;
 
 	root = mount_fs(type, flags, name, data);
 	if (IS_ERR(root)) {
+=======
+	mnt->mnt.data = NULL;
+	if (type->alloc_mnt_data) {
+		mnt->mnt.data = type->alloc_mnt_data();
+		if (!mnt->mnt.data) {
+			mnt_free_id(mnt);
+			free_vfsmnt(mnt);
+			return ERR_PTR(-ENOMEM);
+		}
+	}
+	if (flags & MS_KERNMOUNT)
+		mnt->mnt.mnt_flags = MNT_INTERNAL;
+
+	root = mount_fs(type, flags, name, &mnt->mnt, data);
+	if (IS_ERR(root)) {
+		kfree(mnt->mnt.data);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		free_vfsmnt(mnt);
 		return ERR_CAST(root);
 	}
@@ -815,6 +837,17 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 	if (!mnt)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
+=======
+	if (sb->s_op->clone_mnt_data) {
+		mnt->mnt.data = sb->s_op->clone_mnt_data(old->mnt.data);
+		if (!mnt->mnt.data) {
+			err = -ENOMEM;
+			goto out_free;
+		}
+	}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (flag & (CL_SLAVE | CL_PRIVATE | CL_SHARED_TO_SLAVE))
 		mnt->mnt_group_id = 0; /* not a peer of original */
 	else
@@ -828,6 +861,7 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 
 	mnt->mnt.mnt_flags = old->mnt.mnt_flags & ~MNT_WRITE_HOLD;
 	/* Don't allow unprivileged users to change mount flags */
+<<<<<<< HEAD
 	if (flag & CL_UNPRIVILEGED) {
 		mnt->mnt.mnt_flags |= MNT_LOCK_ATIME;
 
@@ -843,6 +877,10 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 		if (mnt->mnt.mnt_flags & MNT_NOEXEC)
 			mnt->mnt.mnt_flags |= MNT_LOCK_NOEXEC;
 	}
+=======
+	if ((flag & CL_UNPRIVILEGED) && (mnt->mnt.mnt_flags & MNT_READONLY))
+		mnt->mnt.mnt_flags |= MNT_LOCK_READONLY;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	atomic_inc(&sb->s_active);
 	mnt->mnt.mnt_sb = sb;
@@ -878,6 +916,10 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 	return mnt;
 
  out_free:
+<<<<<<< HEAD
+=======
+	kfree(mnt->mnt.data);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	free_vfsmnt(mnt);
 	return ERR_PTR(err);
 }
@@ -1274,8 +1316,11 @@ static int do_umount(struct mount *mnt, int flags)
 		 * Special case for "unmounting" root ...
 		 * we just try to remount it readonly.
 		 */
+<<<<<<< HEAD
 		if (!capable(CAP_SYS_ADMIN))
 			return -EPERM;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		down_write(&sb->s_umount);
 		if (!(sb->s_flags & MS_RDONLY))
 			retval = do_remount_sb(sb, MS_RDONLY, NULL, 0);
@@ -1342,9 +1387,12 @@ SYSCALL_DEFINE2(umount, char __user *, name, int, flags)
 		goto dput_and_out;
 	if (!check_mnt(mnt))
 		goto dput_and_out;
+<<<<<<< HEAD
 	retval = -EPERM;
 	if (flags & MNT_FORCE && !capable(CAP_SYS_ADMIN))
 		goto dput_and_out;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	retval = do_umount(mnt, flags);
 dput_and_out:
@@ -1782,6 +1830,12 @@ static int change_mount_flags(struct vfsmount *mnt, int ms_flags)
 	if (readonly_request == __mnt_is_readonly(mnt))
 		return 0;
 
+<<<<<<< HEAD
+=======
+	if (mnt->mnt_flags & MNT_LOCK_READONLY)
+		return -EPERM;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (readonly_request)
 		error = mnt_make_readonly(real_mount(mnt));
 	else
@@ -1807,6 +1861,7 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 	if (path->dentry != path->mnt->mnt_root)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/* Don't allow changing of locked mnt flags.
 	 *
 	 * No locks need to be held here while testing the various
@@ -1840,6 +1895,8 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 		return -EPERM;
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	err = security_sb_remount(sb, data);
 	if (err)
 		return err;
@@ -1849,11 +1906,25 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 		err = change_mount_flags(path->mnt, flags);
 	else if (!capable(CAP_SYS_ADMIN))
 		err = -EPERM;
+<<<<<<< HEAD
 	else
 		err = do_remount_sb(sb, flags, data, 0);
 	if (!err) {
 		br_write_lock(&vfsmount_lock);
 		mnt_flags |= mnt->mnt.mnt_flags & ~MNT_USER_SETTABLE_MASK;
+=======
+	else {
+		err = do_remount_sb2(path->mnt, sb, flags, data, 0);
+		namespace_lock();
+		br_write_lock(&vfsmount_lock);
+		propagate_remount(mnt);
+		br_write_unlock(&vfsmount_lock);
+		namespace_unlock();
+	}
+	if (!err) {
+		br_write_lock(&vfsmount_lock);
+		mnt_flags |= mnt->mnt.mnt_flags & MNT_PROPAGATION_MASK;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mnt->mnt.mnt_flags = mnt_flags;
 		br_write_unlock(&vfsmount_lock);
 	}
@@ -2039,7 +2110,11 @@ static int do_new_mount(struct path *path, const char *fstype, int flags,
 		 */
 		if (!(type->fs_flags & FS_USERNS_DEV_MOUNT)) {
 			flags |= MS_NODEV;
+<<<<<<< HEAD
 			mnt_flags |= MNT_NODEV | MNT_LOCK_NODEV;
+=======
+			mnt_flags |= MNT_NODEV;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 	}
 
@@ -2357,6 +2432,7 @@ long do_mount(const char *dev_name, const char *dir_name,
 	if (flags & MS_RDONLY)
 		mnt_flags |= MNT_READONLY;
 
+<<<<<<< HEAD
 	/* The default atime for remount is preservation */
 	if ((flags & MS_REMOUNT) &&
 	    ((flags & (MS_NOATIME | MS_NODIRATIME | MS_RELATIME |
@@ -2365,6 +2441,8 @@ long do_mount(const char *dev_name, const char *dir_name,
 		mnt_flags |= path.mnt->mnt_flags & MNT_ATIME_MASK;
 	}
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	flags &= ~(MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_ACTIVE | MS_BORN |
 		   MS_NOATIME | MS_NODIRATIME | MS_RELATIME| MS_KERNMOUNT |
 		   MS_STRICTATIME);
@@ -2705,9 +2783,12 @@ SYSCALL_DEFINE2(pivot_root, const char __user *, new_root,
 	/* make sure we can reach put_old from new_root */
 	if (!is_path_reachable(old_mnt, old.dentry, &new))
 		goto out4;
+<<<<<<< HEAD
 	/* make certain new is below the root */
 	if (!is_path_reachable(new_mnt, new.dentry, &root))
 		goto out4;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	root_mp->m_count++; /* pin it so it won't go away */
 	br_write_lock(&vfsmount_lock);
 	detach_mnt(new_mnt, &parent_path);

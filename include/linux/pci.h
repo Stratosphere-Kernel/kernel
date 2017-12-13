@@ -310,7 +310,10 @@ struct pci_dev {
 	unsigned int	is_added:1;
 	unsigned int	is_busmaster:1; /* device is busmaster */
 	unsigned int	no_msi:1;	/* device may not use msi */
+<<<<<<< HEAD
 	unsigned int	no_64bit_msi:1; /* device may only use 32-bit MSIs */
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	unsigned int	block_cfg_access:1;	/* config space access is blocked */
 	unsigned int	broken_parity_status:1;	/* Device generates false positive parity */
 	unsigned int	irq_reroute_variant:2;	/* device needs IRQ rerouting variant */

@@ -39,6 +39,10 @@ struct timerfd_ctx {
 	int clockid;
 	struct rcu_head rcu;
 	struct list_head clist;
+<<<<<<< HEAD
+=======
+	spinlock_t cancel_lock;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	bool might_cancel;
 };
 
@@ -111,7 +115,11 @@ void timerfd_clock_was_set(void)
 	rcu_read_unlock();
 }
 
+<<<<<<< HEAD
 static void timerfd_remove_cancel(struct timerfd_ctx *ctx)
+=======
+static void __timerfd_remove_cancel(struct timerfd_ctx *ctx)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	if (ctx->might_cancel) {
 		ctx->might_cancel = false;
@@ -121,6 +129,16 @@ static void timerfd_remove_cancel(struct timerfd_ctx *ctx)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void timerfd_remove_cancel(struct timerfd_ctx *ctx)
+{
+	spin_lock(&ctx->cancel_lock);
+	__timerfd_remove_cancel(ctx);
+	spin_unlock(&ctx->cancel_lock);
+}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static bool timerfd_canceled(struct timerfd_ctx *ctx)
 {
 	if (!ctx->might_cancel || ctx->moffs.tv64 != KTIME_MAX)
@@ -131,6 +149,10 @@ static bool timerfd_canceled(struct timerfd_ctx *ctx)
 
 static void timerfd_setup_cancel(struct timerfd_ctx *ctx, int flags)
 {
+<<<<<<< HEAD
+=======
+	spin_lock(&ctx->cancel_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if ((ctx->clockid == CLOCK_REALTIME ||
 	     ctx->clockid == CLOCK_REALTIME_ALARM) &&
 	    (flags & TFD_TIMER_ABSTIME) && (flags & TFD_TIMER_CANCEL_ON_SET)) {
@@ -140,9 +162,16 @@ static void timerfd_setup_cancel(struct timerfd_ctx *ctx, int flags)
 			list_add_rcu(&ctx->clist, &cancel_list);
 			spin_unlock(&cancel_lock);
 		}
+<<<<<<< HEAD
 	} else if (ctx->might_cancel) {
 		timerfd_remove_cancel(ctx);
 	}
+=======
+	} else {
+		__timerfd_remove_cancel(ctx);
+	}
+	spin_unlock(&ctx->cancel_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static ktime_t timerfd_get_remaining(struct timerfd_ctx *ctx)
@@ -326,6 +355,10 @@ SYSCALL_DEFINE2(timerfd_create, int, clockid, int, flags)
 		return -ENOMEM;
 
 	init_waitqueue_head(&ctx->wqh);
+<<<<<<< HEAD
+=======
+	spin_lock_init(&ctx->cancel_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ctx->clockid = clockid;
 
 	if (isalarm(ctx))

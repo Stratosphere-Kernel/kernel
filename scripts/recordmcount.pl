@@ -262,6 +262,10 @@ if ($arch eq "x86_64") {
     # force flags for this arch
     $ld .= " -m shlelf_linux";
     $objcopy .= " -O elf32-sh-linux";
+<<<<<<< HEAD
+=======
+    $cc .= " -m32";
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 } elsif ($arch eq "powerpc") {
     $local_regex = "^[0-9a-fA-F]+\\s+t\\s+(\\.?\\S+)";

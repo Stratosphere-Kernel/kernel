@@ -453,7 +453,11 @@ static long vol_cdev_ioctl(struct file *file, unsigned int cmd,
 		/* Validate the request */
 		err = -EINVAL;
 		if (req.lnum < 0 || req.lnum >= vol->reserved_pebs ||
+<<<<<<< HEAD
 		    req.bytes < 0 || req.bytes > vol->usable_leb_size)
+=======
+		    req.bytes < 0 || req.lnum >= vol->usable_leb_size)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			break;
 
 		err = get_exclusive(ubi, desc);

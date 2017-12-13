@@ -173,7 +173,11 @@ static int tas5086_get_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct tas5086_private *priv = snd_soc_codec_get_drvdata(codec);
 
+<<<<<<< HEAD
 	ucontrol->value.integer.value[0] = priv->deemph;
+=======
+	ucontrol->value.enumerated.item[0] = priv->deemph;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return 0;
 }
@@ -184,7 +188,11 @@ static int tas5086_put_deemph(struct snd_kcontrol *kcontrol,
 	struct snd_soc_codec *codec = snd_kcontrol_chip(kcontrol);
 	struct tas5086_private *priv = snd_soc_codec_get_drvdata(codec);
 
+<<<<<<< HEAD
 	priv->deemph = ucontrol->value.integer.value[0];
+=======
+	priv->deemph = ucontrol->value.enumerated.item[0];
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	return tas5086_set_deemph(codec);
 }

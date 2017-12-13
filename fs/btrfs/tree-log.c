@@ -943,7 +943,11 @@ again:
 		base = btrfs_item_ptr_offset(leaf, path->slots[0]);
 
 		while (cur_offset < item_size) {
+<<<<<<< HEAD
 			extref = (struct btrfs_inode_extref *)(base + cur_offset);
+=======
+			extref = (struct btrfs_inode_extref *)base + cur_offset;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 			victim_name_len = btrfs_inode_extref_name_len(leaf, extref);
 

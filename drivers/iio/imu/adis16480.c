@@ -110,10 +110,13 @@
 struct adis16480_chip_info {
 	unsigned int num_channels;
 	const struct iio_chan_spec *channels;
+<<<<<<< HEAD
 	unsigned int gyro_max_val;
 	unsigned int gyro_max_scale;
 	unsigned int accel_max_val;
 	unsigned int accel_max_scale;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 struct adis16480 {
@@ -537,14 +540,18 @@ static int adis16480_set_filter_freq(struct iio_dev *indio_dev,
 static int adis16480_read_raw(struct iio_dev *indio_dev,
 	const struct iio_chan_spec *chan, int *val, int *val2, long info)
 {
+<<<<<<< HEAD
 	struct adis16480 *st = iio_priv(indio_dev);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	switch (info) {
 	case IIO_CHAN_INFO_RAW:
 		return adis_single_conversion(indio_dev, chan, 0, val);
 	case IIO_CHAN_INFO_SCALE:
 		switch (chan->type) {
 		case IIO_ANGL_VEL:
+<<<<<<< HEAD
 			*val = st->chip_info->gyro_max_scale;
 			*val2 = st->chip_info->gyro_max_val;
 			return IIO_VAL_FRACTIONAL;
@@ -552,6 +559,15 @@ static int adis16480_read_raw(struct iio_dev *indio_dev,
 			*val = st->chip_info->accel_max_scale;
 			*val2 = st->chip_info->accel_max_val;
 			return IIO_VAL_FRACTIONAL;
+=======
+			*val = 0;
+			*val2 = IIO_DEGREE_TO_RAD(20000); /* 0.02 degree/sec */
+			return IIO_VAL_INT_PLUS_MICRO;
+		case IIO_ACCEL:
+			*val = 0;
+			*val2 = IIO_G_TO_M_S_2(800); /* 0.8 mg */
+			return IIO_VAL_INT_PLUS_MICRO;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		case IIO_MAGN:
 			*val = 0;
 			*val2 = 100; /* 0.0001 gauss */
@@ -708,6 +724,7 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 	[ADIS16375] = {
 		.channels = adis16485_channels,
 		.num_channels = ARRAY_SIZE(adis16485_channels),
+<<<<<<< HEAD
 		/*
 		 * storing the value in rad/degree and the scale in degree
 		 * gives us the result in rad and better precession than
@@ -717,30 +734,41 @@ static const struct adis16480_chip_info adis16480_chip_info[] = {
 		.gyro_max_scale = 300,
 		.accel_max_val = IIO_M_S_2_TO_G(21973),
 		.accel_max_scale = 18,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	},
 	[ADIS16480] = {
 		.channels = adis16480_channels,
 		.num_channels = ARRAY_SIZE(adis16480_channels),
+<<<<<<< HEAD
 		.gyro_max_val = IIO_RAD_TO_DEGREE(22500),
 		.gyro_max_scale = 450,
 		.accel_max_val = IIO_M_S_2_TO_G(12500),
 		.accel_max_scale = 5,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	},
 	[ADIS16485] = {
 		.channels = adis16485_channels,
 		.num_channels = ARRAY_SIZE(adis16485_channels),
+<<<<<<< HEAD
 		.gyro_max_val = IIO_RAD_TO_DEGREE(22500),
 		.gyro_max_scale = 450,
 		.accel_max_val = IIO_M_S_2_TO_G(20000),
 		.accel_max_scale = 5,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	},
 	[ADIS16488] = {
 		.channels = adis16480_channels,
 		.num_channels = ARRAY_SIZE(adis16480_channels),
+<<<<<<< HEAD
 		.gyro_max_val = IIO_RAD_TO_DEGREE(22500),
 		.gyro_max_scale = 450,
 		.accel_max_val = IIO_M_S_2_TO_G(22500),
 		.accel_max_scale = 18,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	},
 };
 

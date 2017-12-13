@@ -177,7 +177,11 @@ acpi_status acpi_load_tables(void);
  */
 acpi_status acpi_reallocate_root_table(void);
 
+<<<<<<< HEAD
 acpi_status acpi_find_root_pointer(acpi_physical_address *rsdp_address);
+=======
+acpi_status acpi_find_root_pointer(acpi_size *rsdp_address);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 acpi_status acpi_unload_table_id(acpi_owner_id id);
 

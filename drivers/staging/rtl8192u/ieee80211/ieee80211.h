@@ -2250,7 +2250,11 @@ static inline void *ieee80211_priv(struct net_device *dev)
 	return ((struct ieee80211_device *)netdev_priv(dev))->priv;
 }
 
+<<<<<<< HEAD
 static inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
+=======
+extern inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	/* Single white space is for Linksys APs */
 	if (essid_len == 1 && essid[0] == ' ')
@@ -2266,7 +2270,11 @@ static inline int ieee80211_is_empty_essid(const char *essid, int essid_len)
 	return 1;
 }
 
+<<<<<<< HEAD
 static inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mode)
+=======
+extern inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mode)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	/*
 	 * It is possible for both access points and our device to support
@@ -2292,7 +2300,11 @@ static inline int ieee80211_is_valid_mode(struct ieee80211_device *ieee, int mod
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline int ieee80211_get_hdrlen(u16 fc)
+=======
+extern inline int ieee80211_get_hdrlen(u16 fc)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	int hdrlen = IEEE80211_3ADDR_LEN;
 
@@ -2578,12 +2590,20 @@ void ieee80211_softmac_scan_syncro(struct ieee80211_device *ieee);
 
 extern const long ieee80211_wlan_frequencies[];
 
+<<<<<<< HEAD
 static inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
+=======
+extern inline void ieee80211_increment_scans(struct ieee80211_device *ieee)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	ieee->scans++;
 }
 
+<<<<<<< HEAD
 static inline int ieee80211_get_scans(struct ieee80211_device *ieee)
+=======
+extern inline int ieee80211_get_scans(struct ieee80211_device *ieee)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	return ieee->scans;
 }

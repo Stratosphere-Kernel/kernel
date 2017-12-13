@@ -191,6 +191,7 @@ void mlx4_en_deactivate_tx_ring(struct mlx4_en_priv *priv,
 		       MLX4_QP_STATE_RST, NULL, 0, 0, &ring->qp);
 }
 
+<<<<<<< HEAD
 static void mlx4_en_stamp_wqe(struct mlx4_en_priv *priv,
 			      struct mlx4_en_tx_ring *ring, int index,
 			      u8 owner)
@@ -224,6 +225,8 @@ static void mlx4_en_stamp_wqe(struct mlx4_en_priv *priv,
 	}
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 static u32 mlx4_en_free_tx_desc(struct mlx4_en_priv *priv,
 				struct mlx4_en_tx_ring *ring,
@@ -238,6 +241,11 @@ static u32 mlx4_en_free_tx_desc(struct mlx4_en_priv *priv,
 	void *end = ring->buf + ring->buf_size;
 	int frags = skb_shinfo(skb)->nr_frags;
 	int i;
+<<<<<<< HEAD
+=======
+	__be32 *ptr = (__be32 *)tx_desc;
+	__be32 stamp = cpu_to_be32(STAMP_VAL | (!!owner << STAMP_SHIFT));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct skb_shared_hwtstamps hwts;
 
 	if (timestamp) {
@@ -263,6 +271,15 @@ static u32 mlx4_en_free_tx_desc(struct mlx4_en_priv *priv,
 					skb_frag_size(frag), PCI_DMA_TODEVICE);
 			}
 		}
+<<<<<<< HEAD
+=======
+		/* Stamp the freed descriptor */
+		for (i = 0; i < tx_info->nr_txbb * TXBB_SIZE; i += STAMP_STRIDE) {
+			*ptr = stamp;
+			ptr += STAMP_DWORDS;
+		}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	} else {
 		if (!tx_info->inl) {
 			if ((void *) data >= end) {
@@ -288,6 +305,19 @@ static u32 mlx4_en_free_tx_desc(struct mlx4_en_priv *priv,
 				++data;
 			}
 		}
+<<<<<<< HEAD
+=======
+		/* Stamp the freed descriptor */
+		for (i = 0; i < tx_info->nr_txbb * TXBB_SIZE; i += STAMP_STRIDE) {
+			*ptr = stamp;
+			ptr += STAMP_DWORDS;
+			if ((void *) ptr >= end) {
+				ptr = ring->buf;
+				stamp ^= cpu_to_be32(0x80000000);
+			}
+		}
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	dev_kfree_skb_any(skb);
 	return tx_info->nr_txbb;
@@ -333,9 +363,14 @@ static void mlx4_en_process_tx_cq(struct net_device *dev, struct mlx4_en_cq *cq)
 	struct mlx4_en_tx_ring *ring = &priv->tx_ring[cq->ring];
 	struct mlx4_cqe *cqe;
 	u16 index;
+<<<<<<< HEAD
 	u16 new_index, ring_index, stamp_index;
 	u32 txbbs_skipped = 0;
 	u32 txbbs_stamp = 0;
+=======
+	u16 new_index, ring_index;
+	u32 txbbs_skipped = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	u32 cons_index = mcq->cons_index;
 	int size = cq->size;
 	u32 size_mask = ring->size_mask;
@@ -351,7 +386,10 @@ static void mlx4_en_process_tx_cq(struct net_device *dev, struct mlx4_en_cq *cq)
 	index = cons_index & size_mask;
 	cqe = &buf[(index << factor) + factor];
 	ring_index = ring->cons & size_mask;
+<<<<<<< HEAD
 	stamp_index = ring_index;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Process all completed CQEs */
 	while (XNOR(cqe->owner_sr_opcode & MLX4_CQE_OWNER_MASK,
@@ -376,12 +414,15 @@ static void mlx4_en_process_tx_cq(struct net_device *dev, struct mlx4_en_cq *cq)
 					priv, ring, ring_index,
 					!!((ring->cons + txbbs_skipped) &
 					ring->size), timestamp);
+<<<<<<< HEAD
 
 			mlx4_en_stamp_wqe(priv, ring, stamp_index,
 					  !!((ring->cons + txbbs_stamp) &
 						ring->size));
 			stamp_index = ring_index;
 			txbbs_stamp = txbbs_skipped;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			packets++;
 			bytes += ring->tx_info[ring_index].nr_bytes;
 		} while (ring_index != new_index);

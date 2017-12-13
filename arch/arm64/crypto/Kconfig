@@ -50,8 +50,11 @@ config CRYPTO_AES_ARM64_NEON_BLK
 	select CRYPTO_AES
 	select CRYPTO_ABLK_HELPER
 
+<<<<<<< HEAD
 config CRYPTO_CRC32_ARM64
 	tristate "CRC32 and CRC32C using optional ARMv8 instructions"
 	depends on ARM64
 	select CRYPTO_HASH
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 endif

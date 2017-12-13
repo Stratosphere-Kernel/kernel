@@ -154,7 +154,10 @@ static struct audit_chunk *alloc_chunk(int count)
 		chunk->owners[i].index = i;
 	}
 	fsnotify_init_mark(&chunk->mark, audit_tree_destroy_watch);
+<<<<<<< HEAD
 	chunk->mark.mask = FS_IN_IGNORED;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return chunk;
 }
 

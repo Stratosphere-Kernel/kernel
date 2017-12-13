@@ -151,7 +151,10 @@ struct panel_connector {
 static void panel_connector_destroy(struct drm_connector *connector)
 {
 	struct panel_connector *panel_connector = to_panel_connector(connector);
+<<<<<<< HEAD
 	drm_sysfs_connector_remove(connector);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	drm_connector_cleanup(connector);
 	kfree(panel_connector);
 }
@@ -286,8 +289,15 @@ static void panel_destroy(struct tilcdc_module *mod)
 {
 	struct panel_module *panel_mod = to_panel_module(mod);
 
+<<<<<<< HEAD
 	if (panel_mod->timings)
 		display_timings_release(panel_mod->timings);
+=======
+	if (panel_mod->timings) {
+		display_timings_release(panel_mod->timings);
+		kfree(panel_mod->timings);
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	tilcdc_module_cleanup(mod);
 	kfree(panel_mod->info);

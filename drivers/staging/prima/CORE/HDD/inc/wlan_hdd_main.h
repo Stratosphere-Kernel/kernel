@@ -106,11 +106,19 @@
 /** Maximum time(ms)to wait for disconnect to complete **/
 #define WLAN_WAIT_TIME_DISCONNECT  5000
 #define WLAN_WAIT_TIME_STATS       800
+<<<<<<< HEAD
 #define WLAN_WAIT_TIME_POWER       800
+=======
+#define WLAN_WAIT_TIME_POWER       5000
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define WLAN_WAIT_TIME_COUNTRY     1000
 #define WLAN_WAIT_TIME_CHANNEL_UPDATE   600
 #define FW_STATE_WAIT_TIME 500
 #define FW_STATE_RSP_LEN 100
+<<<<<<< HEAD
+=======
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* Amount of time to wait for sme close session callback.
    This value should be larger than the timeout used by WDI to wait for
    a response from WCNSS */
@@ -241,6 +249,11 @@ typedef v_U8_t tWlanHddMacAddr[HDD_MAC_ADDR_LEN];
 
 #endif
 #define SCAN_REJECT_THRESHOLD_TIME 300000 /* Time is in msec, equal to 5 mins */
+<<<<<<< HEAD
+=======
+#define SCAN_REJECT_THRESHOLD 15
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #define WLAN_WAIT_TIME_EXTSCAN  1000
 
@@ -1146,7 +1159,14 @@ struct hdd_adapter_s
 #ifdef FEATURE_WLAN_WAPI
    hdd_wapi_info_t wapi_info;
 #endif
+<<<<<<< HEAD
    
+=======
+
+   /* Keep track ns offload count */
+   v_U8_t ns_slots;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
    v_S7_t rssi;
    v_S7_t rssi_on_disconnect;
 
@@ -1686,7 +1706,12 @@ struct hdd_context_s
     v_U8_t last_scan_reject_session_id;
     scan_reject_states last_scan_reject_reason;
     v_TIME_t last_scan_reject_timestamp;
+<<<<<<< HEAD
 
+=======
+    v_U8_t scan_reject_cnt;
+    bool is_fatal_event_log_sup;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
     uint32_t track_arp_ip;
 };
 
@@ -2040,4 +2065,19 @@ int hdd_reassoc(hdd_adapter_t *pAdapter, const tANI_U8 *bssid,
 
 void wlan_hdd_start_sap(hdd_adapter_t *ap_adapter);
 
+<<<<<<< HEAD
+=======
+/**
+ * hdd_drv_cmd_validate() - Validates for space in hdd driver command
+ * @command: pointer to input data (its a NULL terminated string)
+ * @len: length of command name
+ *
+ * This function checks for space after command name and if no space
+ * is found returns error.
+ *
+ * Return: 0 for success non-zero for failure
+ */
+int hdd_drv_cmd_validate(tANI_U8 *command, int len);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif    // end #if !defined( WLAN_HDD_MAIN_H )

@@ -1975,12 +1975,21 @@ static void msm_otg_notify_charger(struct msm_otg *motg, unsigned mA)
 		return;
 
 #ifdef CONFIG_FORCE_FAST_CHARGE
+<<<<<<< HEAD
         if (force_fast_charge > 0 && mA > 0) {
             mA = IDEV_ACA_CHG_MAX;
             pr_info("USB fast charging is ON\n");
         } else {
             pr_info("USB fast charging is OFF\n");
         }
+=======
+	if (force_fast_charge > 0 && mA > 0) {
+		mA = IDEV_ACA_CHG_MAX;
+		pr_info("USB fast charging is ON\n");
+	} else {
+		pr_info("USB fast charging is OFF\n");
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif
 
 	dev_info(motg->phy.dev, "Avail curr from USB = %u\n", mA);

@@ -335,8 +335,11 @@ out:
 
 out_unlock:
 	spin_unlock_irq(&pidmap_lock);
+<<<<<<< HEAD
 	put_pid_ns(ns);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 out_free:
 	while (++i <= ns->level)
 		free_pidmap(pid->numbers + i);

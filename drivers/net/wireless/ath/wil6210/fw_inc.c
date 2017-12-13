@@ -26,6 +26,7 @@
 					     prefix_type, rowsize,	\
 					     groupsize, buf, len, ascii)
 
+<<<<<<< HEAD
 #define FW_ADDR_CHECK(ioaddr, val, msg) do { \
 		ioaddr = wmi_buffer(wil, val); \
 		if (!ioaddr) { \
@@ -34,6 +35,19 @@
 			return -EINVAL; \
 		} \
 	} while (0)
+=======
+static bool wil_fw_addr_check(struct wil6210_priv *wil,
+			      void __iomem **ioaddr, __le32 val,
+			      u32 size, const char *msg)
+{
+	*ioaddr = wmi_buffer_block(wil, val, size);
+	if (!(*ioaddr)) {
+		wil_err_fw(wil, "bad %s: 0x%08x\n", msg, le32_to_cpu(val));
+		return false;
+	}
+	return true;
+}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /**
  * wil_fw_verify - verify firmware file validity
@@ -138,7 +152,12 @@ static int fw_handle_data(struct wil6210_priv *wil, const void *data,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	FW_ADDR_CHECK(dst, d->addr, "address");
+=======
+	if (!wil_fw_addr_check(wil, &dst, d->addr, s, "address"))
+		return -EINVAL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	wil_dbg_fw(wil, "write [0x%08x] <== %zu bytes\n", le32_to_cpu(d->addr),
 		   s);
 	wil_memcpy_toio_32(dst, d->data, s);
@@ -170,7 +189,12 @@ static int fw_handle_fill(struct wil6210_priv *wil, const void *data,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	FW_ADDR_CHECK(dst, d->addr, "address");
+=======
+	if (!wil_fw_addr_check(wil, &dst, d->addr, s, "address"))
+		return -EINVAL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	v = le32_to_cpu(d->value);
 	wil_dbg_fw(wil, "fill [0x%08x] <== 0x%08x, %zu bytes\n",
@@ -219,7 +243,12 @@ static int fw_handle_direct_write(struct wil6210_priv *wil, const void *data,
 		u32 v = le32_to_cpu(block[i].value);
 		u32 x, y;
 
+<<<<<<< HEAD
 		FW_ADDR_CHECK(dst, block[i].addr, "address");
+=======
+		if (!wil_fw_addr_check(wil, &dst, block[i].addr, 0, "address"))
+			return -EINVAL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		x = ioread32(dst);
 		y = (x & m) | (v & ~m);
@@ -285,10 +314,22 @@ static int fw_handle_gateway_data(struct wil6210_priv *wil, const void *data,
 	wil_dbg_fw(wil, "gw write record [%3d] blocks, cmd 0x%08x\n",
 		   n, gw_cmd);
 
+<<<<<<< HEAD
 	FW_ADDR_CHECK(gwa_addr, d->gateway_addr_addr, "gateway_addr_addr");
 	FW_ADDR_CHECK(gwa_val, d->gateway_value_addr, "gateway_value_addr");
 	FW_ADDR_CHECK(gwa_cmd, d->gateway_cmd_addr, "gateway_cmd_addr");
 	FW_ADDR_CHECK(gwa_ctl, d->gateway_ctrl_address, "gateway_ctrl_address");
+=======
+	if (!wil_fw_addr_check(wil, &gwa_addr, d->gateway_addr_addr, 0,
+			       "gateway_addr_addr") ||
+	    !wil_fw_addr_check(wil, &gwa_val, d->gateway_value_addr, 0,
+			       "gateway_value_addr") ||
+	    !wil_fw_addr_check(wil, &gwa_cmd, d->gateway_cmd_addr, 0,
+			       "gateway_cmd_addr") ||
+	    !wil_fw_addr_check(wil, &gwa_ctl, d->gateway_ctrl_address, 0,
+			       "gateway_ctrl_address"))
+		return -EINVAL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	wil_dbg_fw(wil, "gw addresses: addr 0x%08x val 0x%08x"
 		   " cmd 0x%08x ctl 0x%08x\n",
@@ -344,12 +385,28 @@ static int fw_handle_gateway_data4(struct wil6210_priv *wil, const void *data,
 	wil_dbg_fw(wil, "gw4 write record [%3d] blocks, cmd 0x%08x\n",
 		   n, gw_cmd);
 
+<<<<<<< HEAD
 	FW_ADDR_CHECK(gwa_addr, d->gateway_addr_addr, "gateway_addr_addr");
 	for (k = 0; k < ARRAY_SIZE(block->value); k++)
 		FW_ADDR_CHECK(gwa_val[k], d->gateway_value_addr[k],
 			      "gateway_value_addr");
 	FW_ADDR_CHECK(gwa_cmd, d->gateway_cmd_addr, "gateway_cmd_addr");
 	FW_ADDR_CHECK(gwa_ctl, d->gateway_ctrl_address, "gateway_ctrl_address");
+=======
+	if (!wil_fw_addr_check(wil, &gwa_addr, d->gateway_addr_addr, 0,
+			       "gateway_addr_addr"))
+		return -EINVAL;
+	for (k = 0; k < ARRAY_SIZE(block->value); k++)
+		if (!wil_fw_addr_check(wil, &gwa_val[k],
+				       d->gateway_value_addr[k],
+				       0, "gateway_value_addr"))
+			return -EINVAL;
+	if (!wil_fw_addr_check(wil, &gwa_cmd, d->gateway_cmd_addr, 0,
+			       "gateway_cmd_addr") ||
+	    !wil_fw_addr_check(wil, &gwa_ctl, d->gateway_ctrl_address, 0,
+			       "gateway_ctrl_address"))
+		return -EINVAL;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	wil_dbg_fw(wil, "gw4 addresses: addr 0x%08x cmd 0x%08x ctl 0x%08x\n",
 		   le32_to_cpu(d->gateway_addr_addr),

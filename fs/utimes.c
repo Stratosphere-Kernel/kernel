@@ -96,13 +96,21 @@ static int utimes_common(struct path *path, struct timespec *times)
 			goto mnt_drop_write_and_out;
 
 		if (!inode_owner_or_capable(inode)) {
+<<<<<<< HEAD
 			error = inode_permission(inode, MAY_WRITE);
+=======
+			error = inode_permission2(path->mnt, inode, MAY_WRITE);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			if (error)
 				goto mnt_drop_write_and_out;
 		}
 	}
 	mutex_lock(&inode->i_mutex);
+<<<<<<< HEAD
 	error = notify_change(path->dentry, &newattrs);
+=======
+	error = notify_change2(path->mnt, path->dentry, &newattrs);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	mutex_unlock(&inode->i_mutex);
 
 mnt_drop_write_and_out:

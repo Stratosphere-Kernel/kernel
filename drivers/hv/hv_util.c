@@ -279,7 +279,11 @@ static int util_probe(struct hv_device *dev,
 		(struct hv_util_service *)dev_id->driver_data;
 	int ret;
 
+<<<<<<< HEAD
 	srv->recv_buffer = kmalloc(PAGE_SIZE * 4, GFP_KERNEL);
+=======
+	srv->recv_buffer = kmalloc(PAGE_SIZE * 2, GFP_KERNEL);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!srv->recv_buffer)
 		return -ENOMEM;
 	if (srv->util_init) {

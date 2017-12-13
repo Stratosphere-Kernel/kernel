@@ -35,12 +35,21 @@ struct __read_mostly va_alignment va_align = {
 	.flags = -1,
 };
 
+<<<<<<< HEAD
 static unsigned long stack_maxrandom_size(void)
 {
 	unsigned long max = 0;
 	if ((current->flags & PF_RANDOMIZE) &&
 		!(current->personality & ADDR_NO_RANDOMIZE)) {
 		max = ((-1UL) & STACK_RND_MASK) << PAGE_SHIFT;
+=======
+static unsigned int stack_maxrandom_size(void)
+{
+	unsigned int max = 0;
+	if ((current->flags & PF_RANDOMIZE) &&
+		!(current->personality & ADDR_NO_RANDOMIZE)) {
+		max = ((-1U) & STACK_RND_MASK) << PAGE_SHIFT;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	return max;

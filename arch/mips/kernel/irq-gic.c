@@ -256,6 +256,7 @@ static void __init gic_setup_intr(unsigned int intr, unsigned int cpu,
 
 	/* Setup Intr to Pin mapping */
 	if (pin & GIC_MAP_TO_NMI_MSK) {
+<<<<<<< HEAD
 		int i;
 
 		GICWRITE(GIC_REG_ADDR(SHARED, GIC_SH_MAP_TO_PIN(intr)), pin);
@@ -263,6 +264,13 @@ static void __init gic_setup_intr(unsigned int intr, unsigned int cpu,
 		for (i = 0; i < NR_CPUS; i += 32) {
 			GICWRITE(GIC_REG_ADDR(SHARED,
 					  GIC_SH_MAP_TO_VPE_REG_OFF(intr, i)),
+=======
+		GICWRITE(GIC_REG_ADDR(SHARED, GIC_SH_MAP_TO_PIN(intr)), pin);
+		/* FIXME: hack to route NMI to all cpu's */
+		for (cpu = 0; cpu < NR_CPUS; cpu += 32) {
+			GICWRITE(GIC_REG_ADDR(SHARED,
+					  GIC_SH_MAP_TO_VPE_REG_OFF(intr, cpu)),
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				 0xffffffff);
 		}
 	} else {

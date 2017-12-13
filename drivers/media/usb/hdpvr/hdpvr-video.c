@@ -81,7 +81,11 @@ static void hdpvr_read_bulk_callback(struct urb *urb)
 }
 
 /*=========================================================================*/
+<<<<<<< HEAD
 /* buffer bits */
+=======
+/* bufffer bits */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /* function expects dev->io_mutex to be hold by caller */
 int hdpvr_cancel_queue(struct hdpvr_device *dev)
@@ -921,7 +925,11 @@ static int hdpvr_s_ctrl(struct v4l2_ctrl *ctrl)
 	case V4L2_CID_MPEG_AUDIO_ENCODING:
 		if (dev->flags & HDPVR_FLAG_AC3_CAP) {
 			opt->audio_codec = ctrl->val;
+<<<<<<< HEAD
 			return hdpvr_set_audio(dev, opt->audio_input + 1,
+=======
+			return hdpvr_set_audio(dev, opt->audio_input,
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 					      opt->audio_codec);
 		}
 		return 0;
@@ -1191,7 +1199,11 @@ int hdpvr_register_videodev(struct hdpvr_device *dev, struct device *parent,
 	v4l2_ctrl_new_std_menu(hdl, &hdpvr_ctrl_ops,
 		V4L2_CID_MPEG_AUDIO_ENCODING,
 		ac3 ? V4L2_MPEG_AUDIO_ENCODING_AC3 : V4L2_MPEG_AUDIO_ENCODING_AAC,
+<<<<<<< HEAD
 		0x7, ac3 ? dev->options.audio_codec : V4L2_MPEG_AUDIO_ENCODING_AAC);
+=======
+		0x7, V4L2_MPEG_AUDIO_ENCODING_AAC);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	v4l2_ctrl_new_std_menu(hdl, &hdpvr_ctrl_ops,
 		V4L2_CID_MPEG_VIDEO_ENCODING,
 		V4L2_MPEG_VIDEO_ENCODING_MPEG_4_AVC, 0x3,

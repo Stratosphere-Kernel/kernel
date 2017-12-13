@@ -72,6 +72,10 @@ struct tick_sched {
 
 extern void __init tick_init(void);
 extern int tick_is_oneshot_available(void);
+<<<<<<< HEAD
+=======
+extern u64 jiffy_to_sched_clock(u64 *now, u64 *jiffy_sched_clock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 extern struct tick_device *tick_get_device(int cpu);
 
 # ifdef CONFIG_HIGH_RES_TIMERS

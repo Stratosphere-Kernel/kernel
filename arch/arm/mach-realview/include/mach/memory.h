@@ -56,8 +56,11 @@
 #define PAGE_OFFSET1	(PAGE_OFFSET + 0x10000000)
 #define PAGE_OFFSET2	(PAGE_OFFSET + 0x30000000)
 
+<<<<<<< HEAD
 #define PHYS_OFFSET PLAT_PHYS_OFFSET
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define __phys_to_virt(phys)						\
 	((phys) >= 0x80000000 ?	(phys) - 0x80000000 + PAGE_OFFSET2 :	\
 	 (phys) >= 0x20000000 ?	(phys) - 0x20000000 + PAGE_OFFSET1 :	\

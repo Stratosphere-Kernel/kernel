@@ -39,4 +39,11 @@ extern int devfreq_add_governor(struct devfreq_governor *governor);
 extern int devfreq_remove_governor(struct devfreq_governor *governor);
 
 extern int devfreq_get_freq_level(struct devfreq *devfreq, unsigned long freq);
+<<<<<<< HEAD
+=======
+extern int devfreq_policy_add_files(struct devfreq *devfreq,
+				    struct attribute_group attr_group);
+extern void devfreq_policy_remove_files(struct devfreq *devfreq,
+					struct attribute_group attr_group);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #endif /* _GOVERNOR_H */

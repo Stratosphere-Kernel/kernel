@@ -468,4 +468,7 @@ static void __exit msm_adreno_tz_exit(void)
 module_exit(msm_adreno_tz_exit);
 
 MODULE_LICENSE("GPLv2");
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

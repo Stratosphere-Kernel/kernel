@@ -1006,7 +1006,10 @@ static int __init usb_init(void)
 		pr_info("%s: USB support disabled\n", usbcore_name);
 		return 0;
 	}
+<<<<<<< HEAD
 	usb_init_pool_max();
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	retval = usb_debugfs_init();
 	if (retval)

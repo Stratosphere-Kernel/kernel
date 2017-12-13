@@ -161,7 +161,10 @@ int ptrace_setfpregs(struct task_struct *child, __u32 __user *data)
 		__get_user(fregs[i], i + (__u64 __user *) data);
 
 	__get_user(child->thread.fpu.fcr31, data + 64);
+<<<<<<< HEAD
 	child->thread.fpu.fcr31 &= ~FPU_CSR_ALL_X;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* FIR may not be written.  */
 
@@ -452,7 +455,11 @@ long arch_ptrace(struct task_struct *child, long request,
 			break;
 #endif
 		case FPC_CSR:
+<<<<<<< HEAD
 			child->thread.fpu.fcr31 = data & ~FPU_CSR_ALL_X;
+=======
+			child->thread.fpu.fcr31 = data;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			break;
 		case DSP_BASE ... DSP_BASE + 5: {
 			dspreg_t *dregs;

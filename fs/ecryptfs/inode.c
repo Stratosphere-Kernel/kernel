@@ -1051,7 +1051,11 @@ ecryptfs_setxattr(struct dentry *dentry, const char *name, const void *value,
 	}
 
 	rc = vfs_setxattr(lower_dentry, name, value, size, flags);
+<<<<<<< HEAD
 	if (!rc && dentry->d_inode)
+=======
+	if (!rc)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		fsstack_copy_attr_all(dentry->d_inode, lower_dentry->d_inode);
 out:
 	return rc;

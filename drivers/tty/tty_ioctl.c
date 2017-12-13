@@ -217,6 +217,7 @@ void tty_wait_until_sent(struct tty_struct *tty, long timeout)
 #endif
 	if (!timeout)
 		timeout = MAX_SCHEDULE_TIMEOUT;
+<<<<<<< HEAD
 
 	if (wait_event_interruptible_timeout(tty->write_wait,
 			!tty_chars_in_buffer(tty), timeout) < 0) {
@@ -228,6 +229,13 @@ void tty_wait_until_sent(struct tty_struct *tty, long timeout)
 
 	if (tty->ops->wait_until_sent)
 		tty->ops->wait_until_sent(tty, timeout);
+=======
+	if (wait_event_interruptible_timeout(tty->write_wait,
+			!tty_chars_in_buffer(tty), timeout) >= 0) {
+		if (tty->ops->wait_until_sent)
+			tty->ops->wait_until_sent(tty, timeout);
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 EXPORT_SYMBOL(tty_wait_until_sent);
 

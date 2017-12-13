@@ -861,6 +861,7 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 		if (!pte_file(pte)) {
 			swp_entry_t entry = pte_to_swp_entry(pte);
 
+<<<<<<< HEAD
 			if (likely(!non_swap_entry(entry))) {
 				if (swap_duplicate(entry) < 0)
 					return entry.val;
@@ -875,6 +876,22 @@ copy_one_pte(struct mm_struct *dst_mm, struct mm_struct *src_mm,
 				}
 				rss[MM_SWAPENTS]++;
 			} else if (is_migration_entry(entry)) {
+=======
+			if (swap_duplicate(entry) < 0)
+				return entry.val;
+
+			/* make sure dst_mm is on swapoff's mmlist. */
+			if (unlikely(list_empty(&dst_mm->mmlist))) {
+				spin_lock(&mmlist_lock);
+				if (list_empty(&dst_mm->mmlist))
+					list_add(&dst_mm->mmlist,
+						 &src_mm->mmlist);
+				spin_unlock(&mmlist_lock);
+			}
+			if (likely(!non_swap_entry(entry)))
+				rss[MM_SWAPENTS]++;
+			else if (is_migration_entry(entry)) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 				page = migration_entry_to_page(entry);
 
 				if (PageAnon(page))
@@ -1901,8 +1918,12 @@ long __get_user_pages(struct task_struct *tsk, struct mm_struct *mm,
 						else
 							return -EFAULT;
 					}
+<<<<<<< HEAD
 					if (ret & (VM_FAULT_SIGBUS |
 						   VM_FAULT_SIGSEGV))
+=======
+					if (ret & VM_FAULT_SIGBUS)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 						return i ? i : -EFAULT;
 					BUG();
 				}
@@ -2012,7 +2033,11 @@ int fixup_user_fault(struct task_struct *tsk, struct mm_struct *mm,
 			return -ENOMEM;
 		if (ret & (VM_FAULT_HWPOISON | VM_FAULT_HWPOISON_LARGE))
 			return -EHWPOISON;
+<<<<<<< HEAD
 		if (ret & (VM_FAULT_SIGBUS | VM_FAULT_SIGSEGV))
+=======
+		if (ret & VM_FAULT_SIGBUS)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			return -EFAULT;
 		BUG();
 	}
@@ -3275,7 +3300,11 @@ static inline int check_stack_guard_page(struct vm_area_struct *vma, unsigned lo
 		if (prev && prev->vm_end == address)
 			return prev->vm_flags & VM_GROWSDOWN ? 0 : -ENOMEM;
 
+<<<<<<< HEAD
 		return expand_downwards(vma, address - PAGE_SIZE);
+=======
+		expand_downwards(vma, address - PAGE_SIZE);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if ((vma->vm_flags & VM_GROWSUP) && address + PAGE_SIZE == vma->vm_end) {
 		struct vm_area_struct *next = vma->vm_next;
@@ -3284,7 +3313,11 @@ static inline int check_stack_guard_page(struct vm_area_struct *vma, unsigned lo
 		if (next && next->vm_start == address + PAGE_SIZE)
 			return next->vm_flags & VM_GROWSUP ? 0 : -ENOMEM;
 
+<<<<<<< HEAD
 		return expand_upwards(vma, address + PAGE_SIZE);
+=======
+		expand_upwards(vma, address + PAGE_SIZE);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	return 0;
 }
@@ -3310,7 +3343,11 @@ static int do_anonymous_page(struct mm_struct *mm, struct vm_area_struct *vma,
 
 	/* Check if we need to add a guard page to the stack */
 	if (check_stack_guard_page(vma, address) < 0)
+<<<<<<< HEAD
 		return VM_FAULT_SIGSEGV;
+=======
+		return VM_FAULT_SIGBUS;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Use the zero-page for reads */
 	if (!(flags & FAULT_FLAG_WRITE)) {
@@ -3834,14 +3871,30 @@ unlock:
 /*
  * By the time we get here, we already hold the mm semaphore
  */
+<<<<<<< HEAD
 static int __handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 			     unsigned long address, unsigned int flags)
+=======
+int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
+		unsigned long address, unsigned int flags)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	pgd_t *pgd;
 	pud_t *pud;
 	pmd_t *pmd;
 	pte_t *pte;
 
+<<<<<<< HEAD
+=======
+	__set_current_state(TASK_RUNNING);
+
+	count_vm_event(PGFAULT);
+	mem_cgroup_count_vm_event(mm, PGFAULT);
+
+	/* do counter updates before entering really critical section. */
+	check_sync_rss_stat(current);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (unlikely(is_vm_hugetlb_page(vma)))
 		return hugetlb_fault(mm, vma, address, flags);
 
@@ -3922,6 +3975,7 @@ retry:
 	return handle_pte_fault(mm, vma, address, pte, pmd, flags);
 }
 
+<<<<<<< HEAD
 int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 		    unsigned long address, unsigned int flags)
 {
@@ -3959,6 +4013,8 @@ int handle_mm_fault(struct mm_struct *mm, struct vm_area_struct *vma,
 	return ret;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifndef __PAGETABLE_PUD_FOLDED
 /*
  * Allocate page upper directory.
@@ -4168,7 +4224,11 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
 	if (follow_phys(vma, addr, write, &prot, &phys_addr))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
+=======
+	maddr = ioremap_prot(phys_addr, PAGE_SIZE, prot);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (write)
 		memcpy_toio(maddr + offset, buf, len);
 	else

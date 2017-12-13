@@ -812,8 +812,16 @@ do_sigbus(struct pt_regs *regs, unsigned long error_code, unsigned long address,
 	  unsigned int fault)
 {
 	struct task_struct *tsk = current;
+<<<<<<< HEAD
 	int code = BUS_ADRERR;
 
+=======
+	struct mm_struct *mm = tsk->mm;
+	int code = BUS_ADRERR;
+
+	up_read(&mm->mmap_sem);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* Kernel mode? Handle exceptions or die: */
 	if (!(error_code & PF_USER)) {
 		no_context(regs, error_code, address, SIGBUS, BUS_ADRERR);
@@ -839,6 +847,7 @@ do_sigbus(struct pt_regs *regs, unsigned long error_code, unsigned long address,
 	force_sig_info_fault(SIGBUS, code, address, tsk, fault);
 }
 
+<<<<<<< HEAD
 static noinline void
 mm_fault_error(struct pt_regs *regs, unsigned long error_code,
 	       unsigned long address, unsigned int fault)
@@ -847,15 +856,45 @@ mm_fault_error(struct pt_regs *regs, unsigned long error_code,
 		no_context(regs, error_code, address, 0, 0);
 		return;
 	}
+=======
+static noinline int
+mm_fault_error(struct pt_regs *regs, unsigned long error_code,
+	       unsigned long address, unsigned int fault)
+{
+	/*
+	 * Pagefault was interrupted by SIGKILL. We have no reason to
+	 * continue pagefault.
+	 */
+	if (fatal_signal_pending(current)) {
+		if (!(fault & VM_FAULT_RETRY))
+			up_read(&current->mm->mmap_sem);
+		if (!(error_code & PF_USER))
+			no_context(regs, error_code, address, 0, 0);
+		return 1;
+	}
+	if (!(fault & VM_FAULT_ERROR))
+		return 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (fault & VM_FAULT_OOM) {
 		/* Kernel mode? Handle exceptions or die: */
 		if (!(error_code & PF_USER)) {
+<<<<<<< HEAD
 			no_context(regs, error_code, address,
 				   SIGSEGV, SEGV_MAPERR);
 			return;
 		}
 
+=======
+			up_read(&current->mm->mmap_sem);
+			no_context(regs, error_code, address,
+				   SIGSEGV, SEGV_MAPERR);
+			return 1;
+		}
+
+		up_read(&current->mm->mmap_sem);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		/*
 		 * We ran out of memory, call the OOM killer, and return the
 		 * userspace (which will retry the fault, or kill us if we got
@@ -866,11 +905,18 @@ mm_fault_error(struct pt_regs *regs, unsigned long error_code,
 		if (fault & (VM_FAULT_SIGBUS|VM_FAULT_HWPOISON|
 			     VM_FAULT_HWPOISON_LARGE))
 			do_sigbus(regs, error_code, address, fault);
+<<<<<<< HEAD
 		else if (fault & VM_FAULT_SIGSEGV)
 			bad_area_nosemaphore(regs, error_code, address);
 		else
 			BUG();
 	}
+=======
+		else
+			BUG();
+	}
+	return 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static int spurious_fault_check(unsigned long error_code, pte_t *pte)
@@ -1179,6 +1225,7 @@ good_area:
 	 */
 	fault = handle_mm_fault(mm, vma, address, flags);
 
+<<<<<<< HEAD
 	/*
 	 * If we need to retry but a fatal signal is pending, handle the
 	 * signal first. We do not need to release the mmap_sem because it
@@ -1191,6 +1238,11 @@ good_area:
 		up_read(&mm->mmap_sem);
 		mm_fault_error(regs, error_code, address, fault);
 		return;
+=======
+	if (unlikely(fault & (VM_FAULT_RETRY|VM_FAULT_ERROR))) {
+		if (mm_fault_error(regs, error_code, address, fault))
+			return;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	/*

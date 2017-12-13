@@ -425,8 +425,11 @@ good_area:
 	 */
 	fault = handle_mm_fault(mm, vma, address, flags);
 	if (unlikely(fault & (VM_FAULT_RETRY|VM_FAULT_ERROR))) {
+<<<<<<< HEAD
 		if (fault & VM_FAULT_SIGSEGV)
 			goto bad_area;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		rc = mm_fault_error(regs, address, fault);
 		if (rc >= MM_FAULT_RETURN)
 			goto bail;

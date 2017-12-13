@@ -237,7 +237,10 @@ static struct dmi_system_id lis3lv02d_dmi_ids[] = {
 	AXIS_DMI_MATCH("HPB64xx", "HP ProBook 64", xy_swap),
 	AXIS_DMI_MATCH("HPB64xx", "HP EliteBook 84", xy_swap),
 	AXIS_DMI_MATCH("HPB65xx", "HP ProBook 65", x_inverted),
+<<<<<<< HEAD
 	AXIS_DMI_MATCH("HPZBook15", "HP ZBook 15", x_inverted),
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	{ NULL, }
 /* Laptop models without axis info (yet):
  * "NC6910" "HP Compaq 6910"

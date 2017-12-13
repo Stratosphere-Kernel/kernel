@@ -25,6 +25,14 @@ struct tcm_loop_tmr {
 };
 
 struct tcm_loop_nexus {
+<<<<<<< HEAD
+=======
+	int it_nexus_active;
+	/*
+	 * Pointer to Linux/SCSI HBA from linux/include/scsi_host.h
+	 */
+	struct scsi_host *sh;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/*
 	 * Pointer to TCM session for I_T Nexus
 	 */
@@ -40,7 +48,10 @@ struct tcm_loop_tpg {
 	atomic_t tl_tpg_port_count;
 	struct se_portal_group tl_se_tpg;
 	struct tcm_loop_hba *tl_hba;
+<<<<<<< HEAD
 	struct tcm_loop_nexus *tl_nexus;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 };
 
 struct tcm_loop_hba {
@@ -49,6 +60,10 @@ struct tcm_loop_hba {
 	struct se_hba_s *se_hba;
 	struct se_lun *tl_hba_lun;
 	struct se_port *tl_hba_lun_sep;
+<<<<<<< HEAD
+=======
+	struct tcm_loop_nexus *tl_nexus;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct device dev;
 	struct Scsi_Host *sh;
 	struct tcm_loop_tpg tl_hba_tpgs[TL_TPGS_PER_HBA];

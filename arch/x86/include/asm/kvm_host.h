@@ -99,7 +99,11 @@ static inline gfn_t gfn_to_index(gfn_t gfn, gfn_t base_gfn, int level)
 #define KVM_REFILL_PAGES 25
 #define KVM_MAX_CPUID_ENTRIES 80
 #define KVM_NR_FIXED_MTRR_REGION 88
+<<<<<<< HEAD
 #define KVM_NR_VAR_MTRR 8
+=======
+#define KVM_NR_VAR_MTRR 10
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 #define ASYNC_PF_PER_VCPU 64
 
@@ -470,7 +474,10 @@ struct kvm_vcpu_arch {
 	u64 mmio_gva;
 	unsigned access;
 	gfn_t mmio_gfn;
+<<<<<<< HEAD
 	u64 mmio_gen;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	struct kvm_pmu pmu;
 
@@ -548,7 +555,11 @@ struct kvm_arch {
 	struct kvm_pic *vpic;
 	struct kvm_ioapic *vioapic;
 	struct kvm_pit *vpit;
+<<<<<<< HEAD
 	atomic_t vapics_in_nmi_mode;
+=======
+	int vapics_in_nmi_mode;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct mutex apic_map_lock;
 	struct kvm_apic_map *apic_map;
 
@@ -960,6 +971,7 @@ static inline void kvm_inject_gp(struct kvm_vcpu *vcpu, u32 error_code)
 	kvm_queue_exception_e(vcpu, GP_VECTOR, error_code);
 }
 
+<<<<<<< HEAD
 static inline u64 get_canonical(u64 la)
 {
 	return ((int64_t)la << 16) >> 16;
@@ -974,6 +986,8 @@ static inline bool is_noncanonical_address(u64 la)
 #endif
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define TSS_IOPB_BASE_OFFSET 0x66
 #define TSS_BASE_SIZE 0x68
 #define TSS_IOPB_SIZE (65536 / 8)
@@ -1032,7 +1046,11 @@ int kvm_cpu_get_interrupt(struct kvm_vcpu *v);
 void kvm_vcpu_reset(struct kvm_vcpu *vcpu);
 
 void kvm_define_shared_msr(unsigned index, u32 msr);
+<<<<<<< HEAD
 int kvm_set_shared_msr(unsigned index, u64 val, u64 mask);
+=======
+void kvm_set_shared_msr(unsigned index, u64 val, u64 mask);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 bool kvm_is_linear_rip(struct kvm_vcpu *vcpu, unsigned long linear_rip);
 

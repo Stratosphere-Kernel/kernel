@@ -1626,7 +1626,11 @@ kvm_mips_complete_mmio_load(struct kvm_vcpu *vcpu, struct kvm_run *run)
 		if (vcpu->mmio_needed == 2)
 			*gpr = *(int16_t *) run->mmio.data;
 		else
+<<<<<<< HEAD
 			*gpr = *(uint16_t *)run->mmio.data;
+=======
+			*gpr = *(int16_t *) run->mmio.data;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 		break;
 	case 1:

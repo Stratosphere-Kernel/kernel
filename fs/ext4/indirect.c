@@ -577,7 +577,11 @@ int ext4_ind_map_blocks(handle_t *handle, struct inode *inode,
 				       EXT4_FEATURE_RO_COMPAT_BIGALLOC)) {
 		EXT4_ERROR_INODE(inode, "Can't allocate blocks for "
 				 "non-extent mapped inodes with bigalloc");
+<<<<<<< HEAD
 		return -EUCLEAN;
+=======
+		return -ENOSPC;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	goal = ext4_find_goal(inode, map->m_lblk, partial);

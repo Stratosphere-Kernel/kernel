@@ -117,6 +117,7 @@ subsys_initcall(init_vdso);
 
 struct linux_binprm;
 
+<<<<<<< HEAD
 /*
  * Put the vdso above the (randomized) stack with another randomized
  * offset.  This way there is no hole in the middle of address space.
@@ -128,10 +129,17 @@ struct linux_binprm;
  *
  * Only used for the 64-bit and x32 vdsos.
  */
+=======
+/* Put the vdso above the (randomized) stack with another randomized offset.
+   This way there is no hole in the middle of address space.
+   To save memory make sure it is still in the same PTE as the stack top.
+   This doesn't give that many random bits */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static unsigned long vdso_addr(unsigned long start, unsigned len)
 {
 	unsigned long addr, end;
 	unsigned offset;
+<<<<<<< HEAD
 
 	/*
 	 * Round up the start address.  It can start out unaligned as a result
@@ -156,6 +164,24 @@ static unsigned long vdso_addr(unsigned long start, unsigned len)
 	 * Forcibly align the final address in case we have a hardware
 	 * issue that requires alignment for performance reasons.
 	 */
+=======
+	end = (start + PMD_SIZE - 1) & PMD_MASK;
+	if (end >= TASK_SIZE_MAX)
+		end = TASK_SIZE_MAX;
+	end -= len;
+	/* This loses some more bits than a modulo, but is cheaper */
+	offset = get_random_int() & (PTRS_PER_PTE - 1);
+	addr = start + (offset << PAGE_SHIFT);
+	if (addr >= end)
+		addr = end;
+
+	/*
+	 * page-align it here so that get_unmapped_area doesn't
+	 * align it wrongfully again to the next page. addr can come in 4K
+	 * unaligned here as a result of stack start randomization.
+	 */
+	addr = PAGE_ALIGN(addr);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	addr = align_vdso_addr(addr);
 
 	return addr;

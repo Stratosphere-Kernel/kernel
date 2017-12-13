@@ -642,6 +642,7 @@ static int get_amp_val_to_activate(struct hda_codec *codec, hda_nid_t nid,
 	return val;
 }
 
+<<<<<<< HEAD
 /* is this a stereo widget or a stereo-to-mono mix? */
 static bool is_stereo_amps(struct hda_codec *codec, hda_nid_t nid, int dir)
 {
@@ -659,11 +660,14 @@ static bool is_stereo_amps(struct hda_codec *codec, hda_nid_t nid, int dir)
 	return !!(get_wcaps(codec, conn) & AC_WCAP_STEREO);
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* initialize the amp value (only at the first time) */
 static void init_amp(struct hda_codec *codec, hda_nid_t nid, int dir, int idx)
 {
 	unsigned int caps = query_amp_caps(codec, nid, dir);
 	int val = get_amp_val_to_activate(codec, nid, dir, caps, false);
+<<<<<<< HEAD
 
 	if (is_stereo_amps(codec, nid, dir))
 		snd_hda_codec_amp_init_stereo(codec, nid, dir, idx, 0xff, val);
@@ -681,6 +685,9 @@ static int update_amp(struct hda_codec *codec, hda_nid_t nid, int dir, int idx,
 	else
 		return snd_hda_codec_amp_update(codec, nid, 0, dir, idx,
 						mask, val);
+=======
+	snd_hda_codec_amp_init_stereo(codec, nid, dir, idx, 0xff, val);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 /* calculate amp value mask we can modify;
@@ -720,7 +727,11 @@ static void activate_amp(struct hda_codec *codec, hda_nid_t nid, int dir,
 		return;
 
 	val &= mask;
+<<<<<<< HEAD
 	update_amp(codec, nid, dir, idx, mask, val);
+=======
+	snd_hda_codec_amp_stereo(codec, nid, dir, idx, mask, val);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void activate_amp_out(struct hda_codec *codec, struct nid_path *path,
@@ -4268,11 +4279,21 @@ static void mute_all_mixer_nid(struct hda_codec *codec, hda_nid_t mix)
 	has_amp = nid_has_mute(codec, mix, HDA_INPUT);
 	for (i = 0; i < nums; i++) {
 		if (has_amp)
+<<<<<<< HEAD
 			update_amp(codec, mix, HDA_INPUT, i,
 				   0xff, HDA_AMP_MUTE);
 		else if (nid_has_volume(codec, conn[i], HDA_OUTPUT))
 			update_amp(codec, conn[i], HDA_OUTPUT, 0,
 				   0xff, HDA_AMP_MUTE);
+=======
+			snd_hda_codec_amp_stereo(codec, mix,
+						 HDA_INPUT, i,
+						 0xff, HDA_AMP_MUTE);
+		else if (nid_has_volume(codec, conn[i], HDA_OUTPUT))
+			snd_hda_codec_amp_stereo(codec, conn[i],
+						 HDA_OUTPUT, 0,
+						 0xff, HDA_AMP_MUTE);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 }
 

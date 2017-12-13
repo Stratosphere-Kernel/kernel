@@ -138,7 +138,10 @@ static int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
 	struct hv_netvsc_packet *packet;
 	int ret;
 	unsigned int i, num_pages, npg_data;
+<<<<<<< HEAD
 	u32 skb_length = skb->len;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Add multipages for skb->data and additional 2 for RNDIS */
 	npg_data = (((unsigned long)skb->data + skb_headlen(skb) - 1)
@@ -209,7 +212,11 @@ static int netvsc_start_xmit(struct sk_buff *skb, struct net_device *net)
 	ret = rndis_filter_send(net_device_ctx->device_ctx,
 				  packet);
 	if (ret == 0) {
+<<<<<<< HEAD
 		net->stats.tx_bytes += skb_length;
+=======
+		net->stats.tx_bytes += skb->len;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		net->stats.tx_packets++;
 	} else {
 		kfree(packet);

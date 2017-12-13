@@ -78,6 +78,7 @@ ENTRY(cpu_v7_set_pte_ext)
 	tst	rh, #1 << (57 - 32)		@ L_PTE_NONE
 	bicne	rl, #L_PTE_VALID
 	bne	1f
+<<<<<<< HEAD
 
 	eor	ip, rh, #1 << (55 - 32)	@ toggle L_PTE_DIRTY in temp reg to
 					@ test for !L_PTE_DIRTY || L_PTE_RDONLY
@@ -85,6 +86,10 @@ ENTRY(cpu_v7_set_pte_ext)
 	orrne	rl, #PTE_AP2
 	biceq	rl, #PTE_AP2
 
+=======
+	tst	rh, #1 << (55 - 32)		@ L_PTE_DIRTY
+	orreq	rl, #L_PTE_RDONLY
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 1:	strd	r2, r3, [r0]
 	ALT_SMP(W(nop))
 	ALT_UP (mcr	p15, 0, r0, c7, c10, 1)		@ flush_pte

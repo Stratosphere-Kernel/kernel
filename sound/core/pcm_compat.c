@@ -206,8 +206,11 @@ static int snd_pcm_status_user_compat(struct snd_pcm_substream *substream,
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	if (clear_user(src, sizeof(*src)))
 		return -EFAULT;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (put_user(status.state, &src->state) ||
 	    compat_put_timespec(&status.trigger_tstamp, &src->trigger_tstamp) ||
 	    compat_put_timespec(&status.tstamp, &src->tstamp) ||

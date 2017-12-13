@@ -172,7 +172,11 @@ static int get_fan_speed_index(struct gpio_fan_data *fan_data)
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int rpm_to_speed_index(struct gpio_fan_data *fan_data, unsigned long rpm)
+=======
+static int rpm_to_speed_index(struct gpio_fan_data *fan_data, int rpm)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct gpio_fan_speed *speed = fan_data->speed;
 	int i;

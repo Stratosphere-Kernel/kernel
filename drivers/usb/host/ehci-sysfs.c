@@ -29,7 +29,11 @@ static ssize_t show_companion(struct device *dev,
 	int			count = PAGE_SIZE;
 	char			*ptr = buf;
 
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	nports = HCS_N_PORTS(ehci->hcs_params);
 
 	for (index = 0; index < nports; ++index) {
@@ -54,7 +58,11 @@ static ssize_t store_companion(struct device *dev,
 	struct ehci_hcd		*ehci;
 	int			portnum, new_owner;
 
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	new_owner = PORT_OWNER;		/* Owned by companion */
 	if (sscanf(buf, "%d", &portnum) != 1)
 		return -EINVAL;
@@ -85,7 +93,11 @@ static ssize_t show_uframe_periodic_max(struct device *dev,
 	struct ehci_hcd		*ehci;
 	int			n;
 
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	n = scnprintf(buf, PAGE_SIZE, "%d\n", ehci->uframe_periodic_max);
 	return n;
 }
@@ -102,7 +114,11 @@ static ssize_t store_uframe_periodic_max(struct device *dev,
 	unsigned long		flags;
 	ssize_t			ret;
 
+<<<<<<< HEAD
 	ehci = hcd_to_ehci(dev_get_drvdata(dev));
+=======
+	ehci = hcd_to_ehci(bus_to_hcd(dev_get_drvdata(dev)));
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (kstrtouint(buf, 0, &uframe_periodic_max) < 0)
 		return -EINVAL;
 

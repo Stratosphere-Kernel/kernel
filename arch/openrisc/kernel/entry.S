@@ -853,6 +853,7 @@ UNHANDLED_EXCEPTION(_vector_0x1f00,0x1f00)
 
 /* ========================================================[ return ] === */
 
+<<<<<<< HEAD
 _resume_userspace:
 	DISABLE_INTERRUPTS(r3,r4)
 	l.lwz	r4,TI_FLAGS(r10)
@@ -891,6 +892,39 @@ _work_pending:
 	l.lwz	r7,PT_GPR7(r1)
 	l.j	_syscall_check_trace_enter
 	 l.lwz	r8,PT_GPR8(r1)
+=======
+_work_pending:
+	/*
+	 * if (current_thread_info->flags & _TIF_NEED_RESCHED)
+	 *     schedule();
+	 */
+	l.lwz   r5,TI_FLAGS(r10)
+	l.andi	r3,r5,_TIF_NEED_RESCHED
+	l.sfnei r3,0
+	l.bnf   _work_notifysig
+	 l.nop
+	l.jal   schedule
+	 l.nop
+	l.j	_resume_userspace
+	 l.nop
+
+/* Handle pending signals and notify-resume requests.
+ * do_notify_resume must be passed the latest pushed pt_regs, not
+ * necessarily the "userspace" ones.  Also, pt_regs->syscallno
+ * must be set so that the syscall restart functionality works.
+ */
+_work_notifysig:
+	l.jal	do_notify_resume
+	 l.ori	r3,r1,0		  /* pt_regs */
+
+_resume_userspace:
+	DISABLE_INTERRUPTS(r3,r4)
+	l.lwz	r3,TI_FLAGS(r10)
+	l.andi	r3,r3,_TIF_WORK_MASK
+	l.sfnei	r3,0
+	l.bf	_work_pending
+	 l.nop
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 _restore_all:
 	RESTORE_ALL

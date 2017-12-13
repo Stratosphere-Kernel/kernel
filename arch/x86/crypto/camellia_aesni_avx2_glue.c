@@ -582,5 +582,10 @@ module_exit(camellia_aesni_fini);
 
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Camellia Cipher Algorithm, AES-NI/AVX2 optimized");
+<<<<<<< HEAD
 MODULE_ALIAS_CRYPTO("camellia");
 MODULE_ALIAS_CRYPTO("camellia-asm");
+=======
+MODULE_ALIAS("camellia");
+MODULE_ALIAS("camellia-asm");
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d

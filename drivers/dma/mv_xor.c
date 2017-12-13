@@ -393,8 +393,12 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 	dma_cookie_t cookie = 0;
 	int busy = mv_chan_is_busy(mv_chan);
 	u32 current_desc = mv_chan_get_current_desc(mv_chan);
+<<<<<<< HEAD
 	int current_cleaned = 0;
 	struct mv_xor_desc *hw_desc;
+=======
+	int seen_current = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	dev_dbg(mv_chan_to_devp(mv_chan), "%s %d\n", __func__, __LINE__);
 	dev_dbg(mv_chan_to_devp(mv_chan), "current_desc %x\n", current_desc);
@@ -406,6 +410,7 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 
 	list_for_each_entry_safe(iter, _iter, &mv_chan->chain,
 					chain_node) {
+<<<<<<< HEAD
 
 		/* clean finished descriptors */
 		hw_desc = iter->hw_desc;
@@ -457,6 +462,40 @@ static void __mv_xor_slot_cleanup(struct mv_xor_chan *mv_chan)
 				tasklet_schedule(&mv_chan->irq_tasklet);
 			}
 		}
+=======
+		prefetch(_iter);
+		prefetch(&_iter->async_tx);
+
+		/* do not advance past the current descriptor loaded into the
+		 * hardware channel, subsequent descriptors are either in
+		 * process or have not been submitted
+		 */
+		if (seen_current)
+			break;
+
+		/* stop the search if we reach the current descriptor and the
+		 * channel is busy
+		 */
+		if (iter->async_tx.phys == current_desc) {
+			seen_current = 1;
+			if (busy)
+				break;
+		}
+
+		cookie = mv_xor_run_tx_complete_actions(iter, mv_chan, cookie);
+
+		if (mv_xor_clean_slot(iter, mv_chan))
+			break;
+	}
+
+	if ((busy == 0) && !list_empty(&mv_chan->chain)) {
+		struct mv_xor_desc_slot *chain_head;
+		chain_head = list_entry(mv_chan->chain.next,
+					struct mv_xor_desc_slot,
+					chain_node);
+
+		mv_xor_start_new_chain(mv_chan, chain_head);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (cookie > 0)

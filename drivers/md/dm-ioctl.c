@@ -1767,7 +1767,11 @@ static int ctl_ioctl(uint command, struct dm_ioctl __user *user)
 	if (r)
 		goto out;
 
+<<<<<<< HEAD
 	param->data_size = sizeof(*param);
+=======
+	param->data_size = offsetof(struct dm_ioctl, data);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	r = fn(param, input_param_size);
 
 	if (unlikely(param->flags & DM_BUFFER_FULL_FLAG) &&

@@ -123,12 +123,15 @@ static inline int put_dreq(struct nfs_direct_req *dreq)
  */
 ssize_t nfs_direct_IO(int rw, struct kiocb *iocb, const struct iovec *iov, loff_t pos, unsigned long nr_segs)
 {
+<<<<<<< HEAD
 	struct inode *inode = iocb->ki_filp->f_mapping->host;
 
 	/* we only support swap file calling nfs_direct_IO */
 	if (!IS_SWAPFILE(inode))
 		return 0;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifndef CONFIG_NFS_SWAP
 	dprintk("NFS: nfs_direct_IO (%s) off/no(%Ld/%lu) EINVAL\n",
 			iocb->ki_filp->f_path.dentry->d_name.name,
@@ -186,7 +189,10 @@ static void nfs_direct_req_free(struct kref *kref)
 {
 	struct nfs_direct_req *dreq = container_of(kref, struct nfs_direct_req, kref);
 
+<<<<<<< HEAD
 	nfs_free_pnfs_ds_cinfo(&dreq->ds_cinfo);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (dreq->l_ctx != NULL)
 		nfs_put_lock_context(dreq->l_ctx);
 	if (dreq->ctx != NULL)

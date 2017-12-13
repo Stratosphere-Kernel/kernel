@@ -626,9 +626,12 @@ static int dmc_tsc10_init(struct usbtouch_usb *usbtouch)
 		goto err_out;
 	}
 
+<<<<<<< HEAD
 	/* TSC-25 data sheet specifies a delay after the RESET command */
 	msleep(150);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* set coordinate output rate */
 	buf[0] = buf[1] = 0xFF;
 	ret = usb_control_msg(dev, usb_rcvctrlpipe (dev, 0),

@@ -28,7 +28,10 @@
 #include <linux/ioport.h>
 #include <linux/sched.h>
 #include <linux/ktime.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #include <asm/dma.h>	/* isa_dma_bridge_buggy */
 #include "pci.h"
 
@@ -292,6 +295,7 @@ static void quirk_citrine(struct pci_dev *dev)
 }
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_IBM,	PCI_DEVICE_ID_IBM_CITRINE,	quirk_citrine);
 
+<<<<<<< HEAD
 /*  On IBM Crocodile ipr SAS adapters, expand BAR to system page size */
 static void quirk_extend_bar_to_page(struct pci_dev *dev)
 {
@@ -311,6 +315,8 @@ static void quirk_extend_bar_to_page(struct pci_dev *dev)
 }
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_IBM, 0x034a, quirk_extend_bar_to_page);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /*
  *  S3 868 and 968 chips report region size equal to 32M, but they decode 64M.
  *  If it's needed, re-allocate the region.
@@ -2796,6 +2802,7 @@ DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_INTEL, 0x3c28, vtd_mask_spec_errors);
 
 static void fixup_ti816x_class(struct pci_dev *dev)
 {
+<<<<<<< HEAD
 	u32 class = dev->class;
 
 	/* TI 816x devices do not have class code set when in PCIe boot mode */
@@ -2805,6 +2812,14 @@ static void fixup_ti816x_class(struct pci_dev *dev)
 }
 DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_TI, 0xb800,
 			      PCI_CLASS_NOT_DEFINED, 0, fixup_ti816x_class);
+=======
+	/* TI 816x devices do not have class code set when in PCIe boot mode */
+	dev_info(&dev->dev, "Setting PCI class for 816x PCIe device\n");
+	dev->class = PCI_CLASS_MULTIMEDIA_VIDEO;
+}
+DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_TI, 0xb800,
+				 PCI_CLASS_NOT_DEFINED, 0, fixup_ti816x_class);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 /* Some PCIe devices do not work reliably with the claimed maximum
  * payload size supported.

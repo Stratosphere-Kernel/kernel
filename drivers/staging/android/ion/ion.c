@@ -1,9 +1,16 @@
 /*
 
+<<<<<<< HEAD
  * drivers/gpu/ion/ion.c
  *
  * Copyright (C) 2011 Google, Inc.
  * Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+=======
+ * drivers/staging/android/ion/ion.c
+ *
+ * Copyright (C) 2011 Google, Inc.
+ * Copyright (c) 2011-2014,2017, The Linux Foundation. All rights reserved.
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -705,7 +712,11 @@ static void user_ion_free_nolock(struct ion_client *client,
 		WARN(1, "%s: invalid handle passed to free.\n", __func__);
 		return;
 	}
+<<<<<<< HEAD
 	if (!handle->user_ref_count > 0) {
+=======
+	if (handle->user_ref_count == 0) {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		WARN(1, "%s: User does not have access!\n", __func__);
 		return;
 	}
@@ -1968,10 +1979,18 @@ void ion_device_add_heap(struct ion_device *dev, struct ion_heap *heap)
 	up_write(&dev->lock);
 }
 
+<<<<<<< HEAD
 int ion_walk_heaps(struct ion_client *client, int heap_id, void *data,
 			int (*f)(struct ion_heap *heap, void *data))
 {
 	int ret_val = -EINVAL;
+=======
+int ion_walk_heaps(struct ion_client *client, int heap_id,
+			enum ion_heap_type type, void *data,
+			int (*f)(struct ion_heap *heap, void *data))
+{
+	int ret_val = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	struct ion_heap *heap;
 	struct ion_device *dev = client->dev;
 	/*
@@ -1980,7 +1999,12 @@ int ion_walk_heaps(struct ion_client *client, int heap_id, void *data,
 	 */
 	down_write(&dev->lock);
 	plist_for_each_entry(heap, &dev->heaps, node) {
+<<<<<<< HEAD
 		if (ION_HEAP(heap->id) != heap_id)
+=======
+		if (ION_HEAP(heap->id) != heap_id ||
+			type != heap->type)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			continue;
 		ret_val = f(heap, data);
 		break;

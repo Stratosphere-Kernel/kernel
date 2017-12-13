@@ -333,6 +333,11 @@ static int pcan_usb_pro_send_req(struct peak_usb_device *dev, int req_id,
 	if (!(dev->state & PCAN_USB_STATE_CONNECTED))
 		return 0;
 
+<<<<<<< HEAD
+=======
+	memset(req_addr, '\0', req_size);
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	req_type = USB_TYPE_VENDOR | USB_RECIP_OTHER;
 
 	switch (req_id) {
@@ -343,7 +348,10 @@ static int pcan_usb_pro_send_req(struct peak_usb_device *dev, int req_id,
 	default:
 		p = usb_rcvctrlpipe(dev->udev, 0);
 		req_type |= USB_DIR_IN;
+<<<<<<< HEAD
 		memset(req_addr, '\0', req_size);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		break;
 	}
 

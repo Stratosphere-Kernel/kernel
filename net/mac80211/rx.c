@@ -1585,6 +1585,7 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
 	sc = le16_to_cpu(hdr->seq_ctrl);
 	frag = sc & IEEE80211_SCTL_FRAG;
 
+<<<<<<< HEAD
 	if (is_multicast_ether_addr(hdr->addr1)) {
 		rx->local->dot11MulticastReceivedFrameCount++;
 		goto out_no_led;
@@ -1593,6 +1594,13 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
 	if (likely(!ieee80211_has_morefrags(fc) && frag == 0))
 		goto out;
 
+=======
+	if (likely((!ieee80211_has_morefrags(fc) && frag == 0) ||
+		   is_multicast_ether_addr(hdr->addr1))) {
+		/* not fragmented */
+		goto out;
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	I802_DEBUG_INC(rx->local->rx_handlers_fragments);
 
 	if (skb_linearize(rx->skb))
@@ -1683,10 +1691,19 @@ ieee80211_rx_h_defragment(struct ieee80211_rx_data *rx)
 	status->rx_flags |= IEEE80211_RX_FRAGMENTED;
 
  out:
+<<<<<<< HEAD
 	ieee80211_led_rx(rx->local);
  out_no_led:
 	if (rx->sta)
 		rx->sta->rx_packets++;
+=======
+	if (rx->sta)
+		rx->sta->rx_packets++;
+	if (is_multicast_ether_addr(hdr->addr1))
+		rx->local->dot11MulticastReceivedFrameCount++;
+	else
+		ieee80211_led_rx(rx->local);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return RX_CONTINUE;
 }
 
@@ -2023,9 +2040,12 @@ ieee80211_rx_h_mesh_fwding(struct ieee80211_rx_data *rx)
 	hdr = (struct ieee80211_hdr *) skb->data;
 	mesh_hdr = (struct ieee80211s_hdr *) (skb->data + hdrlen);
 
+<<<<<<< HEAD
 	if (ieee80211_drop_unencrypted(rx, hdr->frame_control))
 		return RX_DROP_MONITOR;
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	/* frame is in RMC, don't forward */
 	if (ieee80211_is_data(hdr->frame_control) &&
 	    is_multicast_ether_addr(hdr->addr1) &&

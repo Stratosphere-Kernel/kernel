@@ -242,15 +242,24 @@ static ssize_t store_drivers_probe(struct bus_type *bus,
 				   const char *buf, size_t count)
 {
 	struct device *dev;
+<<<<<<< HEAD
 	int err = -EINVAL;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	dev = bus_find_device_by_name(bus, NULL, buf);
 	if (!dev)
 		return -ENODEV;
+<<<<<<< HEAD
 	if (bus_rescan_devices_helper(dev, NULL) == 0)
 		err = count;
 	put_device(dev);
 	return err;
+=======
+	if (bus_rescan_devices_helper(dev, NULL) != 0)
+		return -EINVAL;
+	return count;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static struct device *next_device(struct klist_iter *i)

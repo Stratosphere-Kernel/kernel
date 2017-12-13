@@ -220,8 +220,12 @@ static int nfsd_startup_generic(int nrservs)
 	 */
 	ret = nfsd_racache_init(2*nrservs);
 	if (ret)
+<<<<<<< HEAD
 		goto dec_users;
 
+=======
+		return ret;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ret = nfs4_state_start();
 	if (ret)
 		goto out_racache;
@@ -229,8 +233,11 @@ static int nfsd_startup_generic(int nrservs)
 
 out_racache:
 	nfsd_racache_shutdown();
+<<<<<<< HEAD
 dec_users:
 	nfsd_users--;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	return ret;
 }
 

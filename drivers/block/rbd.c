@@ -457,7 +457,10 @@ void rbd_warn(struct rbd_device *rbd_dev, const char *fmt, ...)
 #  define rbd_assert(expr)	((void) 0)
 #endif /* !RBD_DEBUG */
 
+<<<<<<< HEAD
 static void rbd_osd_copyup_callback(struct rbd_obj_request *obj_request);
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int rbd_img_obj_request_submit(struct rbd_obj_request *obj_request);
 static void rbd_img_parent_read(struct rbd_obj_request *obj_request);
 static void rbd_dev_remove_parent(struct rbd_device *rbd_dev);
@@ -1671,6 +1674,7 @@ static void rbd_osd_stat_callback(struct rbd_obj_request *obj_request)
 	obj_request_done_set(obj_request);
 }
 
+<<<<<<< HEAD
 static void rbd_osd_call_callback(struct rbd_obj_request *obj_request)
 {
 	dout("%s: obj %p\n", __func__, obj_request);
@@ -1681,6 +1685,8 @@ static void rbd_osd_call_callback(struct rbd_obj_request *obj_request)
 		obj_request_done_set(obj_request);
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static void rbd_osd_req_callback(struct ceph_osd_request *osd_req,
 				struct ceph_msg *msg)
 {
@@ -1719,8 +1725,11 @@ static void rbd_osd_req_callback(struct ceph_osd_request *osd_req,
 		rbd_osd_stat_callback(obj_request);
 		break;
 	case CEPH_OSD_OP_CALL:
+<<<<<<< HEAD
 		rbd_osd_call_callback(obj_request);
 		break;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	case CEPH_OSD_OP_NOTIFY_ACK:
 	case CEPH_OSD_OP_WATCH:
 		rbd_osd_trivial_callback(obj_request);
@@ -1864,11 +1873,19 @@ static struct rbd_obj_request *rbd_obj_request_create(const char *object_name,
 	rbd_assert(obj_request_type_valid(type));
 
 	size = strlen(object_name) + 1;
+<<<<<<< HEAD
 	name = kmalloc(size, GFP_NOIO);
 	if (!name)
 		return NULL;
 
 	obj_request = kmem_cache_zalloc(rbd_obj_request_cache, GFP_NOIO);
+=======
+	name = kmalloc(size, GFP_KERNEL);
+	if (!name)
+		return NULL;
+
+	obj_request = kmem_cache_zalloc(rbd_obj_request_cache, GFP_KERNEL);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	if (!obj_request) {
 		kfree(name);
 		return NULL;
@@ -2128,11 +2145,14 @@ static bool rbd_img_obj_end_request(struct rbd_obj_request *obj_request)
 			result, xferred);
 		if (!img_request->result)
 			img_request->result = result;
+<<<<<<< HEAD
 		/*
 		 * Need to end I/O on the entire obj_request worth of
 		 * bytes in case of error.
 		 */
 		xferred = obj_request->length;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	/* Image object requests don't own their page array */
@@ -2167,6 +2187,10 @@ static void rbd_img_obj_callback(struct rbd_obj_request *obj_request)
 	rbd_assert(img_request->obj_request_count > 0);
 	rbd_assert(which != BAD_WHICH);
 	rbd_assert(which < img_request->obj_request_count);
+<<<<<<< HEAD
+=======
+	rbd_assert(which >= img_request->next_completion);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	spin_lock_irq(&img_request->completion_lock);
 	if (which != img_request->next_completion)
@@ -2318,15 +2342,22 @@ out_unwind:
 }
 
 static void
+<<<<<<< HEAD
 rbd_osd_copyup_callback(struct rbd_obj_request *obj_request)
+=======
+rbd_img_obj_copyup_callback(struct rbd_obj_request *obj_request)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 {
 	struct rbd_img_request *img_request;
 	struct rbd_device *rbd_dev;
 	struct page **pages;
 	u32 page_count;
 
+<<<<<<< HEAD
 	dout("%s: obj %p\n", __func__, obj_request);
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	rbd_assert(obj_request->type == OBJ_REQUEST_BIO);
 	rbd_assert(obj_request_img_data_test(obj_request));
 	img_request = obj_request->img_request;
@@ -2352,7 +2383,13 @@ rbd_osd_copyup_callback(struct rbd_obj_request *obj_request)
 	if (!obj_request->result)
 		obj_request->xferred = obj_request->length;
 
+<<<<<<< HEAD
 	obj_request_done_set(obj_request);
+=======
+	/* Finish up with the normal image object callback */
+
+	rbd_img_obj_callback(obj_request);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void
@@ -2449,6 +2486,10 @@ rbd_img_obj_parent_read_full_callback(struct rbd_img_request *img_request)
 
 	/* All set, send it off. */
 
+<<<<<<< HEAD
+=======
+	orig_request->callback = rbd_img_obj_copyup_callback;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	osdc = &rbd_dev->rbd_client->client->osdc;
 	img_result = rbd_obj_request_submit(osdc, orig_request);
 	if (!img_result)
@@ -3243,7 +3284,11 @@ static int rbd_obj_read_sync(struct rbd_device *rbd_dev,
 	page_count = (u32) calc_pages_for(offset, length);
 	pages = ceph_alloc_page_vector(page_count, GFP_KERNEL);
 	if (IS_ERR(pages))
+<<<<<<< HEAD
 		return PTR_ERR(pages);
+=======
+		ret = PTR_ERR(pages);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	ret = -ENOMEM;
 	obj_request = rbd_obj_request_create(object_name, offset, length,

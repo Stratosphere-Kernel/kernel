@@ -150,7 +150,11 @@ void cpu_panic(void)
 #define NUM_ROUNDS	64	/* magic value */
 #define NUM_ITERS	5	/* likewise */
 
+<<<<<<< HEAD
 static DEFINE_RAW_SPINLOCK(itc_sync_lock);
+=======
+static DEFINE_SPINLOCK(itc_sync_lock);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static unsigned long go[SLAVE + 1];
 
 #define DEBUG_TICK_SYNC	0
@@ -258,7 +262,11 @@ static void smp_synchronize_one_tick(int cpu)
 	go[MASTER] = 0;
 	membar_safe("#StoreLoad");
 
+<<<<<<< HEAD
 	raw_spin_lock_irqsave(&itc_sync_lock, flags);
+=======
+	spin_lock_irqsave(&itc_sync_lock, flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	{
 		for (i = 0; i < NUM_ROUNDS*NUM_ITERS; i++) {
 			while (!go[MASTER])
@@ -269,7 +277,11 @@ static void smp_synchronize_one_tick(int cpu)
 			membar_safe("#StoreLoad");
 		}
 	}
+<<<<<<< HEAD
 	raw_spin_unlock_irqrestore(&itc_sync_lock, flags);
+=======
+	spin_unlock_irqrestore(&itc_sync_lock, flags);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 #if defined(CONFIG_SUN_LDOMS) && defined(CONFIG_HOTPLUG_CPU)
@@ -821,17 +833,25 @@ void arch_send_call_function_single_ipi(int cpu)
 void __irq_entry smp_call_function_client(int irq, struct pt_regs *regs)
 {
 	clear_softint(1 << irq);
+<<<<<<< HEAD
 	irq_enter();
 	generic_smp_call_function_interrupt();
 	irq_exit();
+=======
+	generic_smp_call_function_interrupt();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 void __irq_entry smp_call_function_single_client(int irq, struct pt_regs *regs)
 {
 	clear_softint(1 << irq);
+<<<<<<< HEAD
 	irq_enter();
 	generic_smp_call_function_single_interrupt();
 	irq_exit();
+=======
+	generic_smp_call_function_single_interrupt();
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 }
 
 static void tsb_sync(void *info)

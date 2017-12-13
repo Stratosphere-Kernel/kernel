@@ -210,17 +210,26 @@ int __pci_read_base(struct pci_dev *dev, enum pci_bar_type type,
 		res->flags |= IORESOURCE_SIZEALIGN;
 		if (res->flags & IORESOURCE_IO) {
 			l &= PCI_BASE_ADDRESS_IO_MASK;
+<<<<<<< HEAD
 			sz &= PCI_BASE_ADDRESS_IO_MASK;
 			mask = PCI_BASE_ADDRESS_IO_MASK & (u32) IO_SPACE_LIMIT;
 		} else {
 			l &= PCI_BASE_ADDRESS_MEM_MASK;
 			sz &= PCI_BASE_ADDRESS_MEM_MASK;
+=======
+			mask = PCI_BASE_ADDRESS_IO_MASK & (u32) IO_SPACE_LIMIT;
+		} else {
+			l &= PCI_BASE_ADDRESS_MEM_MASK;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			mask = (u32)PCI_BASE_ADDRESS_MEM_MASK;
 		}
 	} else {
 		res->flags |= (l & IORESOURCE_ROM_ENABLE);
 		l &= PCI_ROM_ADDRESS_MASK;
+<<<<<<< HEAD
 		sz &= PCI_ROM_ADDRESS_MASK;
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		mask = (u32)PCI_ROM_ADDRESS_MASK;
 	}
 

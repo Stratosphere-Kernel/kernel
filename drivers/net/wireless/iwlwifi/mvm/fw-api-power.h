@@ -67,6 +67,7 @@
 /* Power Management Commands, Responses, Notifications */
 
 /**
+<<<<<<< HEAD
  * enum iwl_ltr_config_flags - masks for LTR config command flags
  * @LTR_CFG_FLAG_FEATURE_ENABLE: Feature operational status
  * @LTR_CFG_FLAG_HW_DIS_ON_SHADOW_REG_ACCESS: allow LTR change on shadow
@@ -101,6 +102,9 @@ struct iwl_ltr_config_cmd {
 
 /**
  * enum iwl_power_flags - masks for power table command flags
+=======
+ * enum iwl_scan_flags - masks for power table command flags
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
  * @POWER_FLAGS_POWER_SAVE_ENA_MSK: '1' Allow to save power by turning off
  *		receiver and transmitter. '0' - does not allow.
  * @POWER_FLAGS_POWER_MANAGEMENT_ENA_MSK: '0' Driver disables power management,

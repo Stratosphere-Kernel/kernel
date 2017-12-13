@@ -248,6 +248,36 @@ out:
 DEFINE_SIMPLE_ATTRIBUTE(mmc_max_clock_fops, mmc_max_clock_get,
 		mmc_max_clock_set, "%llu\n");
 
+<<<<<<< HEAD
+=======
+static int mmc_err_state_get(void *data, u64 *val)
+{
+	struct mmc_host *host = data;
+
+	if (!host)
+		return -EINVAL;
+
+	*val = host->err_occurred ? 1 : 0;
+
+	return 0;
+}
+
+static int mmc_err_state_clear(void *data, u64 val)
+{
+	struct mmc_host *host = data;
+
+	if (!host)
+		return -EINVAL;
+
+	host->err_occurred = false;
+
+	return 0;
+}
+
+DEFINE_SIMPLE_ATTRIBUTE(mmc_err_state, mmc_err_state_get,
+		mmc_err_state_clear, "%llu\n");
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 void mmc_add_host_debugfs(struct mmc_host *host)
 {
 	struct dentry *root;
@@ -274,6 +304,13 @@ void mmc_add_host_debugfs(struct mmc_host *host)
 		&mmc_max_clock_fops))
 		goto err_node;
 
+<<<<<<< HEAD
+=======
+	if (!debugfs_create_file("err_state", S_IRUSR | S_IWUSR, root, host,
+		&mmc_err_state))
+		goto err_node;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #ifdef CONFIG_MMC_CLKGATE
 	if (!debugfs_create_u32("clk_delay", (S_IRUSR | S_IWUSR),
 				root, &host->clk_delay))
@@ -403,9 +440,16 @@ static ssize_t mmc_wr_pack_stats_read(struct file *filp, char __user *ubuf,
 {
 	struct mmc_card *card = filp->private_data;
 	struct mmc_wr_pack_stats *pack_stats;
+<<<<<<< HEAD
 	int i;
 	int max_num_of_packed_reqs = 0;
 	char *temp_buf;
+=======
+	int i, ret = 0;
+	int max_num_of_packed_reqs = 0;
+	char *temp_buf, *temp_ubuf;
+	size_t tubuf_cnt = 0;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (!card)
 		return cnt;
@@ -431,15 +475,35 @@ static ssize_t mmc_wr_pack_stats_read(struct file *filp, char __user *ubuf,
 
 	max_num_of_packed_reqs = card->ext_csd.max_packed_writes;
 
+<<<<<<< HEAD
 	temp_buf = kmalloc(TEMP_BUF_SIZE, GFP_KERNEL);
 	if (!temp_buf)
 		goto exit;
 
+=======
+	if (cnt <= (strlen_user(ubuf) + 1))
+		goto exit;
+
+	temp_buf = kzalloc(TEMP_BUF_SIZE, GFP_KERNEL);
+	if (!temp_buf)
+		goto exit;
+
+	tubuf_cnt = cnt - strlen_user(ubuf) - 1;
+
+	temp_ubuf = kzalloc(tubuf_cnt, GFP_KERNEL);
+	if (!temp_ubuf)
+		goto cleanup;
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	spin_lock(&pack_stats->lock);
 
 	snprintf(temp_buf, TEMP_BUF_SIZE, "%s: write packing statistics:\n",
 		mmc_hostname(card->host));
+<<<<<<< HEAD
 	strlcat(ubuf, temp_buf, cnt);
+=======
+	strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	for (i = 1 ; i <= max_num_of_packed_reqs ; ++i) {
 		if (pack_stats->packing_events[i]) {
@@ -447,63 +511,99 @@ static ssize_t mmc_wr_pack_stats_read(struct file *filp, char __user *ubuf,
 				 "%s: Packed %d reqs - %d times\n",
 				mmc_hostname(card->host), i,
 				pack_stats->packing_events[i]);
+<<<<<<< HEAD
 			strlcat(ubuf, temp_buf, cnt);
+=======
+			strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		}
 	}
 
 	snprintf(temp_buf, TEMP_BUF_SIZE,
 		 "%s: stopped packing due to the following reasons:\n",
 		 mmc_hostname(card->host));
+<<<<<<< HEAD
 	strlcat(ubuf, temp_buf, cnt);
+=======
+	strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (pack_stats->pack_stop_reason[EXCEEDS_SEGMENTS]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: exceed max num of segments\n",
 			 mmc_hostname(card->host),
 			 pack_stats->pack_stop_reason[EXCEEDS_SEGMENTS]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[EXCEEDS_SECTORS]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: exceed max num of sectors\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[EXCEEDS_SECTORS]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[WRONG_DATA_DIR]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: wrong data direction\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[WRONG_DATA_DIR]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[FLUSH_OR_DISCARD]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: flush or discard\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[FLUSH_OR_DISCARD]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[EMPTY_QUEUE]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: empty queue\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[EMPTY_QUEUE]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[REL_WRITE]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: rel write\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[REL_WRITE]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[THRESHOLD]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: Threshold\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[THRESHOLD]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 
 	if (pack_stats->pack_stop_reason[LARGE_SEC_ALIGN]) {
@@ -511,25 +611,52 @@ static ssize_t mmc_wr_pack_stats_read(struct file *filp, char __user *ubuf,
 			 "%s: %d times: Large sector alignment\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[LARGE_SEC_ALIGN]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[RANDOM]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: random request\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[RANDOM]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	}
 	if (pack_stats->pack_stop_reason[FUA]) {
 		snprintf(temp_buf, TEMP_BUF_SIZE,
 			 "%s: %d times: fua request\n",
 			mmc_hostname(card->host),
 			pack_stats->pack_stop_reason[FUA]);
+<<<<<<< HEAD
 		strlcat(ubuf, temp_buf, cnt);
 	}
 
 	spin_unlock(&pack_stats->lock);
 
+=======
+		strlcat(temp_ubuf, temp_buf, tubuf_cnt);
+	}
+	if (strlen_user(ubuf) < cnt - strlen(temp_ubuf))
+		ret = copy_to_user((ubuf + strlen_user(ubuf)),
+				temp_ubuf, tubuf_cnt);
+	else
+		ret = -EFAULT;
+	if (ret)
+		pr_err("%s: %s: Copy to userspace failed: %s\n",
+				mmc_hostname(card->host), __func__, ubuf);
+
+	spin_unlock(&pack_stats->lock);
+
+	kfree(temp_ubuf);
+
+cleanup:
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	kfree(temp_buf);
 
 	pr_info("%s", ubuf);

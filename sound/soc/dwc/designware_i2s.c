@@ -263,6 +263,7 @@ static void dw_i2s_shutdown(struct snd_pcm_substream *substream,
 	snd_soc_dai_set_dma_data(dai, substream, NULL);
 }
 
+<<<<<<< HEAD
 static int dw_i2s_prepare(struct snd_pcm_substream *substream,
 			  struct snd_soc_dai *dai)
 {
@@ -276,6 +277,8 @@ static int dw_i2s_prepare(struct snd_pcm_substream *substream,
 	return 0;
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 static int dw_i2s_trigger(struct snd_pcm_substream *substream,
 		int cmd, struct snd_soc_dai *dai)
 {
@@ -307,7 +310,10 @@ static struct snd_soc_dai_ops dw_i2s_dai_ops = {
 	.startup	= dw_i2s_startup,
 	.shutdown	= dw_i2s_shutdown,
 	.hw_params	= dw_i2s_hw_params,
+<<<<<<< HEAD
 	.prepare	= dw_i2s_prepare,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.trigger	= dw_i2s_trigger,
 };
 

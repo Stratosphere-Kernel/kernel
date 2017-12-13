@@ -558,7 +558,10 @@ static struct wm831x_touch_pdata touch_pdata = {
 
 static struct wm831x_pdata crag_pmic_pdata = {
 	.wm831x_num = 1,
+<<<<<<< HEAD
 	.irq_base = BANFF_PMIC_IRQ_BASE,
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	.gpio_base = BANFF_PMIC_GPIO_BASE,
 	.soft_shutdown = true,
 

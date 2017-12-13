@@ -700,7 +700,11 @@ void lguest_arch_setup_regs(struct lg_cpu *cpu, unsigned long start)
 	 * interrupts are enabled.  We always leave interrupts enabled while
 	 * running the Guest.
 	 */
+<<<<<<< HEAD
 	regs->eflags = X86_EFLAGS_IF | X86_EFLAGS_FIXED;
+=======
+	regs->eflags = X86_EFLAGS_IF | X86_EFLAGS_BIT1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/*
 	 * The "Extended Instruction Pointer" register says where the Guest is

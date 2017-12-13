@@ -84,6 +84,7 @@ static const struct dmi_system_id pci_crs_quirks[] __initconst = {
 			DMI_MATCH(DMI_BIOS_VENDOR, "Phoenix Technologies, LTD"),
 		},
 	},
+<<<<<<< HEAD
 	/* https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/931368 */
 	/* https://bugs.launchpad.net/ubuntu/+source/alsa-driver/+bug/1033299 */
 	{
@@ -95,6 +96,8 @@ static const struct dmi_system_id pci_crs_quirks[] __initconst = {
 			DMI_MATCH(DMI_BIOS_VENDOR, "Phoenix Technologies, LTD"),
 		},
 	},
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	/* Now for the blacklist.. */
 

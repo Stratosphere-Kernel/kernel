@@ -2056,6 +2056,13 @@ static int _sha_complete(struct qce_device *pce_dev)
 	uint32_t result_dump_status;
 
 	areq = (struct ahash_request *) pce_dev->areq;
+<<<<<<< HEAD
+=======
+	if (!areq) {
+		pr_err("sha operation error. areq is NULL\n");
+		return -ENXIO;
+	}
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	qce_dma_unmap_sg(pce_dev->pdev, areq->src, pce_dev->src_nents,
 				DMA_TO_DEVICE);
 	memcpy(digest, (char *)(&pce_dev->ce_sps.result->auth_iv[0]),

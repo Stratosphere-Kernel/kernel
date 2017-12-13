@@ -273,14 +273,27 @@ pid_t vm_is_stack(struct task_struct *task,
 
 	if (in_group) {
 		struct task_struct *t;
+<<<<<<< HEAD
 
 		rcu_read_lock();
 		for_each_thread(task, t) {
+=======
+		rcu_read_lock();
+		if (!pid_alive(task))
+			goto done;
+
+		t = task;
+		do {
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			if (vm_is_stack_for_task(t, vma)) {
 				ret = t->pid;
 				goto done;
 			}
+<<<<<<< HEAD
 		}
+=======
+		} while_each_thread(task, t);
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 done:
 		rcu_read_unlock();
 	}

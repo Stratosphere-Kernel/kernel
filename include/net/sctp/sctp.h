@@ -540,11 +540,14 @@ static inline void sctp_assoc_pending_pmtu(struct sock *sk, struct sctp_associat
 	asoc->pmtu_pending = 0;
 }
 
+<<<<<<< HEAD
 static inline bool sctp_chunk_pending(const struct sctp_chunk *chunk)
 {
 	return !list_empty(&chunk->list);
 }
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* Walk through a list of TLV parameters.  Don't trust the
  * individual parameter lengths and instead depend on
  * the chunk length to indicate when to stop.  Make sure

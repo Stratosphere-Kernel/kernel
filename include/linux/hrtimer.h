@@ -454,12 +454,15 @@ extern void hrtimer_run_pending(void);
 /* Bootup initialization: */
 extern void __init hrtimers_init(void);
 
+<<<<<<< HEAD
 #if BITS_PER_LONG < 64
 extern u64 ktime_divns(const ktime_t kt, s64 div);
 #else /* BITS_PER_LONG < 64 */
 # define ktime_divns(kt, div)		(u64)((kt).tv64 / (div))
 #endif
 
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 /* Show pending timers: */
 extern void sysrq_timer_list_show(void);
 

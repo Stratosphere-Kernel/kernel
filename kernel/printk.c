@@ -111,7 +111,11 @@ static struct console *exclusive_console;
  */
 struct console_cmdline
 {
+<<<<<<< HEAD
 	char	name[16];			/* Name of the driver	    */
+=======
+	char	name[8];			/* Name of the driver	    */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	int	index;				/* Minor dev. to use	    */
 	char	*options;			/* Options for the driver   */
 #ifdef CONFIG_A11Y_BRAILLE_CONSOLE
@@ -2604,8 +2608,11 @@ void register_console(struct console *newcon)
 	 */
 	for (i = 0; i < MAX_CMDLINECONSOLES && console_cmdline[i].name[0];
 			i++) {
+<<<<<<< HEAD
 		BUILD_BUG_ON(sizeof(console_cmdline[i].name) !=
 			     sizeof(newcon->name));
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		if (strcmp(console_cmdline[i].name, newcon->name) != 0)
 			continue;
 		if (newcon->index >= 0 &&

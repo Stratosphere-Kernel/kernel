@@ -499,7 +499,11 @@ static int do_one_mathemu(u32 insn, unsigned long *pfsr, unsigned long *fregs)
 		case 0: fsr = *pfsr;
 			if (IR == -1) IR = 2;
 			/* fcc is always fcc0 */
+<<<<<<< HEAD
 			fsr &= ~0xc00; fsr |= (IR << 10);
+=======
+			fsr &= ~0xc00; fsr |= (IR << 10); break;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 			*pfsr = fsr;
 			break;
 		case 1: rd->s = IR; break;

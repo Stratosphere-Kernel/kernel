@@ -286,11 +286,19 @@
 	ENTRY_COMP(msgsnd)
 	ENTRY_COMP(msgrcv)
 	ENTRY_SAME(msgget)		/* 190 */
+<<<<<<< HEAD
 	ENTRY_COMP(msgctl)
 	ENTRY_COMP(shmat)
 	ENTRY_SAME(shmdt)
 	ENTRY_SAME(shmget)
 	ENTRY_COMP(shmctl)		/* 195 */
+=======
+	ENTRY_SAME(msgctl)
+	ENTRY_SAME(shmat)
+	ENTRY_SAME(shmdt)
+	ENTRY_SAME(shmget)
+	ENTRY_SAME(shmctl)		/* 195 */
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ENTRY_SAME(ni_syscall)		/* streams1 */
 	ENTRY_SAME(ni_syscall)		/* streams2 */
 	ENTRY_SAME(lstat64)
@@ -323,7 +331,11 @@
 	ENTRY_SAME(epoll_ctl)		/* 225 */
 	ENTRY_SAME(epoll_wait)
  	ENTRY_SAME(remap_file_pages)
+<<<<<<< HEAD
 	ENTRY_COMP(semtimedop)
+=======
+	ENTRY_SAME(semtimedop)
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	ENTRY_COMP(mq_open)
 	ENTRY_SAME(mq_unlink)		/* 230 */
 	ENTRY_COMP(mq_timedsend)

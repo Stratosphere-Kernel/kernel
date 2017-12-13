@@ -81,7 +81,11 @@ NESTED(handle_sys, PT_SIZE, sp)
 	PTR	4b, bad_stack
 	.previous
 
+<<<<<<< HEAD
 	li	t1, _TIF_WORK_SYSCALL_ENTRY
+=======
+	li	t1, _TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	LONG_L	t0, TI_FLAGS($28)	# syscall tracing enabled?
 	and	t0, t1, t0
 	bnez	t0, trace_a_syscall

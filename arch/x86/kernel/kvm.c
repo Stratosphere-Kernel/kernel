@@ -279,6 +279,7 @@ do_async_page_fault(struct pt_regs *regs, unsigned long error_code)
 static void __init paravirt_ops_setup(void)
 {
 	pv_info.name = "KVM";
+<<<<<<< HEAD
 
 	/*
 	 * KVM isn't paravirt in the sense of paravirt_enabled.  A KVM
@@ -287,6 +288,9 @@ static void __init paravirt_ops_setup(void)
 	 * missing.
 	 */
 	pv_info.paravirt_enabled = 0;
+=======
+	pv_info.paravirt_enabled = 1;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 
 	if (kvm_para_has_feature(KVM_FEATURE_NOP_IO_DELAY))
 		pv_cpu_ops.io_delay = kvm_io_delay;

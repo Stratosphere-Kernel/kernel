@@ -30,8 +30,13 @@
 V_FUNCTION_BEGIN(__kernel_getcpu)
   .cfi_startproc
 	mfspr	r5,SPRN_USPRG3
+<<<<<<< HEAD
 	cmpwi	cr0,r3,0
 	cmpwi	cr1,r4,0
+=======
+	cmpdi	cr0,r3,0
+	cmpdi	cr1,r4,0
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	clrlwi  r6,r5,16
 	rlwinm  r7,r5,16,31-15,31-0
 	beq	cr0,1f

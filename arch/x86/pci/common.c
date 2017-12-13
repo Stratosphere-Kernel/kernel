@@ -448,6 +448,7 @@ static const struct dmi_system_id pciprobe_dmi_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "ftServer"),
 		},
 	},
+<<<<<<< HEAD
         {
                 .callback = set_scan_all,
                 .ident = "Stratus/NEC ftServer",
@@ -464,6 +465,8 @@ static const struct dmi_system_id pciprobe_dmi_table[] = {
                         DMI_MATCH(DMI_PRODUCT_NAME, "Express5800/R31"),
                 },
         },
+=======
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 	{}
 };
 

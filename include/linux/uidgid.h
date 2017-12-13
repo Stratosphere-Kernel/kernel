@@ -64,6 +64,12 @@ static inline gid_t __kgid_val(kgid_t gid)
 #define GLOBAL_ROOT_UID KUIDT_INIT(0)
 #define GLOBAL_ROOT_GID KGIDT_INIT(0)
 
+<<<<<<< HEAD
+=======
+#define GLOBAL_SYSTEM_UID KUIDT_INIT(1000)
+#define GLOBAL_SYSTEM_GID KGIDT_INIT(1000)
+
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 #define INVALID_UID KUIDT_INIT(-1)
 #define INVALID_GID KGIDT_INIT(-1)
 

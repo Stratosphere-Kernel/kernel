@@ -393,6 +393,7 @@ int vmbus_post_msg(void *buffer, size_t buflen)
 	 * insufficient resources. Retry the operation a couple of
 	 * times before giving up.
 	 */
+<<<<<<< HEAD
 	while (retries < 10) {
 		ret = hv_post_message(conn_id, 1, buffer, buflen);
 
@@ -408,6 +409,12 @@ int vmbus_post_msg(void *buffer, size_t buflen)
 			return -EINVAL;
 		}
 
+=======
+	while (retries < 3) {
+		ret =  hv_post_message(conn_id, 1, buffer, buflen);
+		if (ret != HV_STATUS_INSUFFICIENT_BUFFERS)
+			return ret;
+>>>>>>> 55d768e2f9058aa68224277a32bf84f0a687486d
 		retries++;
 		msleep(100);
 	}
